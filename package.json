@@ -1,0 +1,28 @@
+{
+  "name": "auto-spies",
+  "version": "1.0.0",
+  "description": "spy generator",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config config/webpack.js",
+    "test": "jasmine-ts --config=tsjasmine.json"
+  },
+  "keywords": [
+    "spy",
+    "jasmine",
+    "jest",
+    "auto"
+  ],
+  "author": "Vittorio Guerriero",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jasmine": "3.3.5",
+    "awesome-typescript-loader": "5.2.1",
+    "jasmine": "3.3.1",
+    "jasmine-ts": "0.3.0",
+    "ts-node": "7.0.1",
+    "typescript": "3.2.2",
+    "webpack": "4.28.3",
+    "webpack-cli": "3.1.2"
+  }
+}
