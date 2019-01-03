@@ -6,7 +6,8 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "webpack --config config/webpack.js",
-    "test": "jasmine-ts --config=tsjasmine.json"
+    "test": "jasmine-ts --config=tsjasmine.json",
+    "test2": "karma start"
   },
   "keywords": [
     "spy",
@@ -20,10 +21,18 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jasmine": "3.3.5",
+    "awesome-typescript-loader": "5.2.1",
     "jasmine": "3.3.1",
     "jasmine-ts": "0.3.0",
+    "karma": "3.1.4",
+    "karma-chrome-launcher": "2.2.0",
+    "karma-jasmine": "2.0.1",
+    "karma-webpack": "3.0.5",
+    "path": "0.12.7",
+    "puppeteer": "1.11.0",
     "ts-loader": "5.3.2",
     "ts-node": "7.0.1",
+    "ts-transformer-keys": "0.3.4",
     "typescript": "3.2.2",
     "webpack": "4.28.3",
     "webpack-cli": "3.1.2"
