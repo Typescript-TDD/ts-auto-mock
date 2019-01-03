@@ -8,12 +8,16 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
+    "esModuleInterop": true,
     "noImplicitAny": false,
     "lib": [
       "es2017",
       "dom"
     ]
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules"
   ]
