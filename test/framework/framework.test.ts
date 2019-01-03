@@ -1,32 +1,31 @@
-import { ClassWithOneMethod } from "./mock/oneMethod";
-import { Spy } from "../src/spy/spy";
-import { SpyFactory } from "../src/spy/spyFactory";
-import { ClassWithMultipleMethod } from "./mock/multipleMethod";
-import { ClassWithProperties } from "./mock/withProperties";
+import { FrameworkAutoSpy } from "../../src/framework/frameworkAutoSpy";
+import { ClassWithOneMethod } from "../mock/oneMethod";
+import { FameworkSpyFactory } from "../../src/framework/fameworkSpyFactory";
+import { ClassWithMultipleMethod } from "../mock/multipleMethod";
+import { ClassWithProperties } from "../mock/withProperties";
 
 describe('createSpy', () => {
     describe('when creating for one method class', () => {
-        let spyClass: Spy<ClassWithOneMethod>;
+        let spyClass: FrameworkAutoSpy<ClassWithOneMethod>;
 
         beforeEach(() => {
-            spyClass = SpyFactory.forClass(ClassWithOneMethod);
+            spyClass = FameworkSpyFactory.forClass(ClassWithOneMethod);
         });
 
         it('should contain the method', () => {
-          expect(spyClass.method).toBeDefined();
+            expect(spyClass.method).toBeDefined();
         });
 
         it('should have a spy', () => {
-          spyClass.method();
-          expect(spyClass.method).toHaveBeenCalledWith();
+            expect(spyClass.method.spyName).toBe("method");
         });
     });
 
     describe('when creating for multiple method class', () => {
-        let spyClass: Spy<ClassWithMultipleMethod>;
+        let spyClass: FrameworkAutoSpy<ClassWithMultipleMethod>;
 
         beforeEach(() => {
-            spyClass = SpyFactory.forClass(ClassWithMultipleMethod);
+            spyClass = FameworkSpyFactory.forClass(ClassWithMultipleMethod);
         });
 
         it('should contain the methods', () => {
@@ -36,22 +35,17 @@ describe('createSpy', () => {
         });
 
         it('should have all the spies', () => {
-            spyClass.method();
-            expect(spyClass.method).toHaveBeenCalledWith();
-            expect(spyClass.method2).not.toHaveBeenCalled();
-            spyClass.method2();
-            expect(spyClass.method2).toHaveBeenCalledWith();
-            spyClass.method3();
-            expect(spyClass.method3).toHaveBeenCalledWith();
+            expect(spyClass.method.spyName).toBe("method");
+            expect(spyClass.method2.spyName).toBe("method2");
+            expect(spyClass.method3.spyName).toBe("method3");
         });
     });
 
     describe('when creating for a class with properties', () => {
-        let spyClass: Spy<ClassWithProperties>;
+        let spyClass: FrameworkAutoSpy<ClassWithProperties>;
 
         beforeEach(() => {
-
-            spyClass = SpyFactory.forClass(ClassWithProperties);
+            spyClass = FameworkSpyFactory.forClass(ClassWithProperties);
         });
 
         it('should contain the method', () => {
@@ -68,8 +62,7 @@ describe('createSpy', () => {
         });
 
         it('should have all the spies', () => {
-            spyClass.method();
-            expect(spyClass.method).toHaveBeenCalledWith();
+            expect(spyClass.method.spyName).toBe("method");
         });
     });
 });

@@ -5,7 +5,8 @@ export function getMethodNames<T>(klass: ClassType<T>): any {
     let proto = klass.prototype;
 
     do {
-        methods = methods.concat(Object.keys(proto));
+        const keys = Object.keys(proto);
+        methods = methods.concat(keys);
         proto = Object.getPrototypeOf(proto);
     } while (proto);
 

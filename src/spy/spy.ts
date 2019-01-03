@@ -1,5 +1,5 @@
-export type Spy<T> = {
-    [key in keyof T]: T[key] extends Function ? SpyMethod<T[key]> : T[key];
-} & Function;
+type SpyMethod<T, TSpy> = T & TSpy;
 
-type SpyMethod<T> = T & jasmine.Spy;
+export type Spy<TClass, TSpy> = {
+    [key in keyof TClass]: TClass[key] extends Function ? SpyMethod<TClass[key], TSpy> : TClass[key];
+};
