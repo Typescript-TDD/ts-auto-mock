@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var ts = require("typescript");
 var path = require("path");
+var helpers_1 = require("./helpers");
 function transformer(program) {
     return function (context) { return function (file) { return visitNodeAndChildren(file, program, context); }; };
 }
@@ -17,6 +18,7 @@ function visitNode(node, program) {
     if (!node.typeArguments) {
         return ts.createArrayLiteral([]);
     }
+    console.log(helpers_1.createFactoryExport);
     return getDescriptor(node.typeArguments[0], typeChecker);
     // const type = typeChecker.getTypeFromTypeNode(node.typeArguments[0]);
     // const properties = typeChecker.getPropertiesOfType(type);
