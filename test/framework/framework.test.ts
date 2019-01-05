@@ -18,6 +18,9 @@ beforeEach(() => {
         a6: () => string;
         a7: () => number;
         a8: () => boolean;
+        a9: number;
+        a10: boolean;
+        a11: any;
     }
 
     const keysOfProps = keys<Test>();

@@ -1,8 +1,16 @@
-const keysTransformer = require('./transformer').default;
+const keysTransformer = require('./transformer.1').default;
 
 module.exports = {
+    mode: "development",
     resolve: {
         extensions: ['.ts', '.js']
+    },
+    entry: {
+        app: ['./index.ts']
+    },
+    output: {
+        filename: "index.js",
+        libraryTarget: "umd"
     },
     module: {
         rules: [

@@ -5,9 +5,10 @@
   "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build": "webpack --config config/webpack.js",
+    "build": "webpack --config config/webpack.test.js",
     "compileTransformer": "tsc config/transformer.ts",
-    "test": "karma start"
+    "compileTransformer1": "tsc config/transformer.1.ts",
+    "test": "tsc config/transformer.1.ts --lib es6,dom && karma start"
   },
   "keywords": [
     "spy",

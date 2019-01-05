@@ -20,7 +20,7 @@ export function createImport(filenameToImportFrom: string): ImportWithIdentifier
   }
 }
 
-export function createFactoryExport(factoryName: string, newMockInstanceExpression: ts.Expression) {
+export function createFactoryExport(factoryName: string, newMockInstanceExpression: ts.Expression): ts.FunctionDeclaration {
   return ts.createFunctionDeclaration(
       [],
       [ts.createToken(ts.SyntaxKind.ExportKeyword)],
