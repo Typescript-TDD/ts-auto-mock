@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as path from 'path';
+import { createFactoryExport } from './helpers';
 import { GetDescriptor } from "../src/transformer/descriptor/descriptor";
 
 export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
@@ -20,6 +21,8 @@ function visitNode(node: ts.Node, program: ts.Program): ts.Node {
     if (!node.typeArguments) {
         return ts.createArrayLiteral([]);
     }
+
+    console.log(createFactoryExport);
 
     return GetDescriptor(node.typeArguments[0], typeChecker);
     // const type = typeChecker.getTypeFromTypeNode(node.typeArguments[0]);
