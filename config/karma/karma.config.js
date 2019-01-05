@@ -26,7 +26,7 @@ module.exports = function(config) {
         logLevel: config.LOG_INFO,
         autoWatch: false,
         browsers: ['ChromeHeadless'],
-        singleRun: false
+        singleRun: true
     };
 
     config.set(_config);
