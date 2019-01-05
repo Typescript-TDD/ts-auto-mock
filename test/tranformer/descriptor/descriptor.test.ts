@@ -34,6 +34,73 @@ describe('descriptor', () => {
 		});
 	});
 	
+	describe('for interface with null', () => {
+		interface Interface {
+			a: null;
+		}
+		
+		it('should set null', () => {
+			const properties: Interface = createMock<Interface>();
+			expect(properties.a).toBe(null)
+		});
+	});
+	
+	describe('for interface with any', () => {
+		interface Interface {
+			a: any;
+		}
+		
+		it('should set null', () => {
+			const properties: Interface = createMock<Interface>();
+			expect(properties.a).toBe(null)
+		});
+	});
+	
+	describe('for interface with unknown', () => {
+		interface Interface {
+			a: unknown;
+		}
+		
+		it('should set null', () => {
+			const properties: Interface = createMock<Interface>();
+			expect(properties.a).toBe(null)
+		});
+	});
+	
+	describe('for interface with undefined', () => {
+		interface Interface {
+			a: undefined;
+		}
+		
+		it('should set null', () => {
+			const properties: Interface = createMock<Interface>();
+			expect(properties.a).toBe(null)
+		});
+	});
+	
+	describe('for interface with a specific string', () => {
+		interface Interface {
+			a: "string2";
+		}
+		
+		it('should set null', () => {
+			const properties: Interface = createMock<Interface>();
+			expect(properties.a).toBe("string2")
+		});
+	});
+	
+	describe('for interface with a specific number', () => {
+		interface Interface {
+			a: 2;
+		}
+		
+		it('should set null', () => {
+			const properties: Interface = createMock<Interface>();
+			expect(properties.a).toBe(2)
+		});
+	});
+	
+	
 	describe('for declared interface with multiple properties', () => {
 		interface Interface {
 			a: boolean;

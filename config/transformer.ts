@@ -25,9 +25,6 @@ function visitNode(node: ts.Node, program: ts.Program): ts.Node {
     console.log(createFactoryExport);
 
     return GetDescriptor(node.typeArguments[0], typeChecker);
-    // const type = typeChecker.getTypeFromTypeNode(node.typeArguments[0]);
-    // const properties = typeChecker.getPropertiesOfType(type);
-    // return ts.createArrayLiteral(properties.map(property => ts.createLiteral(property.name)));
 }
 
 const indexTs = path.join(__dirname, 'create-mock.ts');
