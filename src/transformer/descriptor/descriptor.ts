@@ -10,6 +10,7 @@ import { GetLiteralDescriptor } from "./literal/literal";
 import { GetImportDescriptor } from "./import/import";
 import { GetClassDeclarationDescriptor } from "./class/classDeclaration";
 import { GetArrayDescriptor } from "./array/array";
+import { GetMethodSignatureDescriptor } from "./method/methodSignature";
 
 export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Expression {
 	switch (node.kind) {
@@ -32,6 +33,8 @@ export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Ex
 			return GetImportDescriptor(node as ts.ImportSpecifier, typeChecker);
 		case ts.SyntaxKind.ImportClause:
 			return GetImportDescriptor(node as ts.ImportClause, typeChecker);
+		case ts.SyntaxKind.MethodSignature:
+			return GetMethodSignatureDescriptor(node as ts.MethodSignature, typeChecker);
 		case ts.SyntaxKind.ArrayType:
 			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:
@@ -44,6 +47,7 @@ export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Ex
 		case ts.SyntaxKind.AnyKeyword:
 		case ts.SyntaxKind.UnknownKeyword:
 		case ts.SyntaxKind.UndefinedKeyword:
+		case ts.SyntaxKind.VoidKeyword:
 			return GetNullDescriptor();
 		default:
 			console.log("NOT IMPLEMENTED "+ ts.SyntaxKind[node.kind]);

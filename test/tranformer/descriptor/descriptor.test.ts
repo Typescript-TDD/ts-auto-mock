@@ -41,17 +41,6 @@ describe('descriptor', () => {
 		});
 	});
 	
-	describe('for declared interface with array', () => {
-		interface Interface {
-			a: boolean[];
-		}
-		
-		it('should set false', () => {
-			const properties: Interface = createMock<Interface>();
-			expect(properties.a).toEqual([])
-		});
-	});
-	
 	describe('for interface with null', () => {
 		interface Interface {
 			a: null;
@@ -117,7 +106,6 @@ describe('descriptor', () => {
 			expect(properties.a).toBe(2)
 		});
 	});
-	
 	
 	describe('for declared interface with multiple properties', () => {
 		interface Interface {
