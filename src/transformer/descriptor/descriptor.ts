@@ -9,9 +9,9 @@ import { GetNullDescriptor } from "./null/null";
 import { GetLiteralDescriptor } from "./literal/literal";
 import { GetImportDescriptor } from "./import/import";
 import { GetClassDeclarationDescriptor } from "./class/classDeclaration";
+import { GetArrayDescriptor } from "./array/array";
 
 export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Expression {
-	
 	switch (node.kind) {
 		case ts.SyntaxKind.TypeAliasDeclaration:
 			return GetDescriptor((node as ts.TypeAliasDeclaration).type, typeChecker);
@@ -32,6 +32,8 @@ export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Ex
 			return GetImportDescriptor(node as ts.ImportSpecifier, typeChecker);
 		case ts.SyntaxKind.ImportClause:
 			return GetImportDescriptor(node as ts.ImportClause, typeChecker);
+		case ts.SyntaxKind.ArrayType:
+			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:
 			return GetStringDescriptor();
 		case ts.SyntaxKind.NumberKeyword:
