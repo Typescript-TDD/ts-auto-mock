@@ -1,6 +1,6 @@
 import { createMock } from "../../../config/create-mock";
 
-describe('for declared interface with array', () => {
+describe('for array', () => {
 	interface Interface {
 		a: boolean[];
 	}

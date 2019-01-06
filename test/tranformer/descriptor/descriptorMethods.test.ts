@@ -1,11 +1,16 @@
 import { createMock } from "../../../config/create-mock";
 
-describe('for declared interface with a method', () => {
+describe('for methods', () => {
+	interface InterfaceReturnMethod {
+		a: string;
+	}
+	
 	interface Interface {
 		a(): void;
 		b(): number;
 		c(): string;
 		d(): string[];
+		e(): InterfaceReturnMethod;
 	}
 	
 	it('should set the functions', () => {
@@ -14,5 +19,6 @@ describe('for declared interface with a method', () => {
 		expect(properties.b()).toBe(0);
 		expect(properties.c()).toBe("");
 		expect(properties.d()).toEqual([]);
+		expect(properties.e().a).toBe("");
 	});
 });

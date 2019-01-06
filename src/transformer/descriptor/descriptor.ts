@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { GetStringDescriptor } from "./string/string";
-import { GetInterfaceDeclarationDescriptor } from "./interface/declaration/interfaceDeclaration";
+import { GetInterfaceDeclarationDescriptor } from "./interface/interfaceDeclaration";
 import { GetTypeReferenceDescriptor } from "./type/typeReference";
 import { GetPropertyDescriptor } from "./property/propertySignature";
 import { GetNumberDescriptor } from "./number/number";
@@ -11,6 +11,7 @@ import { GetImportDescriptor } from "./import/import";
 import { GetClassDeclarationDescriptor } from "./class/classDeclaration";
 import { GetArrayDescriptor } from "./array/array";
 import { GetMethodSignatureDescriptor } from "./method/methodSignature";
+import { GetUnionDescriptor } from "./union/union";
 
 export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Expression {
 	switch (node.kind) {
@@ -35,6 +36,8 @@ export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Ex
 			return GetImportDescriptor(node as ts.ImportClause, typeChecker);
 		case ts.SyntaxKind.MethodSignature:
 			return GetMethodSignatureDescriptor(node as ts.MethodSignature, typeChecker);
+		case ts.SyntaxKind.UnionType:
+			return GetUnionDescriptor(node as ts.UnionTypeNode, typeChecker);
 		case ts.SyntaxKind.ArrayType:
 			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:

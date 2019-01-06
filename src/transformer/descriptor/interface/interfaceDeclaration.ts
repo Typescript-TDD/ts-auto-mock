@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { GetMockBlock } from "../../../mock/mockBlock";
+import { GetMockBlock } from "../../mock/mockBlock";
 
 export function GetInterfaceDeclarationDescriptor(node: ts.InterfaceDeclaration, typeChecker: ts.TypeChecker): ts.Expression {
 	return ts.createObjectLiteral(
