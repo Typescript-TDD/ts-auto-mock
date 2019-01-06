@@ -12,6 +12,8 @@ import { GetClassDeclarationDescriptor } from "./class/classDeclaration";
 import { GetArrayDescriptor } from "./array/array";
 import { GetMethodSignatureDescriptor } from "./method/methodSignature";
 import { GetUnionDescriptor } from "./union/union";
+import { GetEnumDeclarationDescriptor } from "./enum/enumDeclaration";
+import { GetEnumDescriptor } from "./enum/enum";
 
 export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Expression {
 	switch (node.kind) {
@@ -38,6 +40,10 @@ export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Ex
 			return GetMethodSignatureDescriptor(node as ts.MethodSignature, typeChecker);
 		case ts.SyntaxKind.UnionType:
 			return GetUnionDescriptor(node as ts.UnionTypeNode, typeChecker);
+		case ts.SyntaxKind.EnumDeclaration:
+			return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
+		case ts.SyntaxKind.EnumMember:
+			return GetEnumDescriptor(node as ts.EnumMember);
 		case ts.SyntaxKind.ArrayType:
 			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:
