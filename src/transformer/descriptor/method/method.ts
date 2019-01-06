@@ -1,7 +1,9 @@
 import { GetDescriptor } from "../descriptor";
 import * as ts from 'typescript';
 
-export function GetMethodSignatureDescriptor(node: ts.MethodSignature, typeChecker: ts.TypeChecker): ts.Expression {
+type Method = ts.MethodDeclaration | ts.MethodSignature;
+
+export function GetMethodDescriptor(node: Method, typeChecker: ts.TypeChecker): ts.Expression {
 	const returnValue: ts.Expression = GetDescriptor(node.type, typeChecker);
 	const returnStatement: ts.ReturnStatement = ts.createReturn(returnValue);
 	const body = ts.createBlock([returnStatement]);

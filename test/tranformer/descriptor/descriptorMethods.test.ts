@@ -21,4 +21,17 @@ describe('for methods', () => {
 		expect(properties.d()).toEqual([]);
 		expect(properties.e().a).toBe("");
 	});
+	
+	describe('for declaration', () => {
+		class MyClass {
+			method(): number {
+				return 2;
+			}
+		}
+		
+		it('should set the functions', () => {
+			const properties: MyClass = createMock<MyClass>();
+			expect(properties.method()).toBe(0);
+		});
+	});
 });
