@@ -44,7 +44,7 @@ export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Ex
 		case ts.SyntaxKind.UnionType:
 			return GetUnionDescriptor(node as ts.UnionTypeNode, typeChecker);
 		case ts.SyntaxKind.EnumDeclaration:
-			return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
+			return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration, typeChecker);
 		case ts.SyntaxKind.ArrayType:
 			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:
