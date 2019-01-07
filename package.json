@@ -6,8 +6,8 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "webpack --config config/webpack.test.js",
-    "compileTransformer": "tsc config/transformer.ts",
-    "compileTransformer1": "tsc config/transformer.1.ts",
+    "compileTransformer": "tsc --target ES5 config/transformer.ts",
+    "compileTransformer1": "tsc --target config/transformer.1.ts",
     "test": "tsc config/transformer.1.ts --lib es6,dom && karma start"
   },
   "keywords": [
