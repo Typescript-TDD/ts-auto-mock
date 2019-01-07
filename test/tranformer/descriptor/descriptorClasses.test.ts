@@ -37,5 +37,8 @@ describe('for classes', () => {
 
 	it('should be possible to change the value', () => {
         const properties: AbstractClass = createMock<AbstractClass>();
+        
+        properties.property = "changedValue";
+        expect(properties.property).toBe("changedValue");
 	});
 });
