@@ -6,11 +6,6 @@ export interface ImportWithIdentifier {
 	identifier: ts.Identifier;
 }
 
-export interface ExportWithIdentifier {
-  exportDeclaration: ts.FunctionDeclaration;
-  identifier: ts.Identifier;
-}
-
 export function createImport(filenameToImportFrom: string): ImportWithIdentifier {
 	const importIdentifier = ts.createIdentifier(urlslug(filenameToImportFrom, '_'));
 
@@ -26,25 +21,4 @@ export function createImport(filenameToImportFrom: string): ImportWithIdentifier
 		),
 		identifier: importIdentifier
 	};
-}
-
-export function createFactoryExport(
-	factoryName: string,
-	newMockInstanceExpression: ts.Expression
-): ExportWithIdentifier {
-  const identifier = ts.createIdentifier(factoryName);
-
-	return {
-    exportDeclaration: ts.createFunctionDeclaration(
-      [],
-      [ ts.createToken(ts.SyntaxKind.ExportKeyword) ],
-      undefined,
-      identifier,
-      undefined,
-      [],
-      undefined,
-      ts.createBlock([ ts.createReturn(newMockInstanceExpression) ])
-    ),
-    identifier: identifier
-  };
 }

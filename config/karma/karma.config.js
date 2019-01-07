@@ -6,12 +6,17 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
         files: [
             {
-                pattern: '**/*.test.ts',
+                pattern: './test/**/*.test.ts',
+                watched: false
+            },
+            {
+                pattern: './config.test.ts',
                 watched: false
             }
         ],
         preprocessors: {
-            '**/*.test.ts': ['webpack']
+            './test/**/*.test.ts': ['webpack'],
+            './config.test.ts': ['webpack']
         },
         webpack: webpackConfig,
         webpackMiddleware: {

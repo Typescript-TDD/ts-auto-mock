@@ -3,6 +3,12 @@ import { Class } from "./classes/class";
 import { AbstractClass } from "./classes/AbstractClass";
 import { EmptyClass } from "./classes/EmptyClass";
 
+export class Yeah {
+	contructor() {
+		console.log('yeah');
+	}
+} 
+
 describe('for classes', () => {
 	class Test {
 		private _a: string;

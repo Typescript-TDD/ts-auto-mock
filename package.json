@@ -6,9 +6,12 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "webpack --config config/webpack.test.js",
+    "buildtest": "webpack --config config/webpack.js",
     "compileTransformer": "tsc --target ES5 config/transformer.ts",
-    "compileTransformer1": "tsc --target config/transformer.1.ts",
-    "test": "tsc config/transformer.1.ts --lib es6,dom && karma start"
+    "compileTransformer1": "tsc --lib es6,dom --target ES5 config/transformer.1.ts",
+    "compile1": "tsc --lib es6,dom config/transformer.1.ts && webpack --config config/webpack.test.js",
+    "compiletest": "tsc config/transformer.1.ts --lib es6,dom --target ES5 && karma start",
+    "test": "karma start"
   },
   "keywords": [
     "spy",
@@ -38,5 +41,8 @@
     "typescript": "3.2.2",
     "webpack": "4.28.3",
     "webpack-cli": "3.1.2"
+  },
+  "dependencies": {
+    "url-slug": "^2.0.0"
   }
 }

@@ -1,4 +1,4 @@
-const keysTransformer = require('./transformer.1').default;
+const transformers = require('./transformer.1');
 
 module.exports = {
     mode: "development",
@@ -13,7 +13,7 @@ module.exports = {
                 options: {
                     getCustomTransformers: program => ({
                         before: [
-                            keysTransformer(program)
+                            transformers.transformer(program)
                         ]
                     })
                 }
