@@ -39,6 +39,12 @@ describe('for interfaces', () => {
 			const properties: Interface = createMock<Interface>();
 			expect(properties.a.b.c).toBe("");
 		});
+		
+		it('should be able to change the value', () => {
+			const properties: Interface = createMock<Interface>();
+			properties.a.b.c = "test2";
+			expect(properties.a.b.c).toBe("test2");
+		});
 	});
 	
 	describe('with nested interfaces', () => {
