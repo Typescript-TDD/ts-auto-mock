@@ -8,15 +8,10 @@ module.exports = function(config) {
             {
                 pattern: './test/**/*.test.ts',
                 watched: false
-            },
-            {
-                pattern: './config.test.ts',
-                watched: false
             }
         ],
         preprocessors: {
-            './test/**/*.test.ts': ['webpack'],
-            './config.test.ts': ['webpack']
+            './test/**/*.test.ts': ['webpack']
         },
         webpack: webpackConfig,
         webpackMiddleware: {
