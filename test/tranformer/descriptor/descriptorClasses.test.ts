@@ -40,4 +40,8 @@ describe('for classes', () => {
 		expect(properties.publicProperty).toBe("");
 		expect(properties["privateProperty"]).toBeUndefined();
 	});
+
+	it('should be possible to change the value', () => {
+        const properties: AbstractClass = createMock<AbstractClass>();
+	});
 });

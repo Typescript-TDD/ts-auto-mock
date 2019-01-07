@@ -16,6 +16,15 @@ describe('for interfaces', () => {
 			expect(properties.c).toBe(0);
 		});
 	});
+
+    describe('without properties', () => {
+        interface Interface {}
+
+        it('should not fail', () => {
+            const properties: Interface = createMock<Interface>();
+            expect(properties).toEqual({});
+        });
+    });
 	
 	describe('with nested properties', () => {
 		interface Interface {
