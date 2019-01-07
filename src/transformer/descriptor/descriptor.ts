@@ -13,8 +13,12 @@ import { GetArrayDescriptor } from "./array/array";
 import { GetUnionDescriptor } from "./union/union";
 import { GetEnumDeclarationDescriptor } from "./enum/enumDeclaration";
 import { GetMethodDescriptor } from "./method/method";
+import { GetHeritageClauseDescriptor } from "./heritage/heritage";
+import { GetExpressionWithTypeArgumentsDescriptor } from "./expression/expressionWithTypeArguments";
+import { GetIdentifierDescriptor } from "./identifier/identifier";
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
+	console.log(ts.SyntaxKind[node.kind]);
 	switch (node.kind) {
 		case ts.SyntaxKind.TypeAliasDeclaration:
 			return GetDescriptor((node as ts.TypeAliasDeclaration).type);
@@ -31,6 +35,12 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetPropertyDescriptor(node as ts.PropertyDeclaration);
 		case ts.SyntaxKind.LiteralType:
 			return GetLiteralDescriptor(node as ts.LiteralTypeNode);
+		case ts.SyntaxKind.HeritageClause:
+			return GetHeritageClauseDescriptor(node as ts.HeritageClause);
+		case ts.SyntaxKind.ExpressionWithTypeArguments:
+			return GetExpressionWithTypeArgumentsDescriptor(node as ts.ExpressionWithTypeArguments);
+		case ts.SyntaxKind.Identifier:
+			return GetIdentifierDescriptor(node as ts.Identifier);
 		// case ts.SyntaxKind.ThisType:
 		// 	return GetThisDescriptor(node as ts.ThisTypeNode, typeChecker); // max call exceeded
 		case ts.SyntaxKind.ImportSpecifier:

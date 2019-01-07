@@ -76,11 +76,11 @@ export class MockDefiner {
 		}
 	}
 
-	public isTypeFactoryInFile(declaration: ts.Declaration, sourceFile: ts.SourceFile) {
+	public isTypeFactoryInFile(declaration: ts.Declaration, sourceFile: ts.SourceFile): boolean {
 		return this._cache.has(declaration) && this._cache.get(declaration).filepath === sourceFile.fileName;
 	}
 
-	public getTypeFactoryName(declaration: ts.Declaration) {
+	public getTypeFactoryName(declaration: ts.Declaration): string {
 		return this._cache.get(declaration).name;
 	}
 

@@ -91,7 +91,6 @@ describe('for interfaces', () => {
 			expect(properties.a.f).toBe(0);
 		});
 	});
-	
 });
 
 
