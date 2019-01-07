@@ -30,6 +30,13 @@ describe('with import', () => {
 			const properties: ImportNamespace.Interface2 = createMock<ImportNamespace.Interface2>();
 			expect(properties.b).toBe(0);
 		});
+
+        it('should be possible to change the value', () => {
+            const properties: ImportNamespace.Interface2 = createMock<ImportNamespace.Interface2>();
+            expect(properties.b).toBe(0);
+            properties.b = 2;
+            expect(properties.b).toBe(2);
+        });
 	});
 	
 	describe('for types', () => {
