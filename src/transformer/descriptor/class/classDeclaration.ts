@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { GetMockBlock } from "../../mock/mockBlock";
 
-export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration, typeChecker: ts.TypeChecker): ts.Expression {
+export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration): ts.Expression {
 	const members = node.members.filter((member: ts.ClassElement) => {
 		const hasModifiers = !!member.modifiers;
 		
@@ -17,7 +17,7 @@ export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration, typeChe
 	return ts.createObjectLiteral(
 		members.map(
 			(member): ts.ObjectLiteralElementLike =>  {
-				return GetMockBlock(member, typeChecker);
+				return GetMockBlock(member);
 			}
 		)
 	)

@@ -1,32 +1,32 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var path = require("path");
-var helpers_1 = require("./helpers");
 var descriptor_1 = require("../src/transformer/descriptor/descriptor");
+var getTypeChecker_1 = require("../src/transformer/getTypeChecker");
 function transformer(program) {
-    return function (context) { return function (file) { return visitNodeAndChildren(file, program, context); }; };
+    getTypeChecker_1.SetTypeChecker(program.getTypeChecker());
+    return function (context) { return function (file) { return visitNodeAndChildren(file, context); }; };
 }
-exports["default"] = transformer;
-function visitNodeAndChildren(node, program, context) {
-    return ts.visitEachChild(visitNode(node, program), function (childNode) { return visitNodeAndChildren(childNode, program, context); }, context);
+exports.default = transformer;
+function visitNodeAndChildren(node, context) {
+    return ts.visitEachChild(visitNode(node), function (childNode) { return visitNodeAndChildren(childNode, context); }, context);
 }
-function visitNode(node, program) {
-    var typeChecker = program.getTypeChecker();
-    if (!isKeysCallExpression(node, typeChecker)) {
+function visitNode(node) {
+    if (!isKeysCallExpression(node)) {
         return node;
     }
     if (!node.typeArguments) {
         return ts.createArrayLiteral([]);
     }
-    console.log(helpers_1.createFactoryExport);
-    return descriptor_1.GetDescriptor(node.typeArguments[0], typeChecker);
+    return descriptor_1.GetDescriptor(node.typeArguments[0]);
 }
 var indexTs = path.join(__dirname, 'create-mock.ts');
-function isKeysCallExpression(node, typeChecker) {
+function isKeysCallExpression(node) {
     if (node.kind !== ts.SyntaxKind.CallExpression) {
         return false;
     }
+    var typeChecker = getTypeChecker_1.GetTypeChecker();
     var signature = typeChecker.getResolvedSignature(node);
     if (typeof signature === 'undefined') {
         return false;
