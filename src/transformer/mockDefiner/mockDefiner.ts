@@ -54,14 +54,18 @@ export class MockDefiner {
 
 			return newFactory.identifier;
 		} else {
-			const factoryImport = createImport(this._cache.get(key).filepath);
-			if (this._importList.has(thisFileName)) {
-				this._importList.get(thisFileName).push(factoryImport.importDeclaration);
+			if (this._cache.get(key).filepath === thisFileName) {
+				return ts.createIdentifier(this._cache.get(key).name);
 			} else {
-				this._importList.set(thisFileName, [ factoryImport.importDeclaration ]);
-			}
+				const factoryImport = createImport(this._cache.get(key).filepath);
+				if (this._importList.has(thisFileName)) {
+					this._importList.get(thisFileName).push(factoryImport.importDeclaration);
+				} else {
+					this._importList.set(thisFileName, [ factoryImport.importDeclaration ]);
+				}
 
-			return ts.createPropertyAccess(factoryImport.identifier, this._cache.get(key).name);
+				return ts.createPropertyAccess(factoryImport.identifier, this._cache.get(key).name);
+			}
 		}
 	}
 

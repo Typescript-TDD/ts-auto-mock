@@ -1,5 +1,5 @@
 /*globals module, require */
-const keysTransformer = require('./transformer.1').default;
+const transformers = require('./transformer');
 
 module.exports = {
     mode: "development",
@@ -14,7 +14,7 @@ module.exports = {
                 options: {
                     getCustomTransformers: program => ({
                         before: [
-                            keysTransformer(program)
+                            transformers.transformer(program)
                         ]
                     })
                 }
@@ -22,7 +22,7 @@ module.exports = {
         ]
     },
     entry: {
-        app: ['./test/tranformer/descriptor/descriptorSimpleProperties.test.ts']
+        app: ['./test/tranformer/descriptor/descriptorClasses.test.ts']
     },
     output: {
         filename: "test.js",

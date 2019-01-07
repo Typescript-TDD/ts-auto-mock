@@ -1,4 +1,4 @@
-const transformers = require('./transformer.1');
+const transformers = require('./transformer');
 
 module.exports = {
     mode: "development",
