@@ -15,6 +15,8 @@ You are responsible to provide a small configuration
 4) Typescript/lib types
 5) key in
 6) key of
+7) extends
+8) implements
 
 ## Authors
 
