@@ -5,13 +5,6 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js']
     },
-    entry: {
-        app: ['./index.ts']
-    },
-    output: {
-        filename: "index.js",
-        libraryTarget: "umd"
-    },
     module: {
         rules: [
             {

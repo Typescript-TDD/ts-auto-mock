@@ -1,12 +1,26 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
+var path = require("path");
 var helpers_1 = require("./helpers");
+var descriptor_1 = require("../src/transformer/descriptor/descriptor");
 var cache = new Map();
+var exportList = new Map();
+var exportMap = new Map();
+var importList = new Map();
 function transformer(program) {
-    return function (context) { return function (file) { return visitNodeAndChildren(file, program, context); }; };
+    return function (context) { return function (file) {
+        var sourceFile = visitNodeAndChildren(file, program, context);
+        var importsToAdd = importList.get(sourceFile.fileName);
+        var exportsToAdd = exportList.get(sourceFile.fileName);
+        // console.log('File:', sourceFile.fileName);
+        // console.log('Imports', (importsToAdd||[]).map(x => x.getText()));
+        // console.log('Exports', (exportsToAdd||[]).map(x => x.identifier.text));
+        sourceFile = ts.updateSourceFileNode(sourceFile, (importsToAdd || []).concat((exportsToAdd || []).map(function (x) { return x.exportDeclaration; }), sourceFile.statements));
+        return sourceFile;
+    }; };
 }
-exports["default"] = transformer;
+exports.default = transformer;
 function visitNodeAndChildren(node, program, context) {
     return ts.visitEachChild(visitNode(node, program), function (childNode) { return visitNodeAndChildren(childNode, program, context); }, context);
 }
@@ -18,25 +32,46 @@ function visitNode(node, program) {
     if (!node.typeArguments) {
         return ts.createArrayLiteral([]);
     }
-    console.log(helpers_1.createFactoryExport);
-    var factory = generateFactoryIfNeeded(node.typeArguments[0], typeChecker);
-    return factory;
-    // const type = typeChecker.getTypeFromTypeNode(node.typeArguments[0]);
-    // const properties = typeChecker.getPropertiesOfType(type);
-    // return ts.createArrayLiteral(properties.map(property => ts.createLiteral(property.name)));
+    return ts.createCall(generateFactoryIfNeeded(node.typeArguments[0], typeChecker), [], []);
 }
 function generateFactoryIfNeeded(type, typeChecker) {
-    if (!cache.has(type)) {
-        var func = helpers_1.createFactoryExport('A_NAME', getDescriptor(type, typeChecker));
-        cache.set(type, { name: 'A_NAME', filepath: type.getSourceFile().fileName });
-        return func.name;
+    var symbol = typeChecker.getSymbolAtLocation(type.typeName);
+    var declaredType = typeChecker.getDeclaredTypeOfSymbol(symbol);
+    var declaration = declaredType.symbol.declarations[0];
+    var thisFileName = type.getSourceFile().fileName;
+    var key = declaration;
+    if (!cache.has(key)) {
+        var baseFactoryName = "create__" + typeChecker.typeToString(typeChecker.getTypeFromTypeNode(type)) + "__mock"; // generateFactoryName(type);
+        var count = exportMap.has(thisFileName) && exportMap.get(thisFileName).get(baseFactoryName) || 1;
+        var factoryName = baseFactoryName + count;
+        console.log('Declaration EXPORT', factoryName);
+        var newFactory = helpers_1.createFactoryExport(factoryName, descriptor_1.GetDescriptor(type, typeChecker));
+        if (exportList.has(thisFileName)) {
+            exportMap.get(thisFileName).set(baseFactoryName, count + 1);
+            exportList.get(thisFileName).push(newFactory);
+        }
+        else {
+            var thisFileExports = new Map();
+            thisFileExports.set(baseFactoryName, count + 1);
+            exportMap.set(thisFileName, thisFileExports);
+            exportList.set(thisFileName, [newFactory]);
+        }
+        cache.set(key, { name: factoryName, filepath: type.getSourceFile().fileName });
+        return newFactory.identifier;
     }
     else {
-        var factoryImport = helpers_1.createImport(cache.get(type).filepath);
-        return ts.createPropertyAccess(factoryImport.namespace, cache.get(type).name);
+        console.log('Declaration IMPORT', key);
+        var factoryImport = helpers_1.createImport(cache.get(key).filepath);
+        if (importList.has(thisFileName)) {
+            importList.get(thisFileName).push(factoryImport.importDeclaration);
+        }
+        else {
+            importList.set(thisFileName, [factoryImport.importDeclaration]);
+        }
+        return ts.createPropertyAccess(factoryImport.identifier, cache.get(key).name);
     }
 }
-// const indexTs = path.join(__dirname, 'index.ts');
+var indexTs = path.join(__dirname, 'create-mock.ts');
 function isKeysCallExpression(node, typeChecker) {
     if (node.kind !== ts.SyntaxKind.CallExpression) {
         return false;
@@ -47,43 +82,7 @@ function isKeysCallExpression(node, typeChecker) {
     }
     var declaration = signature.declaration;
     return !!declaration
-        //&& (path.join(declaration.getSourceFile().fileName) === indexTs)
+        && (path.join(declaration.getSourceFile().fileName) === indexTs)
         && !!declaration['name']
-        && (declaration['name'].getText() === 'keys');
-}
-function getDescriptor(type, typeChecker) {
-    //this try to understand the type of the node
-    switch (type.kind) {
-        case ts.SyntaxKind.PropertySignature:
-            return getDescriptor(type.type, typeChecker);
-        case ts.SyntaxKind.TypeLiteral:
-        case ts.SyntaxKind.InterfaceDeclaration:
-            return ts.createObjectLiteral(type.members.map(function (m) { return ts.createPropertyAssignment(m.name || '', getDescriptor(m, typeChecker)); }));
-        case ts.SyntaxKind.TypeReference:
-            var symbol = typeChecker.getSymbolAtLocation(type.typeName);
-            var declaration = ((symbol && symbol.declarations) || [])[0];
-            return getDescriptor(declaration, typeChecker);
-        case ts.SyntaxKind.NumberKeyword:
-            return ts.createNumericLiteral('0');
-        case ts.SyntaxKind.BooleanKeyword:
-            return ts.createFalse();
-        case ts.SyntaxKind.AnyKeyword:
-            return ts.createNull();
-        case ts.SyntaxKind.StringKeyword:
-            return ts.createLiteral('');
-        case ts.SyntaxKind.FunctionType: // the type is a function
-            var myType = typeChecker.getTypeAtLocation(type);
-            var signature = typeChecker.getReturnTypeOfSignature(myType.getCallSignatures()[0]); // get the object the contain the return type of the function
-            if (signature.flags === ts.TypeFlags.Object) { // apparently in a lot of scenario is an object (when is a function, interface ecc)
-                var subType = typeChecker.getTypeAtLocation(signature.symbol.declarations[0]);
-                // we need to iterate again here with getDescriptor(signature.symbol.declarations[0])
-                console.log(signature.symbol.declarations[0].kind);
-                //console.log(signature.symbol.declarations[0]);
-            }
-            return ts.createLiteral("funct"); // we should create our object that describe funcions and names
-        //return ts.createObjectLiteral(ts.createPropertyAssignment())
-        case ts.SyntaxKind.ArrayType:
-        default:
-            return ts.createLiteral("Error" + ts.SyntaxKind[type.kind]);
-    }
+        && (declaration['name'].getText() === 'createMock');
 }
