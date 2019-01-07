@@ -1,21 +1,17 @@
 import * as ts from 'typescript';
 import * as path from 'path';
-import { GetDescriptor } from '../src/transformer/descriptor/descriptor';
 import { GetTypeChecker, SetTypeChecker } from '../src/transformer/getTypeChecker';
 import { MockDefiner } from '../src/transformer/mockDefiner/mockDefiner';
 
-let mockDefiner: MockDefiner;
-
 export function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());
-    mockDefiner = new MockDefiner();
 
     return (context: ts.TransformationContext) => (file: ts.SourceFile) => {
         let sourceFile = visitNodeAndChildren(file, context);
 
         sourceFile = ts.updateSourceFileNode(sourceFile, [
-            // ...mockDefiner.getImportsToAddInFile(sourceFile),
-            ...mockDefiner.getExportsToAddInFile(sourceFile),
+            // ...MockDefiner.instance.getImportsToAddInFile(sourceFile),
+            ...MockDefiner.instance.getExportsToAddInFile(sourceFile),
             ...sourceFile.statements
         ]);
 
@@ -37,7 +33,7 @@ function visitNode(node: ts.Node): ts.Node {
         return ts.createArrayLiteral([]);
     }
 
-    return ts.createCall(mockDefiner.generateFactoryIfNeeded(node.typeArguments[0] as ts.TypeReferenceNode), [], []);
+    return ts.createCall(MockDefiner.instance.generateFactoryIfNeeded(node.typeArguments[0] as ts.TypeReferenceNode), [], []);
 }
 
 const indexTs = path.join(__dirname, 'create-mock.ts');

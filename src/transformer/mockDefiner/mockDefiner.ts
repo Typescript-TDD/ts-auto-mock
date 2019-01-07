@@ -15,7 +15,14 @@ export class MockDefiner {
 	private _exportMap: Map<string, Map<string, number>>;
 	private _importList: Map<string, ts.ImportDeclaration[]>;
 
-	constructor() {
+	private static _instance: MockDefiner;
+
+	public static get instance(): MockDefiner {
+		this._instance = this._instance || new MockDefiner();
+		return this._instance;
+	}
+
+	private constructor() {
 		this._cache = new Map<ts.Node, ImportDefinition>();
 		this._exportList = new Map<string, ExportWithIdentifier[]>();
 		this._exportMap = new Map<string, Map<string, number>>();
@@ -54,8 +61,8 @@ export class MockDefiner {
 
 			return newFactory.identifier;
 		} else {
-			if (this._cache.get(key).filepath === thisFileName) {
-				return ts.createIdentifier(this._cache.get(key).name);
+			if (this.isTypeFactoryInFile(key, type.getSourceFile())) {
+				return ts.createIdentifier(this.getTypeFactoryName(key));
 			} else {
 				const factoryImport = createImport(this._cache.get(key).filepath);
 				if (this._importList.has(thisFileName)) {
@@ -64,9 +71,17 @@ export class MockDefiner {
 					this._importList.set(thisFileName, [ factoryImport.importDeclaration ]);
 				}
 
-				return ts.createPropertyAccess(factoryImport.identifier, this._cache.get(key).name);
+				return ts.createPropertyAccess(factoryImport.identifier, this.getTypeFactoryName(key));
 			}
 		}
+	}
+
+	public isTypeFactoryInFile(declaration: ts.Declaration, sourceFile: ts.SourceFile) {
+		return this._cache.has(declaration) && this._cache.get(declaration).filepath === sourceFile.fileName;
+	}
+
+	public getTypeFactoryName(declaration: ts.Declaration) {
+		return this._cache.get(declaration).name;
 	}
 
 	private _createUniqueFactoryName(thisFileName: string, typeName: string) {
