@@ -6,8 +6,12 @@ export namespace TypescriptHelper {
 	}
 
     export function createSetAccessor(name: ts.PropertyName, block: ts.Block): ts.SetAccessorDeclaration {
-        const nameIdentifier = (name as ts.Identifier);
+        const nameIdentifier = "_" + (name as ts.Identifier).escapedText;
 	    const parameterDeclaration = ts.createParameter([], [], undefined, nameIdentifier, undefined, undefined, undefined);
         return ts.createSetAccessor([], [], name, [parameterDeclaration], block);
+    }
+
+    export function createArrowFunction(block: ts.Block): ts.ArrowFunction {
+	    return ts.createArrowFunction([], [], [], undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
     }
 }

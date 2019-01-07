@@ -4,11 +4,11 @@ import { GetDescriptor } from "../descriptor/descriptor";
 
 type Member = ts.ClassElement | ts.TypeElement;
 
-export function GetMockBlock(member: Member): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
+export function GetMockProperty(member: Member): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
 	const descriptor: ts.Expression = GetDescriptor(member);
-    const name = (member.name as ts.Identifier).escapedText;
-	const getExpression = ts.createBinary(ts.createIdentifier("_" + name), ts.SyntaxKind.BarBarToken, descriptor);
-	const setExpression = ts.createBinary(ts.createIdentifier("_" + name), ts.SyntaxKind.EqualsToken, ts.createIdentifier("" + name));
+    const name = (member.name as ts.Identifier);
+	const getExpression = ts.createBinary(name, ts.SyntaxKind.BarBarToken, descriptor);
+	const setExpression = ts.createBinary(name, ts.SyntaxKind.EqualsToken, ts.createIdentifier("_" + name.escapedText));
 
 	const returnGetStatement: ts.ReturnStatement = ts.createReturn(getExpression);
 	const bodyGet: ts.Block = ts.createBlock([returnGetStatement]);

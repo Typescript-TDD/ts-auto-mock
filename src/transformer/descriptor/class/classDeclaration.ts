@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
-import { GetMockBlock } from "../../mock/mockBlock";
+import { GetMockCall } from "../../mock/mockCall";
+import { GetMockProperty } from "../../mock/mockProperty";
 
 export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration): ts.Expression {
 	const members = node.members.filter((member: ts.ClassElement) => {
@@ -14,21 +15,13 @@ export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration): ts.Exp
 		}).length === 0;
 	});
 
-	const statements = [];
+    const variableDeclarations: Array<ts.VariableDeclaration> = members.map((member: ts.ClassElement) => {
+        return ts.createVariableDeclaration(member.name as ts.Identifier)
+    });
 
-	if (members.length) {
-        const variableDeclarations: Array<ts.VariableDeclaration> = members.map((member: ts.ClassElement) => {
-            const name = (member.name as ts.Identifier).escapedText;
-            return ts.createVariableDeclaration(ts.createIdentifier("_" + name))
-        });
-
-        const variableStatement = ts.createVariableStatement([], variableDeclarations);
-        statements.push(variableStatement);
-    }
-
-    const methods: Array<ts.AccessorDeclaration> = members.map(
+    const accessorDeclaration: Array<ts.AccessorDeclaration> = members.map(
         (member): Array<ts.AccessorDeclaration> =>  {
-            return GetMockBlock(member);
+            return GetMockProperty(member);
         }
     ).reduce((acc, declarations: Array<ts.AccessorDeclaration>) => {
         acc = acc.concat(declarations);
@@ -36,17 +29,5 @@ export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration): ts.Exp
         return acc;
     }, []);
 
-    const returnStatement = ts.createReturn(
-        ts.createObjectLiteral(methods, true)
-    );
-
-    statements.push(returnStatement);
-
-    const blockArrowFunction = ts.createBlock(statements);
-
-    const arrowFunction = ts.createArrowFunction([], [], [], undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), blockArrowFunction);
-
-    const par = ts.createParen(arrowFunction);
-
-    return ts.createCall(par, [], []);
+	return GetMockCall(variableDeclarations, accessorDeclaration);
 }
