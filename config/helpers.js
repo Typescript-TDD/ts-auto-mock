@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 function createImport(filenameToImportFrom) {
     var importIdentifier = ts.createIdentifier('namespace_import_identifier');

@@ -14,37 +14,37 @@ import { GetUnionDescriptor } from "./union/union";
 import { GetEnumDeclarationDescriptor } from "./enum/enumDeclaration";
 import { GetMethodDescriptor } from "./method/method";
 
-export function GetDescriptor(node: ts.Node, typeChecker: ts.TypeChecker): ts.Expression {
+export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
 		case ts.SyntaxKind.TypeAliasDeclaration:
-			return GetDescriptor((node as ts.TypeAliasDeclaration).type, typeChecker);
+			return GetDescriptor((node as ts.TypeAliasDeclaration).type);
 		case ts.SyntaxKind.TypeReference:
-			return GetTypeReferenceDescriptor(node as ts.TypeReferenceNode, typeChecker);
+			return GetTypeReferenceDescriptor(node as ts.TypeReferenceNode);
 		case ts.SyntaxKind.TypeLiteral:
 		case ts.SyntaxKind.InterfaceDeclaration:
-			return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration, typeChecker);
+			return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration);
 		case ts.SyntaxKind.ClassDeclaration:
-			return GetClassDeclarationDescriptor(node as ts.ClassDeclaration, typeChecker);
+			return GetClassDeclarationDescriptor(node as ts.ClassDeclaration);
 		case ts.SyntaxKind.PropertySignature:
-			return GetPropertyDescriptor(node as ts.PropertySignature, typeChecker);
+			return GetPropertyDescriptor(node as ts.PropertySignature);
 		case ts.SyntaxKind.PropertyDeclaration:
-			return GetPropertyDescriptor(node as ts.PropertyDeclaration, typeChecker);
+			return GetPropertyDescriptor(node as ts.PropertyDeclaration);
 		case ts.SyntaxKind.LiteralType:
-			return GetLiteralDescriptor(node as ts.LiteralTypeNode, typeChecker);
+			return GetLiteralDescriptor(node as ts.LiteralTypeNode);
 		// case ts.SyntaxKind.ThisType:
 		// 	return GetThisDescriptor(node as ts.ThisTypeNode, typeChecker); // max call exceeded
 		case ts.SyntaxKind.ImportSpecifier:
-			return GetImportDescriptor(node as ts.ImportSpecifier, typeChecker);
+			return GetImportDescriptor(node as ts.ImportSpecifier);
 		case ts.SyntaxKind.ImportClause:
-			return GetImportDescriptor(node as ts.ImportClause, typeChecker);
+			return GetImportDescriptor(node as ts.ImportClause);
 		case ts.SyntaxKind.MethodSignature:
-			return GetMethodDescriptor((node as ts.MethodSignature), typeChecker);
+			return GetMethodDescriptor((node as ts.MethodSignature));
 		case ts.SyntaxKind.MethodDeclaration:
-			return GetMethodDescriptor((node as ts.MethodDeclaration), typeChecker);
+			return GetMethodDescriptor((node as ts.MethodDeclaration));
 		case ts.SyntaxKind.UnionType:
-			return GetUnionDescriptor(node as ts.UnionTypeNode, typeChecker);
+			return GetUnionDescriptor(node as ts.UnionTypeNode);
 		case ts.SyntaxKind.EnumDeclaration:
-			return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration, typeChecker);
+			return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
 		case ts.SyntaxKind.ArrayType:
 			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:
