@@ -18,7 +18,6 @@ import { GetExpressionWithTypeArgumentsDescriptor } from "./expression/expressio
 import { GetIdentifierDescriptor } from "./identifier/identifier";
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
-	console.log(ts.SyntaxKind[node.kind]);
 	switch (node.kind) {
 		case ts.SyntaxKind.TypeAliasDeclaration:
 			return GetDescriptor((node as ts.TypeAliasDeclaration).type);

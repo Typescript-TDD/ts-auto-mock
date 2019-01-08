@@ -2,9 +2,7 @@ import * as ts from 'typescript';
 import { TypescriptHelper } from "../helper/helper";
 import { GetDescriptor } from "../descriptor/descriptor";
 
-type Member = ts.ClassElement | ts.TypeElement;
-
-export function GetMockProperty(member: Member): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
+export function GetMockProperty(member: ts.PropertyDeclaration): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
 	const descriptor: ts.Expression = GetDescriptor(member);
     const name = (member.name as ts.Identifier);
     
