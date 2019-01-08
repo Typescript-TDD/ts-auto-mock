@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import { GetStringDescriptor } from "./string/string";
 import { GetInterfaceDeclarationDescriptor } from "./interface/interfaceDeclaration";
-import { GetTypeReferenceDescriptor } from "./type/typeReference";
 import { GetPropertyDescriptor } from "./property/propertySignature";
 import { GetNumberDescriptor } from "./number/number";
 import { GetBooleanDescriptor } from "./boolean/boolean";
@@ -16,6 +15,14 @@ import { GetMethodDescriptor } from "./method/method";
 import { GetHeritageClauseDescriptor } from "./heritage/heritage";
 import { GetExpressionWithTypeArgumentsDescriptor } from "./expression/expressionWithTypeArguments";
 import { GetIdentifierDescriptor } from "./identifier/identifier";
+import { TypeReferenceCache } from "./typeReference/cache";
+import { GetTypeReferenceDescriptor } from "./typeReference/typeReference";
+import { GetTypeParameterDescriptor } from "./typeParameter/typeParameter";
+
+export function GetDescriptorForMock(node: ts.Node): ts.Expression {
+    TypeReferenceCache.instance.clear();
+    return GetDescriptor(node);
+}
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
@@ -44,6 +51,8 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		// 	return GetThisDescriptor(node as ts.ThisTypeNode, typeChecker); // max call exceeded
 		case ts.SyntaxKind.ImportSpecifier:
 			return GetImportDescriptor(node as ts.ImportSpecifier);
+        case ts.SyntaxKind.TypeParameter:
+            return GetTypeParameterDescriptor(node as ts.TypeParameterDeclaration);
 		case ts.SyntaxKind.ImportClause:
 			return GetImportDescriptor(node as ts.ImportClause);
 		case ts.SyntaxKind.MethodSignature:

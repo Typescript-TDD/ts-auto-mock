@@ -1,7 +1,8 @@
 import * as ts from 'typescript';
+import * as urlSlug from 'url-slug';
 import { ExportWithIdentifier, createFactoryExport } from '../helper/export';
 import { TypeChecker } from '../typeChecker/typeChecker';
-import { GetDescriptor } from '../descriptor/descriptor';
+import { GetDescriptorForMock } from '../descriptor/descriptor';
 import { createImport } from '../helper/import';
 
 interface ImportDefinition {
@@ -51,7 +52,7 @@ export class MockDefiner {
 				typeChecker.typeToString(typeChecker.getTypeFromTypeNode(type))
 			);
 
-			const newFactory = createFactoryExport(factoryName, GetDescriptor(type));
+			const newFactory = createFactoryExport(factoryName, GetDescriptorForMock(type));
 			if (this._exportList.has(thisFileName)) {
 				this._exportList.get(thisFileName).push(newFactory);
 			} else {
@@ -85,10 +86,11 @@ export class MockDefiner {
 	}
 
 	private _createUniqueFactoryName(thisFileName: string, typeName: string) {
+	    const typeNameSanitized = urlSlug(typeName, "_");
 		if (!this._exportMap.has(thisFileName)) {
 			this._exportMap.set(thisFileName, new Map<string, number>());
 		}
-		const baseFactoryName = 'create__' + typeName + '__mock';
+		const baseFactoryName = 'create__' + typeNameSanitized + '__mock';
 		const count = this._exportMap.get(thisFileName).get(baseFactoryName) || 1;
 		this._exportMap.get(thisFileName).set(baseFactoryName, count + 1);
 

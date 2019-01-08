@@ -36,10 +36,9 @@
     "ts-node": "7.0.1",
     "ts-transformer-keys": "0.3.4",
     "typescript": "3.2.2",
+    "url-slug": "2.0.0",
     "webpack": "4.28.3",
     "webpack-cli": "3.1.2"
   },
-  "dependencies": {
-    "url-slug": "^2.0.0"
-  }
+  "dependencies": {}
 }

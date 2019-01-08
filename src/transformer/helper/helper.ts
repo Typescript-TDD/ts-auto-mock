@@ -1,4 +1,7 @@
 import * as ts from 'typescript';
+import { TypeChecker } from "../typeChecker/typeChecker";
+
+type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
 export namespace TypescriptHelper {
 	export function createGetAccessor(name: ts.PropertyName, block: ts.Block): ts.GetAccessorDeclaration {
@@ -13,5 +16,18 @@ export namespace TypescriptHelper {
 
     export function createArrowFunction(block: ts.Block): ts.ArrowFunction {
 	    return ts.createArrowFunction([], [], [], undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
+    }
+
+    export function findParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
+        const typeChecker = TypeChecker();
+        const symbol = typeChecker.getSymbolAtLocation(node);
+        const declaration = symbol.declarations[0];
+
+        if (declaration.kind === ts.SyntaxKind.ImportSpecifier) {
+            const type = typeChecker.getDeclaredTypeOfSymbol(symbol);
+            return (type.symbol.declarations[0] as Declaration).typeParameters;
+        }
+
+        return (symbol.declarations[0] as Declaration).typeParameters;
     }
 }
