@@ -14,7 +14,7 @@ You are responsible to provide a small configuration
 3) key in
 4) key of
 5) Typescript/lib types
-6) namespace
+6) namespace // DONE
 
 ## Authors
 
