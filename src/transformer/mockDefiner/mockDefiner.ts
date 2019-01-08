@@ -15,6 +15,9 @@ export class MockDefiner {
 	private _exportList: Map<string, ExportWithIdentifier[]>;
 	private _exportMap: Map<string, Map<string, number>>;
 	private _importList: Map<string, ts.ImportDeclaration[]>;
+	private _typeChecker: ts.TypeChecker;
+	private _isAlreadyMocked: (d: ts.Declaration, sf: ts.SourceFile) => boolean;
+	private _isImportEnabled: boolean;
 
 	private static _instance: MockDefiner;
 
@@ -28,9 +31,25 @@ export class MockDefiner {
 		this._exportList = new Map<string, ExportWithIdentifier[]>();
 		this._exportMap = new Map<string, Map<string, number>>();
 		this._importList = new Map<string, ts.ImportDeclaration[]>();
+		this._typeChecker = TypeChecker();
+		this.enableImportBetweenFiles();
+	}
+
+	public disableImportBetweenFiles(): void {
+		this._isAlreadyMocked = this._isAlreadyMockedImportDisabled;
+		this._isImportEnabled = false;
+	}
+
+	public enableImportBetweenFiles(): void {
+		this._isAlreadyMocked = this._isAlreadyMockedImportEnabled;
+		this._isImportEnabled = true;
 	}
 
 	public getImportsToAddInFile(sourceFile: ts.SourceFile): Array<ts.ImportDeclaration> {
+		if (!this._isImportEnabled) {
+			return [];
+		}
+
 		return this._importList.get(sourceFile.fileName) || [];
 	}
 
@@ -39,42 +58,58 @@ export class MockDefiner {
 	}
 
 	public generateFactoryIfNeeded(type: ts.TypeReferenceNode): ts.Expression {
-		const typeChecker = TypeChecker();
-		const symbol = typeChecker.getSymbolAtLocation(type.typeName);
-		const declaredType = typeChecker.getDeclaredTypeOfSymbol(symbol);
+		this._typeChecker = TypeChecker();
+		const symbol = this._typeChecker.getSymbolAtLocation(type.typeName);
+		const declaredType = this._typeChecker.getDeclaredTypeOfSymbol(symbol);
 		const declaration = declaredType.symbol.declarations[0];
-		const thisFileName = type.getSourceFile().fileName;
-		const key: ts.Declaration = declaration;
+		const thisFile = type.getSourceFile();
+		const thisFileName = thisFile.fileName;
 
-		if (!this._cache.has(key)) {
-			const factoryName: string = this._createUniqueFactoryName(
-				thisFileName,
-				typeChecker.typeToString(typeChecker.getTypeFromTypeNode(type))
-			);
-
-			const newFactory = createFactoryExport(factoryName, GetDescriptorForMock(type));
-			if (this._exportList.has(thisFileName)) {
-				this._exportList.get(thisFileName).push(newFactory);
-			} else {
-				this._exportList.set(thisFileName, [ newFactory ]);
-			}
-			this._cache.set(key, { name: factoryName, filepath: type.getSourceFile().fileName });
-
-			return newFactory.identifier;
+		if (this._isAlreadyMocked(declaration, thisFile)) {
+			return this._getFactoryReferenceFromCache(thisFileName, type, declaration);
 		} else {
-			if (this.isTypeFactoryInFile(key, type.getSourceFile())) {
-				return ts.createIdentifier(this.getTypeFactoryName(key));
-			} else {
-				const factoryImport = createImport(this._cache.get(key).filepath);
-				if (this._importList.has(thisFileName)) {
-					this._importList.get(thisFileName).push(factoryImport.importDeclaration);
-				} else {
-					this._importList.set(thisFileName, [ factoryImport.importDeclaration ]);
-				}
-
-				return ts.createPropertyAccess(factoryImport.identifier, this.getTypeFactoryName(key));
-			}
+			return this._generateExportedFactoryInCache(thisFileName, type, declaration);
 		}
+	}
+
+	private _isAlreadyMockedImportEnabled(declaration: ts.Declaration, sourceFile: ts.SourceFile) {
+		return this._cache.has(declaration);
+	}
+
+	private _isAlreadyMockedImportDisabled(declaration: ts.Declaration, sourceFile: ts.SourceFile) {
+		return this.isTypeFactoryInFile(declaration, sourceFile);
+	}
+
+	private _getFactoryReferenceFromCache(fileWhereToUseFactory: string, typeToMock: ts.TypeReferenceNode, key: ts.Declaration) {
+		if (this.isTypeFactoryInFile(key, typeToMock.getSourceFile())) {
+			return ts.createIdentifier(this.getTypeFactoryName(key));
+		} else {
+			const factoryImport = createImport(this._cache.get(key).filepath);
+			if (this._importList.has(fileWhereToUseFactory)) {
+				this._importList.get(fileWhereToUseFactory).push(factoryImport.importDeclaration);
+			} else {
+				this._importList.set(fileWhereToUseFactory, [ factoryImport.importDeclaration ]);
+			}
+
+			return ts.createPropertyAccess(factoryImport.identifier, this.getTypeFactoryName(key));
+		}
+	}
+
+	private _generateExportedFactoryInCache(fileWhereToGenerateFactory: string, typeToMock: ts.TypeReferenceNode, key: ts.Declaration) {
+		const factoryName: string = this._createUniqueFactoryName(
+			fileWhereToGenerateFactory,
+			this._typeChecker.typeToString(this._typeChecker.getTypeFromTypeNode(typeToMock))
+		);
+
+		const newFactory = createFactoryExport(factoryName, GetDescriptorForMock(typeToMock));
+		if (this._exportList.has(fileWhereToGenerateFactory)) {
+			this._exportList.get(fileWhereToGenerateFactory).push(newFactory);
+		} else {
+			this._exportList.set(fileWhereToGenerateFactory, [ newFactory ]);
+		}
+		this._cache.set(key, { name: factoryName, filepath: typeToMock.getSourceFile().fileName });
+
+		return newFactory.identifier;
 	}
 
 	public isTypeFactoryInFile(declaration: ts.Declaration, sourceFile: ts.SourceFile): boolean {

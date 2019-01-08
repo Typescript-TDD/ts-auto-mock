@@ -5,7 +5,7 @@ describe('for dictionary', () => {
         hello: string;
     }
     type Dictionary<T> = {
-        [key: string]: T
+        [key: string]: T;
     }
 
     it('should set an empty object', () => {
