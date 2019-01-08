@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var path = require("path");
-var typeChecker_1 = require("../src/transformer/typeChecker/typeChecker");
-var mockDefiner_1 = require("../src/transformer/mockDefiner/mockDefiner");
+var typeChecker_1 = require("./typeChecker/typeChecker");
+var mockDefiner_1 = require("./mockDefiner/mockDefiner");
 function transformer(program) {
     typeChecker_1.SetTypeChecker(program.getTypeChecker());
     return function (context) { return function (file) {

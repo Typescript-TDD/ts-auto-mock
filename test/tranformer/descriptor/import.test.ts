@@ -1,4 +1,4 @@
-import { createMock } from "../../../config/create-mock";
+import { createMock } from "../../../src/transformer/create-mock";
 import { ImportInterface, ImportInterfaceWithNestedInterface } from "./interfaces/importInterface";
 import ImportDefaultInterface from "./interfaces/importDefaultInterface";
 import { ImportNamespace } from "./interfaces/importNameSpace";

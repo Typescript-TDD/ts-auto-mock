@@ -1,5 +1,5 @@
 /*globals module, require */
-const transformers = require('./transformer');
+const transformers = require('../src/transformer/transformer');
 
 module.exports = {
     mode: "development",

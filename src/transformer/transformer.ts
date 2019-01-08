@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as path from 'path';
-import { TypeChecker, SetTypeChecker } from '../src/transformer/typeChecker/typeChecker';
-import { MockDefiner } from '../src/transformer/mockDefiner/mockDefiner';
+import { TypeChecker, SetTypeChecker } from './typeChecker/typeChecker';
+import { MockDefiner } from './mockDefiner/mockDefiner';
 
 export function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());

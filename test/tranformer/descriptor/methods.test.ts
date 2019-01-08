@@ -1,4 +1,4 @@
-import { createMock } from "../../../config/create-mock";
+import { createMock } from "../../../src/transformer/create-mock";
 
 describe('for methods', () => {
 	interface InterfaceReturnMethod {

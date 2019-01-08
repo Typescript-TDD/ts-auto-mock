@@ -1,4 +1,4 @@
-import { createMock } from "../../../config/create-mock";
+import { createMock } from "../../../src/transformer/create-mock";
 import { Class } from "./classes/class";
 import { AbstractClass } from "./classes/AbstractClass";
 import { EmptyClass } from "./classes/EmptyClass";

@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --config config/webpack.test.js",
     "buildtest": "webpack --config config/webpack.js",
-    "compileTransformer": "tsc --lib es6,dom --target ES5 config/transformer.ts",
+    "compileTransformer": "tsc --lib es6,dom --target ES5 src/transformer/transformer.ts",
     "test": "karma start"
   },
   "keywords": [
