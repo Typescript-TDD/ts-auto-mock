@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var path = require("path");
-var getTypeChecker_1 = require("../src/transformer/getTypeChecker");
+var typeChecker_1 = require("../src/transformer/typeChecker/typeChecker");
 var mockDefiner_1 = require("../src/transformer/mockDefiner/mockDefiner");
 function transformer(program) {
-    getTypeChecker_1.SetTypeChecker(program.getTypeChecker());
+    typeChecker_1.SetTypeChecker(program.getTypeChecker());
     return function (context) { return function (file) {
         var sourceFile = visitNodeAndChildren(file, context);
         sourceFile = ts.updateSourceFileNode(sourceFile, mockDefiner_1.MockDefiner.instance.getExportsToAddInFile(sourceFile).concat(sourceFile.statements));
@@ -30,7 +30,7 @@ function isKeysCallExpression(node) {
     if (node.kind !== ts.SyntaxKind.CallExpression) {
         return false;
     }
-    var typeChecker = getTypeChecker_1.GetTypeChecker();
+    var typeChecker = typeChecker_1.TypeChecker();
     var signature = typeChecker.getResolvedSignature(node);
     if (typeof signature === 'undefined') {
         return false;

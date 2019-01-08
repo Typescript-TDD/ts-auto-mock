@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
-import { GetTypeChecker } from "../../getTypeChecker";
+import { TypeChecker } from "../../typeChecker/typeChecker";
 
 export function GetHeritagesMembers(elements: ts.NodeArray<ts.HeritageClause>): any {
-	const typeChecker = GetTypeChecker();
+	const typeChecker = TypeChecker();
 	
 	const element: ts.HeritageClause = elements[0];
 	const typeNode: ts.ExpressionWithTypeArguments = element.types[0];

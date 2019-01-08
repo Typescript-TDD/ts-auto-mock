@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
-import { GetTypeChecker } from "../../getTypeChecker";
+import { TypeChecker } from "../../typeChecker/typeChecker";
 import { GetMockProperties } from "../../mock/mockProperties";
 
 export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration): ts.Expression {
-    const typeChecker = GetTypeChecker();
+    const typeChecker = TypeChecker();
     const type = typeChecker.getTypeAtLocation(node);
     return GetMockProperties(type);
 }

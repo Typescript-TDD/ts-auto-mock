@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import * as path from 'path';
-import { GetTypeChecker, SetTypeChecker } from '../src/transformer/getTypeChecker';
+import { TypeChecker, SetTypeChecker } from '../src/transformer/typeChecker/typeChecker';
 import { MockDefiner } from '../src/transformer/mockDefiner/mockDefiner';
 
 export function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
@@ -42,7 +42,7 @@ function isKeysCallExpression(node: ts.Node): node is ts.CallExpression {
         return false;
     }
 
-    const typeChecker = GetTypeChecker();
+    const typeChecker = TypeChecker();
     const signature = typeChecker.getResolvedSignature(node as ts.CallExpression);
     if (typeof signature === 'undefined') {
         return false;

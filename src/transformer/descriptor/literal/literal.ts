@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
-import { GetTypeChecker } from "../../getTypeChecker";
+import { TypeChecker } from "../../typeChecker/typeChecker";
 
 export function GetLiteralDescriptor(node: ts.LiteralTypeNode): ts.Expression {
-    const typeChecker = GetTypeChecker();
+    const typeChecker = TypeChecker();
 	const type: ts.Type = typeChecker.getTypeAtLocation(node);
 	return ts.createLiteral((type as ts.LiteralType).value);
 }

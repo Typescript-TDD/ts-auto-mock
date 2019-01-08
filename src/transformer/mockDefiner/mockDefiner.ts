@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { ExportWithIdentifier, createFactoryExport } from '../helper/export';
-import { GetTypeChecker } from '../getTypeChecker';
+import { TypeChecker } from '../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { createImport } from '../helper/import';
 
@@ -38,7 +38,7 @@ export class MockDefiner {
 	}
 
 	public generateFactoryIfNeeded(type: ts.TypeReferenceNode): ts.Expression {
-		const typeChecker = GetTypeChecker();
+		const typeChecker = TypeChecker();
 		const symbol = typeChecker.getSymbolAtLocation(type.typeName);
 		const declaredType = typeChecker.getDeclaredTypeOfSymbol(symbol);
 		const declaration = declaredType.symbol.declarations[0];
