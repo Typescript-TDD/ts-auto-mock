@@ -10,7 +10,8 @@ You are responsible to provide a small configuration
 
 - Descriptor types
 1) key in
-2) Typescript/lib types // DONE for array
+2) keyof
+3) Typescript/lib types // DONE for few
 
 ## Authors
 

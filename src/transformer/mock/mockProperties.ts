@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import { TypeChecker } from "../typeChecker/typeChecker";
 import { GetMockCall } from "./mockCall";
 import { GetMockProperty } from "./mockProperty";
 
