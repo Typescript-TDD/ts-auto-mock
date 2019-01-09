@@ -49,7 +49,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.Identifier:
 			return GetIdentifierDescriptor(node as ts.Identifier);
 		// case ts.SyntaxKind.ThisType:
-		// 	return GetThisDescriptor(node as ts.ThisTypeNode, typeChecker); // max call exceeded
+		// 	return GetThisDescriptor(node as ts.ThisTypeNode); // max call exceeded
 		case ts.SyntaxKind.ImportSpecifier:
 			return GetImportDescriptor(node as ts.ImportSpecifier);
         case ts.SyntaxKind.TypeParameter:
