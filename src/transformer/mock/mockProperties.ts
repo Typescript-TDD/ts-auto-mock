@@ -3,10 +3,8 @@ import { TypeChecker } from "../typeChecker/typeChecker";
 import { GetMockCall } from "./mockCall";
 import { GetMockProperty } from "./mockProperty";
 
-export function GetMockProperties(type: ts.Type): ts.Expression {
-    const typeChecker = TypeChecker();
-
-    let properties: Array<ts.Declaration> = typeChecker.getPropertiesOfType(type).map((prop) => {
+export function GetMockProperties(propertiesSymbol: Array<ts.Symbol>): ts.Expression {
+    let properties: Array<ts.Declaration> = propertiesSymbol.map((prop) => {
         return prop.declarations[0];
     });
 

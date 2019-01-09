@@ -5,5 +5,7 @@ import { GetMockProperties } from "../../mock/mockProperties";
 export function GetInterfaceDeclarationDescriptor(node: ts.InterfaceDeclaration): ts.Expression {
     const typeChecker = TypeChecker();
     const type = typeChecker.getTypeAtLocation(node);
-    return GetMockProperties(type);
+    let properties: Array<ts.Symbol> = typeChecker.getPropertiesOfType(type);
+
+    return GetMockProperties(properties);
 }
