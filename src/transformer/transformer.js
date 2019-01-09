@@ -6,9 +6,10 @@ var typeChecker_1 = require("./typeChecker/typeChecker");
 var mockDefiner_1 = require("./mockDefiner/mockDefiner");
 function transformer(program) {
     typeChecker_1.SetTypeChecker(program.getTypeChecker());
+    mockDefiner_1.MockDefiner.instance.disableImportBetweenFiles();
     return function (context) { return function (file) {
         var sourceFile = visitNodeAndChildren(file, context);
-        sourceFile = ts.updateSourceFileNode(sourceFile, mockDefiner_1.MockDefiner.instance.getExportsToAddInFile(sourceFile).concat(sourceFile.statements));
+        sourceFile = ts.updateSourceFileNode(sourceFile, mockDefiner_1.MockDefiner.instance.getImportsToAddInFile(sourceFile).concat(mockDefiner_1.MockDefiner.instance.getExportsToAddInFile(sourceFile), sourceFile.statements));
         return sourceFile;
     }; };
 }

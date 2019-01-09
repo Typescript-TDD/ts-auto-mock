@@ -36,13 +36,7 @@ export namespace TypescriptHelper {
     export function isTypescriptType(node: ts.Node): boolean {
         const fileName = node.getSourceFile().fileName;
 
-        if (!fileName.includes(TypeScriptTypesFolder)) {
-	        return false;
-        }
-
-        const type = TypeChecker().getTypeAtLocation(node);
-
-        return !!TypeScriptTypes[type.symbol.name];
+        return fileName.includes(TypeScriptTypesFolder);
     }
 
     export function getTypescriptType(node: ts.Node): ts.Expression {
