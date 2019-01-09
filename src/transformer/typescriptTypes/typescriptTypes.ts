@@ -3,7 +3,8 @@ export enum TypeScriptTypes {
     Number = "Number",
     String = "String",
     Boolean = "Boolean",
-    Object = "Object"
+    Object = "Object",
+    Function = "Function"
 }
 
 export const TypeScriptTypesFolder = "node_modules/typescript/lib";

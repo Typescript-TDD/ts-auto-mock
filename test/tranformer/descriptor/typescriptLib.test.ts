@@ -40,4 +40,12 @@ describe('typescript lib', () => {
         const properties: Interface = createMock<Interface>();
         expect(properties.a).toEqual({});
     });
+
+    it('should set an empty function for a function', () => {
+        interface Interface {
+            a: Function;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a()).toBeUndefined();
+    });
 });
