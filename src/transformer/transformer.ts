@@ -11,8 +11,7 @@ export function transformer(program: ts.Program): ts.TransformerFactory<ts.Sourc
         let sourceFile = visitNodeAndChildren(file, context);
 
         sourceFile = ts.updateSourceFileNode(sourceFile, [
-            ...MockDefiner.instance.getImportsToAddInFile(sourceFile),
-            ...MockDefiner.instance.getExportsToAddInFile(sourceFile),
+            ...MockDefiner.instance.getTopStatementsForFile(sourceFile),
             ...sourceFile.statements
         ]);
 

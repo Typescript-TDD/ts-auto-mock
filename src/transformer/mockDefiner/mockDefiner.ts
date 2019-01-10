@@ -45,16 +45,8 @@ export class MockDefiner {
 		this._isImportEnabled = true;
 	}
 
-	public getImportsToAddInFile(sourceFile: ts.SourceFile): Array<ts.ImportDeclaration> {
-		if (!this._isImportEnabled) {
-			return [];
-		}
-
-		return this._importList.get(sourceFile.fileName) || [];
-	}
-
-	public getExportsToAddInFile(sourceFile: ts.SourceFile): Array<ts.FunctionDeclaration> {
-		return (this._exportList.get(sourceFile.fileName) || []).map((x) => x.exportDeclaration);
+	public getTopStatementsForFile(sourceFile: ts.SourceFile): Array<ts.Statement> {
+		return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile)];
 	}
 
 	public generateFactoryIfNeeded(type: ts.TypeReferenceNode): ts.Expression {
@@ -70,6 +62,26 @@ export class MockDefiner {
 		} else {
 			return this._generateExportedFactoryInCache(thisFileName, type, declaration);
 		}
+	}
+
+	public isTypeFactoryInFile(declaration: ts.Declaration, sourceFile: ts.SourceFile): boolean {
+		return this._cache.has(declaration) && this._cache.get(declaration).filepath === sourceFile.fileName;
+	}
+
+	public getTypeFactoryName(declaration: ts.Declaration): string {
+		return this._cache.get(declaration).name;
+	}
+
+	private _getImportsToAddInFile(sourceFile: ts.SourceFile): Array<ts.ImportDeclaration> {
+		if (!this._isImportEnabled) {
+			return [];
+		}
+
+		return this._importList.get(sourceFile.fileName) || [];
+	}
+
+	private _getExportsToAddInFile(sourceFile: ts.SourceFile): Array<ts.FunctionDeclaration> {
+		return (this._exportList.get(sourceFile.fileName) || []).map((x) => x.exportDeclaration);
 	}
 
 	private _isAlreadyMockedImportEnabled(declaration: ts.Declaration, sourceFile: ts.SourceFile) {
@@ -110,14 +122,6 @@ export class MockDefiner {
 		this._cache.set(key, { name: factoryName, filepath: typeToMock.getSourceFile().fileName });
 
 		return newFactory.identifier;
-	}
-
-	public isTypeFactoryInFile(declaration: ts.Declaration, sourceFile: ts.SourceFile): boolean {
-		return this._cache.has(declaration) && this._cache.get(declaration).filepath === sourceFile.fileName;
-	}
-
-	public getTypeFactoryName(declaration: ts.Declaration): string {
-		return this._cache.get(declaration).name;
 	}
 
 	private _createUniqueFactoryName(thisFileName: string, typeName: string) {
