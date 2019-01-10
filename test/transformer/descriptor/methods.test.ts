@@ -21,6 +21,17 @@ describe('for methods', () => {
 		expect(properties.d()).toEqual([]);
 		expect(properties.e().a).toBe("");
 	});
+
+	describe('for interface declaration', () => {
+        interface Interface {
+            method: () => number
+        }
+
+        it('should set the functions', () => {
+            const properties: Interface = createMock<Interface>();
+            expect(properties.method()).toBe(0);
+        });
+	});
 	
 	describe('for declaration', () => {
 		class MyClass {
