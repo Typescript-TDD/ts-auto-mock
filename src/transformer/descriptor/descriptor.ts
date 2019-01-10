@@ -57,6 +57,8 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetMethodDescriptor((node as ts.MethodSignature));
 		case ts.SyntaxKind.MethodDeclaration:
 			return GetMethodDescriptor((node as ts.MethodDeclaration));
+        case ts.SyntaxKind.FunctionType:
+            return GetMethodDescriptor((node as ts.FunctionTypeNode));
 		case ts.SyntaxKind.UnionType:
 			return GetUnionDescriptor(node as ts.UnionTypeNode);
         case ts.SyntaxKind.IntersectionType:
