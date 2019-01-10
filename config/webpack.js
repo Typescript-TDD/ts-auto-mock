@@ -1,10 +1,14 @@
 /*globals module, require */
 const transformers = require('../src/transformer/transformer');
+const path = require('path');
 
 module.exports = {
     mode: "development",
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        alias: {
+            ['ts-auto-mock']: path.join(__dirname, '../src/publicApi')
+        }
     },
     module: {
         rules: [
@@ -12,6 +16,7 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'awesome-typescript-loader',
                 options: {
+                    configFileName: './tsconfig.json',
                     getCustomTransformers: program => ({
                         before: [
                             transformers.transformer(program)
@@ -22,7 +27,7 @@ module.exports = {
         ]
     },
     entry: {
-        app: ['./test/tranformer/descriptor/descriptorClasses.test.ts']
+        app: ['./test/transformer/descriptor/classes.test.ts', './src/transformer/repository/repository.ts', './src/transformer/repository/index.ts']
     },
     output: {
         filename: "test.js",

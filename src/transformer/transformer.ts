@@ -5,7 +5,6 @@ import { MockDefiner } from './mockDefiner/mockDefiner';
 
 export function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());
-    MockDefiner.instance.disableImportBetweenFiles();
 
     return (context: ts.TransformationContext) => (file: ts.SourceFile) => {
         let sourceFile = visitNodeAndChildren(file, context);

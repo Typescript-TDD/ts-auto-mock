@@ -13,7 +13,11 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ts-auto-mock": ["publicApi"]
+    },
+    "baseUrl": "./src"
   },
   "include": [
     "src"

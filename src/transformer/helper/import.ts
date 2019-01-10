@@ -10,15 +10,19 @@ export function createImport(filenameToImportFrom: string): ImportWithIdentifier
 	const importIdentifier = ts.createIdentifier(urlslug(filenameToImportFrom, '_'));
 
 	return {
-		importDeclaration: ts.createImportDeclaration(
-			[],
-			[],
-			ts.createImportClause(
-				ts.createIdentifier('import_identifier'), // useless?
-				ts.createNamespaceImport(importIdentifier) // this is to do `* as namespace_import_identifier`
-			),
-			ts.createStringLiteral(filenameToImportFrom)
-		),
+		importDeclaration: this.createImportOnIdentifier(filenameToImportFrom, importIdentifier),
 		identifier: importIdentifier
 	};
+}
+
+export function createImportOnIdentifier(filenameToImportFrom: string, importIdentifier: ts.Identifier): ts.ImportDeclaration {
+	return ts.createImportDeclaration(
+		[],
+		[],
+		ts.createImportClause(
+			undefined,
+			ts.createNamespaceImport(importIdentifier) // this is to do `* as namespace_import_identifier`
+		),
+		ts.createStringLiteral(filenameToImportFrom)
+	);
 }
