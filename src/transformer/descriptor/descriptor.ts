@@ -12,12 +12,12 @@ import { GetArrayDescriptor } from "./array/array";
 import { GetUnionDescriptor } from "./union/union";
 import { GetEnumDeclarationDescriptor } from "./enum/enumDeclaration";
 import { GetMethodDescriptor } from "./method/method";
-import { GetHeritageClauseDescriptor } from "./heritage/heritage";
 import { GetExpressionWithTypeArgumentsDescriptor } from "./expression/expressionWithTypeArguments";
 import { GetIdentifierDescriptor } from "./identifier/identifier";
 import { TypeReferenceCache } from "./typeReference/cache";
 import { GetTypeReferenceDescriptor } from "./typeReference/typeReference";
 import { GetTypeParameterDescriptor } from "./typeParameter/typeParameter";
+import { GetIntersectionDescriptor } from "./intersection/intersection";
 
 export function GetDescriptorForMock(node: ts.Node): ts.Expression {
     TypeReferenceCache.instance.clear();
@@ -41,14 +41,12 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetPropertyDescriptor(node as ts.PropertyDeclaration);
 		case ts.SyntaxKind.LiteralType:
 			return GetLiteralDescriptor(node as ts.LiteralTypeNode);
-		case ts.SyntaxKind.HeritageClause:
-			return GetHeritageClauseDescriptor(node as ts.HeritageClause);
 		case ts.SyntaxKind.ExpressionWithTypeArguments:
 			return GetExpressionWithTypeArgumentsDescriptor(node as ts.ExpressionWithTypeArguments);
 		case ts.SyntaxKind.Identifier:
 			return GetIdentifierDescriptor(node as ts.Identifier);
 		// case ts.SyntaxKind.ThisType:
-		// 	return GetThisDescriptor(node as ts.ThisTypeNode, typeChecker); // max call exceeded
+		// 	return GetThisDescriptor(node as ts.ThisTypeNode); // max call exceeded
 		case ts.SyntaxKind.ImportSpecifier:
 			return GetImportDescriptor(node as ts.ImportSpecifier);
         case ts.SyntaxKind.TypeParameter:
@@ -61,6 +59,8 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetMethodDescriptor((node as ts.MethodDeclaration));
 		case ts.SyntaxKind.UnionType:
 			return GetUnionDescriptor(node as ts.UnionTypeNode);
+        case ts.SyntaxKind.IntersectionType:
+            return GetIntersectionDescriptor(node as ts.IntersectionTypeNode);
 		case ts.SyntaxKind.EnumDeclaration:
 			return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
 		case ts.SyntaxKind.ArrayType:

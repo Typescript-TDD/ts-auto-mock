@@ -6,6 +6,10 @@ describe('for generic', () => {
             iAmAString: T
         }
 
+        interface WithGenericObject<T>{
+            iAmAnObject: T
+        }
+
         interface WithGenerics<T, S>{
             iAmAString: T
             iAmANumber: S
@@ -40,6 +44,11 @@ describe('for generic', () => {
         it('should set all the generics with sub interfaces', () => {
             const properties: WithGenericsSubInterface<string> = createMock<WithGenericsSubInterface<string>>();
             expect(properties.sub.iAmAString).toBe("");
+        });
+
+        it('should set all the generics declared inline ', () => {
+            const properties: WithGenericObject<{a: string}> = createMock<WithGenericObject<{a: string}>>();
+            expect(properties.iAmAnObject.a).toBe("");
         });
     });
 

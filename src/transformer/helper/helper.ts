@@ -1,5 +1,7 @@
 import * as ts from 'typescript';
 import { TypeChecker } from "../typeChecker/typeChecker";
+import { TypeScriptTypes, TypeScriptTypesFolder } from "../typescriptTypes/typescriptTypes";
+import { TypescriptTypesAdapter } from "../typescriptTypes/typescriptTypesAdapter";
 
 type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
@@ -29,5 +31,17 @@ export namespace TypescriptHelper {
         }
 
         return (symbol.declarations[0] as Declaration).typeParameters;
+    }
+
+    export function isTypescriptType(node: ts.Node): boolean {
+        const fileName = node.getSourceFile().fileName;
+
+        return fileName.includes(TypeScriptTypesFolder);
+    }
+
+    export function getTypescriptType(node: ts.Node): ts.Expression {
+        const type = TypeChecker().getTypeAtLocation(node);
+
+        return TypescriptTypesAdapter(TypeScriptTypes[type.symbol.name])
     }
 }

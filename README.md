@@ -9,12 +9,9 @@ You are responsible to provide a small configuration
 ## Missing features
 
 - Descriptor types
-1) Generics // DONE
-2) Intersection
-3) key in
-4) key of // DONE
-5) Typescript/lib types
-6) namespace // DONE
+1) key in
+2) keyof
+3) Typescript/lib types // DONE for few
 
 ## Authors
 

@@ -6,5 +6,11 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration): t
     const typeChecker = TypeChecker();
     const type = typeChecker.getTypeAtLocation(node);
 
-    return TypeReferenceCache.instance.get(type).descriptor;
+    const cacheType = TypeReferenceCache.instance.get(type);
+
+    if (!cacheType) {
+        return ts.createNull();
+    }
+
+    return cacheType.descriptor;
 }

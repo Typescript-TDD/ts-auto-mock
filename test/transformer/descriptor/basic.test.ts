@@ -21,6 +21,17 @@ describe('for simple properties', () => {
 			expect(properties.a).toBe(0)
 		});
 	});
+
+    describe('for declared interface with array', () => {
+        interface Interface {
+            a: boolean[];
+        }
+
+        it('should set an empty array', () => {
+            const properties: Interface = createMock<Interface>();
+            expect(properties.a).toEqual([])
+        });
+    });
 	
 	describe('for declared interface with boolean', () => {
 		interface Interface {
