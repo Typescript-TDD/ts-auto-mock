@@ -1,10 +1,10 @@
-type Factory = Function;
+type Factory = (name: string, value: any) => () => any;
 
 export class MockFactory {
     private static _instance: MockFactory;
     private _factory: Factory;
 
-    private _defaultFactory = (data) => () => data;
+    private _defaultFactory: Factory = (name, value) => () => value;
 
     private constructor() {}
 
@@ -17,9 +17,9 @@ export class MockFactory {
         this._factory = factory;
     }
 
-    public getFactory(data: any): Factory {
+    public getFactory(name: string, value: any): Factory {
         this._factory = this._factory || this._defaultFactory;
         
-        return this._factory(data);
+        return this._factory(name, value);
     }
 }

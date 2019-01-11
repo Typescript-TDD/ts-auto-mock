@@ -18,6 +18,8 @@ import { TypeReferenceCache } from "./typeReference/cache";
 import { GetTypeReferenceDescriptor } from "./typeReference/typeReference";
 import { GetTypeParameterDescriptor } from "./typeParameter/typeParameter";
 import { GetIntersectionDescriptor } from "./intersection/intersection";
+import { GetFunctionTypeDescriptor } from "./method/functionType";
+import { GetMethodDeclarationDescriptor } from "./method/methodDeclaration";
 
 export function GetDescriptorForMock(node: ts.Node): ts.Expression {
     TypeReferenceCache.instance.clear();
@@ -54,11 +56,11 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.ImportClause:
 			return GetImportDescriptor(node as ts.ImportClause);
 		case ts.SyntaxKind.MethodSignature:
-			return GetMethodDescriptor((node as ts.MethodSignature));
+			return GetMethodDeclarationDescriptor((node as ts.MethodSignature));
 		case ts.SyntaxKind.MethodDeclaration:
-			return GetMethodDescriptor((node as ts.MethodDeclaration));
+			return GetMethodDeclarationDescriptor((node as ts.MethodDeclaration));
         case ts.SyntaxKind.FunctionType:
-            return GetMethodDescriptor((node as ts.FunctionTypeNode));
+            return GetFunctionTypeDescriptor((node as ts.FunctionTypeNode));
 		case ts.SyntaxKind.UnionType:
 			return GetUnionDescriptor(node as ts.UnionTypeNode);
         case ts.SyntaxKind.IntersectionType:

@@ -3,9 +3,7 @@ import * as ts from 'typescript';
 import { MockDefiner } from "../../mockDefiner/mockDefiner";
 import { TypescriptHelper } from "../../helper/helper";
 
-type Method = ts.MethodDeclaration | ts.MethodSignature | ts.FunctionTypeNode;
-
-export function GetMethodDescriptor(node: Method): ts.Expression {
+export function GetMethodDescriptor(propertyName: ts.PropertyName, node: ts.SignatureDeclaration): ts.Expression {
     const returnValue: ts.Expression = GetDescriptor(node.type);
 
     const statementFactory = ts.createPropertyAccess(
@@ -17,7 +15,10 @@ export function GetMethodDescriptor(node: Method): ts.Expression {
             ts.createIdentifier('instance')),
         ts.createIdentifier("getFactory"));
 
-    const returnMockFactory = ts.createReturn(ts.createCall(statementFactory, [], [returnValue]));
+    const propertyNameString = ts.createStringLiteral("" + (propertyName as ts.Identifier).escapedText);
+    const callToFactory = ts.createCall(statementFactory, [], [propertyNameString, returnValue]);
+
+    const returnMockFactory = ts.createReturn(callToFactory);
 
     const block = ts.createBlock([returnMockFactory]);
     const functionExpression = TypescriptHelper.createFunctionExpression(block);
