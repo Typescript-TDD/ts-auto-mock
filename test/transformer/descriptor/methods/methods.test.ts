@@ -45,17 +45,4 @@ describe('for methods', () => {
 			expect(properties.method()).toBe(0);
 		});
 	});
-
-	// describe('for class arrow function', () => {
-	//   class MyClass {
-	//       public method = () => {
-    //         return "s"
-    //       }
-    //   }
-    //
-    //     it('should set the function', () => {
-    //         const properties: MyClass = createMock<MyClass>();
-    //         expect(properties.method()).toBe("");
-    //     });
-	// });
 });
