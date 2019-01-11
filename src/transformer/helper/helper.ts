@@ -20,6 +20,15 @@ export namespace TypescriptHelper {
 	    return ts.createArrowFunction([], [], [], undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
     }
 
+    export function createFunctionExpression(block: ts.Block, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.FunctionExpression {
+        return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
+    }
+
+    export function createEmptyFunctionExpression(): ts.FunctionExpression {
+        const block = ts.createBlock([]);
+        return createFunctionExpression(block);
+    }
+
     export function findParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
         const typeChecker = TypeChecker();
         const symbol = typeChecker.getSymbolAtLocation(node);

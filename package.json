@@ -8,7 +8,8 @@
     "build": "webpack --config config/webpack.test.js",
     "buildtest": "webpack --config config/webpack.js",
     "compileTransformer": "tsc --lib es6,dom --target ES5 src/transformer/transformer.ts",
-    "test": "karma start"
+    "test": "karma start config/karma/karma.config.js",
+    "test-framework": "karma start config/karma/karma.config.framework.js"
   },
   "keywords": [
     "spy",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@types/jasmine": "3.3.5",
     "@types/node": "10.12.18",
+    "@types/webpack-env": "1.13.6",
     "awesome-typescript-loader": "5.2.1",
     "jasmine": "3.3.1",
     "jasmine-ts": "0.3.0",
@@ -38,7 +40,8 @@
     "typescript": "3.2.2",
     "url-slug": "2.0.0",
     "webpack": "4.28.3",
-    "webpack-cli": "3.1.2"
+    "webpack-cli": "3.1.2",
+    "webpack-merge": "4.2.1"
   },
   "dependencies": {}
 }

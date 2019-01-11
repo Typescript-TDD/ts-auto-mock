@@ -1,4 +1,4 @@
-import { createMock } from "../../../src/transformer/create-mock";
+import { createMock } from "../../../../src/transformer/create-mock";
 
 describe('for methods', () => {
 	interface InterfaceReturnMethod {
@@ -12,7 +12,7 @@ describe('for methods', () => {
 		d(): string[];
 		e(): InterfaceReturnMethod;
 	}
-	
+
 	it('should set the functions', () => {
 		const properties: Interface = createMock<Interface>();
 		expect(properties.a()).toBeNull();
@@ -32,17 +32,30 @@ describe('for methods', () => {
             expect(properties.method()).toBe(0);
         });
 	});
-	
+
 	describe('for declaration', () => {
 		class MyClass {
 			method(): number {
 				return 2;
 			}
 		}
-		
+
 		it('should set the functions', () => {
 			const properties: MyClass = createMock<MyClass>();
 			expect(properties.method()).toBe(0);
 		});
 	});
+
+	// describe('for class arrow function', () => {
+	//   class MyClass {
+	//       public method = () => {
+    //         return "s"
+    //       }
+    //   }
+    //
+    //     it('should set the function', () => {
+    //         const properties: MyClass = createMock<MyClass>();
+    //         expect(properties.method()).toBe("");
+    //     });
+	// });
 });

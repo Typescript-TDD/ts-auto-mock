@@ -13,8 +13,9 @@ export class MockDefiner {
 	private _factoryCache: FactoryDefinitionCache;
 
 	private static _instance: MockDefiner;
+    public currentTsAutoMockImportName: ts.Identifier;
 
-	public static get instance(): MockDefiner {
+    public static get instance(): MockDefiner {
 		this._instance = this._instance || new MockDefiner();
 		return this._instance;
 	}
@@ -37,7 +38,8 @@ export class MockDefiner {
 		const thisFileName = thisFile.fileName;
 
 		if (!this._neededImportIdentifierPerFile[thisFileName]) {
-			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlslug(thisFileName, '_')}_repository`)
+			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlslug(thisFileName, '_')}_repository`);
+            this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
 		}
 
 		const key = this._registerIfNeeded(thisFileName, type, declaration);
