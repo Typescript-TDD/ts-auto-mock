@@ -4,7 +4,7 @@ describe('for methods', () => {
 	interface InterfaceReturnMethod {
 		a: string;
 	}
-	
+
 	interface Interface {
 		a(): void;
 		b(): number;
@@ -43,6 +43,14 @@ describe('for methods', () => {
 		it('should set the functions', () => {
 			const properties: MyClass = createMock<MyClass>();
 			expect(properties.method()).toBe(0);
+		});
+	});
+	
+	describe('for a type function', () => {
+		type Fn = () => string;
+		it('should set the functions', () => {
+			const properties: Fn = createMock<Fn>();
+			expect(properties()).toBe("");
 		});
 	});
 });

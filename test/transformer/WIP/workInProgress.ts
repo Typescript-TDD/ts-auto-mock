@@ -1,6 +1,5 @@
 import { createMock } from "../../../src/transformer/create-mock";
 describe('for functions assigned', () => {
-
     describe('arrow', () => {
         class MyClass {
             public method = () => {
@@ -52,4 +51,12 @@ describe('for functions assigned', () => {
             expect(properties.test3).toBeUndefined();
         });
     });
+	
+	describe('for a function', () => {
+		it('should set the functions', () => {
+			const properties: () => string = createMock<() => string>();
+			expect(properties()).toBe("");
+		});
+	});
+	
 });

@@ -28,6 +28,10 @@ export namespace TypescriptHelper {
         const block = ts.createBlock([]);
         return createFunctionExpression(block);
     }
+	
+	export function createEmptyProperty(): ts.PropertyDeclaration {
+		return ts.createProperty([], [], "", undefined, undefined, undefined);
+	}
 
     export function findParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
         const typeChecker = TypeChecker();
