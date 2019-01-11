@@ -1,7 +1,7 @@
 {
-  "name": "auto-spy",
+  "name": "ts-auto-mock",
   "version": "0.0.2",
-  "description": "spy generator",
+  "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -12,7 +12,9 @@
     "test-framework": "karma start config/karma/karma.config.framework.js"
   },
   "keywords": [
+    "typescript",
     "spy",
+    "mock",
     "auto"
   ],
   "files": [
