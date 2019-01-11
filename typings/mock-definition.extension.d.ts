@@ -1,4 +1,5 @@
 export {};
+import { CheckType } from "./mock-definition";
 
 interface SpyWithReturnType<TR> {
   (...params: any[]): TR;
