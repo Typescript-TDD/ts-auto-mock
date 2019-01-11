@@ -1,5 +1,0 @@
-{
-  "spec_files": [
-    "test/**/*.test.ts"
-  ]
-}
