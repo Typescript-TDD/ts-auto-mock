@@ -17,7 +17,8 @@
     "paths": {
       "ts-auto-mock": ["publicApi"]
     },
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "typeRoots": ["./typings"]
   },
   "include": [
     "src"
