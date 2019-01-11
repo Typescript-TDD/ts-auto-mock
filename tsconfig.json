@@ -18,11 +18,11 @@
       "ts-auto-mock": ["publicApi"]
     },
     "baseUrl": "./src",
-    "typeRoots": ["./typings"]
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings"
+    ]
   },
-  "include": [
-    "src"
-  ],
   "exclude": [
     "node_modules"
   ]
