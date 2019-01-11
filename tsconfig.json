@@ -17,11 +17,7 @@
     "paths": {
       "ts-auto-mock": ["publicApi"]
     },
-    "baseUrl": "./src",
-    "typeRoots": [
-      "./node_modules/@types",
-      "./typings"
-    ]
+    "baseUrl": "./src"
   },
   "exclude": [
     "node_modules"

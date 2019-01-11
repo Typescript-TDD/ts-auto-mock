@@ -1,4 +1,4 @@
-import { createMock } from "../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 
 describe('when testing with the mock factory jasmine', () => {
     it('should create a spy for methods with the return value', () => {

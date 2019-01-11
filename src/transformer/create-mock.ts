@@ -1,3 +1,3 @@
-import { UittorioMock } from '../../typings/mock-definition';
+import { Mock } from '../mock/mock';
 
-export declare function createMock<T extends object>(): T & UittorioMock<T>;
+export declare function createMock<T extends object>(): T & Mock<T>;
