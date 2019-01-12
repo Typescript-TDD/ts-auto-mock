@@ -25,6 +25,7 @@ import { GetTypeAliasDescriptor } from "./typeAlias/typeAlias";
 import { GetObjectLiteralDescriptor } from "./objectLiteral/objectLiteral";
 import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";
 import { GetBooleanFalseDescriptor } from "./boolean/booleanFalse";
+import { GetUndefinedDescriptor } from "./undefined/undefined";
 
 export function GetDescriptorForMock(node: ts.Node): ts.Expression {
     TypeReferenceCache.instance.clear();
@@ -96,11 +97,12 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.ObjectKeyword:
 			return GetMockProperties([]);
 		case ts.SyntaxKind.NullKeyword:
+			return GetNullDescriptor();
 		case ts.SyntaxKind.AnyKeyword:
 		case ts.SyntaxKind.UnknownKeyword:
 		case ts.SyntaxKind.UndefinedKeyword:
 		case ts.SyntaxKind.VoidKeyword:
-			return GetNullDescriptor();
+			return GetUndefinedDescriptor();
 		default:
 			console.log("NOT IMPLEMENTED "+ ts.SyntaxKind[node.kind]);
 			return ts.createLiteral("NOT IMPLEMENTED" + ts.SyntaxKind[node.kind]);

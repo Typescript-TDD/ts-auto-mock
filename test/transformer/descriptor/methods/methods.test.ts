@@ -16,7 +16,7 @@ describe('for methods', () => {
 
 	it('should set the functions', () => {
 		const properties: Mock<Interface> = createMock<Interface>();
-		expect(properties.a()).toBeNull();
+		expect(properties.a()).toBeUndefined();
 		expect(properties.b()).toBe(0);
 		expect(properties.c()).toBe("");
 		expect(properties.d()).toEqual([]);

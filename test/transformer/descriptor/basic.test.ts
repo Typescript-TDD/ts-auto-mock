@@ -63,7 +63,7 @@ describe('for simple properties', () => {
 		
 		it('should set null', () => {
 			const properties: Mock<Interface> = createMock<Interface>();
-			expect(properties.a).toBe(null)
+			expect(properties.a).toBeUndefined()
 		});
 	});
 	
@@ -74,7 +74,7 @@ describe('for simple properties', () => {
 		
 		it('should set null', () => {
 			const properties: Mock<Interface> = createMock<Interface>();
-			expect(properties.a).toBe(null)
+			expect(properties.a).toBeUndefined()
 		});
 	});
 	
@@ -85,7 +85,7 @@ describe('for simple properties', () => {
 		
 		it('should set null', () => {
 			const properties: Mock<Interface> = createMock<Interface>();
-			expect(properties.a).toBe(null)
+			expect(properties.a).toBeUndefined()
 		});
 	});
 });
