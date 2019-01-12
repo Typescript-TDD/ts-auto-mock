@@ -11,7 +11,6 @@ import { GetClassDeclarationDescriptor } from "./class/classDeclaration";
 import { GetArrayDescriptor } from "./array/array";
 import { GetUnionDescriptor } from "./union/union";
 import { GetEnumDeclarationDescriptor } from "./enum/enumDeclaration";
-import { GetMethodDescriptor } from "./method/method";
 import { GetExpressionWithTypeArgumentsDescriptor } from "./expression/expressionWithTypeArguments";
 import { GetIdentifierDescriptor } from "./identifier/identifier";
 import { TypeReferenceCache } from "./typeReference/cache";
@@ -22,6 +21,7 @@ import { GetFunctionTypeDescriptor } from "./method/functionType";
 import { GetMethodDeclarationDescriptor } from "./method/methodDeclaration";
 import { GetFunctionAssignmentDescriptor } from "./method/functionAssignment";
 import { GetMockProperties } from '../mock/mockProperties';
+import { GetTypeAliasDescriptor } from "./typeAlias/typeAlias";
 
 export function GetDescriptorForMock(node: ts.Node): ts.Expression {
     TypeReferenceCache.instance.clear();
@@ -31,7 +31,7 @@ export function GetDescriptorForMock(node: ts.Node): ts.Expression {
 export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
 		case ts.SyntaxKind.TypeAliasDeclaration:
-			return GetDescriptor((node as ts.TypeAliasDeclaration).type);
+			return GetTypeAliasDescriptor((node as ts.TypeAliasDeclaration));
 		case ts.SyntaxKind.TypeReference:
 			return GetTypeReferenceDescriptor(node as ts.TypeReferenceNode);
 		case ts.SyntaxKind.TypeLiteral:
