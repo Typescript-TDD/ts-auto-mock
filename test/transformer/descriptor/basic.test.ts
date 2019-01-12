@@ -1,5 +1,5 @@
 import { createMock } from "../../../src/transformer/create-mock";
-import { Mock } from "mock/mock";
+import { Mock } from "ts-auto-mock";
 describe('for simple properties', () => {
 	describe('for declared interface with string', () => {
 		interface Interface {

@@ -1,6 +1,5 @@
 import { createMock } from "../../../src/transformer/create-mock";
 
-
 describe('for interfaces', () => {
 	describe('with multiple properties', () => {
 		interface Interface {

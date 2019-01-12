@@ -15,9 +15,9 @@
       "dom"
     ],
     "paths": {
-      "ts-auto-mock": ["publicApi"]
+      "ts-auto-mock": ["index"]
     },
-    "baseUrl": "./src"
+    "baseUrl": "./"
   },
   "exclude": [
     "node_modules"

@@ -20,6 +20,7 @@ import { GetTypeParameterDescriptor } from "./typeParameter/typeParameter";
 import { GetIntersectionDescriptor } from "./intersection/intersection";
 import { GetFunctionTypeDescriptor } from "./method/functionType";
 import { GetMethodDeclarationDescriptor } from "./method/methodDeclaration";
+import { GetFunctionAssignmentDescriptor } from "./method/functionAssignment";
 import { GetMockProperties } from '../mock/mockProperties';
 
 export function GetDescriptorForMock(node: ts.Node): ts.Expression {
@@ -60,8 +61,11 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetMethodDeclarationDescriptor((node as ts.MethodSignature));
 		case ts.SyntaxKind.MethodDeclaration:
 			return GetMethodDeclarationDescriptor((node as ts.MethodDeclaration));
-		case ts.SyntaxKind.FunctionType:
-			return GetFunctionTypeDescriptor((node as ts.FunctionTypeNode));
+        case ts.SyntaxKind.FunctionType:
+            return GetFunctionTypeDescriptor((node as ts.FunctionTypeNode));
+		case ts.SyntaxKind.ArrowFunction:
+		case ts.SyntaxKind.FunctionExpression:
+			return GetFunctionAssignmentDescriptor((node as ts.ArrowFunction));
 		case ts.SyntaxKind.UnionType:
 			return GetUnionDescriptor(node as ts.UnionTypeNode);
 		case ts.SyntaxKind.IntersectionType:
@@ -74,6 +78,13 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetStringDescriptor();
 		case ts.SyntaxKind.NumberKeyword:
 			return GetNumberDescriptor();
+		case ts.SyntaxKind.TrueKeyword:
+			return ts.createLiteral(true);
+		case ts.SyntaxKind.FalseKeyword:
+			return ts.createLiteral(false);
+		case ts.SyntaxKind.NumericLiteral:
+		case ts.SyntaxKind.StringLiteral:
+			return GetLiteralDescriptor(node as ts.LiteralTypeNode);
 		case ts.SyntaxKind.BooleanKeyword:
 			return GetBooleanDescriptor();
 		case ts.SyntaxKind.ObjectKeyword:

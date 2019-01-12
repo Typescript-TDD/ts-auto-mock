@@ -1,5 +1,5 @@
 export {};
-import { Mock } from "../../../src/mock/mock";
+import { Mock } from "ts-auto-mock";
 
 interface SpyWithReturnType<TR> {
   (...params: any[]): TR;
@@ -9,6 +9,6 @@ interface SpyWithReturnType<TR> {
   withArgs(...args: any[]): jasmine.Spy;
 }
 
-declare module '../../../src/mock/mock' {
+declare module 'ts-auto-mock' {
   interface MockMethodExtension<TReturn> extends SpyWithReturnType<Mock<TReturn>> {}
 }

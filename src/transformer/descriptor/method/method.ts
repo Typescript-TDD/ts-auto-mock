@@ -1,11 +1,8 @@
-import { GetDescriptor } from "../descriptor";
 import * as ts from 'typescript';
 import { MockDefiner } from "../../mockDefiner/mockDefiner";
 import { TypescriptHelper } from "../../helper/helper";
 
-export function GetMethodDescriptor(propertyName: ts.PropertyName, node: ts.SignatureDeclaration): ts.Expression {
-    const returnValue: ts.Expression = GetDescriptor(node.type);
-
+export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: ts.Expression): ts.Expression {
     const statementFactory = ts.createPropertyAccess(
         ts.createPropertyAccess(
             ts.createPropertyAccess(

@@ -7,7 +7,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
         alias: {
-            ['ts-auto-mock']: path.join(__dirname, '../src/publicApi')
+            ['ts-auto-mock']: path.join(__dirname, '../index')
         }
     },
     module: {

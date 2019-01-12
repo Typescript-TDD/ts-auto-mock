@@ -1,5 +1,5 @@
 import { createMock } from "../../../../src/transformer/create-mock";
-import { Mock } from "mock/mock";
+import { Mock } from "ts-auto-mock";
 
 describe('for methods', () => {
 	interface InterfaceReturnMethod {
@@ -46,7 +46,7 @@ describe('for methods', () => {
 			expect(properties.method()).toBe(0);
 		});
 	});
-	
+
 	describe('for a type function', () => {
 		type Fn = () => string;
 		it('should set the functions', () => {
