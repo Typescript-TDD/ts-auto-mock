@@ -26,13 +26,6 @@ describe('for functions assigned', () => {
         });
     });
 	
-	describe('for a function', () => {
-		it('should set the functions', () => {
-			const properties: () => string = createMock<() => string>();
-			expect(properties()).toBe("");
-		});
-	});
-	
 	describe('for recursion', () => {
 	    interface Interface {
 	        a: Interface;
