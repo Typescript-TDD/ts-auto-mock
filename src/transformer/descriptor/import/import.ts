@@ -1,12 +1,7 @@
 import { GetDescriptor } from "../descriptor";
-import * as ts from 'typescript';
-import { TypeChecker } from "../../typeChecker/typeChecker";
+import { GetTypeImport, ImportNode } from "../type/typeImport";
 
-type importNode = ts.ImportClause | ts.ImportSpecifier;
-
-export function GetImportDescriptor(node: importNode) {
-    const typeChecker = TypeChecker();
-	const symbol = typeChecker.getSymbolAtLocation(node.name);
-	const type = typeChecker.getDeclaredTypeOfSymbol(symbol);
-	return GetDescriptor(type.symbol.declarations[0]);
+export function GetImportDescriptor(node: ImportNode) {
+    const type = GetTypeImport(node);
+	return GetDescriptor(type);
 }
