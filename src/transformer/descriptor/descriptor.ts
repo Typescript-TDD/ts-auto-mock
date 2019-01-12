@@ -22,6 +22,9 @@ import { GetMethodDeclarationDescriptor } from "./method/methodDeclaration";
 import { GetFunctionAssignmentDescriptor } from "./method/functionAssignment";
 import { GetMockProperties } from '../mock/mockProperties';
 import { GetTypeAliasDescriptor } from "./typeAlias/typeAlias";
+import { GetObjectLiteralDescriptor } from "./objectLiteral/objectLiteral";
+import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";
+import { GetBooleanFalseDescriptor } from "./boolean/booleanFalse";
 
 export function GetDescriptorForMock(node: ts.Node): ts.Expression {
     TypeReferenceCache.instance.clear();
@@ -40,6 +43,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.ClassDeclaration:
 			return GetClassDeclarationDescriptor(node as ts.ClassDeclaration);
 		case ts.SyntaxKind.PropertySignature:
+		case ts.SyntaxKind.PropertyAssignment:
 			return GetPropertyDescriptor(node as ts.PropertySignature);
 		case ts.SyntaxKind.PropertyDeclaration:
 			return GetPropertyDescriptor(node as ts.PropertyDeclaration);
@@ -79,12 +83,14 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.NumberKeyword:
 			return GetNumberDescriptor();
 		case ts.SyntaxKind.TrueKeyword:
-			return ts.createLiteral(true);
+			return GetBooleanTrueDescriptor();
 		case ts.SyntaxKind.FalseKeyword:
-			return ts.createLiteral(false);
+			return GetBooleanFalseDescriptor();
 		case ts.SyntaxKind.NumericLiteral:
 		case ts.SyntaxKind.StringLiteral:
 			return GetLiteralDescriptor(node as ts.LiteralTypeNode);
+		case ts.SyntaxKind.ObjectLiteralExpression:
+			return GetObjectLiteralDescriptor((node as ts.ObjectLiteralExpression));
 		case ts.SyntaxKind.BooleanKeyword:
 			return GetBooleanDescriptor();
 		case ts.SyntaxKind.ObjectKeyword:

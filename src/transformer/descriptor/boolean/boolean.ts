@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
+import { GetBooleanFalseDescriptor } from "./booleanFalse";
 
 export function GetBooleanDescriptor(): ts.Expression {
-	return ts.createLiteral(false);
+	return GetBooleanFalseDescriptor();
 }

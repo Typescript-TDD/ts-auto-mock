@@ -44,4 +44,34 @@ describe('when assigned directly', () => {
 			expect(properties.value).toBe(true);
 		});
 	});
+	
+	describe('return object', () => {
+		class MyClass {
+			public value = {};
+		}
+		
+		it('should set the value', () => {
+			const properties: MyClass = createMock<MyClass>();
+			expect(properties.value).toEqual({});
+		});
+	});
+	
+	describe('return object with properties', () => {
+		class MyClass {
+			public value = {
+				a: 2,
+				b: false,
+				c: "test"
+			};
+		}
+		
+		it('should set the value', () => {
+			const properties: MyClass = createMock<MyClass>();
+			expect(properties.value).toEqual({
+				a: 2,
+				b: false,
+				c: "test"
+			});
+		});
+	});
 });
