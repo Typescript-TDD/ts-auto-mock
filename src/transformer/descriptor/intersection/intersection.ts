@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { TypeChecker } from "../../typeChecker/typeChecker";
-import { GetMockProperties } from "../../mock/mockProperties";
+import { GetMockProperties } from "../mock/mockProperties";
 
 export function GetIntersectionDescriptor(node: ts.IntersectionTypeNode): ts.Expression {
     const typeChecker = TypeChecker();

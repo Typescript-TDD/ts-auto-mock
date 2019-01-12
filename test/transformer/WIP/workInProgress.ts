@@ -41,7 +41,7 @@ describe('for functions assigned', () => {
         
 		it('should work', () => {
 			const properties: Interface = createMock<Interface>();
-			expect(properties.b).toBe("s");
+			expect(properties.b).toBe("");
 		});
 	});
 });

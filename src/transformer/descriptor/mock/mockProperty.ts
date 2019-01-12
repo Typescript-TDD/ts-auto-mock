@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { TypescriptHelper } from "../helper/helper";
-import { GetDescriptor } from "../descriptor/descriptor";
+import { GetDescriptor } from "../descriptor";
 
 export function GetMockProperty(member: ts.PropertyDeclaration): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
 	const descriptor: ts.Expression = GetDescriptor(member);

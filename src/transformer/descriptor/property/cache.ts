@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { TypescriptHelper } from "../../helper/helper";
+import { TypescriptHelper } from "../helper/helper";
 
 export class PropertySignatureCache {
     private static _instance: PropertySignatureCache;

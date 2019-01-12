@@ -20,7 +20,7 @@ import { GetIntersectionDescriptor } from "./intersection/intersection";
 import { GetFunctionTypeDescriptor } from "./method/functionType";
 import { GetMethodDeclarationDescriptor } from "./method/methodDeclaration";
 import { GetFunctionAssignmentDescriptor } from "./method/functionAssignment";
-import { GetMockProperties } from '../mock/mockProperties';
+import { GetMockProperties } from './mock/mockProperties';
 import { GetTypeAliasDescriptor } from "./typeAlias/typeAlias";
 import { GetObjectLiteralDescriptor } from "./objectLiteral/objectLiteral";
 import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";

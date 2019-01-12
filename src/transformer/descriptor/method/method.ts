@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { MockDefiner } from "../../mockDefiner/mockDefiner";
-import { TypescriptHelper } from "../../helper/helper";
+import { TypescriptHelper } from "../helper/helper";
 
 export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: ts.Expression): ts.Expression {
     const statementFactory = ts.createPropertyAccess(

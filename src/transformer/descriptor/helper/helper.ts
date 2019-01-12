@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { TypeChecker } from "../typeChecker/typeChecker";
+import { TypeChecker } from "../../typeChecker/typeChecker";
 import { TypeScriptTypes, TypeScriptTypesFolder } from "../typescriptTypes/typescriptTypes";
 import { TypescriptTypesAdapter } from "../typescriptTypes/typescriptTypesAdapter";
 

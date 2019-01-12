@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { TypeChecker } from "../../typeChecker/typeChecker";
-import { GetMockProperties } from "../../mock/mockProperties";
-import { TypescriptHelper } from "../../helper/helper";
+import { GetMockProperties } from "../mock/mockProperties";
+import { TypescriptHelper } from "../helper/helper";
 
 export function GetInterfaceDeclarationDescriptor(node: ts.InterfaceDeclaration): ts.Expression {
     if (TypescriptHelper.isTypescriptType(node)) {

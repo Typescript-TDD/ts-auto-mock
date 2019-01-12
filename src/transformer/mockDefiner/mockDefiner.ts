@@ -5,7 +5,6 @@ import { GetDescriptorForMock } from '../descriptor/descriptor';
 import { createImportOnIdentifier } from '../helper/import';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
 
-
 export class MockDefiner {
 	private _typeChecker: ts.TypeChecker;
 	private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};

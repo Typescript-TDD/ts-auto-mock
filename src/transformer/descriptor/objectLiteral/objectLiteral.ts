@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { GetMockProperties } from "../../mock/mockProperties";
+import { GetMockProperties } from "../mock/mockProperties";
 import { TypeChecker } from "../../typeChecker/typeChecker";
 
 export function GetObjectLiteralDescriptor(node: ts.ObjectLiteralExpression): ts.Expression {
