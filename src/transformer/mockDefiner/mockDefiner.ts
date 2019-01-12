@@ -30,9 +30,9 @@ export class MockDefiner {
 
 	public generateFactoryIfNeeded(type: ts.TypeReferenceNode): ts.Expression {
 		this._typeChecker = TypeChecker();
-		const symbol = this._typeChecker.getSymbolAtLocation(type.typeName);
-		const declaredType = this._typeChecker.getDeclaredTypeOfSymbol(symbol);
-		const declaration = declaredType.symbol.declarations[0];
+		const definedType = this._typeChecker.getTypeAtLocation(type);
+		const declaration = definedType.symbol.declarations[0];
+		
 		const thisFile = type.getSourceFile();
 		const thisFileName = thisFile.fileName;
 
