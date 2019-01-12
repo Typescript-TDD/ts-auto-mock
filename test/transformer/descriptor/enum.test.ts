@@ -1,4 +1,5 @@
 import { createMock } from "../../../src/transformer/create-mock";
+import { Mock } from "mock/mock";
 
 describe('for enum', () => {
 	enum Direction {
@@ -22,7 +23,7 @@ describe('for enum', () => {
 	}
 	
 	it('should set the first enum', () => {
-		const properties: Interface = createMock<Interface>();
+		const properties: Mock<Interface> = createMock<Interface>();
 		expect(properties.a).toBe(Direction.Right);
 		expect(properties.b).toBe(DirectionAssign.Right);
 		expect(properties.c).toBe(DirectionAssignNumber.Right);

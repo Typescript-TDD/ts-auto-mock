@@ -1,4 +1,5 @@
 import { createMock } from "../../../src/transformer/create-mock";
+import { Mock } from "mock/mock";
 
 describe('for extends', () => {
 
@@ -19,7 +20,7 @@ describe('for extends', () => {
         }
 
         it('should set the default types', () => {
-            const properties: Interface = createMock<Interface>();
+            const properties: Mock<Interface> = createMock<Interface>();
             expect(properties.a).toBe("");
             expect(properties.property).toBe(false);
             expect(properties.b).toBe("");
@@ -40,7 +41,7 @@ describe('for extends', () => {
         }
 
         it('should set the default types', () => {
-            const properties: Class = createMock<Class>();
+            const properties: Mock<Class> = createMock<Class>();
             expect(properties.a).toBe("");
             expect(properties.property).toBe(false);
             expect(properties.b).toBe(0);

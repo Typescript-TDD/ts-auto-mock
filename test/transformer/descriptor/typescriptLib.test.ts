@@ -1,11 +1,12 @@
 import { createMock } from "../../../src/transformer/create-mock";
+import { Mock } from "mock/mock";
 
 describe('typescript lib', () => {
     it('should set an empty array', () => {
         interface Interface {
             a: Array<boolean>;
         }
-        const properties: Interface = createMock<Interface>();
+        const properties: Mock<Interface> = createMock<Interface>();
         expect(properties.a).toEqual([])
     });
 
@@ -13,7 +14,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: Number;
         }
-        const properties: Interface = createMock<Interface>();
+        const properties: Mock<Interface> = createMock<Interface>();
         expect(properties.a).toBe(0);
     });
 
@@ -21,7 +22,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: String;
         }
-        const properties: Interface = createMock<Interface>();
+        const properties: Mock<Interface> = createMock<Interface>();
         expect(properties.a).toBe("");
     });
 
@@ -29,15 +30,15 @@ describe('typescript lib', () => {
         interface Interface {
             a: Boolean;
         }
-        const properties: Interface = createMock<Interface>();
+        const properties: Mock<Interface> = createMock<Interface>();
         expect(properties.a).toBe(false);
     });
 
     it('should set the default value for empty object', () => {
         interface Interface {
-            a: Object;
+            a: object;
         }
-        const properties: Interface = createMock<Interface>();
+        const properties: Mock<Interface> = createMock<Interface>();
         expect(properties.a).toEqual({});
     });
 
@@ -45,7 +46,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: Function;
         }
-        const properties: Interface = createMock<Interface>();
+        const properties: Mock<Interface> = createMock<Interface>();
         expect(properties.a()).toBeUndefined();
     });
 });

@@ -1,5 +1,5 @@
 export {};
-import { CheckType } from "../../../src/mock/mock";
+import { Mock } from "../../../src/mock/mock";
 
 interface SpyWithReturnType<TR> {
   (...params: any[]): TR;
@@ -10,9 +10,5 @@ interface SpyWithReturnType<TR> {
 }
 
 declare module '../../../src/mock/mock' {
-  interface MockMethodExtension<TReturn> extends SpyWithReturnType<CheckType<TReturn>> {}
-
-  interface MockArrayExtension<TElement> {
-    generateList(quantity: number): void;
-  }
+  interface MockMethodExtension<TReturn> extends SpyWithReturnType<Mock<TReturn>> {}
 }

@@ -1,4 +1,5 @@
 import { createMock } from "../../../../src/transformer/create-mock";
+import { Mock } from "mock/mock";
 
 describe('for methods', () => {
 	interface InterfaceReturnMethod {
@@ -14,7 +15,7 @@ describe('for methods', () => {
 	}
 
 	it('should set the functions', () => {
-		const properties: Interface = createMock<Interface>();
+		const properties: Mock<Interface> = createMock<Interface>();
 		expect(properties.a()).toBeNull();
 		expect(properties.b()).toBe(0);
 		expect(properties.c()).toBe("");
@@ -28,7 +29,7 @@ describe('for methods', () => {
         }
 
         it('should set the functions', () => {
-            const properties: Interface = createMock<Interface>();
+            const properties: Mock<Interface> = createMock<Interface>();
             expect(properties.method()).toBe(0);
         });
 	});
@@ -41,7 +42,7 @@ describe('for methods', () => {
 		}
 
 		it('should set the functions', () => {
-			const properties: MyClass = createMock<MyClass>();
+			const properties: Mock<MyClass> = createMock<MyClass>();
 			expect(properties.method()).toBe(0);
 		});
 	});
@@ -49,7 +50,7 @@ describe('for methods', () => {
 	describe('for a type function', () => {
 		type Fn = () => string;
 		it('should set the functions', () => {
-			const properties: Fn = createMock<Fn>();
+			const properties: Mock<Fn> = createMock<Fn>();
 			expect(properties()).toBe("");
 		});
 	});

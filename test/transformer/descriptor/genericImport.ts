@@ -2,18 +2,19 @@ import { createMock } from "../../../src/transformer/create-mock";
 import { ImportWithGenerics } from "./interfaces/withGenerics";
 import { ImportWithGenerics as ClassGenerics } from "./classes/withGenerics";
 import { ImportWithGenerics as TypeGenerics } from "./types/withGenerics";
+import { Mock } from "mock/mock";
 
 describe('for generic', () => {
     describe('interfaces', () => {
         it('should set all the default values with import interfaces', () => {
-            const properties: ImportWithGenerics<string> = createMock<ImportWithGenerics<string>>();
+            const properties: Mock<ImportWithGenerics<string>> = createMock<ImportWithGenerics<string>>();
             expect(properties.a).toBe("");
         });
     });
 
     describe('classes', () => {
         it('should set all the default values with import classes', () => {
-            const properties: ClassGenerics<string> = createMock<ClassGenerics<string>>();
+            const properties: Mock<ClassGenerics<string>> = createMock<ClassGenerics<string>>();
             expect(properties.a).toBe("");
             expect(properties["_a"]).toBeUndefined();
         });
@@ -21,7 +22,7 @@ describe('for generic', () => {
 
     describe('types', () => {
         it('should set all the default values with import type', () => {
-            const properties: TypeGenerics<string> = createMock<TypeGenerics<string>>();
+            const properties: Mock<TypeGenerics<string>> = createMock<TypeGenerics<string>>();
             expect(properties.a).toBe("");
         });
     });

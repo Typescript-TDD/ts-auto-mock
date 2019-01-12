@@ -3,6 +3,12 @@
 
 ## Missing features
 
+* Few types are not mocked properly
+* Typings recursion create stack overflow
+* Typings from Typescript library needs to be mocked properly (only the most reasonable ones)
+* Implement jasmine and jest factories
+* Improve mock interface definition
+* Object type used for a property doesn't work well with typings
 
 ## Authors
 
