@@ -81,6 +81,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.MappedType:
 			return GetMappedDescriptor(node as ts.MappedTypeNode);
 		case ts.SyntaxKind.ArrayType:
+		case ts.SyntaxKind.TupleType:
 			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:
 			return GetStringDescriptor();
