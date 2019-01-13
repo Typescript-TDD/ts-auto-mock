@@ -57,4 +57,14 @@ describe('typescript lib', () => {
 		const properties: Mock<Interface> = createMock<Interface>();
 		expect(properties.a).toEqual([]);
 	});
+	
+	it('should set undefined for a Date', () => {
+		interface Interface {
+			a: Date;
+		}
+		
+		const properties: Mock<Interface> = createMock<Interface>();
+		console.log(properties.a);
+		expect(properties.a).toBeUndefined();
+	});
 });
