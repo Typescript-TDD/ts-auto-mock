@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { TypeScriptTypes } from "./typescriptTypes";
+import { TypescriptLibsTypes } from "./typescriptLibsTypes";
 import { GetNumberDescriptor } from "../number/number";
 import { GetArrayDescriptor } from "../array/array";
 import { GetNullDescriptor } from "../null/null";
@@ -8,19 +8,20 @@ import { GetBooleanDescriptor } from "../boolean/boolean";
 import { GetMockProperties } from "../mock/mockProperties";
 import { TypescriptHelper } from "../helper/helper";
 
-export function TypescriptTypesAdapter(type: TypeScriptTypes): ts.Expression {
+export function TypescriptLibsTypesAdapter(type: TypescriptLibsTypes): ts.Expression {
     switch (type) {
-        case(TypeScriptTypes.Array):
+        case(TypescriptLibsTypes.Array):
+        case(TypescriptLibsTypes.ReadonlyArray):
             return GetArrayDescriptor();
-        case(TypeScriptTypes.Number):
+        case(TypescriptLibsTypes.Number):
             return GetNumberDescriptor();
-        case(TypeScriptTypes.String):
+        case(TypescriptLibsTypes.String):
             return GetStringDescriptor();
-        case(TypeScriptTypes.Boolean):
+        case(TypescriptLibsTypes.Boolean):
             return GetBooleanDescriptor();
-        case(TypeScriptTypes.Object):
+        case(TypescriptLibsTypes.Object):
             return GetMockProperties([]);
-        case(TypeScriptTypes.Function):
+        case(TypescriptLibsTypes.Function):
             return TypescriptHelper.createEmptyFunctionExpression();
         default:
             return GetNullDescriptor();

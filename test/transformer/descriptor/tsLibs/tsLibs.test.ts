@@ -1,4 +1,4 @@
-import { createMock } from "../../../src/transformer/create-mock";
+import { createMock } from "../../../../src/transformer/create-mock";
 import { Mock } from "ts-auto-mock";
 
 describe('typescript lib', () => {
@@ -49,4 +49,12 @@ describe('typescript lib', () => {
         const properties: Mock<Interface> = createMock<Interface>();
         expect(properties.a()).toBeUndefined();
     });
+	
+	it('should set an empty array for a ReadOnlyArray', () => {
+		interface Interface {
+			a: ReadonlyArray<boolean>;
+		}
+		const properties: Mock<Interface> = createMock<Interface>();
+		expect(properties.a).toEqual([]);
+	});
 });

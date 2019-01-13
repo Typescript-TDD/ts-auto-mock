@@ -1,8 +1,8 @@
 import { createMock } from "../../../src/transformer/create-mock";
-import { ImportInterface, ImportInterfaceWithNestedInterface } from "./interfaces/importInterface";
-import ImportDefaultInterface from "./interfaces/importDefaultInterface";
-import { ImportNamespace } from "./interfaces/importNameSpace";
-import { ImportType, Type } from "./types/type";
+import { ImportInterface, ImportInterfaceWithNestedInterface } from "./utils/interfaces/importInterface";
+import ImportDefaultInterface from "./utils/interfaces/importDefaultInterface";
+import { ImportNamespace } from "./utils/interfaces/importNameSpace";
+import { ImportType, Type } from "./utils/types/type";
 import { Mock } from "ts-auto-mock";
 
 describe('with import', () => {

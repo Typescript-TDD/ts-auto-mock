@@ -1,5 +1,6 @@
-export enum TypeScriptTypes {
+export enum TypescriptLibsTypes {
     Array = "Array",
+	ReadonlyArray = "ReadonlyArray",
     Number = "Number",
     String = "String",
     Boolean = "Boolean",
@@ -7,4 +8,4 @@ export enum TypeScriptTypes {
     Function = "Function"
 }
 
-export const TypeScriptTypesFolder = "node_modules/typescript/lib";
+export const TypescriptLibsTypesFolder = "node_modules/typescript/lib";

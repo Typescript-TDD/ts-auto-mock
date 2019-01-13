@@ -1,5 +1,5 @@
 import { createMock } from "../../../src/transformer/create-mock";
-import { NameSpaceInterfaceImport } from "./namespace/namespace";
+import { NameSpaceInterfaceImport } from "./utils/namespace/namespace";
 namespace NameSpaceInterface {
     export interface Interface {
         a: boolean;

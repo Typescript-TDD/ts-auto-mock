@@ -1,7 +1,7 @@
 import { createMock } from "../../../src/transformer/create-mock";
-import { Class } from "./classes/class";
-import { AbstractClass } from "./classes/AbstractClass";
-import { EmptyClass } from "./classes/EmptyClass";
+import { Class } from "./utils/classes/class";
+import { AbstractClass } from "./utils/classes/AbstractClass";
+import { EmptyClass } from "./utils/classes/EmptyClass";
 import { Mock } from "ts-auto-mock";
 
 describe('for classes', () => {

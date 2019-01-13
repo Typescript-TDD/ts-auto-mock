@@ -1,6 +1,6 @@
 import { createMock } from "../../../src/transformer/create-mock";
-import { ImportType } from "./types/type";
-import { ImportInterface } from "./interfaces/importInterface";
+import { ImportType } from "./utils/types/type";
+import { ImportInterface } from "./utils/interfaces/importInterface";
 
 describe('for union', () => {
 	interface Interface {
