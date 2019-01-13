@@ -10,7 +10,6 @@
 * Object type used for a property doesn't work well with typings
 * Tuple type [string, number, ...]
 * key of
-* key in
 
 ## Authors
 
