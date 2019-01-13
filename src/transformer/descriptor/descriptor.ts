@@ -103,6 +103,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.NullKeyword:
 			return GetNullDescriptor();
 		case ts.SyntaxKind.AnyKeyword:
+		case ts.SyntaxKind.NeverKeyword:
 		case ts.SyntaxKind.UnknownKeyword:
 		case ts.SyntaxKind.UndefinedKeyword:
 		case ts.SyntaxKind.VoidKeyword:
