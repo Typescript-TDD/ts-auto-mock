@@ -1,13 +1,12 @@
 /*globals module, require */
-const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    mode: "development",
+    target: 'node',
+    externals: [nodeExternals()],
+    mode: "production",
     resolve: {
-        extensions: ['.ts', '.js'],
-        alias: {
-            ['ts-auto-mock']: path.join(__dirname, '../index')
-        }
+        extensions: ['.ts', '.js']
     },
     module: {
         rules: [
@@ -18,11 +17,9 @@ module.exports = {
         ]
     },
     entry: {
-        app: ['./index.ts']
+        index: ['./index.ts'],
     },
     output: {
-        filename: "index.js",
-        libraryTarget: "umd"
-    },
-    plugins: []
+        filename: "[name].js"
+    }
 };
