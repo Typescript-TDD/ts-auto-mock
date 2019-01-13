@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build": "webpack --config config/webpack.test.js",
-    "buildtest": "webpack --config config/webpack.js",
+    "build": "webpack --config config/webpack.build.js",
     "compileTransformer": "tsc --lib es6,dom --target ES5 src/transformer/transformer.ts",
     "test": "karma start config/karma/karma.config.js",
     "test-framework": "karma start config/karma/karma.config.framework.js"
@@ -21,6 +20,10 @@
     "dist/index.js",
     "**/*.d.ts"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uittorio/ts-auto-mock.git"
+  },
   "author": "Vittorio Guerriero",
   "license": "ISC",
   "devDependencies": {
