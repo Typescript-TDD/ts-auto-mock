@@ -22,8 +22,6 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>): Array<ts.Node> {
 			if (!hasLiteralOrPrimitive) {
 				newNodes = newNodes.concat(intersectionType);
 			}
-			
-			
 		} else {
 			newNodes.push(type);
 		}
@@ -50,6 +48,11 @@ export function GetType(node: ts.Node): ts.Node {
 	if (ts.isImportSpecifier(node)) {
 		const importType = GetTypeImport(node);
 		return GetType(importType);
+	}
+	
+	if (ts.isTypeOperatorNode(node)) {
+		const operatorNodeType = (node as ts.TypeOperatorNode).type;
+		return GetType(operatorNodeType);
 	}
 	
 	return node;

@@ -28,7 +28,11 @@ export namespace TypescriptHelper {
     }
 	
 	export function createEmptyProperty(): ts.PropertyDeclaration {
-		return ts.createProperty([], [], "", undefined, undefined, undefined);
+		return createProperty("", undefined);
+	}
+	
+	export function createProperty(propertyName: string, type: ts.TypeNode): ts.PropertyDeclaration {
+		return ts.createProperty([], [], propertyName, undefined, type, undefined);
 	}
 
     export function findParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {

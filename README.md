@@ -8,8 +8,7 @@
 * Implement jasmine and jest factories
 * Improve mock interface definition
 * Object type used for a property doesn't work well with typings
-* key of
-* never
+* key of with indexType
 
 ## Authors
 
