@@ -7,6 +7,7 @@ import { GetStringDescriptor } from "../string/string";
 import { GetBooleanDescriptor } from "../boolean/boolean";
 import { GetMockProperties } from "../mock/mockProperties";
 import { TypescriptHelper } from "../helper/helper";
+import { GetEmptyMethodDescriptor, GetMethodDescriptor } from "../method/method";
 
 export function TypescriptLibsTypesAdapter(type: TypescriptLibsTypes): ts.Expression {
     switch (type) {
@@ -22,7 +23,7 @@ export function TypescriptLibsTypesAdapter(type: TypescriptLibsTypes): ts.Expres
         case(TypescriptLibsTypes.Object):
             return GetMockProperties([]);
         case(TypescriptLibsTypes.Function):
-            return TypescriptHelper.createEmptyFunctionExpression();
+            return GetEmptyMethodDescriptor();
         default:
             return GetNullDescriptor();
     }
