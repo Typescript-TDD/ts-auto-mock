@@ -18,7 +18,8 @@
   ],
   "files": [
     "dist/index.js",
-    "index.d.ts"
+    "index.d.ts",
+    "src/**/*.d.ts"
   ],
   "repository": {
     "type": "git",
