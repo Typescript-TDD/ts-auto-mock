@@ -1,6 +1,5 @@
-import { createMock } from "../../../src/transformer/create-mock";
-import { ImportType } from "./utils/types/type";
-import { ImportInterface } from "./utils/interfaces/importInterface";
+import { createMock } from "../../../../src/transformer/create-mock";
+import { Mock } from "ts-auto-mock";
 
 describe('for union', () => {
 	interface Interface {
@@ -61,59 +60,14 @@ describe('for union', () => {
 		});
 	});
 	
-	describe('union optional type reference', () => {
-		type Type = null;
-		class MyClass {
-			test: string | Type;
-		}
-		
-		it('should not set the value', () => {
-			const properties: MyClass = createMock<MyClass>();
-			expect(properties.test).toBeUndefined();
-		});
-	});
-	
-	describe('union optional type import', () => {
-		class MyClass {
-			test: string | ImportType;
-		}
-
-		it('should not set the value', () => {
-			const properties: MyClass = createMock<MyClass>();
-			expect(properties.test).toBeUndefined();
-		});
-	});
-	
-	describe('union optional type interface import', () => {
-		class MyClass {
-			test: string | ImportInterface;
-		}
-		
-		it('should not set the value', () => {
-			const properties: MyClass = createMock<MyClass>();
-			expect(properties.test).toBe("");
-		});
-	});
-	
-	describe('union optional type object declared', () => {
-		class MyClass {
-			test: string | { a: string } | null;
-		}
-		
-		it('should not set the value', () => {
-			const properties: MyClass = createMock<MyClass>();
-			expect(properties.test).toBeUndefined();
-		});
-	});
-	
-	describe('union optional type declared value', () => {
-		class MyClass {
-			test: "2" | null;
-		}
-		
-		it('should not set the value', () => {
-			const properties: MyClass = createMock<MyClass>();
-			expect(properties.test).toBeUndefined();
+	describe('union literal type typescript lib', () => {
+		it('should assign the first value', () => {
+			type Type = {
+				test: Array<number> | Array<string>
+			};
+			const properties: Mock<Type> = createMock<Type>();
+			
+			expect(properties.test).toEqual([]);
 		});
 	});
 });

@@ -20,12 +20,13 @@ import { GetIntersectionDescriptor } from "./intersection/intersection";
 import { GetFunctionTypeDescriptor } from "./method/functionType";
 import { GetMethodDeclarationDescriptor } from "./method/methodDeclaration";
 import { GetFunctionAssignmentDescriptor } from "./method/functionAssignment";
-import { GetMockProperties } from './mock/mockProperties';
+import { GetMockPropertiesFromSymbol } from './mock/mockProperties';
 import { GetTypeAliasDescriptor } from "./typeAlias/typeAlias";
 import { GetObjectLiteralDescriptor } from "./objectLiteral/objectLiteral";
 import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";
 import { GetBooleanFalseDescriptor } from "./boolean/booleanFalse";
 import { GetUndefinedDescriptor } from "./undefined/undefined";
+import { GetMappedDescriptor } from "./mapped/mapped";
 
 export function GetDescriptorForMock(node: ts.Node): ts.Expression {
     TypeReferenceCache.instance.clear();
@@ -77,6 +78,8 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetIntersectionDescriptor(node as ts.IntersectionTypeNode);
 		case ts.SyntaxKind.EnumDeclaration:
 			return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
+		case ts.SyntaxKind.MappedType:
+			return GetMappedDescriptor(node as ts.MappedTypeNode);
 		case ts.SyntaxKind.ArrayType:
 			return GetArrayDescriptor();
 		case ts.SyntaxKind.StringKeyword:
@@ -95,7 +98,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.BooleanKeyword:
 			return GetBooleanDescriptor();
 		case ts.SyntaxKind.ObjectKeyword:
-			return GetMockProperties([]);
+			return GetMockPropertiesFromSymbol([]);
 		case ts.SyntaxKind.NullKeyword:
 			return GetNullDescriptor();
 		case ts.SyntaxKind.AnyKeyword:

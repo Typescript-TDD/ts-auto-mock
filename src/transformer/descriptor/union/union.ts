@@ -1,12 +1,13 @@
 import * as ts from 'typescript';
 import { GetDescriptor } from "../descriptor";
 import { GetUndefinedDescriptor } from "../undefined/undefined";
-import { GetType } from "../type/type";
+import { GetTypes } from "../type/type";
 
 export function GetUnionDescriptor(node: ts.UnionTypeNode): ts.Expression {
-	const notDefinedType = node.types.filter((typeNode: ts.TypeNode) => {
-		const findNode = GetType(typeNode);
-		return isNotDefinedType(findNode);
+	const findNodes = GetTypes(node.types);
+	
+	const notDefinedType = findNodes.filter((typeNode: ts.TypeNode) => {
+		return isNotDefinedType(typeNode);
 	});
 	
 	if (notDefinedType.length) {

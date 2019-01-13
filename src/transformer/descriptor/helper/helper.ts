@@ -43,4 +43,12 @@ export namespace TypescriptHelper {
 
         return (symbol.declarations[0] as Declaration).typeParameters;
     }
+    
+    export function IsLiteralOrPrimitive(typeNode: ts.Node) {
+		return ts.isLiteralTypeNode(typeNode) ||
+			typeNode.kind === ts.SyntaxKind.StringKeyword ||
+			typeNode.kind === ts.SyntaxKind.BooleanKeyword ||
+			typeNode.kind === ts.SyntaxKind.NumberKeyword ||
+			typeNode.kind === ts.SyntaxKind.ArrayType;
+	}
 }

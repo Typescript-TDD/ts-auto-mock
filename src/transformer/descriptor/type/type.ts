@@ -1,6 +1,36 @@
 import * as ts from 'typescript';
 import { TypeChecker } from "../../typeChecker/typeChecker";
 import { GetTypeImport } from "./typeImport";
+import { TypescriptHelper } from "../helper/helper";
+
+export function GetTypes(nodes: ts.NodeArray<ts.Node>): Array<ts.Node> {
+	let newNodes = [];
+	
+	nodes.forEach((node: ts.Node) => {
+		let type = GetType(node);
+		
+		if (ts.isUnionTypeNode(type)) {
+			const unionTypes = GetTypes(type.types);
+			newNodes = newNodes.concat(unionTypes);
+		} else if (ts.isIntersectionTypeNode(type)) {
+			const intersectionType = GetTypes(type.types);
+			
+			const hasLiteralOrPrimitive = intersectionType.some((type: ts.Node) => {
+				return TypescriptHelper.IsLiteralOrPrimitive(type)
+			});
+			
+			if (!hasLiteralOrPrimitive) {
+				newNodes = newNodes.concat(intersectionType);
+			}
+			
+			
+		} else {
+			newNodes.push(type);
+		}
+	});
+	
+	return newNodes;
+}
 
 export function GetType(node: ts.Node): ts.Node {
 	const typeChecker = TypeChecker();

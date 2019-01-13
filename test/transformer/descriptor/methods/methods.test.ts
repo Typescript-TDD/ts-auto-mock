@@ -13,7 +13,7 @@ describe('for methods', () => {
 		d(): string[];
 		e(): InterfaceReturnMethod;
 	}
-
+	
 	it('should set the functions', () => {
 		const properties: Mock<Interface> = createMock<Interface>();
 		expect(properties.a()).toBeUndefined();

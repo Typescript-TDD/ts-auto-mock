@@ -9,7 +9,7 @@ export function IsTypescriptType(node: ts.Node): boolean {
 	return fileName.includes(TypescriptLibsTypesFolder);
 }
 
-export function GetTypescriptType(node: ts.Node): ts.Expression {
+export function GetTypescriptTypeDescriptor(node: ts.Node): ts.Expression {
 	const type = TypeChecker().getTypeAtLocation(node);
 	
 	return TypescriptLibsTypesAdapter(TypescriptLibsTypes[type.symbol.name])

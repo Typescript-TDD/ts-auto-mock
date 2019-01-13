@@ -4,7 +4,7 @@ import { GetNumberDescriptor } from "../number/number";
 import { GetArrayDescriptor } from "../array/array";
 import { GetStringDescriptor } from "../string/string";
 import { GetBooleanDescriptor } from "../boolean/boolean";
-import { GetMockProperties } from "../mock/mockProperties";
+import { GetMockPropertiesFromSymbol } from "../mock/mockProperties";
 import { GetEmptyMethodDescriptor } from "../method/method";
 import { GetUndefinedDescriptor } from "../undefined/undefined";
 
@@ -20,7 +20,7 @@ export function TypescriptLibsTypesAdapter(type: TypescriptLibsTypes): ts.Expres
 		case(TypescriptLibsTypes.Boolean):
 			return GetBooleanDescriptor();
 		case(TypescriptLibsTypes.Object):
-			return GetMockProperties([]);
+			return GetMockPropertiesFromSymbol([]);
 		case(TypescriptLibsTypes.Function):
 			return GetEmptyMethodDescriptor();
 		default:

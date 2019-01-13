@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { GetMockProperties } from "../mock/mockProperties";
+import { GetMockPropertiesFromSymbol } from "../mock/mockProperties";
 import { TypeChecker } from "../../typeChecker/typeChecker";
 
 export function GetObjectLiteralDescriptor(node: ts.ObjectLiteralExpression): ts.Expression {
@@ -7,5 +7,5 @@ export function GetObjectLiteralDescriptor(node: ts.ObjectLiteralExpression): ts
 	const type = typeChecker.getTypeAtLocation(node);
 	const symbols = TypeChecker().getPropertiesOfType(type);
 	
-	return GetMockProperties(symbols);
+	return GetMockPropertiesFromSymbol(symbols);
 }
