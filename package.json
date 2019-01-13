@@ -1,6 +1,6 @@
 {
   "name": "ts-auto-mock",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "main": "dist/index.js",
   "types": "index.d.ts",
