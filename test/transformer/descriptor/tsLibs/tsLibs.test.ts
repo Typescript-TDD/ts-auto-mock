@@ -64,7 +64,6 @@ describe('typescript lib', () => {
 		}
 		
 		const properties: Mock<Interface> = createMock<Interface>();
-		console.log(properties.a);
 		expect(properties.a).toBeUndefined();
 	});
 });
