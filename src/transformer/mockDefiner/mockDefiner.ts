@@ -1,10 +1,9 @@
 import * as ts from 'typescript';
-import * as urlslug from 'url-slug';
+import * as urlSlug from "url-slug";
 import { TypeChecker } from '../typeChecker/typeChecker';
 import { GetDescriptorForMock } from '../descriptor/descriptor';
 import { createImportOnIdentifier } from '../helper/import';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
-
 export class MockDefiner {
 	private _typeChecker: ts.TypeChecker;
 	private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};
@@ -36,8 +35,9 @@ export class MockDefiner {
 		const thisFile = type.getSourceFile();
 		const thisFileName = thisFile.fileName;
 
+
 		if (!this._neededImportIdentifierPerFile[thisFileName]) {
-			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlslug(thisFileName, '_')}_repository`);
+			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlSlug(thisFileName, '_')}_repository`);
             this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
 		}
 

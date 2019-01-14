@@ -17,9 +17,11 @@
     "paths": {
       "ts-auto-mock": ["index"]
     },
+    "outDir": "dist",
     "baseUrl": "./"
   },
   "exclude": [
+    "test",
     "node_modules"
   ]
 }

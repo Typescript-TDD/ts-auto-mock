@@ -35,9 +35,10 @@ function visitNode(node: ts.Node): ts.Node {
     return ts.createCall(MockDefiner.instance.generateFactoryIfNeeded(node.typeArguments[0] as ts.TypeReferenceNode), [], []);
 }
 
-const indexTs = path.join(__dirname, 'create-mock.ts');
 function isKeysCallExpression(node: ts.Node): node is ts.CallExpression {
-    if (node.kind !== ts.SyntaxKind.CallExpression) {
+	const indexTs = path.join(__dirname, 'src/transformer/create-mock.d.ts');
+	
+	if (node.kind !== ts.SyntaxKind.CallExpression) {
         return false;
     }
 

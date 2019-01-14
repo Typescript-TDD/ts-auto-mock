@@ -6,6 +6,8 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "webpack --config config/webpack.build.js",
+    "buildTransformer": "tsc --lib es6,dom --target ES5 src/transformer/transformer.ts --outDir dist --declaration true",
+    "buildIndex": "tsc --lib es6,dom --target ES5 index.ts --outDir dist --declaration true",
     "compileTransformer": "tsc --lib es6,dom --target ES5 src/transformer/transformer.ts",
     "test": "karma start config/karma/karma.config.js",
     "test-framework": "karma start config/karma/karma.config.framework.js"
@@ -17,9 +19,7 @@
     "auto"
   ],
   "files": [
-    "dist/index.js",
-    "index.d.ts",
-    "src/**/*.d.ts"
+    "dist/**/*.*"
   ],
   "repository": {
     "type": "git",
@@ -40,16 +40,19 @@
     "karma-webpack": "3.0.5",
     "path": "0.12.7",
     "puppeteer": "1.11.0",
-    "source-map-support": "0.5.10",
+    "slug": "0.9.3",
     "ts-loader": "5.3.2",
     "ts-node": "7.0.1",
-    "ts-transformer-keys": "0.3.4",
     "typescript": "3.2.2",
     "url-slug": "2.0.0",
     "webpack": "4.28.3",
     "webpack-cli": "3.1.2",
     "webpack-merge": "4.2.1",
     "webpack-node-externals": "1.7.2"
+  },
+  "peerDependencies": {
+    "typescript": "3.2.2",
+    "url-slug": "2.0.0"
   },
   "dependencies": {}
 }

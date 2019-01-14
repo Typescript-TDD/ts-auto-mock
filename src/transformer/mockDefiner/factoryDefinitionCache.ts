@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as urlslug from 'url-slug';
+import * as urlSlug from "url-slug";
 
 export class FactoryDefinitionCache {
 	private _typeMockFactoryKeyMap: Map<ts.Declaration, string>;
@@ -24,7 +24,7 @@ export class FactoryDefinitionCache {
 
 	public createUniqueKeyForFactory(declarationMocked: ts.Declaration): string {
 		const declarationNameIdentifier = (declarationMocked as ts.InterfaceDeclaration | ts.ClassDeclaration).name;
-		const declarationNameSanitized: string = urlslug((declarationNameIdentifier && declarationNameIdentifier.text) || 'Anonimous', "_");
+		const declarationNameSanitized: string = urlSlug((declarationNameIdentifier && declarationNameIdentifier.text) || 'Anonimous', "_");
 		const baseFactoryName: string = `create__${declarationNameSanitized}__mock`;
 		const count = this._getNextUniqueCounterForKey(baseFactoryName);
 

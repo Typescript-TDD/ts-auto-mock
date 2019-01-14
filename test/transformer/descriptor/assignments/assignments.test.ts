@@ -1,4 +1,4 @@
-import { createMock } from "../../../../src/transformer/create-mock";
+import { createMock } from "../../../../dist/";
 
 describe('when assigned directly', () => {
 	describe('return number', () => {

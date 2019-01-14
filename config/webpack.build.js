@@ -1,10 +1,7 @@
 /*globals module, require */
-const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    target: 'node',
-    externals: [nodeExternals()],
-    mode: "production",
+    mode: "development",
     resolve: {
         extensions: ['.ts', '.js']
     },
@@ -12,7 +9,8 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                loader: 'ts-loader'
+                loader: 'ts-loader',
+                exclude: /node_modules/
             }
         ]
     },
@@ -20,6 +18,7 @@ module.exports = {
         index: ['./index.ts'],
     },
     output: {
+        libraryTarget: "commonjs",
         filename: "[name].js"
     }
 };

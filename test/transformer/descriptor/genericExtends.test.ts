@@ -1,4 +1,5 @@
 import { createMock } from "../../../src/transformer/create-mock";
+import { Mock } from "../../../src/mock/mock";
 
 describe('for generic', () => {
     describe('interfaces', () => {
@@ -25,8 +26,7 @@ describe('for generic', () => {
         });
 
         it('should return the value as null', () => { // we do not know the type at runtime of the invoke function
-            const properties: WithExtendsMethod<toBeExtended> = createMock<WithExtendsMethod<toBeExtended>>();
-            expect(properties.method<ItWillExtend>()).toBeNull();
+            const properties: Mock<WithExtendsMethod<toBeExtended>> = createMock<WithExtendsMethod<toBeExtended>>();
             expect(properties.method()).toBeNull();
         });
     });

@@ -1,4 +1,4 @@
-const transformers = require('../src/transformer/transformer');
+const tsAutoMock = require('../dist/src/transformer/transformer');
 const path = require('path');
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
                 options: {
                     getCustomTransformers: program => ({
                         before: [
-                            transformers.transformer(program)
+                            tsAutoMock.transformer(program)
                         ]
                     })
                 }
