@@ -21,7 +21,7 @@
     "src/mockFactory/*.d.ts",
     "src/mockRepository/*.d.ts",
     "src/transformer/transformer.d.ts",
-    "src/transformer/create-mock.d.ts",
+    "src/transformer/create-mock.ts",
     "index.d.ts",
     "index.js",
     "transformer.js"

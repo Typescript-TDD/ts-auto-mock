@@ -27,7 +27,7 @@ module.exports = {
     },
     output: {
         libraryTarget: "commonjs",
-        path: path.resolve("../"),
+        path: path.resolve(__dirname, ".."),
         filename: "transformer.js"
     }
 };
