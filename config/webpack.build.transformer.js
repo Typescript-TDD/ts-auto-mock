@@ -1,5 +1,6 @@
 /*globals module, require */
 const webpackNodeExternals = require("webpack-node-externals");
+const path = require('path');
 
 module.exports = {
     mode: "production",
@@ -26,6 +27,7 @@ module.exports = {
     },
     output: {
         libraryTarget: "commonjs",
+        path: path.resolve("../"),
         filename: "transformer.js"
     }
 };

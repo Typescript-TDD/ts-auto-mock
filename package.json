@@ -2,7 +2,7 @@
   "name": "ts-auto-mock",
   "version": "0.0.7",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "webpack --config config/webpack.build.js",
     "build-transformer": "webpack --config config/webpack.build.transformer.js",
@@ -17,7 +17,14 @@
     "auto"
   ],
   "files": [
-    "dist"
+    "src/mock/*.d.ts",
+    "src/mockFactory/*.d.ts",
+    "src/mockRepository/*.d.ts",
+    "src/transformer/transformer.d.ts",
+    "src/transformer/create-mock.d.ts",
+    "index.d.ts",
+    "index.js",
+    "transformer.js"
   ],
   "repository": {
     "type": "git",

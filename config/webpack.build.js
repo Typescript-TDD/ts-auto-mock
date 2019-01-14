@@ -1,4 +1,5 @@
 /*globals module, require */
+const path = require('path');
 
 module.exports = {
     mode: "production",
@@ -19,6 +20,7 @@ module.exports = {
     },
     output: {
         libraryTarget: "commonjs",
+        path: path.resolve(__dirname, "../"),
         filename: "[name].js"
     }
 };
