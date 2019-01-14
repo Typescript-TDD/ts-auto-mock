@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import * as urlSlug from "url-slug";
+const urlSlug = require("url-slug");
 import { TypeChecker } from '../typeChecker/typeChecker';
 import { GetDescriptorForMock } from '../descriptor/descriptor';
 import { createImportOnIdentifier } from '../helper/import';

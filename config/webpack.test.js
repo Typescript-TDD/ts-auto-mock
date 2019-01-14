@@ -1,4 +1,4 @@
-const tsAutoMock = require('../dist/src/transformer/transformer');
+const tsAutoMock = require('../src/transformer/transformer');
 const path = require('path');
 
 module.exports = {

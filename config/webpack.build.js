@@ -1,7 +1,7 @@
 /*globals module, require */
 
 module.exports = {
-    mode: "development",
+    mode: "production",
     resolve: {
         extensions: ['.ts', '.js']
     },

@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
-import * as urlSlug from "url-slug";
-
+const urlSlug = require("url-slug");
 export class FactoryDefinitionCache {
 	private _typeMockFactoryKeyMap: Map<ts.Declaration, string>;
 	private _keyCounters: Map<string, number>;

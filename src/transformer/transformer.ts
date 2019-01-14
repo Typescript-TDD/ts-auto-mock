@@ -36,8 +36,8 @@ function visitNode(node: ts.Node): ts.Node {
 }
 
 function isKeysCallExpression(node: ts.Node): node is ts.CallExpression {
-	const indexTs = path.join(__dirname, 'src/transformer/create-mock.d.ts');
-	
+	const indexTs = path.join(__dirname, 'src/transformer/create-mock.ts');
+
 	if (node.kind !== ts.SyntaxKind.CallExpression) {
         return false;
     }
