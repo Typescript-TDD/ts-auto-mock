@@ -7,6 +7,7 @@ export function transformer(program: ts.Program): ts.TransformerFactory<ts.Sourc
     SetTypeChecker(program.getTypeChecker());
 
     return (context: ts.TransformationContext) => (file: ts.SourceFile) => {
+        MockDefiner.instance.initFile(file);
         let sourceFile = visitNodeAndChildren(file, context);
 
         sourceFile = ts.updateSourceFileNode(sourceFile, [

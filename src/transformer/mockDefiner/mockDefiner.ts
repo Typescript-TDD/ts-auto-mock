@@ -27,6 +27,10 @@ export class MockDefiner {
 		return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile)];
 	}
 
+	public initFile(sourceFile: ts.SourceFile): void {
+		this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
+	}
+
 	public generateFactoryIfNeeded(type: ts.TypeReferenceNode): ts.Expression {
 		this._typeChecker = TypeChecker();
 		const definedType = this._typeChecker.getTypeAtLocation(type);
@@ -35,11 +39,10 @@ export class MockDefiner {
 		const thisFile = type.getSourceFile();
 		const thisFileName = thisFile.fileName;
 
-
 		if (!this._neededImportIdentifierPerFile[thisFileName]) {
 			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlSlug(thisFileName, '_')}_repository`);
-            this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
 		}
+		this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
 
 		const key = this._registerIfNeeded(thisFileName, type, declaration);
 

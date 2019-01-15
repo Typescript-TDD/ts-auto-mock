@@ -1,11 +1,11 @@
 import * as ts from 'typescript';
 const urlSlug = require("url-slug");
 export class FactoryDefinitionCache {
-	private _typeMockFactoryKeyMap: Map<ts.Declaration, string>;
+	private _typeMockFactoryKeyMap: WeakMap<ts.Declaration, string>;
 	private _keyCounters: Map<string, number>;
 
 	constructor() {
-		this._typeMockFactoryKeyMap = new Map();
+		this._typeMockFactoryKeyMap = new WeakMap();
 		this._keyCounters = new Map();
 	}
 
