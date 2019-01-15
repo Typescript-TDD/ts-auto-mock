@@ -4,11 +4,16 @@
 ## Missing features
 
 * Typings recursion create stack overflow
+* Bug on watch test
+* Documentation
+* create more complex interface instead of merged types (Giulio proposal)
 * Typings from Typescript library needs to be mocked properly (only the most reasonable ones)
 * Implement jasmine and jest factories
-* Improve mock interface definition
-* Object type used for a property doesn't work well with typings
+* Improve mock interface definition //NOT DOING
+* Object type used for a property doesn't work well with typings // NOT DOING
 * key of with indexType
+* AlwaysUseCustomMock
+* Test all possible environments (jasmine+karma, jasminets, jest ...)
 
 ## Authors
 
