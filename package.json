@@ -9,7 +9,8 @@
     "build": "npm run build-index & npm run build-transformer",
     "compileTransformer": "tsc --lib es6,dom --target ES5 src/transformer/transformer.ts",
     "test": "karma start config/karma/karma.config.js",
-    "test-framework": "karma start config/karma/karma.config.framework.js"
+    "test-framework": "karma start config/karma/karma.config.framework.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "typescript",
