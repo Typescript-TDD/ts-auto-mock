@@ -1,5 +1,7 @@
 import * as ts from 'typescript';
 import { TypescriptLibsTypes } from "./typescriptLibsTypes";
+import { GetEmptyMethodDescriptor } from "../method/method";
+import { TypeChecker } from "../../typeChecker/typeChecker";
 
 export function TypescriptLibsTypeAdapter(type: TypescriptLibsTypes): ts.Node {
 	switch (type) {
@@ -14,9 +16,10 @@ export function TypescriptLibsTypeAdapter(type: TypescriptLibsTypes): ts.Node {
 			return ts.createNode(ts.SyntaxKind.BooleanKeyword);
 		case(TypescriptLibsTypes.Object):
             return ts.createNode(ts.SyntaxKind.TypeLiteral);
-		case(TypescriptLibsTypes.Function):
-			return ts.createNode(ts.SyntaxKind.FunctionType);
+        case(TypescriptLibsTypes.Function):
+            const type = ts.createNode(ts.SyntaxKind.VoidKeyword);
+            return ts.createFunctionTypeNode([], [], type as ts.TypeNode);
 		default:
-			return ts.createNode(ts.SyntaxKind.NullKeyword);
+			return ts.createNode(ts.SyntaxKind.UndefinedKeyword);
 	}
 }

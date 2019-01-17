@@ -48,9 +48,9 @@ export class MockDefiner {
 		this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
 	}
 
-	public generateFactoryIfNeeded(type: PossibleTypeNode): ts.Expression {
+	public generateFactoryIfNeeded(node: PossibleTypeNode): ts.Expression {
 		this._typeChecker = TypeChecker();
-		const definedType = this._typeChecker.getTypeAtLocation(type);
+		const definedType = this._typeChecker.getTypeAtLocation(node);
 		const declaration = definedType.symbol.declarations[0];
 		
 		const thisFileName = this._fileName;
@@ -60,7 +60,7 @@ export class MockDefiner {
 		}
 		this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
 
-		const key = this._registerIfNeeded(thisFileName, type, declaration);
+		const key = this._registerIfNeeded(thisFileName, node, declaration);
 
 		return ts.createCall(
 			ts.createPropertyAccess(

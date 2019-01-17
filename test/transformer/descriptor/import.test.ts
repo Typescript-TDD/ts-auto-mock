@@ -46,9 +46,9 @@ describe('with import', () => {
 			expect(properties.a).toBe("");
 		});
 
-		// it('should set the correct property', () => {
-		// 	const properties: Mock<{ a: ImportType }> = createMock<{ a: ImportType }>();
-		// 	expect(properties.a).toBeUndefined();
-		// });
+		it('should set the correct property', () => {
+			const properties: Mock<{ a: ImportType }> = createMock<{ a: ImportType }>();
+			expect(properties.a).toBeUndefined();
+		});
 	});
 });

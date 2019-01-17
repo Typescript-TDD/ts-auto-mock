@@ -10,5 +10,6 @@ describe('recursive', () => {
         const mock: Mock<Interface> = createMock<Interface>();
         expect(mock.a).toBe(0);
         expect(mock.b.a).toBe(0);
+        expect(mock.b.b.b.b.b.a).toBe(0);
     });
 });

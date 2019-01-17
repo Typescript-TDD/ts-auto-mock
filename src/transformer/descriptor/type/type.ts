@@ -56,7 +56,7 @@ export function GetType(node: ts.Node): ts.Node {
 		return GetType(operatorNodeType);
 	}
 
-	if (IsTypescriptType(node)) {
+	if (ts.isInterfaceDeclaration(node) && IsTypescriptType(node)) {
 	    return GetTypescriptType(node);
     }
 	

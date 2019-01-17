@@ -4,9 +4,8 @@ import { TypescriptLibsTypes, TypescriptLibsTypesFolder } from "./typescriptLibs
 import { TypescriptLibsTypeAdapter } from "./typescriptLibsTypeAdapter";
 
 export function IsTypescriptType(node: ts.Node): boolean {
-	const fileName = node.getSourceFile().fileName;
-	
-	return fileName.includes(TypescriptLibsTypesFolder);
+    const fileName = node.getSourceFile().fileName;
+    return fileName.includes(TypescriptLibsTypesFolder);
 }
 
 export function GetTypescriptType(node: ts.Node): ts.Node {
