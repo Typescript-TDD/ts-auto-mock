@@ -1,4 +1,4 @@
-import { createMock } from "../../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 import { ImportWithGenerics } from "./utils/interfaces/withGenerics";
 import { ImportWithGenerics as ClassGenerics } from "./utils/classes/withGenerics";
 import { ImportWithGenerics as TypeGenerics } from "./utils/types/withGenerics";

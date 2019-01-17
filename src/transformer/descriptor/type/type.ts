@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import { TypeChecker } from "../../typeChecker/typeChecker";
 import { GetTypeImport } from "./typeImport";
 import { TypescriptHelper } from "../helper/helper";
+import { GetTypescriptType, IsTypescriptType } from "../tsLibs/typecriptLibs";
 
 export function GetTypes(nodes: ts.NodeArray<ts.Node>): Array<ts.Node> {
 	let newNodes = [];
@@ -45,7 +46,7 @@ export function GetType(node: ts.Node): ts.Node {
 		return GetType(typeCast.type);
 	}
 	
-	if (ts.isImportSpecifier(node)) {
+	if (ts.isImportSpecifier(node) || ts.isImportClause(node)) {
 		const importType = GetTypeImport(node);
 		return GetType(importType);
 	}
@@ -54,6 +55,10 @@ export function GetType(node: ts.Node): ts.Node {
 		const operatorNodeType = (node as ts.TypeOperatorNode).type;
 		return GetType(operatorNodeType);
 	}
+
+	if (IsTypescriptType(node)) {
+	    return GetTypescriptType(node);
+    }
 	
 	return node;
 }

@@ -1,4 +1,4 @@
-import { createMock } from "../../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 import { NameSpaceInterfaceImport } from "./utils/namespace/namespace";
 namespace NameSpaceInterface {
     export interface Interface {

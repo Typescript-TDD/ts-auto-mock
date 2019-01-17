@@ -1,4 +1,4 @@
-import { createMock } from "../../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 
 describe('for interfaces', () => {
 	describe('with multiple properties', () => {
@@ -7,7 +7,7 @@ describe('for interfaces', () => {
 			b: string;
 			c: number;
 		}
-		
+
 		it('should set the default properties', () => {
 			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBe(false);
@@ -24,7 +24,7 @@ describe('for interfaces', () => {
             expect(properties).toEqual({});
         });
     });
-	
+
 	describe('with nested properties', () => {
 		interface Interface {
 			a: {
@@ -33,28 +33,28 @@ describe('for interfaces', () => {
 				}
 			};
 		}
-		
+
 		it('should set the default properties to the nested object', () => {
 			const properties: Interface = createMock<Interface>();
 			expect(properties.a.b.c).toBe("");
 		});
-		
+
 		it('should be able to change the value', () => {
 			const properties: Interface = createMock<Interface>();
 			properties.a.b.c = "test2";
 			expect(properties.a.b.c).toBe("test2");
 		});
 	});
-	
+
 	describe('with nested interfaces', () => {
 		interface Interface {
 			a: InterfaceSub
 		}
-		
+
 		interface InterfaceSub {
 			subA: string
 		}
-		
+
 		it('should set the default properties to the nested object', () => {
 			const properties: Interface = createMock<Interface>();
 			expect(properties.a.subA).toBe("");
@@ -65,9 +65,9 @@ describe('for interfaces', () => {
 		interface Interface {
 			a: Type
 		}
-		
+
 		type Type = string;
-		
+
 		it('should set the default property', () => {
 			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBe("");
@@ -78,12 +78,12 @@ describe('for interfaces', () => {
 		interface Interface {
 			a: Type
 		}
-		
+
 		type Type = {
 			e: string;
 			f: number;
 		};
-		
+
 		it('should set the default property', () => {
 			const properties: Interface = createMock<Interface>();
 			expect(properties.a.e).toBe("");

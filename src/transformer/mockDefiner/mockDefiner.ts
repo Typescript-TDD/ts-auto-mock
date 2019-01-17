@@ -1,9 +1,19 @@
 import * as ts from 'typescript';
 const urlSlug = require("url-slug");
 import { TypeChecker } from '../typeChecker/typeChecker';
-import { GetDescriptorForMock } from '../descriptor/descriptor';
+import { GetDescriptor } from '../descriptor/descriptor';
 import { createImportOnIdentifier } from '../helper/import';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
+import { GetTypeReferenceDescriptor } from "../descriptor/typeReference/typeReference";
+type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLiteralNode;
+
+function GetPossibleDescriptor(node: ts.Node): ts.Expression {
+    if (node.kind === ts.SyntaxKind.TypeReference) {
+        return GetTypeReferenceDescriptor((node as ts.TypeReferenceNode))
+    }
+
+    return GetDescriptor(node);
+}
 export class MockDefiner {
 	private _typeChecker: ts.TypeChecker;
 	private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};
@@ -12,6 +22,7 @@ export class MockDefiner {
 
 	private static _instance: MockDefiner;
     public currentTsAutoMockImportName: ts.Identifier;
+    private _fileName: string;
 
     public static get instance(): MockDefiner {
 		this._instance = this._instance || new MockDefiner();
@@ -23,6 +34,12 @@ export class MockDefiner {
 		this._typeChecker = TypeChecker();
 	}
 
+
+    public setFileNameFromNode(node: ts.TypeNode): void {
+        const thisFile = node.getSourceFile();
+        this._fileName = thisFile.fileName;
+    }
+
 	public getTopStatementsForFile(sourceFile: ts.SourceFile): Array<ts.Statement> {
 		return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile)];
 	}
@@ -31,13 +48,12 @@ export class MockDefiner {
 		this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
 	}
 
-	public generateFactoryIfNeeded(type: ts.TypeReferenceNode): ts.Expression {
+	public generateFactoryIfNeeded(type: PossibleTypeNode): ts.Expression {
 		this._typeChecker = TypeChecker();
 		const definedType = this._typeChecker.getTypeAtLocation(type);
 		const declaration = definedType.symbol.declarations[0];
 		
-		const thisFile = type.getSourceFile();
-		const thisFileName = thisFile.fileName;
+		const thisFileName = this._fileName;
 
 		if (!this._neededImportIdentifierPerFile[thisFileName]) {
 			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlSlug(thisFileName, '_')}_repository`);
@@ -66,7 +82,7 @@ export class MockDefiner {
 		);
 	}
 
-	private _registerIfNeeded(thisFileName: string, type: ts.TypeReferenceNode, declaration: ts.Declaration): string {
+	private _registerIfNeeded(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
 		if(this._factoryCache.hasFactoryForTypeMock(declaration)) {
 			return this._factoryCache.getFactoryKeyForTypeMock(declaration);
 		}
@@ -78,11 +94,13 @@ export class MockDefiner {
 
 		this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
 
+		const descriptor = GetPossibleDescriptor(type);
+
 		this._factoryRegistrationsPerFile[thisFileName].push({
 			key: declaration,
 			factory: ts.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined,
 				ts.createBlock(
-					[ts.createReturn(GetDescriptorForMock(type))]
+					[ts.createReturn(descriptor)]
 				)
 			)
 		});

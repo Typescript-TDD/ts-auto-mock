@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
-import { TypescriptLibsTypesAdapter } from "./typescriptLibsTypesAdapter";
 import { TypeChecker } from "../../typeChecker/typeChecker";
 import { TypescriptLibsTypes, TypescriptLibsTypesFolder } from "./typescriptLibsTypes";
+import { TypescriptLibsTypeAdapter } from "./typescriptLibsTypeAdapter";
 
 export function IsTypescriptType(node: ts.Node): boolean {
 	const fileName = node.getSourceFile().fileName;
@@ -9,8 +9,8 @@ export function IsTypescriptType(node: ts.Node): boolean {
 	return fileName.includes(TypescriptLibsTypesFolder);
 }
 
-export function GetTypescriptTypeDescriptor(node: ts.Node): ts.Expression {
-	const type = TypeChecker().getTypeAtLocation(node);
-	
-	return TypescriptLibsTypesAdapter(TypescriptLibsTypes[type.symbol.name])
+export function GetTypescriptType(node: ts.Node): ts.Node {
+    const type = TypeChecker().getTypeAtLocation(node);
+
+    return TypescriptLibsTypeAdapter(TypescriptLibsTypes[type.symbol.name])
 }

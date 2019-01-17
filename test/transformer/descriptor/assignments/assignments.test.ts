@@ -1,4 +1,4 @@
-import { createMock } from "../../../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 
 describe('when assigned directly', () => {
 	describe('return number', () => {

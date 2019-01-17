@@ -1,11 +1,12 @@
 import * as ts from 'typescript';
 import { TypeChecker } from "../../typeChecker/typeChecker";
 import { GetMockPropertiesFromSymbol } from "../mock/mockProperties";
-import { GetTypescriptTypeDescriptor, IsTypescriptType } from "../tsLibs/typecriptLibs";
+import { GetTypescriptType, IsTypescriptType } from "../tsLibs/typecriptLibs";
+import { GetDescriptor } from "../descriptor";
 
 export function GetInterfaceDeclarationDescriptor(node: ts.InterfaceDeclaration): ts.Expression {
     if (IsTypescriptType(node)) {
-       return GetTypescriptTypeDescriptor(node);
+       return GetDescriptor(GetTypescriptType(node));
     }
 
     const typeChecker = TypeChecker();
