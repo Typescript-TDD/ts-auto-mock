@@ -1,18 +1,6 @@
-import { createMock } from "../../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 import { Mock } from "ts-auto-mock";
-describe('for functions assigned', () => {
-	describe('for recursion', () => {
-	    interface Interface {
-	        a: Interface;
-	        b: string;
-        }
-        
-		it('should work', () => {
-			const properties: Interface = createMock<Interface>();
-			expect(properties.b).toBe("");
-		});
-	});
-	
+describe('work in progress', () => {
 	describe('extends typescript libs', () => {
 		interface Interface extends Array<string> {
 			b: string;

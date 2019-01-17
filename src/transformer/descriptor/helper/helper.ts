@@ -21,11 +21,6 @@ export namespace TypescriptHelper {
     export function createFunctionExpression(block: ts.Block, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.FunctionExpression {
         return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
     }
-
-    export function createEmptyFunctionExpression(): ts.FunctionExpression {
-        const block = ts.createBlock([]);
-        return createFunctionExpression(block);
-    }
 	
 	export function createEmptyProperty(): ts.PropertyDeclaration {
 		return createProperty("", undefined);
