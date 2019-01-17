@@ -4,9 +4,10 @@ import { TypeChecker, SetTypeChecker } from './typeChecker/typeChecker';
 import { MockDefiner } from './mockDefiner/mockDefiner';
 import { GetNullDescriptor } from "./descriptor/null/null";
 import { GetType } from "./descriptor/type/type";
-import { IsValidTypeToMock } from "./typeValidator/typeValidator";
+import { isTypeReusable } from "./typeValidator/typeValidator";
 import { TypeReferenceCache } from "./descriptor/typeReference/cache";
 import { GetMockFactoryCall } from "./mockFactoryCall/mockFactoryCall";
+import { GetDescriptor } from "./descriptor/descriptor";
 
 export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());
@@ -41,13 +42,13 @@ function visitNode(node: ts.Node): ts.Node {
     const nodeToMock = node.typeArguments[0];
     const nodeResolved = GetType(nodeToMock);
 
-    if (IsValidTypeToMock(nodeResolved)) {
+    if (isTypeReusable(nodeResolved)) {
         TypeReferenceCache.instance.clear();
         MockDefiner.instance.setFileNameFromNode(nodeToMock);
         return GetMockFactoryCall(nodeToMock);
+    } else {
+        return GetDescriptor(nodeToMock);
     }
-
-    return GetWrongTypeError(nodeResolved);
 }
 
 function isKeysCallExpression(node: ts.Node): node is ts.CallExpression {
@@ -68,15 +69,4 @@ function isKeysCallExpression(node: ts.Node): node is ts.CallExpression {
         && (path.join(declaration.getSourceFile().fileName) === indexTs)
         && !!declaration['name']
         && (declaration['name'].getText() === 'createMock');
-}
-function GetWrongTypeError(node: ts.Node): ts.Expression {
-    const message: string = "Cannot convert type "+ ts.SyntaxKind[node.kind] + " to a mock";
-    let { line, character } = node.getSourceFile().getLineAndCharacterOfPosition(
-        node.getStart()
-    );
-    console.error(
-        `${node.getSourceFile().fileName} (${line + 1},${character + 1}): ${message}`
-    );
-
-    return GetNullDescriptor();
 }

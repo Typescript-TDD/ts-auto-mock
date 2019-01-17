@@ -25,7 +25,7 @@ import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";
 import { GetBooleanFalseDescriptor } from "./boolean/booleanFalse";
 import { GetUndefinedDescriptor } from "./undefined/undefined";
 import { GetMappedDescriptor } from "./mapped/mapped";
-import { IsValidTypeToMock } from "../typeValidator/typeValidator";
+import { isTypeReusable } from "../typeValidator/typeValidator";
 import { GetTypeReferenceDescriptor } from "./typeReference/typeReference";
 import { GetMockFactoryCall } from "../mockFactoryCall/mockFactoryCall";
 
@@ -34,7 +34,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.TypeAliasDeclaration:
 			return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration);
 		case ts.SyntaxKind.TypeReference:
-            if (IsValidTypeToMock(node)) {
+            if (isTypeReusable(node)) {
                 return GetMockFactoryCall(node);
             } else {
                 return GetTypeReferenceDescriptor(node as ts.TypeReferenceNode);

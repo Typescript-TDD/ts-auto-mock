@@ -1,7 +1,7 @@
 import { GetType } from "../descriptor/type/type";
 import * as ts from 'typescript';
 
-const validTypes = [
+const reusableTypes = [
     ts.SyntaxKind.ClassDeclaration,
     ts.SyntaxKind.InterfaceDeclaration,
     ts.SyntaxKind.TypeLiteral,
@@ -9,7 +9,7 @@ const validTypes = [
     ts.SyntaxKind.FunctionType
 ];
 
-export function IsValidTypeToMock(node: ts.Node) {
+export function isTypeReusable(node: ts.Node) {
     const nodeResolved = GetType(node);
-    return validTypes.includes(nodeResolved.kind);
+    return reusableTypes.includes(nodeResolved.kind);
 }
