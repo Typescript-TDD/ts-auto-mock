@@ -6,6 +6,7 @@ import { GetNullDescriptor } from "./descriptor/null/null";
 import { GetType } from "./descriptor/type/type";
 import { IsValidTypeToMock } from "./typeValidator/typeValidator";
 import { TypeReferenceCache } from "./descriptor/typeReference/cache";
+import { GetMockFactoryCall } from "./mockFactoryCall/mockFactoryCall";
 
 export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());
@@ -43,9 +44,7 @@ function visitNode(node: ts.Node): ts.Node {
     if (IsValidTypeToMock(nodeResolved)) {
         TypeReferenceCache.instance.clear();
         MockDefiner.instance.setFileNameFromNode(nodeToMock);
-        const mockCall = MockDefiner.instance.generateFactoryIfNeeded(nodeToMock as ts.TypeReferenceNode);
-
-        return ts.createCall(mockCall, [], []);
+        return GetMockFactoryCall(nodeToMock);
     }
 
     return GetWrongTypeError(nodeResolved);

@@ -25,9 +25,9 @@ import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";
 import { GetBooleanFalseDescriptor } from "./boolean/booleanFalse";
 import { GetUndefinedDescriptor } from "./undefined/undefined";
 import { GetMappedDescriptor } from "./mapped/mapped";
-import { MockDefiner } from "../mockDefiner/mockDefiner";
 import { IsValidTypeToMock } from "../typeValidator/typeValidator";
 import { GetTypeReferenceDescriptor } from "./typeReference/typeReference";
+import { GetMockFactoryCall } from "../mockFactoryCall/mockFactoryCall";
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
@@ -35,11 +35,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration);
 		case ts.SyntaxKind.TypeReference:
             if (IsValidTypeToMock(node)) {
-                return ts.createCall(
-                    MockDefiner.instance.generateFactoryIfNeeded(node as ts.TypeReferenceNode),
-                    [],
-                    []
-                );
+                return GetMockFactoryCall(node);
             } else {
                 return GetTypeReferenceDescriptor(node as ts.TypeReferenceNode);
             }
@@ -60,11 +56,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.Identifier:
 			return GetIdentifierDescriptor(node as ts.Identifier);
 		case ts.SyntaxKind.ThisType:
-            return ts.createCall(
-                MockDefiner.instance.generateFactoryIfNeeded(node as ts.TypeReferenceNode),
-                [],
-                []
-            );
+            return GetMockFactoryCall(node);
 		case ts.SyntaxKind.ImportSpecifier:
 			return GetImportDescriptor(node as ts.ImportSpecifier);
 		case ts.SyntaxKind.TypeParameter:
