@@ -50,20 +50,33 @@ describe('typescript lib', () => {
         expect(properties.a()).toBeUndefined();
     });
 
-	it('should set an empty array for a ReadOnlyArray', () => {
-		interface Interface {
-			a: ReadonlyArray<boolean>;
-		}
-		const properties: Mock<Interface> = createMock<Interface>();
-		expect(properties.a).toEqual([]);
-	});
+    it('should set an empty array for a ReadOnlyArray', () => {
+        interface Interface {
+            a: ReadonlyArray<boolean>;
+        }
+        const properties: Mock<Interface> = createMock<Interface>();
+        expect(properties.a).toEqual([]);
+    });
 
-	it('should set undefined for a Date', () => {
-		interface Interface {
-			a: Date;
-		}
+    it('should set undefined for a Date', () => {
+        interface Interface {
+            a: Date;
+        }
 
-		const properties: Mock<Interface> = createMock<Interface>();
-		expect(properties.a).toBeUndefined();
-	});
+        const properties: Mock<Interface> = createMock<Interface>();
+        expect(properties.a).toBeUndefined();
+    });
+
+    it('should set a promise resolved for a promise', async () => {
+        interface Interface {
+            a(): Promise<string>;
+        }
+
+        const properties: Mock<Interface> = createMock<Interface>();
+
+        const interfaceCast = properties as unknown as Interface;
+
+        const result = await interfaceCast.a();
+        expect(result).toBe("")
+    });
 });

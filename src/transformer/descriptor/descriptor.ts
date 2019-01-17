@@ -25,20 +25,15 @@ import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";
 import { GetBooleanFalseDescriptor } from "./boolean/booleanFalse";
 import { GetUndefinedDescriptor } from "./undefined/undefined";
 import { GetMappedDescriptor } from "./mapped/mapped";
-import { isTypeReusable } from "../typeValidator/typeValidator";
-import { GetTypeReferenceDescriptor } from "./typeReference/typeReference";
 import { GetMockFactoryCall } from "../mockFactoryCall/mockFactoryCall";
+import { GetTypeReferenceDescriptorReusable } from "./typeReference/typeReferenceReusable";
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
 		case ts.SyntaxKind.TypeAliasDeclaration:
 			return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration);
 		case ts.SyntaxKind.TypeReference:
-            if (isTypeReusable(node)) {
-                return GetMockFactoryCall(node);
-            } else {
-                return GetTypeReferenceDescriptor(node as ts.TypeReferenceNode);
-            }
+            return GetTypeReferenceDescriptorReusable(node as ts.TypeReferenceNode);
 		case ts.SyntaxKind.TypeLiteral:
 		case ts.SyntaxKind.InterfaceDeclaration:
 			return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration);
@@ -108,8 +103,10 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.UndefinedKeyword:
 		case ts.SyntaxKind.VoidKeyword:
 			return GetUndefinedDescriptor();
+        case ts.SyntaxKind.CallExpression:
+            return node as ts.Expression;
 		default:
 			console.log("NOT IMPLEMENTED "+ ts.SyntaxKind[node.kind]);
-			return ts.createLiteral("NOT IMPLEMENTED" + ts.SyntaxKind[node.kind]);
+			return GetNullDescriptor();
 	}
 }

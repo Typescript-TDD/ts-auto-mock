@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
-import { TypeChecker } from "../../typeChecker/typeChecker";
-import { TypescriptLibsTypes, TypescriptLibsTypesFolder } from "./typescriptLibsTypes";
+import { TypescriptLibsTypesFolder } from "./typescriptLibsTypes";
 import { TypescriptLibsTypeAdapter } from "./typescriptLibsTypeAdapter";
 
 export function IsTypescriptType(node: ts.Node): boolean {
@@ -9,7 +8,5 @@ export function IsTypescriptType(node: ts.Node): boolean {
 }
 
 export function GetTypescriptType(node: ts.Node): ts.Node {
-    const type = TypeChecker().getTypeAtLocation(node);
-
-    return TypescriptLibsTypeAdapter(TypescriptLibsTypes[type.symbol.name])
+    return TypescriptLibsTypeAdapter(node);
 }
