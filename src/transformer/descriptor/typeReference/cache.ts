@@ -26,9 +26,10 @@ export class TypeReferenceCache {
             const declarationTypeParameters = TypescriptHelper.findParameterOfNode(node.typeName);
 
             node.typeArguments.forEach((typeArgument, index: number) => {
+                const descriptor = GetDescriptor(typeArgument);
                 const type = TypeChecker().getTypeAtLocation(declarationTypeParameters[index]);
 
-                this._add(type, GetDescriptor(typeArgument));
+                this._add(type, descriptor);
             });
         }
     }
@@ -40,6 +41,14 @@ export class TypeReferenceCache {
     }
 
     private _add(type: ts.Type, descriptor: ts.Expression): void {
+        const existingType = this.get(type);
+
+        if (existingType) {
+            const indexToRemove = this._cache.indexOf(existingType);
+
+            this._cache.splice(indexToRemove, 1)
+        }
+
         this._cache.push({
             type, descriptor
         });

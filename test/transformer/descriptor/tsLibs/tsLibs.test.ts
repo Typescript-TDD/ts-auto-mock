@@ -79,4 +79,72 @@ describe('typescript lib', () => {
         const result = await interfaceCast.a();
         expect(result).toBe("")
     });
+
+    it('should set a promise resolved for a promise wit array', async () => {
+        interface Interface {
+            a(): Promise<Array<string>>;
+        }
+
+        const properties: Mock<Interface> = createMock<Interface>();
+
+        const interfaceCast = properties as unknown as Interface;
+
+        const result: Array<string> = await interfaceCast.a();
+        expect(result).toEqual([]);
+    });
+
+    it('should set a promise resolved for a promise with more generics', async () => {
+        interface WithGenerics<T> {
+            generic: T
+        }
+        interface Interface {
+            a(): Promise<WithGenerics<string>>;
+        }
+
+        const properties: Mock<Interface> = createMock<Interface>();
+
+        const interfaceCast = properties as unknown as Interface;
+
+        const result: WithGenerics<string> = await interfaceCast.a();
+        expect(result).toEqual({
+            generic: ""
+        });
+    });
+
+    it('should set a promise resolved for a promise with more promise', async () => {
+        interface WithGenerics {
+            generic(): Promise<number>
+        }
+
+        interface Interface {
+            a(): Promise<WithGenerics>;
+        }
+
+        const properties: Mock<Interface> = createMock<Interface>();
+        const interfaceCast = properties as unknown as Interface;
+        const result: WithGenerics = await interfaceCast.a();
+        const secondPromise: number = await result.generic();
+
+        expect(secondPromise).toBe(0);
+    });
+
+    it('should set a promise resolved for a promise with more promise with generics', async () => {
+        interface WithGenerics<T> {
+            generic(): Promise<T>
+            generic2(): Promise<number>
+        }
+
+        interface Interface {
+            a(): Promise<WithGenerics<string>>;
+        }
+
+        const properties: Mock<Interface> = createMock<Interface>();
+        const interfaceCast = properties as unknown as Interface;
+        const result: WithGenerics<string> = await interfaceCast.a();
+        const secondPromise: string = await result.generic();
+        const secondPromise2: number = await result.generic2();
+
+        expect(secondPromise).toBe("");
+        expect(secondPromise2).toBe(0);
+    });
 });
