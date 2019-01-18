@@ -48,19 +48,18 @@ export class MockDefiner {
 		this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
 	}
 
-	public generateFactoryIfNeeded(node: PossibleTypeNode): ts.Expression {
+	public getMockFactory(node: PossibleTypeNode): ts.Expression {
 		this._typeChecker = TypeChecker();
-		const definedType = this._typeChecker.getTypeAtLocation(node);
-		const declaration = definedType.symbol.declarations[0];
-		
-		const thisFileName = this._fileName;
+		const definedType: ts.Type = this._typeChecker.getTypeAtLocation(node);
+		const declaration: ts.Declaration = definedType.symbol.declarations[0];
+		const thisFileName: string = this._fileName;
 
 		if (!this._neededImportIdentifierPerFile[thisFileName]) {
 			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlSlug(thisFileName, '_')}_repository`);
 		}
 		this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
 
-		const key = this._registerIfNeeded(thisFileName, node, declaration);
+		const key: string = this._getMockFactoryId(thisFileName, node, declaration);
 
 		return ts.createCall(
 			ts.createPropertyAccess(
@@ -82,7 +81,7 @@ export class MockDefiner {
 		);
 	}
 
-	private _registerIfNeeded(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
+	private _getMockFactoryId(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
 		if(this._factoryCache.hasFactoryForTypeMock(declaration)) {
 			return this._factoryCache.getFactoryKeyForTypeMock(declaration);
 		}
