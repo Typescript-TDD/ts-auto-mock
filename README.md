@@ -1,6 +1,6 @@
 # Ts Auto Mock
 
-Typescript transformer that will allow you to create mock for any types (Interfaces, Classes, ...) without need to create manual fakes/mocks.
+A Typescript transformer that will allow you to create mock for any types (Interfaces, Classes, ...) without need to create manual fakes/mocks.
 
 Let's have a look.
 
@@ -12,8 +12,8 @@ Let's have a look.
 typescript@^3.2.2
 `
 
-## Installation
-`* A Transormer needs to be provided at compile time to your application. There are different ways to do it.` 
+## Installatio
+A Transormer needs to be provided at compile time. There are different ways to do it.
 [Please read the following guide to find your configuration](docs/TRANSFORMER.md)`
 
 ## Usage
