@@ -4,6 +4,8 @@
 ## Missing features
 
 * Documentation
+* move issues and feature on github with examples
+* Fix issue with Generics not stored properly in the cache
 * create more complex interface instead of merged types (Giulio proposal)
 * Implement jasmine and jest factories
 * key of with indexType
