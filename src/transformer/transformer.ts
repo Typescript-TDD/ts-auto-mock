@@ -41,9 +41,9 @@ function visitNode(node: ts.Node): ts.Node {
 
     const nodeToMock = node.typeArguments[0];
     const nodeResolved = GetType(nodeToMock);
+    TypeReferenceCache.instance.clear();
 
     if (isTypeReusable(nodeResolved)) {
-        TypeReferenceCache.instance.clear();
         MockDefiner.instance.setFileNameFromNode(nodeToMock);
         return GetMockFactoryCall(nodeToMock);
     } else {

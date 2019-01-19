@@ -135,4 +135,24 @@ describe('for generic', () => {
             expect(properties.sub.iAmAString).toBe("");
         });
     });
+
+    describe('with default', () => {
+        interface WithGeneric<T = number>{
+            generic: T
+        }
+
+        interface WithGeneric2<T = number>{
+            generic: T
+        }
+
+        it('should work when provided', () => {
+            const properties: WithGeneric<string> = createMock<WithGeneric<string>>();
+            expect(properties.generic).toBe("")
+        });
+
+        it('should work when not provided', () => {
+            const properties: WithGeneric2 = createMock<WithGeneric2>();
+            expect(properties.generic).toBe(0)
+        });
+    });
 });
