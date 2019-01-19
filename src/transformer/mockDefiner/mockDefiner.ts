@@ -14,6 +14,7 @@ function GetPossibleDescriptor(node: ts.Node): ts.Expression {
 
     return GetDescriptor(node);
 }
+
 export class MockDefiner {
 	private _typeChecker: ts.TypeChecker;
 	private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};
@@ -33,7 +34,6 @@ export class MockDefiner {
 		this._factoryCache = new FactoryDefinitionCache();
 		this._typeChecker = TypeChecker();
 	}
-
 
     public setFileNameFromNode(node: ts.TypeNode): void {
         const thisFile = node.getSourceFile();
