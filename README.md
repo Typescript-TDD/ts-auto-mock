@@ -5,7 +5,6 @@
 
 * Documentation
 * create more complex interface instead of merged types (Giulio proposal)
-* Typings from Typescript library needs to be mocked properly (only the most reasonable ones)
 * Implement jasmine and jest factories
 * key of with indexType
 * AlwaysUseCustomMock
