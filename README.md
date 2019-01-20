@@ -12,7 +12,7 @@ Let's have a look.
 typescript@^3.2.2
 `
 
-## Installatio
+## Installation
 A Transormer needs to be provided at compile time. There are different ways to do it.
 [Please read the following guide to find your configuration](docs/TRANSFORMER.md)`
 
@@ -31,77 +31,11 @@ const mock = createMock<Person>();
 mock.id // ""
 mock.getName() // "{ name: "", surname: "" }"
 mock.detail // "{phone: 0} "
-
 ```
 
-## Explanation
-The library try to convert the type  given to createMock so you dont need to create concrete mock manually.
-* For primitives types:
-```ts
-number // 0
-string // ""
-boolean // false
-boolean[] // []
-void // undefined
-null // null
-undefined // undefined
-```
-
-* For interfaces and classes types:
-```ts
-
-interface Person {
-    id: string
-    name: string 
-}
-/* {
-    id: "",
-    name: ""
-} */
-```
-
-* For methods
-``` ts
-interface InterfaceWithMethod {
-    method(): string
-} 
-/* {
-    method: () => {
-        return ""
-    }
-} */
-```
-
-* For literal types
-```ts
-type Data = {
-    id: "I am a specific string"
-}
-
-/*
-{
-    id: "I am a specific string"
-}
-/*
-```
-
-* For Enume types it will select the first value
-```ts
-enum Direction {
-    LEFT,
-    RIGHT
-}
-
-interface WithEnum {
-    direction: Direction
-}
-
-/*
-{
-    direction: DIRECTION.LEFT
-}
-/*
-```
+## Type Examples
+The library try to convert the type given to createMock so you dont need to create concrete mock manually.
+[Open this link to see more examples](docs/DETAILS.md)`
 
 ## Authors
 
