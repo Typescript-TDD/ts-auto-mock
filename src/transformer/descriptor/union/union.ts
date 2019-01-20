@@ -5,7 +5,7 @@ import { GetTypes } from "../type/type";
 
 export function GetUnionDescriptor(node: ts.UnionTypeNode): ts.Expression {
 	const findNodes = GetTypes(node.types);
-	
+
 	const notDefinedType = findNodes.filter((typeNode: ts.TypeNode) => {
 		return isNotDefinedType(typeNode);
 	});

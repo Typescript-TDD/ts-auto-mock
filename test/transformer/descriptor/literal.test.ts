@@ -1,4 +1,4 @@
-import { createMock } from "../../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 
 describe('for literal', () => {
 	describe('with a specific string', () => {

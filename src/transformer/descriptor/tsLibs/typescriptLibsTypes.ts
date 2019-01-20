@@ -5,7 +5,8 @@ export enum TypescriptLibsTypes {
     String = "String",
     Boolean = "Boolean",
     Object = "Object",
-    Function = "Function"
+    Function = "Function",
+    Promise = "Promise"
 }
 
 export const TypescriptLibsTypesFolder = "node_modules/typescript/lib";

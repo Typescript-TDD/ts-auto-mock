@@ -1,4 +1,4 @@
-import { createMock } from "../../../../src/transformer/create-mock";
+import { createMock } from "ts-auto-mock";
 import { ImportType } from "../utils/types/type";
 import { ImportInterface } from "../utils/interfaces/importInterface";
 
@@ -58,40 +58,40 @@ describe('union optional', () => {
 			expect(properties.test).toBeUndefined();
 		});
 	});
-	
+
 	describe('type reference optional', () => {
 		type TypeOptional = string | null;
-		
+
 		class MyClass {
 			test: TypeOptional | number;
 		}
-		
+
 		it('should not set the value', () => {
 			const properties: MyClass = createMock<MyClass>();
 			expect(properties.test).toBeUndefined();
 		});
 	});
-	
+
 	describe('type reference optional second', () => {
 		type TypeOptional = string | null;
-		
+
 		class MyClass {
 			test: number | TypeOptional;
 		}
-		
+
 		it('should not set the value', () => {
 			const properties: MyClass = createMock<MyClass>();
 			expect(properties.test).toBeUndefined();
 		});
 	});
-	
+
 	describe('type reference optional and extends', () => {
 		type TypeOptional = { a: string} & { b: number} | null;
-		
+
 		class MyClass {
 			test: number | TypeOptional;
 		}
-		
+
 		it('should not set the value', () => {
 			const properties: MyClass = createMock<MyClass>();
 			expect(properties.test).toBeUndefined();

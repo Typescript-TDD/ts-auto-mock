@@ -13,8 +13,6 @@ import { GetUnionDescriptor } from "./union/union";
 import { GetEnumDeclarationDescriptor } from "./enum/enumDeclaration";
 import { GetExpressionWithTypeArgumentsDescriptor } from "./expression/expressionWithTypeArguments";
 import { GetIdentifierDescriptor } from "./identifier/identifier";
-import { TypeReferenceCache } from "./typeReference/cache";
-import { GetTypeReferenceDescriptor } from "./typeReference/typeReference";
 import { GetTypeParameterDescriptor } from "./typeParameter/typeParameter";
 import { GetIntersectionDescriptor } from "./intersection/intersection";
 import { GetFunctionTypeDescriptor } from "./method/functionType";
@@ -27,18 +25,15 @@ import { GetBooleanTrueDescriptor } from "./boolean/booleanTrue";
 import { GetBooleanFalseDescriptor } from "./boolean/booleanFalse";
 import { GetUndefinedDescriptor } from "./undefined/undefined";
 import { GetMappedDescriptor } from "./mapped/mapped";
-
-export function GetDescriptorForMock(node: ts.Node): ts.Expression {
-    TypeReferenceCache.instance.clear();
-    return GetDescriptor(node);
-}
+import { GetMockFactoryCall } from "../mockFactoryCall/mockFactoryCall";
+import { GetTypeReferenceDescriptorReusable } from "./typeReference/typeReferenceReusable";
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
 		case ts.SyntaxKind.TypeAliasDeclaration:
-			return GetTypeAliasDescriptor((node as ts.TypeAliasDeclaration));
+			return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration);
 		case ts.SyntaxKind.TypeReference:
-			return GetTypeReferenceDescriptor(node as ts.TypeReferenceNode);
+            return GetTypeReferenceDescriptorReusable(node as ts.TypeReferenceNode);
 		case ts.SyntaxKind.TypeLiteral:
 		case ts.SyntaxKind.InterfaceDeclaration:
 			return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration);
@@ -55,8 +50,8 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 			return GetExpressionWithTypeArgumentsDescriptor(node as ts.ExpressionWithTypeArguments);
 		case ts.SyntaxKind.Identifier:
 			return GetIdentifierDescriptor(node as ts.Identifier);
-		// case ts.SyntaxKind.ThisType:
-		// 	return GetThisDescriptor(node as ts.ThisTypeNode); // max call exceeded
+		case ts.SyntaxKind.ThisType:
+            return GetMockFactoryCall(node);
 		case ts.SyntaxKind.ImportSpecifier:
 			return GetImportDescriptor(node as ts.ImportSpecifier);
 		case ts.SyntaxKind.TypeParameter:
@@ -64,14 +59,14 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.ImportClause:
 			return GetImportDescriptor(node as ts.ImportClause);
 		case ts.SyntaxKind.MethodSignature:
-			return GetMethodDeclarationDescriptor((node as ts.MethodSignature));
+			return GetMethodDeclarationDescriptor(node as ts.MethodSignature);
 		case ts.SyntaxKind.MethodDeclaration:
-			return GetMethodDeclarationDescriptor((node as ts.MethodDeclaration));
+			return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration);
         case ts.SyntaxKind.FunctionType:
-            return GetFunctionTypeDescriptor((node as ts.FunctionTypeNode));
+            return GetFunctionTypeDescriptor(node as ts.FunctionTypeNode);
 		case ts.SyntaxKind.ArrowFunction:
 		case ts.SyntaxKind.FunctionExpression:
-			return GetFunctionAssignmentDescriptor((node as ts.ArrowFunction));
+			return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction);
 		case ts.SyntaxKind.UnionType:
 			return GetUnionDescriptor(node as ts.UnionTypeNode);
 		case ts.SyntaxKind.IntersectionType:
@@ -95,7 +90,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.StringLiteral:
 			return GetLiteralDescriptor(node as ts.LiteralTypeNode);
 		case ts.SyntaxKind.ObjectLiteralExpression:
-			return GetObjectLiteralDescriptor((node as ts.ObjectLiteralExpression));
+			return GetObjectLiteralDescriptor(node as ts.ObjectLiteralExpression);
 		case ts.SyntaxKind.BooleanKeyword:
 			return GetBooleanDescriptor();
 		case ts.SyntaxKind.ObjectKeyword:
@@ -108,8 +103,10 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.UndefinedKeyword:
 		case ts.SyntaxKind.VoidKeyword:
 			return GetUndefinedDescriptor();
+        case ts.SyntaxKind.CallExpression:
+            return node as ts.Expression;
 		default:
 			console.log("NOT IMPLEMENTED "+ ts.SyntaxKind[node.kind]);
-			return ts.createLiteral("NOT IMPLEMENTED" + ts.SyntaxKind[node.kind]);
+			return GetNullDescriptor();
 	}
 }

@@ -2,6 +2,12 @@ import * as ts from 'typescript';
 import * as path from 'path';
 import { TypeChecker, SetTypeChecker } from './typeChecker/typeChecker';
 import { MockDefiner } from './mockDefiner/mockDefiner';
+import { GetNullDescriptor } from "./descriptor/null/null";
+import { GetType } from "./descriptor/type/type";
+import { isTypeReusable } from "./typeValidator/typeValidator";
+import { TypeReferenceCache } from "./descriptor/typeReference/cache";
+import { GetMockFactoryCall } from "./mockFactoryCall/mockFactoryCall";
+import { GetDescriptor } from "./descriptor/descriptor";
 
 export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());
@@ -33,7 +39,16 @@ function visitNode(node: ts.Node): ts.Node {
         return ts.createArrayLiteral([]);
     }
 
-    return ts.createCall(MockDefiner.instance.generateFactoryIfNeeded(node.typeArguments[0] as ts.TypeReferenceNode), [], []);
+    const nodeToMock = node.typeArguments[0];
+    const nodeResolved = GetType(nodeToMock);
+    TypeReferenceCache.instance.clear();
+
+    if (isTypeReusable(nodeResolved)) {
+        MockDefiner.instance.setFileNameFromNode(nodeToMock);
+        return GetMockFactoryCall(nodeToMock);
+    } else {
+        return GetDescriptor(nodeToMock);
+    }
 }
 
 function isKeysCallExpression(node: ts.Node): node is ts.CallExpression {
