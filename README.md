@@ -35,7 +35,7 @@ mock.detail // "{phone: 0} "
 
 ## Type Examples
 The library try to convert the type given to createMock so you dont need to create concrete mock manually.
-[Open this link to see more examples](docs/DETAILS.md)`
+[Open this link to see more examples](docs/DETAILS.md)
 
 ## Authors
 

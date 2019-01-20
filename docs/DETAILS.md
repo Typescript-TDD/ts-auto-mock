@@ -150,16 +150,6 @@ const mock = createMock<MyClass>();
 mock // { union: "" }
 ```
 
-## Union (it will convert to the first type)
-```ts
-class MyClass {
-  union: string | number;
-}	
-
-const mock = createMock<MyClass>();
-mock // { union: "" }
-```
-
 ## Dictionary
 ```ts
 type Dictionary<T> = {
@@ -181,16 +171,6 @@ interface Interface extends Keys {
 
 const mock = createMock<Interface>();
 mock // { a: "", b: "" }
-```
-
-## Generics
-```ts
-interface WithGeneric<T>{
-  generic: T
-}
-
-const mock = createMock<WithGeneric<string>>();
-mock // { generic: "" }
 ```
 
 ## Generics
