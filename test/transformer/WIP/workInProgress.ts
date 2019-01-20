@@ -1,5 +1,6 @@
 import { createMock } from "../../../src/transformer/create-mock";
 import { Mock } from "ts-auto-mock";
+import { TypeUnion } from "../descriptor/utils/types/typeUnion";
 describe('for functions assigned', () => {
 	describe('for recursion', () => {
 	    interface Interface {
@@ -33,6 +34,17 @@ describe('for functions assigned', () => {
 		it('should work', () => {
 			const properties: Mock<Intersection> = createMock<Intersection>();
 			expect(properties.a.then).toBeUndefined();
+		});
+	});
+	
+	describe('union type string imported', () => {
+		it('should assign the first value as if it would declared literal', () => {
+			interface UnionContainer {
+				union: TypeUnion;
+			}
+
+			const properties: Mock<UnionContainer> = createMock<UnionContainer>();
+			expect(properties.union).toBe("1");
 		});
 	});
 });
