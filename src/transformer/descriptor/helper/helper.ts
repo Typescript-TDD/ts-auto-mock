@@ -31,16 +31,15 @@ export namespace TypescriptHelper {
 	}
 
     export function findParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
-        const typeChecker = TypeChecker();
-        const symbol = typeChecker.getSymbolAtLocation(node);
-        const declaration = symbol.declarations[0];
+        const declaration = GetDeclarationFromNode(node);
 
         if (declaration.kind === ts.SyntaxKind.ImportSpecifier) {
-            const type = typeChecker.getDeclaredTypeOfSymbol(symbol);
-            return (type.symbol.declarations[0] as Declaration).typeParameters;
+            const importDeclaration = GetDeclarationForImport(declaration as ts.ImportSpecifier);
+
+            return (importDeclaration as Declaration).typeParameters;
         }
 
-        return (symbol.declarations[0] as Declaration).typeParameters;
+        return (declaration as Declaration).typeParameters;
     }
     
     export function IsLiteralOrPrimitive(typeNode: ts.Node) {
@@ -49,5 +48,29 @@ export namespace TypescriptHelper {
 			typeNode.kind === ts.SyntaxKind.BooleanKeyword ||
 			typeNode.kind === ts.SyntaxKind.NumberKeyword ||
 			typeNode.kind === ts.SyntaxKind.ArrayType;
-	}
+    }
+    
+    export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
+        const typeChecker = TypeChecker();
+        const symbol = typeChecker.getSymbolAtLocation(node);
+        return symbol.declarations[0];
+    }
+
+    export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier): ts.Node {
+        const typeChecker = TypeChecker();
+        const symbol = typeChecker.getSymbolAtLocation(node.name);
+        const declaredType = typeChecker.getDeclaredTypeOfSymbol(symbol);
+        return GetDeclarationFromType(declaredType);    
+    }
+
+    export function GetDeclarationFromType(type: ts.Type): ts.TypeNode | ts.Declaration {
+        if (type.symbol && type.symbol.declarations) {
+			return type.symbol.declarations[0];
+		} else if (type.aliasSymbol && type.aliasSymbol.declarations) {
+			return type.aliasSymbol.declarations[0];
+        } 
+        
+		return TypeChecker().typeToTypeNode(type);
+    
+    }
 }

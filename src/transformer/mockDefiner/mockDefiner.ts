@@ -5,6 +5,7 @@ import { GetDescriptor } from '../descriptor/descriptor';
 import { createImportOnIdentifier } from '../helper/import';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
 import { GetTypeReferenceDescriptor } from "../descriptor/typeReference/typeReference";
+import { TypescriptHelper } from '../descriptor/helper/helper';
 type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLiteralNode;
 
 function GetPossibleDescriptor(node: ts.Node): ts.Expression {
@@ -51,7 +52,8 @@ export class MockDefiner {
 	public getMockFactory(node: PossibleTypeNode): ts.Expression {
 		this._typeChecker = TypeChecker();
 		const definedType: ts.Type = this._typeChecker.getTypeAtLocation(node);
-		const declaration: ts.Declaration = definedType.symbol.declarations[0];
+		let declaration = TypescriptHelper.GetDeclarationFromType(definedType);
+
 		const thisFileName: string = this._fileName;
 
 		if (!this._neededImportIdentifierPerFile[thisFileName]) {
@@ -59,7 +61,7 @@ export class MockDefiner {
 		}
 		this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
 
-		const key: string = this._getMockFactoryId(thisFileName, node, declaration);
+		const key: string = this._getMockFactoryId(thisFileName, node, declaration as ts.Declaration);
 
 		return ts.createCall(
 			ts.createPropertyAccess(

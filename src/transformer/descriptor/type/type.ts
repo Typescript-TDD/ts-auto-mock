@@ -35,9 +35,8 @@ export function GetType(node: ts.Node): ts.Node {
 	const typeChecker = TypeChecker();
 	
 	if (ts.isTypeReferenceNode(node)) {
-		const identifier: ts.EntityName = (node as ts.TypeReferenceNode).typeName;
-		const symbol = typeChecker.getSymbolAtLocation(identifier);
-		const declaration = symbol.declarations[0];
+		const identifier: ts.EntityName = (node as ts.TypeReferenceNode).typeName;		
+		const declaration = TypescriptHelper.GetDeclarationFromNode(identifier);
 		return GetType(declaration);
 	}
 	

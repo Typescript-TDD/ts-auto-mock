@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import { GetDescriptor } from "../descriptor";
 import { TypeChecker } from "../../typeChecker/typeChecker";
+import { TypescriptHelper } from '../helper/helper';
 
 export function GetIdentifierDescriptor(node: ts.Identifier): ts.Expression {
-	const typeChecker = TypeChecker();
-	const type = typeChecker.getSymbolAtLocation(node);
-	return GetDescriptor(type.declarations[0]);
+	const declaration = TypescriptHelper.GetDeclarationFromNode(node);
+	return GetDescriptor(declaration);
 }

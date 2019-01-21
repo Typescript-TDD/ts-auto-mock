@@ -5,3 +5,4 @@ export type TypeUnionTokenSameBoolean =  true | true;
 export type TypeUnionTokenAllBoolean =  true | false;
 export type TypeUnionObject =  {a: string} | {b: string};
 export type TypeUnionFunction =  () => void | string;
+export type TypeUnionEmptyObject =  {} | {};

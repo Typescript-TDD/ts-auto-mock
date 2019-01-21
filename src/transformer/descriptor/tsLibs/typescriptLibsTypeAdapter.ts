@@ -4,7 +4,8 @@ import { TypeChecker } from "../../typeChecker/typeChecker";
 import { TypeReferenceCache } from "../typeReference/cache";
 
 export function TypescriptLibsTypeAdapter(node): ts.Node {
-    const type = TypeChecker().getTypeAtLocation(node);
+    const typeChecker = TypeChecker();
+    const type = typeChecker.getTypeAtLocation(node);
     const typeScriptType = TypescriptLibsTypes[type.symbol.name];
 
 	switch (typeScriptType) {
@@ -24,7 +25,7 @@ export function TypescriptLibsTypeAdapter(node): ts.Node {
             return ts.createFunctionTypeNode([], [], functionNode as ts.TypeNode);
         case(TypescriptLibsTypes.Promise):
             const parameter = node.typeParameters[0];
-            const type = TypeChecker().getTypeAtLocation(parameter);
+            const type = typeChecker.getTypeAtLocation(parameter);
 
             const promiseResolveType = TypeReferenceCache.instance.get(type);
             return ts.createCall(

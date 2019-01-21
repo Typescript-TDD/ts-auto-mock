@@ -4,6 +4,7 @@ import { TypeChecker } from "../../typeChecker/typeChecker";
 import { TypeReferenceCache } from "./cache";
 import { isTypeReusable } from "../../typeValidator/typeValidator";
 import { GetMockFactoryCall } from "../../mockFactoryCall/mockFactoryCall";
+import { TypescriptHelper } from '../helper/helper';
 
 export function GetTypeReferenceDescriptorReusable(node: ts.TypeReferenceNode): ts.Expression {
     const typeChecker = TypeChecker();
@@ -13,8 +14,8 @@ export function GetTypeReferenceDescriptorReusable(node: ts.TypeReferenceNode): 
     if (isTypeReusable(node)) {
         return GetMockFactoryCall(node);
     } else {
-        const symbol = typeChecker.getSymbolAtLocation(node.typeName);
-        const declaration = symbol.declarations[0];
+        TypeReferenceCache.instance.addIfPresent(node);
+        const declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
         return GetDescriptor(declaration);
     }
 }

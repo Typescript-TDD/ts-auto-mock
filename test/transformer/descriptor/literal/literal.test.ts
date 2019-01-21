@@ -1,5 +1,5 @@
 import { createMock } from "ts-auto-mock";
-import { TypeUnion, TypeUnionTokenNumber, TypeUnionToken, TypeUnionObject, TypeUnionFunction, TypeUnionTokenSameBoolean, TypeUnionTokenAllBoolean } from "../utils/types/typeUnion";
+import { TypeUnion, TypeUnionTokenNumber, TypeUnionToken, TypeUnionObject, TypeUnionFunction, TypeUnionTokenSameBoolean, TypeUnionTokenAllBoolean, TypeUnionEmptyObject } from "../utils/types/typeUnion";
 
 describe('for literal', () => {
 	describe('with a specific string', () => {
@@ -100,6 +100,17 @@ describe('for literal', () => {
 		it('should set the first one', () => {
 			const properties: Interface = createMock<Interface>();
 			expect(properties.literal()).toBeUndefined();
+		});
+	});
+
+	describe('with import empty object', () => {
+		interface Interface {
+			literal: TypeUnionEmptyObject;
+		}
+		
+		it('should set the first one', () => {
+			const properties: Interface = createMock<Interface>();
+			expect(properties.literal).toEqual({});
 		});
 	});
 });
