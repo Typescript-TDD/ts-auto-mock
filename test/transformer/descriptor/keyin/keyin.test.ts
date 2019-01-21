@@ -2,13 +2,13 @@ import { createMock } from "ts-auto-mock";
 
 describe('for keyin', () => {
 	describe('with an union', () => {
-		type Keys = "a" | "b";
+		type Keys = "z" | "f";
 		type myType = {[key in Keys]: string}
 
 		it('should set all the keys as properties', () => {
 			const properties: myType = createMock<myType>();
-			expect(properties.a).toBe("");
-			expect(properties.b).toBe("");
+			expect(properties.z).toBe("");
+			expect(properties.f).toBe("");
 		});
 	});
 	

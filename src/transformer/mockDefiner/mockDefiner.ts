@@ -82,7 +82,7 @@ export class MockDefiner {
 	}
 
 	private _getMockFactoryId(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
-		if(this._factoryCache.hasFactoryForTypeMock(declaration)) {
+		if (this._factoryCache.hasFactoryForTypeMock(declaration)) {
 			return this._factoryCache.getFactoryKeyForTypeMock(declaration);
 		}
 

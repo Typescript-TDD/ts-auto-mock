@@ -8,6 +8,8 @@ export function GetTypeImport(node: ImportNode): ts.Node {
 	
 	if (declaredType.symbol) {
 		return declaredType.symbol.declarations[0];
+	} else if (declaredType.aliasSymbol) {
+		return declaredType.aliasSymbol.declarations[0];
 	} else {
 		return typeChecker.typeToTypeNode(declaredType);
 	}
