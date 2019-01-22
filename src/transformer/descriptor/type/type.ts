@@ -17,7 +17,7 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>): Array<ts.Node> {
 			const intersectionType = GetTypes(type.types);
 			
 			const hasLiteralOrPrimitive = intersectionType.some((type: ts.Node) => {
-				return TypescriptHelper.IsLiteralOrPrimitive(type)
+				return TypescriptHelper.IsLiteralOrPrimitive(type);
 			});
 			
 			if (!hasLiteralOrPrimitive) {
@@ -30,10 +30,7 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>): Array<ts.Node> {
 	
 	return newNodes;
 }
-
-export function GetType(node: ts.Node): ts.Node {
-	const typeChecker = TypeChecker();
-	
+export function GetType(node: ts.Node): ts.Node {	
 	if (ts.isTypeReferenceNode(node)) {
 		const identifier: ts.EntityName = (node as ts.TypeReferenceNode).typeName;		
 		const declaration = TypescriptHelper.GetDeclarationFromNode(identifier);

@@ -7,14 +7,11 @@ import { GetMockFactoryCall } from "../../mockFactoryCall/mockFactoryCall";
 import { TypescriptHelper } from '../helper/helper';
 
 export function GetTypeReferenceDescriptorReusable(node: ts.TypeReferenceNode): ts.Expression {
-    const typeChecker = TypeChecker();
-
-    TypeReferenceCache.instance.addIfPresent(node);
+    TypeReferenceCache.instance.addIfPresentForTypeReference(node);
 
     if (isTypeReusable(node)) {
         return GetMockFactoryCall(node);
     } else {
-        TypeReferenceCache.instance.addIfPresent(node);
         const declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
         return GetDescriptor(declaration);
     }

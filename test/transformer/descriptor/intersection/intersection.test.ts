@@ -64,4 +64,17 @@ describe('for intersection', () => {
 			expect(properties.e).toBeUndefined();
 		});
 	});
+
+	describe('intersection with typescript lib', () => {
+		type TypeIntersection = {} & Promise<string>;
+			
+		interface Intersection {
+			a: TypeIntersection;
+		}
+	
+		it('should ignore the types typescript lib', () => {
+			const properties: Mock<Intersection> = createMock<Intersection>();
+			expect(properties.a.then).toBeUndefined();
+		});
+	});
 });

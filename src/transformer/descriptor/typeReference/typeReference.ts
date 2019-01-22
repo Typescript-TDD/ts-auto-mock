@@ -5,7 +5,7 @@ import { TypeReferenceCache } from "./cache";
 import { TypescriptHelper } from '../helper/helper';
 
 export function GetTypeReferenceDescriptor(node: ts.TypeReferenceNode): ts.Expression {
-    TypeReferenceCache.instance.addIfPresent(node);
+    TypeReferenceCache.instance.addIfPresentForTypeReference(node);
 
     const declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
     return GetDescriptor(declaration);

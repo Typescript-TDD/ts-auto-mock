@@ -2,7 +2,6 @@ import { createMock } from "ts-auto-mock";
 import { Mock } from "ts-auto-mock";
 
 describe('for extends', () => {
-
     describe('for interface', () => {
         interface Keys {
             a: string;
@@ -45,6 +44,51 @@ describe('for extends', () => {
             expect(properties.a).toBe("");
             expect(properties.property).toBe(false);
             expect(properties.b).toBe(0);
+        });
+    });
+
+    describe('extends types', () => {
+        type Type = {
+            c: string;
+        }
+        interface Interface extends Type {}
+            
+        it('should set the correct value', () => {
+            const properties: Mock<Interface> = createMock<Interface>();
+            expect(properties.c).toBe(""); 
+        });
+    });
+
+    describe('extends typescript libs Array', () => {
+        interface Interface extends Array<string> {
+            a: number;
+        }
+            
+        it('should set the correct value', () => {
+            const properties: Mock<Interface> = createMock<Interface>();
+            expect(properties as any).toEqual({a: 0}); 
+        });
+    });
+
+    describe('extends typescript libs Promise', () => {
+        interface Interface extends Promise<string> {
+            a: number;
+        }
+            
+        it('should ignore the typescript library', () => {
+            const properties: Mock<Interface> = createMock<Interface>();
+            
+            expect(properties as any).toEqual({ a: 0 })
+        });
+    });
+
+    describe('extends type with boolean', () => {
+        type Type = boolean[]
+        interface Interface extends Type {}
+            
+        it('should ignore the typescript library', () => {
+            const properties: Mock<Interface> = createMock<Interface>();
+            expect(properties as any).toEqual({}); 
         });
     });
 });

@@ -21,16 +21,28 @@ export class TypeReferenceCache {
         this._cache = [];
     }
 
-    public addIfPresent(node: ts.TypeReferenceNode) {
+    private _addFromTypeArguments(node: ts.TypeReferenceNode  | ts.ExpressionWithTypeArguments, declarations: ts.NodeArray<ts.TypeParameterDeclaration>) {
+        node.typeArguments.forEach((typeArgument, index: number) => {
+            const descriptor = GetDescriptor(typeArgument);
+            const type = TypeChecker().getTypeAtLocation(declarations[index]);
+
+            this._add(type, descriptor);
+        });
+    }
+
+    public addIfPresentForTypeReference(node: ts.TypeReferenceNode) {
         if (node.typeArguments) {
             const declarationTypeParameters = TypescriptHelper.findParameterOfNode(node.typeName);
 
-            node.typeArguments.forEach((typeArgument, index: number) => {
-                const descriptor = GetDescriptor(typeArgument);
-                const type = TypeChecker().getTypeAtLocation(declarationTypeParameters[index]);
+            this._addFromTypeArguments(node, declarationTypeParameters);            
+        }
+    }
 
-                this._add(type, descriptor);
-            });
+    public addIfPresentForExpression(node: ts.ExpressionWithTypeArguments) {
+        if (node.typeArguments) {
+            const declarationTypeParameters = TypescriptHelper.findParameterOfNode(node.expression as ts.Identifier);
+
+            this._addFromTypeArguments(node, declarationTypeParameters);
         }
     }
 

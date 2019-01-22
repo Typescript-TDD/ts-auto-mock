@@ -28,11 +28,13 @@ export function TypescriptLibsTypeAdapter(node): ts.Node {
             const type = typeChecker.getTypeAtLocation(parameter);
 
             const promiseResolveType = TypeReferenceCache.instance.get(type);
+            const promiseAccess = ts.createPropertyAccess(ts.createIdentifier("Promise"), ts.createIdentifier("resolve"));
+            
             return ts.createCall(
-                ts.createPropertyAccess(ts.createIdentifier("Promise"), ts.createIdentifier("resolve")),
+                promiseAccess,
                 [],
-                [promiseResolveType.descriptor]
-            );
+                promiseResolveType ? [promiseResolveType.descriptor]: []
+            );                        
 		default:
 			return ts.createNode(ts.SyntaxKind.UndefinedKeyword);
 	}
