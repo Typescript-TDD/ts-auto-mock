@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import { GetMockCall } from "./mockCall";
 import { GetMockProperty } from "./mockProperty";
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
+import { GetMockDeclarationName } from './mockDeclarationName';
 
 export function GetMockPropertiesFromSymbol(propertiesSymbol: Array<ts.Symbol>): ts.Expression {
     let properties: Array<ts.Declaration> = propertiesSymbol.map((prop) => {
@@ -29,7 +30,8 @@ export function GetMockPropertiesFromDeclarations(list: Array<ts.Declaration>) {
 	});
 	
 	const variableDeclarations: Array<ts.VariableDeclaration> = properties.map((member: ts.PropertyDeclaration) => {
-		return ts.createVariableDeclaration(member.name as ts.Identifier);
+		const name = GetMockDeclarationName(member.name as ts.Identifier);
+		return ts.createVariableDeclaration(name);
 	});
 	
 	const accessorDeclaration: Array<ts.AccessorDeclaration> = properties.map(

@@ -8,9 +8,8 @@ export namespace TypescriptHelper {
 		return ts.createGetAccessor([], [], name, [], undefined, block)
 	}
 
-    export function createSetAccessor(name: ts.PropertyName, block: ts.Block): ts.SetAccessorDeclaration {
-        const nameIdentifier = "_" + (name as ts.Identifier).escapedText;
-	    const parameterDeclaration = ts.createParameter([], [], undefined, nameIdentifier, undefined, undefined, undefined);
+    export function createSetAccessor(name: ts.PropertyName, block: ts.Block, parameterName: ts.Identifier): ts.SetAccessorDeclaration {
+	    const parameterDeclaration = ts.createParameter([], [], undefined, parameterName, undefined, undefined, undefined);
         return ts.createSetAccessor([], [], name, [parameterDeclaration], block);
     }
 
