@@ -1,23 +1,27 @@
 import * as ts from 'typescript';
 import { TypescriptHelper } from "../helper/helper";
 import { GetDescriptor } from "../descriptor";
+import { GetMockDeclarationName, GetMockSetParameterName } from './mockDeclarationName';
 
 export function GetMockProperty(member: ts.PropertyDeclaration): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
 	const descriptor: ts.Expression = GetDescriptor(member);
-    const name = (member.name as ts.Identifier);
+	
+	const propertyName = member.name as ts.Identifier;
+	const variableDeclarationName = GetMockDeclarationName(propertyName);
+	const setVariableParameterName = GetMockSetParameterName(propertyName);
+
+    const expressionGetAssignment = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, descriptor);
     
-    const expressionAssignment = ts.createBinary(name, ts.SyntaxKind.EqualsToken, descriptor);
-    
-	const getExpression = ts.createBinary(name, ts.SyntaxKind.BarBarToken, expressionAssignment);
-	const setExpression = ts.createBinary(name, ts.SyntaxKind.EqualsToken, ts.createIdentifier("_" + name.escapedText));
+	const getExpressionBody = ts.createBinary(variableDeclarationName, ts.SyntaxKind.BarBarToken, expressionGetAssignment);
+	const setExpressionBody = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, setVariableParameterName);
 
-	const returnGetStatement: ts.ReturnStatement = ts.createReturn(getExpression);
-	const bodyGet: ts.Block = ts.createBlock([returnGetStatement]);
+	const returnGetStatement: ts.ReturnStatement = ts.createReturn(getExpressionBody);
+	const getBody: ts.Block = ts.createBlock([returnGetStatement]);
 
-	const returnStatement: ts.Statement = ts.createExpressionStatement(setExpression);
-    const bodySet: ts.Block = ts.createBlock([returnStatement]);
+	const returnSetStatement: ts.Statement = ts.createExpressionStatement(setExpressionBody);
+    const setBody: ts.Block = ts.createBlock([returnSetStatement]);
 
-	const getAccessor = TypescriptHelper.createGetAccessor(member.name, bodyGet);
-	const setAccessor = TypescriptHelper.createSetAccessor(member.name, bodySet);
+	const getAccessor = TypescriptHelper.createGetAccessor(propertyName, getBody);
+	const setAccessor = TypescriptHelper.createSetAccessor(propertyName, setBody, setVariableParameterName);
 	return [getAccessor, setAccessor]
 }
