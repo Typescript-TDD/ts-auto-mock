@@ -29,8 +29,8 @@ interface Person {
 }
 const mock = createMock<Person>();
 mock.id // ""
-mock.getName() // "{ name: "", surname: "" }"
-mock.detail // "{phone: 0} "
+mock.getName() // ""
+mock.details // "{phone: 0} "
 ```
 
 ## Type Examples
