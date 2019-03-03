@@ -13,7 +13,7 @@ typescript@^3.2.2
 `
 
 ## Installation
-A Transormer needs to be provided at compile time. There are different ways to do it.
+A Transformer needs to be provided at compile time. There are different ways to do it.
 [Please read the following guide to find your configuration](docs/TRANSFORMER.md)`
 
 ## Usage
