@@ -8,3 +8,4 @@ test/**/*.js
 src/**/*.js
 !src/mock/*.d.ts
 !test/framework/typings/*.d.ts
+.idea

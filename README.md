@@ -4,8 +4,8 @@ A Typescript transformer that will allow you to create mock for any types (Inter
 
 Let's have a look.
 
-* If you are interested to use it with jasmine please go to jasmine-ts-auto-mock
-* If you are interested to use it with jest please go to jest-ts-auto-mock
+* If you are interested to use it with jasmine please go to jasmine-ts-auto-mock (work in progress)
+* If you are interested to use it with jest please go to jest-ts-auto-mock (work in progress)
 
 ## Requirements
 `
@@ -29,8 +29,8 @@ interface Person {
 }
 const mock = createMock<Person>();
 mock.id // ""
-mock.getName() // "{ name: "", surname: "" }"
-mock.detail // "{phone: 0} "
+mock.getName() // ""
+mock.details // "{phone: 0} "
 ```
 
 ## Type Examples
