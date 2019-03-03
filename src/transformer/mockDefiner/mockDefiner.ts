@@ -17,7 +17,6 @@ function GetPossibleDescriptor(node: ts.Node): ts.Expression {
 }
 
 export class MockDefiner {
-	private _typeChecker: ts.TypeChecker;
 	private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};
 	private _factoryRegistrationsPerFile: { [key: string]: Array<{ key: ts.Declaration; factory: ts.Expression }> } = {};
 	private _factoryCache: FactoryDefinitionCache;
@@ -33,7 +32,6 @@ export class MockDefiner {
 
 	private constructor() {
 		this._factoryCache = new FactoryDefinitionCache();
-		this._typeChecker = TypeChecker();
 	}
 
     public setFileNameFromNode(node: ts.TypeNode): void {
@@ -50,8 +48,8 @@ export class MockDefiner {
 	}
 
 	public getMockFactory(node: PossibleTypeNode): ts.Expression {
-		this._typeChecker = TypeChecker();
-		const definedType: ts.Type = this._typeChecker.getTypeAtLocation(node);
+		const typeChecker = TypeChecker();
+		const definedType: ts.Type = typeChecker.getTypeAtLocation(node);
 		let declaration = TypescriptHelper.GetDeclarationFromType(definedType);
 
 		const thisFileName: string = this._fileName;
