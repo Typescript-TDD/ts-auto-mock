@@ -15,7 +15,7 @@ describe('for generic', () => {
             iAmGeneric: T
         }
 
-        interface WithExtendsMethod<T>{
+        interface WithExtendsMethod<T> {
             method<S extends T>(): S
         }
 

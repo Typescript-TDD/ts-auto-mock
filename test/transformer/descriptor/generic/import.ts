@@ -1,7 +1,7 @@
 import { createMock } from "ts-auto-mock";
-import { ImportWithGenerics } from "./utils/interfaces/withGenerics";
-import { ImportWithGenerics as ClassGenerics } from "./utils/classes/withGenerics";
-import { ImportWithGenerics as TypeGenerics } from "./utils/types/withGenerics";
+import { ImportWithGenerics } from "../utils/interfaces/withGenerics";
+import { ImportWithGenerics as ClassGenerics } from "../utils/classes/withGenerics";
+import { ImportWithGenerics as TypeGenerics } from "../utils/types/withGenerics";
 import { Mock } from "ts-auto-mock";
 
 describe('for generic', () => {
