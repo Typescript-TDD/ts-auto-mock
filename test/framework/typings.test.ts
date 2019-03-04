@@ -1,4 +1,4 @@
-import { createMock } from "ts-auto-mock";
+import { createMock, mockedMethod, On } from "ts-auto-mock";
 import { Mock } from "ts-auto-mock";
 
 describe('when creating a mock', () => {
@@ -15,7 +15,8 @@ describe('when creating a mock', () => {
         }
 
         const mock: Mock<Interface> = createMock<Interface>();
-        mock.methodExpectJasmineExtension.and.returnValue('');
+        const spy = On.Mock(mock).get(mockedMethod(x => x.methodExpectJasmineExtension));
+        spy.and.returnValue("");
         //mock.arrayExpectGenerateMethod.generateList(3); //TODO Implements functionality
         // mock.methodReturnMockedType().a.and.returnValue(2);
     });

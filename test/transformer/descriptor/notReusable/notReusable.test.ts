@@ -7,6 +7,7 @@ describe('not reusable', () => {
         // @ts-ignore
         const mock2: Mock<number> = createMock<number>();
         expect(mock).toBe("");
+        // @ts-ignore
         expect(mock2).toBe(0);
     });
 

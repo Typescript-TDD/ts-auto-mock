@@ -1,5 +1,5 @@
-import * as tsAutoMock from "ts-auto-mock";
+import { MockFactory } from "ts-auto-mock";
 
-tsAutoMock.MockFactory.instance.registerFactory((name: string, value: any) => {
+MockFactory.instance.registerFactory((name: string, value: any) => {
     return jasmine.createSpy(name).and.returnValue(value);
 });
