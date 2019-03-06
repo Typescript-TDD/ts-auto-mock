@@ -7,7 +7,8 @@
     "build-index": "webpack --config config/webpack.build.js",
     "build-transformer": "webpack --config config/webpack.build.transformer.js",
     "build": "npm run build-index & npm run build-transformer",
-    "test": "karma start config/karma/karma.config.js",
+    "test": "npm run test-transformer & npm run test-framework",
+    "test-transformer": "karma start config/karma/karma.config.transformer.js",
     "test-framework": "karma start config/karma/karma.config.framework.js",
     "prepublishOnly": "npm run build"
   },

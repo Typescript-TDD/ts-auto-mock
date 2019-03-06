@@ -4,5 +4,5 @@ MockFactory.instance.registerFactory((name: string, value: any) => {
 	return jasmine.createSpy(name).and.returnValue(value);
 });
 
-const context = require.context('./../', true, /\.test\.ts$/);
-context.keys().map(context);
+const frameworkContext = require.context('./', true, /\.test\.ts$/);
+frameworkContext.keys().map(frameworkContext);
