@@ -6,7 +6,7 @@ For this reason if you need your custom spies you need to use our framework to s
 (this example is taken from jasmine-ts-auto-mock)
 
 To extend a method you need to: 
-1) provide the function
+1) set your spy function (jasmine.createSpy(name))
 
 ```ts
 import { MockFactory } from "ts-auto-mock";
@@ -24,13 +24,22 @@ declare module 'ts-auto-mock' {
 }
 ```
 ### Method Usage
+1) create an interface
 ```ts
 interface Interface {
-    a: () => string
+    methodToSpy: () => string
 }
-
-const mock: Mock<Interface> = createMock<Interface>();
-const spy: jasmine.Spy = On.Mock(mock).get(mockedMethod(x => x.a));
+```
+1) create a mock
+```ts
+const mock: Interface = createMock<Interface>();
+```
+2) get the method spy 
+```ts
+const spy: jasmine.Spy = On.Mock(mock).get(mockedMethod(mock => mock.methodToSpy));
+```
+3) trigger the method
+```ts
 someMethodThatWillTriggerInterfaceA();
 expect(spy).toHaveBeenCalled();
 ```

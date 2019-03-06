@@ -18,7 +18,7 @@ A Transformer needs to be provided at compile time. There are different ways to 
 
 ## Usage
 ```ts
-import { Mock, createMock } from 'ts-auto-mock';
+import { createMock } from 'ts-auto-mock';
 
 interface Person {
   id: string;
