@@ -7,7 +7,6 @@
     "build-index": "webpack --config config/webpack.build.js",
     "build-transformer": "webpack --config config/webpack.build.transformer.js",
     "build": "npm run build-index & npm run build-transformer",
-    "compileTransformer": "tsc --lib es6,dom --target ES5 src/transformer/transformer.ts",
     "test": "karma start config/karma/karma.config.js",
     "test-framework": "karma start config/karma/karma.config.framework.js",
     "prepublishOnly": "npm run build"
@@ -19,9 +18,11 @@
     "auto"
   ],
   "files": [
+    "src/framework/*.d.ts",
     "src/mock/*.d.ts",
     "src/mockFactory/*.d.ts",
     "src/mockRepository/*.d.ts",
+    "src/mockMarker/*.d.ts",
     "src/transformer/transformer.d.ts",
     "src/transformer/create-mock.ts",
     "index.d.ts",

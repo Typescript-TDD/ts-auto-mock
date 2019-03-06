@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for never', () => {
 	interface Interface {
@@ -7,7 +6,7 @@ describe('for never', () => {
 	}
 	
 	it('should set undefined', () => {
-		const properties: Mock<Interface> = createMock<Interface>();
+		const properties: Interface = createMock<Interface>();
 		expect(properties.a).toBeUndefined()
 	});
 });

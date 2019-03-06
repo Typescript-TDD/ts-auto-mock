@@ -41,6 +41,7 @@ function visitNode(node: ts.Node): ts.Node {
     const nodeToMock = node.typeArguments[0];
     TypeReferenceCache.instance.clear();
     MockDefiner.instance.setFileNameFromNode(nodeToMock);
+    MockDefiner.instance.setTsAutoMockImportIdentifier();
     
     if (isTypeReusable(nodeToMock)) {
         return GetMockFactoryCall(nodeToMock);

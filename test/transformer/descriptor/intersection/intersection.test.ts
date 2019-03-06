@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for intersection', () => {
     describe('interface', () => {
@@ -56,7 +55,7 @@ describe('for intersection', () => {
 			e: TypeIntersectionString
 		}
 		it('should be undefined', () => {
-			const properties: Mock<Intersection> = createMock<Intersection>();
+			const properties: Intersection = createMock<Intersection>();
 			expect(properties.a).toBeUndefined();
 			expect(properties.b).toBeUndefined();
 			expect(properties.c).toBeUndefined();
@@ -73,7 +72,7 @@ describe('for intersection', () => {
 		}
 	
 		it('should ignore the types typescript lib', () => {
-			const properties: Mock<Intersection> = createMock<Intersection>();
+			const properties: Intersection = createMock<Intersection>();
 			expect(properties.a.then).toBeUndefined();
 		});
 	});

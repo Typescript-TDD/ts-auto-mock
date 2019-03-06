@@ -2,19 +2,18 @@ import { createMock } from "ts-auto-mock";
 import { ImportWithGenerics } from "../utils/interfaces/withGenerics";
 import { ImportWithGenerics as ClassGenerics } from "../utils/classes/withGenerics";
 import { ImportWithGenerics as TypeGenerics } from "../utils/types/withGenerics";
-import { Mock } from "ts-auto-mock";
 
 describe('for generic', () => {
     describe('interfaces', () => {
         it('should set all the default values with import interfaces', () => {
-            const properties: Mock<ImportWithGenerics<string>> = createMock<ImportWithGenerics<string>>();
+            const properties: ImportWithGenerics<string> = createMock<ImportWithGenerics<string>>();
             expect(properties.a).toBe("");
         });
     });
 
     describe('classes', () => {
         it('should set all the default values with import classes', () => {
-            const properties: Mock<ClassGenerics<string>> = createMock<ClassGenerics<string>>();
+            const properties: ClassGenerics<string> = createMock<ClassGenerics<string>>();
             expect(properties.a).toBe("");
             expect(properties["_a"]).toBeUndefined();
         });
@@ -22,7 +21,7 @@ describe('for generic', () => {
 
     describe('types', () => {
         it('should set all the default values with import type', () => {
-            const properties: Mock<TypeGenerics<string>> = createMock<TypeGenerics<string>>();
+            const properties: TypeGenerics<string> = createMock<TypeGenerics<string>>();
             expect(properties.a).toBe("");
         });
     });

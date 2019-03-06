@@ -1,1 +1,0 @@
-export type Mock<T> = T & { ___thisIsAMockMarker: boolean };

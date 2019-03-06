@@ -6,6 +6,6 @@ src/**/*.d.ts
 test/**/*.d.ts
 test/**/*.js
 src/**/*.js
-!src/mock/*.d.ts
+!src/mock/mockMethod.d.ts
 !test/framework/typings/*.d.ts
 .idea

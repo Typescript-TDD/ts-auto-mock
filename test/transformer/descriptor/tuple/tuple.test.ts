@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for tuple', () => {
 	interface Interface {
@@ -7,7 +6,7 @@ describe('for tuple', () => {
 	}
 	
 	it('should set an empty string', () => {
-		const properties: Mock<Interface> = createMock<Interface>();
+		const properties: Interface = createMock<Interface>();
 		expect(properties.a).toEqual([])
 	});
 });

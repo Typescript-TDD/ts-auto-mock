@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for reserverd words', () => {
     interface WithReservedWord {

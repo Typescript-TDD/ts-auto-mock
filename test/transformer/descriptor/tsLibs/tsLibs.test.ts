@@ -1,12 +1,11 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('typescript lib', () => {
     it('should set an empty array', () => {
         interface Interface {
             a: Array<boolean>;
         }
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a).toEqual([])
     });
 
@@ -14,7 +13,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: Number;
         }
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a).toBe(0);
     });
 
@@ -22,7 +21,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: String;
         }
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a).toBe("");
     });
 
@@ -30,7 +29,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: Boolean;
         }
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a).toBe(false);
     });
 
@@ -38,7 +37,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: object;
         }
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a).toEqual({});
     });
 
@@ -46,7 +45,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: Function;
         }
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a()).toBeUndefined();
     });
 
@@ -54,7 +53,7 @@ describe('typescript lib', () => {
         interface Interface {
             a: ReadonlyArray<boolean>;
         }
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a).toEqual([]);
     });
 
@@ -63,7 +62,7 @@ describe('typescript lib', () => {
             a: Date;
         }
 
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         expect(properties.a).toBeUndefined();
     });
 
@@ -72,7 +71,7 @@ describe('typescript lib', () => {
             a(): Promise<string>;
         }
 
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
 
         const interfaceCast = properties as unknown as Interface;
 
@@ -85,7 +84,7 @@ describe('typescript lib', () => {
             a(): Promise<Array<string>>;
         }
 
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
 
         const interfaceCast = properties as unknown as Interface;
 
@@ -101,7 +100,7 @@ describe('typescript lib', () => {
             a(): Promise<WithGenerics<string>>;
         }
 
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
 
         const interfaceCast = properties as unknown as Interface;
 
@@ -120,7 +119,7 @@ describe('typescript lib', () => {
             a(): Promise<WithGenerics>;
         }
 
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         const interfaceCast = properties as unknown as Interface;
         const result: WithGenerics = await interfaceCast.a();
         const secondPromise: number = await result.generic();
@@ -138,7 +137,7 @@ describe('typescript lib', () => {
             a(): Promise<WithGenerics<string>>;
         }
 
-        const properties: Mock<Interface> = createMock<Interface>();
+        const properties: Interface = createMock<Interface>();
         const interfaceCast = properties as unknown as Interface;
         const result: WithGenerics<string> = await interfaceCast.a();
         const secondPromise: string = await result.generic();

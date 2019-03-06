@@ -1,7 +1,8 @@
 import * as ts from 'typescript';
 import { TypescriptHelper } from "../helper/helper";
+import { GetMockMarkerProperty } from "./mockMarker";
 
-export function GetMockCall(declarations: Array<ts.VariableDeclaration>, access: Array<ts.AccessorDeclaration>): ts.CallExpression {
+export function GetMockCall(declarations: Array<ts.VariableDeclaration>, properties: Array<ts.AccessorDeclaration>): ts.CallExpression {
     const statements = [];
 
     if (declarations.length) {
@@ -10,8 +11,10 @@ export function GetMockCall(declarations: Array<ts.VariableDeclaration>, access:
         statements.push(variableStatement);
     }
 
+    const mockMarkerProperty = GetMockMarkerProperty();
+    const propertiesToAssign = [...properties, mockMarkerProperty];
     const returnStatement = ts.createReturn(
-        ts.createObjectLiteral(access, true)
+        ts.createObjectLiteral(propertiesToAssign, true)
     );
 
     statements.push(returnStatement);

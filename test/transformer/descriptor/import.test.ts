@@ -3,7 +3,6 @@ import { ImportInterface, ImportInterfaceWithNestedInterface } from "./utils/int
 import ImportDefaultInterface from "./utils/interfaces/importDefaultInterface";
 import { ImportNamespace } from "./utils/interfaces/importNameSpace";
 import { ImportType, Type } from "./utils/types/type";
-import { Mock } from "ts-auto-mock";
 
 describe('with import', () => {
 	describe('for interfaces', () => {
@@ -47,7 +46,7 @@ describe('with import', () => {
 		});
 
 		it('should set the correct property', () => {
-			const properties: Mock<{ a: ImportType }> = createMock<{ a: ImportType }>();
+			const properties: { a: ImportType } = createMock<{ a: ImportType }>();
 			expect(properties.a).toBeUndefined();
 		});
 	});

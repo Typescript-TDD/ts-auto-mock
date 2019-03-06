@@ -2,7 +2,6 @@ import { createMock } from "ts-auto-mock";
 import { Class } from "./utils/classes/class";
 import { AbstractClass } from "./utils/classes/AbstractClass";
 import { EmptyClass } from "./utils/classes/EmptyClass";
-import { Mock } from "ts-auto-mock";
 
 describe('for classes', () => {
 	class Test {
@@ -11,13 +10,13 @@ describe('for classes', () => {
 	}
 
 	it('should set the correct property for internal class', () => {
-		const properties: Mock<Test> = createMock<Test>();
+		const properties: Test = createMock<Test>();
 		expect(properties.a).toBe("");
 		expect(properties["_a"]).toBeUndefined();
 	});
 
 	it('should set the correct property for imported class', () => {
-		const properties: Mock<Class> = createMock<Class>();
+		const properties: Class = createMock<Class>();
 		expect(properties.a).toBe("");
 		expect(properties.b).toBe("");
 		expect(properties["_a"]).toBeUndefined();
@@ -29,7 +28,7 @@ describe('for classes', () => {
 	});
 
 	it('should set the correct properties for an abstract class', () => {
-		const properties: Mock<AbstractClass> = createMock<AbstractClass>();
+		const properties: AbstractClass = createMock<AbstractClass>();
 		expect(properties.abstractProperty).toBe("");
 		expect(properties.property).toBe("");
 		expect(properties.publicProperty).toBe("");
@@ -37,7 +36,7 @@ describe('for classes', () => {
 	});
 
 	it('should be possible to change the value', () => {
-        const properties: Mock<AbstractClass> = createMock<AbstractClass>();
+        const properties: AbstractClass = createMock<AbstractClass>();
 
         properties.property = "changedValue";
         expect(properties.property).toBe("changedValue");

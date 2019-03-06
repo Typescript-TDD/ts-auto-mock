@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for methods', () => {
 	interface InterfaceReturnMethod {
@@ -15,7 +14,7 @@ describe('for methods', () => {
 	}
 	
 	it('should set the functions', () => {
-		const properties: Mock<Interface> = createMock<Interface>();
+		const properties: Interface = createMock<Interface>();
 		expect(properties.a()).toBeUndefined();
 		expect(properties.b()).toBe(0);
 		expect(properties.c()).toBe("");
@@ -29,7 +28,7 @@ describe('for methods', () => {
         }
 
         it('should set the functions', () => {
-            const properties: Mock<Interface> = createMock<Interface>();
+            const properties: Interface = createMock<Interface>();
             expect(properties.method()).toBe(0);
         });
 	});
@@ -42,7 +41,7 @@ describe('for methods', () => {
 		}
 
 		it('should set the functions', () => {
-			const properties: Mock<MyClass> = createMock<MyClass>();
+			const properties: MyClass = createMock<MyClass>();
 			expect(properties.method()).toBe(0);
 		});
 	});
@@ -50,7 +49,7 @@ describe('for methods', () => {
 	describe('for a type function', () => {
 		type Fn = () => string;
 		it('should set the functions', () => {
-			const properties: Mock<Fn> = createMock<Fn>();
+			const properties: Fn = createMock<Fn>();
 			expect(properties()).toBe("");
 		});
 	});

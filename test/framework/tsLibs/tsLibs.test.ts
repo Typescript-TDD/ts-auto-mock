@@ -1,14 +1,14 @@
-import { createMock, Mock, mockedMethod, On } from "ts-auto-mock";
+import { createMock, mockedMethod, On } from "ts-auto-mock";
 
-describe('tsLib ', () => {
+describe('tsLib', () => {
 	it('should return a spy with a name', () => {
 		interface Interface {
 			a: Function;
 		}
 		
-		const mock: Mock<Interface> = createMock<Interface>();
+		const mock: Interface = createMock<Interface>();
 		const spy = On.Mock(mock).get(mockedMethod(x => x.a));
-		
+
 		expect(spy.and.identity).toBe("a");
 		
 		mock.a();

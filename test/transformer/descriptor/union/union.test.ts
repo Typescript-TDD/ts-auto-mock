@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for union', () => {
 	interface Interface {
@@ -65,7 +64,7 @@ describe('for union', () => {
 			type Type = {
 				test: Array<number> | Array<string>
 			};
-			const properties: Mock<Type> = createMock<Type>();
+			const properties: Type = createMock<Type>();
 
 			expect(properties.test).toEqual([]);
 		});

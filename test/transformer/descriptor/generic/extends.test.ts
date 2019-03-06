@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for generic', () => {
     describe('interfaces', () => {
@@ -26,7 +25,7 @@ describe('for generic', () => {
         });
 
         it('should return the value as null', () => { // we do not know the type at runtime of the invoke function
-            const properties: Mock<WithExtendsMethod<toBeExtended>> = createMock<WithExtendsMethod<toBeExtended>>();
+            const properties: WithExtendsMethod<toBeExtended> = createMock<WithExtendsMethod<toBeExtended>>();
             expect(properties.method()).toBeNull();
         });
     });

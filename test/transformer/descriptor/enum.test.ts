@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for enum', () => {
 	enum Direction {
@@ -23,7 +22,7 @@ describe('for enum', () => {
 	}
 	
 	it('should set the first enum', () => {
-		const properties: Mock<Interface> = createMock<Interface>();
+		const properties: Interface = createMock<Interface>();
 		expect(properties.a).toBe(Direction.Right);
 		expect(properties.b).toBe(DirectionAssign.Right);
 		expect(properties.c).toBe(DirectionAssignNumber.Right);

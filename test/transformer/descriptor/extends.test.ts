@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 
 describe('for extends', () => {
     describe('for interface', () => {
@@ -19,7 +18,7 @@ describe('for extends', () => {
         }
 
         it('should set the default types', () => {
-            const properties: Mock<Interface> = createMock<Interface>();
+            const properties: Interface = createMock<Interface>();
             expect(properties.a).toBe("");
             expect(properties.property).toBe(false);
             expect(properties.b).toBe("");
@@ -40,7 +39,7 @@ describe('for extends', () => {
         }
 
         it('should set the default types', () => {
-            const properties: Mock<Class> = createMock<Class>();
+            const properties: Class = createMock<Class>();
             expect(properties.a).toBe("");
             expect(properties.property).toBe(false);
             expect(properties.b).toBe(0);
@@ -54,7 +53,7 @@ describe('for extends', () => {
         interface Interface extends Type {}
             
         it('should set the correct value', () => {
-            const properties: Mock<Interface> = createMock<Interface>();
+            const properties: Interface = createMock<Interface>();
             expect(properties.c).toBe(""); 
         });
     });
@@ -65,7 +64,7 @@ describe('for extends', () => {
         }
             
         it('should set the correct value', () => {
-            const properties: Mock<Interface> = createMock<Interface>();
+            const properties: Interface = createMock<Interface>();
             expect(properties as any).toEqual({a: 0}); 
         });
     });
@@ -76,7 +75,7 @@ describe('for extends', () => {
         }
             
         it('should ignore the typescript library', () => {
-            const properties: Mock<Interface> = createMock<Interface>();
+            const properties: Interface = createMock<Interface>();
             
             expect(properties as any).toEqual({ a: 0 })
         });
@@ -87,7 +86,7 @@ describe('for extends', () => {
         interface Interface extends Type {}
             
         it('should ignore the typescript library', () => {
-            const properties: Mock<Interface> = createMock<Interface>();
+            const properties: Interface = createMock<Interface>();
             expect(properties as any).toEqual({}); 
         });
     });

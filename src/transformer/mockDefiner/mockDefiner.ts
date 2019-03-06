@@ -38,6 +38,13 @@ export class MockDefiner {
         const thisFile = node.getSourceFile();
         this._fileName = thisFile.fileName;
     }
+    
+    public setTsAutoMockImportIdentifier() {
+		if (!this._neededImportIdentifierPerFile[this._fileName]) {
+			this._neededImportIdentifierPerFile[this._fileName] = ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_repository`);
+		}
+		this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[this._fileName];
+	}
 
 	public getTopStatementsForFile(sourceFile: ts.SourceFile): Array<ts.Statement> {
 		return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile)];
@@ -53,11 +60,8 @@ export class MockDefiner {
 		let declaration = TypescriptHelper.GetDeclarationFromType(definedType);
 
 		const thisFileName: string = this._fileName;
-
-		if (!this._neededImportIdentifierPerFile[thisFileName]) {
-			this._neededImportIdentifierPerFile[thisFileName] = ts.createFileLevelUniqueName(`${urlSlug(thisFileName, '_')}_repository`);
-		}
-		this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[thisFileName];
+		
+		this.setTsAutoMockImportIdentifier();
 
 		const key: string = this._getMockFactoryId(thisFileName, node, declaration as ts.Declaration);
 

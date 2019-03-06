@@ -1,5 +1,4 @@
 import { createMock } from "ts-auto-mock";
-import { Mock } from "ts-auto-mock";
 describe('for simple properties', () => {
 	describe('for declared interface with string', () => {
 		interface Interface {
@@ -7,7 +6,7 @@ describe('for simple properties', () => {
 		}
 		
 		it('should set an empty string', () => {
-			const properties: Mock<Interface> = createMock<Interface>();
+			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBe("")
 		});
 	});
@@ -18,7 +17,7 @@ describe('for simple properties', () => {
 		}
 		
 		it('should set 0', () => {
-			const properties: Mock<Interface> = createMock<Interface>();
+			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBe(0)
 		});
 	});
@@ -29,7 +28,7 @@ describe('for simple properties', () => {
         }
 
         it('should set an empty array', () => {
-            const properties: Mock<Interface> = createMock<Interface>();
+            const properties: Interface = createMock<Interface>();
             expect(properties.a).toEqual([])
         });
     });
@@ -40,7 +39,7 @@ describe('for simple properties', () => {
 		}
 		
 		it('should set false', () => {
-			const properties: Mock<Interface> = createMock<Interface>();
+			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBe(false)
 		});
 	});
@@ -51,7 +50,7 @@ describe('for simple properties', () => {
 		}
 		
 		it('should set null', () => {
-			const properties: Mock<Interface> = createMock<Interface>();
+			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBe(null)
 		});
 	});
@@ -62,7 +61,7 @@ describe('for simple properties', () => {
 		}
 		
 		it('should set null', () => {
-			const properties: Mock<Interface> = createMock<Interface>();
+			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBeUndefined()
 		});
 	});
@@ -73,7 +72,7 @@ describe('for simple properties', () => {
 		}
 		
 		it('should set null', () => {
-			const properties: Mock<Interface> = createMock<Interface>();
+			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBeUndefined()
 		});
 	});
@@ -84,7 +83,7 @@ describe('for simple properties', () => {
 		}
 		
 		it('should set null', () => {
-			const properties: Mock<Interface> = createMock<Interface>();
+			const properties: Interface = createMock<Interface>();
 			expect(properties.a).toBeUndefined()
 		});
 	});
