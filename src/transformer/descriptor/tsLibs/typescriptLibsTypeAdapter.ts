@@ -26,7 +26,7 @@ export function TypescriptLibsTypeAdapter(node): ts.Node {
         case(TypescriptLibsTypes.Promise):
             const parameter = node.typeParameters[0];
             const type = typeChecker.getTypeAtLocation(parameter);
-
+	
             const promiseResolveType = TypeReferenceCache.instance.get(type);
             const promiseAccess = ts.createPropertyAccess(ts.createIdentifier("Promise"), ts.createIdentifier("resolve"));
             

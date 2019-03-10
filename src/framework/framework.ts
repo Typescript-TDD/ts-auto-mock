@@ -1,5 +1,5 @@
 import { MockMarker } from "../mockMarker/mockMarker";
-import { MockMethod } from "../mock/mockMethod";
+import { MockMethod } from "../mockMethod/mockMethod";
 
 function Mock<U extends object>(mock: U): AutoMockExtensionHandler<U> {
 	// @ts-ignore
