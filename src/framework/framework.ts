@@ -2,12 +2,8 @@ import { MockMarker } from "../mockMarker/mockMarker";
 import { MockMethod } from "../mock/mockMethod";
 
 function Mock<U extends object>(mock: U): AutoMockExtensionHandler<U> {
-	const symbols: Symbol[] = Object.getOwnPropertySymbols(mock);
-	const symbolMarker = symbols.find((symbol: Symbol) => {
-		return symbol === MockMarker.instance.get();
-	});
-	
-	if (!symbolMarker) {
+	// @ts-ignore
+	if (!mock[MockMarker.instance.get()]) {
 		throw new Error("The provided mock is not valid. Please create a mock first with createMock")
 	}
 	
