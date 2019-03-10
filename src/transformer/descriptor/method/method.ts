@@ -23,9 +23,3 @@ export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: 
     const parenthesizedExpression = ts.createParen(functionExpression);
     return ts.createCall(parenthesizedExpression, [], []);
 }
-
-export function GetEmptyMethodDescriptor() {
-	const property = ts.createIdentifier("");
-	const returnValue = ts.createIdentifier("");
-	return GetMethodDescriptor(property, returnValue);
-}

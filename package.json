@@ -18,11 +18,11 @@
     "auto"
   ],
   "files": [
-    "src/framework/*.d.ts",
-    "src/mock/*.d.ts",
-    "src/mockFactory/*.d.ts",
-    "src/mockRepository/*.d.ts",
-    "src/mockMarker/*.d.ts",
+    "src/framework/framework.d.ts",
+    "src/mockMethod/mockMethod.d.ts",
+    "src/mockFactory/mockFactory.d.ts",
+    "src/mockRepository/mockRepository.ts",
+    "src/mockMarker/mockMarker.d.ts",
     "src/transformer/transformer.d.ts",
     "src/transformer/create-mock.ts",
     "index.d.ts",

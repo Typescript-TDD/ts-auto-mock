@@ -1,7 +1,12 @@
-import * as ts from "typescript";
+import * as ts from 'typescript';
 import { MockDefiner } from "../../mockDefiner/mockDefiner";
 
-export function GetMockMarkerProperty() {
+export interface Property {
+	name: ts.Expression,
+	value: ts.Expression
+}
+
+export function GetMockMarkerProperty(): Property {
 	const propertyAccessExpression = ts.createPropertyAccess(
 		ts.createPropertyAccess(
 			ts.createPropertyAccess(
@@ -12,6 +17,9 @@ export function GetMockMarkerProperty() {
 		ts.createIdentifier("get"));
 	
 	const mockMarkerCall = ts.createCall(propertyAccessExpression, [], []);
-	const computedPropertyName = ts.createComputedPropertyName(mockMarkerCall);
-	return ts.createPropertyAssignment(computedPropertyName, ts.createLiteral(true));
+	
+	return {
+		name: mockMarkerCall,
+		value: ts.createLiteral(true)
+	};
 }
