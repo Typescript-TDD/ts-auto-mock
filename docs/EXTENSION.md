@@ -36,7 +36,7 @@ const mock: Interface = createMock<Interface>();
 ```
 2) get the method spy 
 ```ts
-const spy: jasmine.Spy = On.Mock(mock).get(mockedMethod(mock => mock.methodToSpy));
+const spy: jasmine.Spy = On(mock).get(mockedMethod(mock => mock.methodToSpy));
 ```
 3) trigger the method
 ```ts

@@ -1,7 +1,7 @@
 import { MockMarker } from "../mockMarker/mockMarker";
 import { MockMethod } from "../mockMethod/mockMethod";
 
-function Mock<U extends object>(mock: U): AutoMockExtensionHandler<U> {
+export function On<U extends object>(mock: U): AutoMockExtensionHandler<U> {
 	// @ts-ignore
 	if (!mock[MockMarker.instance.get()]) {
 		throw new Error("The provided mock is not valid. Please create a mock first with createMock")
@@ -12,25 +12,21 @@ function Mock<U extends object>(mock: U): AutoMockExtensionHandler<U> {
 
 type FunctionReturn<TR> = () => TR;
 
-export const On = {
-	Mock: Mock
-};
-
-export class AutoMockExtensionHandler<U> {
-	private readonly _mock: U;
+export class AutoMockExtensionHandler<TMock> {
+	private readonly _mock: TMock;
 	
-	constructor(mock: U) {
+	constructor(mock: TMock) {
 		this._mock = mock;
 	}
 	
-	get<R>(extension: Extension<U, R>): R {
+	get<TRequestedOverriddenMock>(extension: FindOverriddenMockStrategy<TMock, TRequestedOverriddenMock>): TRequestedOverriddenMock {
 		return extension(this._mock);
 	}
 }
 
-export type Extension<TMock, TMocked> = (mock: TMock) => TMocked;
+export type FindOverriddenMockStrategy<TMock, TRequestedOverriddenMock> = (mock: TMock) => TRequestedOverriddenMock;
 
-export function mockedMethod<T extends FunctionReturn<TR> | Function, TR, U>(cb: (mock: U) => T): Extension<U, MockMethod<TR>> {
-	return cb as unknown as (mock: U) => MockMethod<TR>;
+export function method<TFunctionReturn, TMock>(cb: (mock: TMock) => (FunctionReturn<TFunctionReturn> | Function)): FindOverriddenMockStrategy<TMock, MockMethod<TFunctionReturn>> {
+	return cb as unknown as (mock: TMock) => MockMethod<TFunctionReturn>;
 }
 

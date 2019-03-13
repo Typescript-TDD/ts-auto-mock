@@ -1,4 +1,4 @@
-import { createMock, mockedMethod, On } from "ts-auto-mock";
+import { createMock, method, On } from "ts-auto-mock";
 
 describe('functions', () => {
 	type a = () => void;
@@ -19,7 +19,7 @@ describe('functions', () => {
 	
 	it('should not be able to get the mock', () => {
 		expect(() => {
-			On.Mock(mock).get(mockedMethod(x => x.apply))
+			On(mock).get(method(x => x.apply))
 		}).toThrow();
 	});
 });
