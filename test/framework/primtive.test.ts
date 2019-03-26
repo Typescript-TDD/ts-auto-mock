@@ -1,4 +1,4 @@
-import { createMock, mockedMethod, On } from "ts-auto-mock";
+import { createMock, method, On } from "ts-auto-mock";
 
 describe('primitives', () => {
 	type a = string;
@@ -12,7 +12,7 @@ describe('primitives', () => {
 	it('should not be able to get the mock', () => {
 		expect(() => {
 			// @ts-ignore
-			On.Mock(mock).get(mockedMethod(x => x.apply))
+			On(mock).get(method(x => x.apply))
 		}).toThrow();
 	});
 });
