@@ -1,5 +1,5 @@
-import { MockMarker } from "../mockMarker/mockMarker";
-import { MockMethod } from "../mockMethod/mockMethod";
+import {MockMarker} from "../mockMarker/mockMarker";
+import {Extension} from "./extension";
 
 export function On<U extends object>(mock: U): AutoMockExtensionHandler<U> {
 	// @ts-ignore
@@ -10,8 +10,6 @@ export function On<U extends object>(mock: U): AutoMockExtensionHandler<U> {
 	return new AutoMockExtensionHandler(mock);
 }
 
-type FunctionReturn<TR> = () => TR;
-
 export class AutoMockExtensionHandler<TMock> {
 	private readonly _mock: TMock;
 	
@@ -19,24 +17,7 @@ export class AutoMockExtensionHandler<TMock> {
 		this._mock = mock;
 	}
 	
-	get<TRequestedOverriddenMock>(extension: FindOverriddenMockStrategy<TMock, TRequestedOverriddenMock>): TRequestedOverriddenMock {
+	get<TRequestedOverriddenMock>(extension: Extension<TMock, TRequestedOverriddenMock>): TRequestedOverriddenMock {
 		return extension(this._mock);
 	}
 }
-
-export type FindOverriddenMockStrategy<TMock, TRequestedOverriddenMock> = (mock: TMock) => TRequestedOverriddenMock;
-
-function isString(cbOrTarget: any): cbOrTarget is string {
-	return Object.prototype.toString.call(cbOrTarget) === "[object String]";
-}
-
-export function method<TFunctionReturn, TMock>(target: keyof TMock): FindOverriddenMockStrategy<TMock, MockMethod<TFunctionReturn>>;
-export function method<TFunctionReturn, TMock>(cb: (mock: TMock) => (FunctionReturn<TFunctionReturn> | Function)): FindOverriddenMockStrategy<TMock, MockMethod<TFunctionReturn>>;
-export function method<TFunctionReturn, TMock>(cbOrTarget: any): FindOverriddenMockStrategy<TMock, MockMethod<TFunctionReturn>> {
-	if(isString(cbOrTarget)) {
-		return (mock: TMock) => mock[cbOrTarget] as MockMethod<TFunctionReturn>;
-	} else {
-		return cbOrTarget as unknown as (mock: TMock) => MockMethod<TFunctionReturn>;
-	}
-}
-
