@@ -23,7 +23,6 @@ export default function transformer(program: ts.Program): ts.TransformerFactory<
     };
 }
 
-
 function visitNodeAndChildren(node: ts.SourceFile, context: ts.TransformationContext): ts.SourceFile;
 function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext): ts.Node;
 function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext): ts.Node {
@@ -31,11 +30,8 @@ function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext):
 }
 
 function visitNode(node: ts.Node): ts.Node {
-    if (!isKeysCallExpression(node)) {
+    if (!isCreateMockCallExpression(node)) {
         return node;
-    }
-    if (!node.typeArguments) {
-        return ts.createArrayLiteral([]);
     }
 
     const nodeToMock = node.typeArguments[0];
@@ -50,7 +46,7 @@ function visitNode(node: ts.Node): ts.Node {
     }
 }
 
-function isKeysCallExpression(node: ts.Node): node is ts.CallExpression {
+function isCreateMockCallExpression(node: ts.Node): node is ts.CallExpression {
 	const indexTs = path.join(__dirname, 'src/transformer/create-mock.ts');
 
 	if (node.kind !== ts.SyntaxKind.CallExpression) {
