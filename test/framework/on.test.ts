@@ -6,6 +6,6 @@ describe('On', () => {
     });
     
     it('should return an AutoMockExtensionHandler when used with a mock', () => {
-        expect(On(createMock<{prop: Function}>())).toEqual(jasmine.any(AutoMockExtensionHandler));
+        expect(On(createMock<{prop: () => void}>())).toEqual(jasmine.any(AutoMockExtensionHandler));
     });
 });
