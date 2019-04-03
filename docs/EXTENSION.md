@@ -30,15 +30,24 @@ interface Interface {
     methodToSpy: () => string
 }
 ```
-1) create a mock
+2) create a mock
 ```ts
 const mock: Interface = createMock<Interface>();
 ```
-2) get the method spy 
+
+3) get the spy from the method
+You can get the method in two different way
+
+through a function that access to the mock
 ```ts
-const spy: jasmine.Spy = On(mock).get(mockedMethod(mock => mock.methodToSpy));
+const spy: jasmine.Spy = On(mock).get(method(mock => mock.methodToSpy));
 ```
-3) trigger the method
+directly as string
+```ts
+const spy: jasmine.Spy = On(mock).get(method('methodToSpy'));
+```
+ 
+4) trigger the method
 ```ts
 someMethodThatWillTriggerInterfaceA();
 expect(spy).toHaveBeenCalled();
