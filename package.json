@@ -20,6 +20,7 @@
   ],
   "files": [
     "src/framework/*.d.ts",
+    "src/framework/extension.ts",
     "src/mockMethod/*.d.ts",
     "src/mockFactory/*.d.ts",
     "src/mockRepository/*.ts",
