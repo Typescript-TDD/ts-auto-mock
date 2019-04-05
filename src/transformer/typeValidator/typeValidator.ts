@@ -5,8 +5,7 @@ const reusableTypes = [
     ts.SyntaxKind.ClassDeclaration,
     ts.SyntaxKind.InterfaceDeclaration,
     ts.SyntaxKind.TypeLiteral,
-    ts.SyntaxKind.MappedType,
-    ts.SyntaxKind.FunctionType
+    ts.SyntaxKind.MappedType
 ];
 
 export function isTypeReusable(node: ts.Node): boolean {
