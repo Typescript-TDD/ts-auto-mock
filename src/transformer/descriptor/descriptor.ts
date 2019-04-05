@@ -16,7 +16,7 @@ import { GetIdentifierDescriptor } from "./identifier/identifier";
 import { GetTypeParameterDescriptor } from "./typeParameter/typeParameter";
 import { GetIntersectionDescriptor } from "./intersection/intersection";
 import { GetFunctionTypeDescriptor } from "./method/functionType";
-import { GetMethodDeclarationDescriptor } from "./method/methodDeclaration";
+import {GetMethodDeclarationDescriptor, GetMethodSignatureDescriptor} from "./method/methodDeclaration";
 import { GetFunctionAssignmentDescriptor } from "./method/functionAssignment";
 import { GetMockPropertiesFromSymbol } from './mock/mockProperties';
 import { GetTypeAliasDescriptor } from "./typeAlias/typeAlias";
@@ -59,7 +59,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.ImportClause:
 			return GetImportDescriptor(node as ts.ImportClause);
 		case ts.SyntaxKind.MethodSignature:
-			return GetMethodDeclarationDescriptor(node as ts.MethodSignature);
+			return GetMethodSignatureDescriptor(node as ts.MethodSignature);
 		case ts.SyntaxKind.MethodDeclaration:
 			return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration);
         case ts.SyntaxKind.FunctionType:
