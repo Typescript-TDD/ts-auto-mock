@@ -25,13 +25,12 @@ describe('functions', () => {
 
 	it('should create different factories for different functions mock', () => {
 		interface Mock {
-			woooow: Function;
-			duuuuuuu: Function;
-			great(): string;
+			first: Function;
+			second: Function;
 		}
 		const mock: Mock = createMock<Mock>();
 
-		expect((mock.woooow as jasmine.Spy).and.identity).toBe('woooow');
-		expect((mock.duuuuuuu as jasmine.Spy).and.identity).toBe('duuuuuuu');
+		expect((mock.first as jasmine.Spy).and.identity).toBe('first');
+		expect((mock.second as jasmine.Spy).and.identity).toBe('second');
 	});
 });
