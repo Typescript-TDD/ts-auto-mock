@@ -10,7 +10,8 @@
     "test": "npm run test-transformer & npm run test-framework",
     "test-transformer": "karma start config/karma/karma.config.transformer.js",
     "test-framework": "karma start config/karma/karma.config.framework.js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "keywords": [
     "typescript",
