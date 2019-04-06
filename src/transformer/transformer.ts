@@ -52,7 +52,7 @@ function isCreateMockCallExpression(node: ts.Node): node is ts.CallExpression {
 	if (node.kind !== ts.SyntaxKind.CallExpression) {
         return false;
     }
-
+	
     const typeChecker = TypeChecker();
     const signature = typeChecker.getResolvedSignature(node as ts.CallExpression);
     if (typeof signature === 'undefined') {
