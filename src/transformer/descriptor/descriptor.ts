@@ -16,7 +16,7 @@ import { GetIdentifierDescriptor } from "./identifier/identifier";
 import { GetTypeParameterDescriptor } from "./typeParameter/typeParameter";
 import { GetIntersectionDescriptor } from "./intersection/intersection";
 import { GetFunctionTypeDescriptor } from "./method/functionType";
-import {GetMethodDeclarationDescriptor, GetMethodSignatureDescriptor} from "./method/methodDeclaration";
+import {GetMethodDeclarationDescriptor} from "./method/methodDeclaration";
 import { GetFunctionAssignmentDescriptor } from "./method/functionAssignment";
 import { GetMockPropertiesFromSymbol } from './mock/mockProperties';
 import { GetTypeAliasDescriptor } from "./typeAlias/typeAlias";
@@ -27,6 +27,7 @@ import { GetUndefinedDescriptor } from "./undefined/undefined";
 import { GetMappedDescriptor } from "./mapped/mapped";
 import { GetMockFactoryCall } from "../mockFactoryCall/mockFactoryCall";
 import { GetTypeReferenceDescriptorReusable } from "./typeReference/typeReferenceReusable";
+import {GetMethodSignatureDescriptor} from "./method/methodSignature";
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
