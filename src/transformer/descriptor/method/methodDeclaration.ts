@@ -1,10 +1,16 @@
 import * as ts from 'typescript';
-import { GetMethodDescriptor } from "./method";
-import { GetDescriptor } from "../descriptor";
+import {GetMethodDescriptor} from "./method";
+import {GetDescriptor} from "../descriptor";
+import {GetReturnTypeFromBody} from "./bodyReturnType";
 
-type Methods = ts.MethodSignature | ts.MethodDeclaration;
+export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration): ts.Expression {
+    let returnType: ts.Expression;
 
-export function GetMethodDeclarationDescriptor(node: Methods): ts.Expression {
-	const returnValue: ts.Expression = GetDescriptor(node.type);
-    return GetMethodDescriptor(node.name, returnValue);
+    if (node.type) {
+        returnType = GetDescriptor(node.type);
+    } else {
+        returnType = GetReturnTypeFromBody(node);
+    }
+
+    return GetMethodDescriptor(node.name, returnType);
 }
