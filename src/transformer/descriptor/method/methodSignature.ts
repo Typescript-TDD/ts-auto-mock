@@ -1,15 +1,14 @@
 import * as ts from "typescript";
-import { GetMethodDescriptor } from "./method";
+import {GetMethodDescriptor} from "./method";
 import { GetNullDescriptor } from "../null/null";
-import { GetMethodWithReturnType } from "./methodWithReturnType";
+import { GetDescriptor } from "../descriptor";
 
-export function GetMethodSignature(node: ts.MethodSignature) {
+export function GetMethodSignatureDescriptor(node: ts.MethodSignature): ts.Expression {
 	const hasReturnValue = node.type;
 	
 	if (hasReturnValue) {
-		return GetMethodWithReturnType(node);
+		return GetMethodDescriptor(node.name, GetDescriptor(node.type));
 	}
 	
-	const returnValue: ts.Expression = GetNullDescriptor();
-	return GetMethodDescriptor(node.name, returnValue)
+    return GetMethodDescriptor(node.name, GetNullDescriptor());
 }

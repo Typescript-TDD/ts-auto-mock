@@ -22,4 +22,15 @@ describe('functions', () => {
 			On(mock).get(method(x => x.apply))
 		}).toThrow();
 	});
+
+	it('should create different factories for different functions mock', () => {
+		interface Mock {
+			first: Function;
+			second: Function;
+		}
+		const mock: Mock = createMock<Mock>();
+
+		expect((mock.first as jasmine.Spy).and.identity).toBe('first');
+		expect((mock.second as jasmine.Spy).and.identity).toBe('second');
+	});
 });

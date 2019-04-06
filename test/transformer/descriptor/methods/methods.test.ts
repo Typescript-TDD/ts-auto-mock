@@ -46,6 +46,19 @@ describe('for methods', () => {
 		});
 });
 
+	describe('for undeclared return value', () => {
+		class MyClass {
+			method() {
+				return 2;
+			}
+		}
+
+		it('should infer the return value from return statement', () => {
+			const properties: MyClass = createMock<MyClass>();
+			expect(properties.method()).toBe(2);
+		});
+	});
+
 	describe('for a type function', () => {
 		type Fn = () => string;
 		it('should set the functions', () => {
