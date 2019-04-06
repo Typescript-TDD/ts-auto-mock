@@ -21,4 +21,3 @@ export class AutoMockExtensionHandler<TMock> {
 		return extension(this._mock);
 	}
 }
-
