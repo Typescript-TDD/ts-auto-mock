@@ -4,8 +4,8 @@ describe('for methods', () => {
 	interface InterfaceReturnMethod {
 		a: string;
 	}
-
-	interface Interface {
+	
+		interface Interface {
 		a(): void;
 		b(): number;
 		c(): string;
@@ -25,14 +25,14 @@ describe('for methods', () => {
 	describe('for interface declaration', () => {
         interface Interface {
             method: () => number
-        }
-
+		}
+		
         it('should set the functions', () => {
             const properties: Interface = createMock<Interface>();
             expect(properties.method()).toBe(0);
         });
 	});
-
+	
 	describe('for declaration', () => {
 		class MyClass {
 			method(): number {
@@ -44,7 +44,7 @@ describe('for methods', () => {
 			const properties: MyClass = createMock<MyClass>();
 			expect(properties.method()).toBe(0);
 		});
-	});
+});
 
 	describe('for undeclared return value', () => {
 		class MyClass {
@@ -66,4 +66,16 @@ describe('for methods', () => {
 			expect(properties()).toBe("");
 		});
 	});
+	
+	describe('for an interface without return value', () => {
+		interface Interface {
+			method();
+		}
+		
+		it('should return null', () => {
+			const a: Interface = createMock<Interface>();
+			
+			expect(a.method()).toBeNull();
+		});
+	})
 });
