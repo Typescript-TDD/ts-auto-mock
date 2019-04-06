@@ -27,6 +27,7 @@ import { GetUndefinedDescriptor } from "./undefined/undefined";
 import { GetMappedDescriptor } from "./mapped/mapped";
 import { GetMockFactoryCall } from "../mockFactoryCall/mockFactoryCall";
 import { GetTypeReferenceDescriptorReusable } from "./typeReference/typeReferenceReusable";
+import { GetMethodSignature } from "./method/methodSignature";
 
 export function GetDescriptor(node: ts.Node): ts.Expression {
 	switch (node.kind) {
@@ -59,7 +60,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
 		case ts.SyntaxKind.ImportClause:
 			return GetImportDescriptor(node as ts.ImportClause);
 		case ts.SyntaxKind.MethodSignature:
-			return GetMethodDeclarationDescriptor(node as ts.MethodSignature);
+			return GetMethodSignature(node as ts.MethodSignature);
 		case ts.SyntaxKind.MethodDeclaration:
 			return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration);
         case ts.SyntaxKind.FunctionType:
