@@ -4,11 +4,13 @@ import { GetNullDescriptor } from "../null/null";
 import { GetDescriptor } from "../descriptor";
 
 export function GetMethodSignatureDescriptor(node: ts.MethodSignature): ts.Expression {
-	const hasReturnValue = node.type;
+	let returnType: ts.Expression;
 	
-	if (hasReturnValue) {
-		return GetMethodDescriptor(node.name, GetDescriptor(node.type));
+	if (node.type) {
+		returnType = GetDescriptor(node.type);
+	} else {
+		returnType = GetNullDescriptor();
 	}
 	
-    return GetMethodDescriptor(node.name, GetNullDescriptor());
+    return GetMethodDescriptor(node.name, returnType);
 }
