@@ -1,3 +1,19 @@
+## [0.0.25](https://github.com/uittorio/ts-auto-mock/compare/v0.0.24...v0.0.25) (2019-04-06)
+
+
+### Bug Fixes
+
+* **changelog:** this should work ([ef5afdd](https://github.com/uittorio/ts-auto-mock/commit/ef5afdd))
+
+
+### Features
+
+* **changelog:** add commit hooks check ([b15c306](https://github.com/uittorio/ts-auto-mock/commit/b15c306))
+* **changelog:** test ([7bd0ac4](https://github.com/uittorio/ts-auto-mock/commit/7bd0ac4))
+* **changelog:** this will not fail ([b7d3b13](https://github.com/uittorio/ts-auto-mock/commit/b7d3b13))
+
+
+
 ## [0.0.24](https://github.com/uittorio/ts-auto-mock/compare/v0.0.23...v0.0.24) (2019-04-03)
 
 
