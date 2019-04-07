@@ -1,3 +1,9 @@
+<a name="0.0.26"></a>
+## [0.0.26](https://github.com/uittorio/ts-auto-mock/compare/v0.0.25...v0.0.26) (2019-04-07)
+
+
+
+<a name="0.0.25"></a>
 ## [0.0.25](https://github.com/uittorio/ts-auto-mock/compare/bd3a43d...v0.0.25) (2019-04-07)
 
 
