@@ -1,4 +1,5 @@
 const webpackConfig = require('./../webpack.test.js');
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config, url) {
     return {
@@ -25,6 +26,12 @@ module.exports = function(config, url) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
+        customLaunchers: {
+            Chrome_no_sandbox: {
+                base: 'Chrome',
+                flags: ['--headless', '--no-sandbox']
+            }
+        },
         browsers: ['ChromeHeadless'],
         singleRun: true
     }
