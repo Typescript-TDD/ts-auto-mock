@@ -15,6 +15,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm build
-      - run: npm test-transformer
-      - run: npm test-framework
+      - run: npm run build
+      - run: npm run test-transformer
+      - run: npm run test-framework
