@@ -1,7 +1,8 @@
-import { GetDescriptor } from "../descriptor";
-import { GetTypeImport, ImportNode } from "../type/typeImport";
+import * as ts from 'typescript';
+import { GetDescriptor } from '../descriptor';
+import { GetTypeImport, ImportNode } from '../type/typeImport';
 
-export function GetImportDescriptor(node: ImportNode) {
-    const type = GetTypeImport(node);
-	return GetDescriptor(type);
+export function GetImportDescriptor(node: ImportNode): ts.Expression {
+    const type: ts.Node = GetTypeImport(node);
+    return GetDescriptor(type);
 }

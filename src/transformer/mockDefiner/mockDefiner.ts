@@ -1,143 +1,148 @@
 import * as ts from 'typescript';
-const urlSlug = require("url-slug");
-import { TypeChecker } from '../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor/descriptor';
-import { createImportOnIdentifier } from '../helper/import';
-import { FactoryDefinitionCache } from './factoryDefinitionCache';
-import { GetTypeReferenceDescriptor } from "../descriptor/typeReference/typeReference";
 import { TypescriptHelper } from '../descriptor/helper/helper';
+import { GetTypeReferenceDescriptor } from '../descriptor/typeReference/typeReference';
+import { createImportOnIdentifier } from '../helper/import';
+import { TypeChecker } from '../typeChecker/typeChecker';
+import { FactoryDefinitionCache } from './factoryDefinitionCache';
+
+// tslint:disable-next-line:no-any
+const urlSlug: any = require('url-slug');
+
 type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLiteralNode;
 
 function GetPossibleDescriptor(node: ts.Node): ts.Expression {
     if (node.kind === ts.SyntaxKind.TypeReference) {
-        return GetTypeReferenceDescriptor((node as ts.TypeReferenceNode))
+        return GetTypeReferenceDescriptor((node as ts.TypeReferenceNode));
     }
 
     return GetDescriptor(node);
 }
 
 export class MockDefiner {
-	private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};
-	private _factoryRegistrationsPerFile: { [key: string]: Array<{ key: ts.Declaration; factory: ts.Expression }> } = {};
-	private _factoryCache: FactoryDefinitionCache;
-
-	private static _instance: MockDefiner;
-    public currentTsAutoMockImportName: ts.Identifier;
+    private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};
+    private _factoryRegistrationsPerFile: { [key: string]: Array<{ key: ts.Declaration; factory: ts.Expression }> } = {};
+    private _factoryCache: FactoryDefinitionCache;
     private _fileName: string;
 
-    public static get instance(): MockDefiner {
-		this._instance = this._instance || new MockDefiner();
-		return this._instance;
-	}
+    private constructor() {
+        this._factoryCache = new FactoryDefinitionCache();
+    }
 
-	private constructor() {
-		this._factoryCache = new FactoryDefinitionCache();
-	}
+    private static _instance: MockDefiner;
+
+    public static get instance(): MockDefiner {
+        this._instance = this._instance || new MockDefiner();
+        return this._instance;
+    }
+
+    public currentTsAutoMockImportName: ts.Identifier;
 
     public setFileNameFromNode(node: ts.TypeNode): void {
-        const thisFile = node.getSourceFile();
+        // tslint:disable-next-line:no-any
+        const thisFile: any = node.getSourceFile();
         this._fileName = thisFile.fileName;
     }
-    
-    public setTsAutoMockImportIdentifier() {
-		if (!this._neededImportIdentifierPerFile[this._fileName]) {
-			this._neededImportIdentifierPerFile[this._fileName] = ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_repository`);
-		}
-		this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[this._fileName];
-	}
 
-	public getTopStatementsForFile(sourceFile: ts.SourceFile): Array<ts.Statement> {
-		return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile)];
-	}
+    public setTsAutoMockImportIdentifier(): void {
+        if (!this._neededImportIdentifierPerFile[this._fileName]) {
+            this._neededImportIdentifierPerFile[this._fileName] = ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_repository`);
+        }
+        this.currentTsAutoMockImportName = this._neededImportIdentifierPerFile[this._fileName];
+    }
 
-	public initFile(sourceFile: ts.SourceFile): void {
-		this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
-	}
+    public getTopStatementsForFile(sourceFile: ts.SourceFile): ts.Statement[] {
+        return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile)];
+    }
 
-	public getMockFactory(node: PossibleTypeNode): ts.Expression {
-		const typeChecker = TypeChecker();
-		const definedType: ts.Type = typeChecker.getTypeAtLocation(node);
-		let declaration = TypescriptHelper.GetDeclarationFromType(definedType);
+    public initFile(sourceFile: ts.SourceFile): void {
+        this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
+    }
 
-		const thisFileName: string = this._fileName;
-		
-		this.setTsAutoMockImportIdentifier();
+    public getMockFactory(node: PossibleTypeNode): ts.Expression {
+        const typeChecker: ts.TypeChecker = TypeChecker();
+        const definedType: ts.Type = typeChecker.getTypeAtLocation(node);
+        const declaration: ts.TypeNode | ts.Declaration = TypescriptHelper.GetDeclarationFromType(definedType);
 
-		const key: string = this._getMockFactoryId(thisFileName, node, declaration as ts.Declaration);
+        const thisFileName: string = this._fileName;
 
-		return ts.createCall(
-			ts.createPropertyAccess(
-				this._mockRepositoryAccess(thisFileName),
-				ts.createIdentifier('getFactory')
-			),
-			[],
-			[ts.createStringLiteral(key)]
-		);
-	}
+        this.setTsAutoMockImportIdentifier();
 
-	private _mockRepositoryAccess(filename: string): ts.Expression {
-		return ts.createPropertyAccess(
-			ts.createPropertyAccess(
-				this._neededImportIdentifierPerFile[filename],
-				ts.createIdentifier('MockRepository')
-			),
-			ts.createIdentifier('instance')
-		);
-	}
+        const key: string = this._getMockFactoryId(thisFileName, node, declaration as ts.Declaration);
 
-	private _getMockFactoryId(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
-		if (this._factoryCache.hasFactoryForTypeMock(declaration)) {
-			return this._factoryCache.getFactoryKeyForTypeMock(declaration);
-		}
+        return ts.createCall(
+            ts.createPropertyAccess(
+                this._mockRepositoryAccess(thisFileName),
+                ts.createIdentifier('getFactory'),
+            ),
+            [],
+            [ts.createStringLiteral(key)],
+        );
+    }
 
-		this._factoryCache.setFactoryKeyForTypeMock(
-			declaration,
-			this._factoryCache.createUniqueKeyForFactory(declaration)
-		);
+    private _mockRepositoryAccess(filename: string): ts.Expression {
+        return ts.createPropertyAccess(
+            ts.createPropertyAccess(
+                this._neededImportIdentifierPerFile[filename],
+                ts.createIdentifier('MockRepository'),
+            ),
+            ts.createIdentifier('instance'),
+        );
+    }
 
-		this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
+    private _getMockFactoryId(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
+        if (this._factoryCache.hasFactoryForTypeMock(declaration)) {
+            return this._factoryCache.getFactoryKeyForTypeMock(declaration);
+        }
 
-		const descriptor = GetPossibleDescriptor(type);
+        this._factoryCache.setFactoryKeyForTypeMock(
+            declaration,
+            this._factoryCache.createUniqueKeyForFactory(declaration),
+        );
 
-		this._factoryRegistrationsPerFile[thisFileName].push({
-			key: declaration,
-			factory: ts.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined,
-				ts.createBlock(
-					[ts.createReturn(descriptor)]
-				)
-			)
-		});
+        this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
 
-		return this._factoryCache.getFactoryKeyForTypeMock(declaration);
-	}
+        const descriptor: ts.Expression = GetPossibleDescriptor(type);
 
-	private _getImportsToAddInFile(sourceFile: ts.SourceFile): Array<ts.Statement> {
-		if (this._neededImportIdentifierPerFile[sourceFile.fileName]) {
-			return [createImportOnIdentifier('ts-auto-mock', this._neededImportIdentifierPerFile[sourceFile.fileName])];
-		}
+        this._factoryRegistrationsPerFile[thisFileName].push({
+            key: declaration,
+            factory: ts.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined,
+                ts.createBlock(
+                    [ts.createReturn(descriptor)],
+                ),
+            ),
+        });
 
-		return [];
-	}
+        return this._factoryCache.getFactoryKeyForTypeMock(declaration);
+    }
 
-	private _getExportsToAddInFile(sourceFile: ts.SourceFile): Array<ts.Statement> {
-		if (this._factoryRegistrationsPerFile[sourceFile.fileName]) {
-			return this._factoryRegistrationsPerFile[sourceFile.fileName]
-				.map(reg => this._createRegistration(sourceFile.fileName, reg.key, reg.factory));
-		}
+    private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
+        if (this._neededImportIdentifierPerFile[sourceFile.fileName]) {
+            return [createImportOnIdentifier('ts-auto-mock', this._neededImportIdentifierPerFile[sourceFile.fileName])];
+        }
 
-		return [];
-	}
+        return [];
+    }
 
-	private _createRegistration(filename: string, key: ts.Declaration, factory: ts.Expression): ts.Statement {
-		return ts.createExpressionStatement(
-			ts.createCall(
-				ts.createPropertyAccess(
-					this._mockRepositoryAccess(filename),
-					ts.createIdentifier('registerFactory')
-				),
-				[],
-				[ts.createStringLiteral(this._factoryCache.getFactoryKeyForTypeMock(key)), factory]
-			)
-		);
-	}
+    private _getExportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
+        if (this._factoryRegistrationsPerFile[sourceFile.fileName]) {
+            return this._factoryRegistrationsPerFile[sourceFile.fileName]
+                .map((reg: { key: ts.Declaration; factory: ts.Expression }) => this._createRegistration(sourceFile.fileName, reg.key, reg.factory));
+        }
+
+        return [];
+    }
+
+    private _createRegistration(filename: string, key: ts.Declaration, factory: ts.Expression): ts.Statement {
+        return ts.createExpressionStatement(
+            ts.createCall(
+                ts.createPropertyAccess(
+                    this._mockRepositoryAccess(filename),
+                    ts.createIdentifier('registerFactory'),
+                ),
+                [],
+                [ts.createStringLiteral(this._factoryCache.getFactoryKeyForTypeMock(key)), factory],
+            ),
+        );
+    }
 }

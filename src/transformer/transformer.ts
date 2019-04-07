@@ -1,22 +1,22 @@
-import * as ts from 'typescript';
 import * as path from 'path';
-import { TypeChecker, SetTypeChecker } from './typeChecker/typeChecker';
+import * as ts from 'typescript';
+import { GetDescriptor } from './descriptor/descriptor';
+import { TypeReferenceCache } from './descriptor/typeReference/cache';
 import { MockDefiner } from './mockDefiner/mockDefiner';
-import { isTypeReusable } from "./typeValidator/typeValidator";
-import { TypeReferenceCache } from "./descriptor/typeReference/cache";
-import { GetMockFactoryCall } from "./mockFactoryCall/mockFactoryCall";
-import { GetDescriptor } from "./descriptor/descriptor";
+import { GetMockFactoryCall } from './mockFactoryCall/mockFactoryCall';
+import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
+import { isTypeReusable } from './typeValidator/typeValidator';
 
 export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());
 
-    return (context: ts.TransformationContext) => (file: ts.SourceFile) => {
+    return (context: ts.TransformationContext): (file: ts.SourceFile) => ts.SourceFile => (file: ts.SourceFile): ts.SourceFile => {
         MockDefiner.instance.initFile(file);
-        let sourceFile = visitNodeAndChildren(file, context);
+        let sourceFile: ts.SourceFile = visitNodeAndChildren(file, context);
 
         sourceFile = ts.updateSourceFileNode(sourceFile, [
             ...MockDefiner.instance.getTopStatementsForFile(sourceFile),
-            ...sourceFile.statements
+            ...sourceFile.statements,
         ]);
 
         return sourceFile;
@@ -26,7 +26,7 @@ export default function transformer(program: ts.Program): ts.TransformerFactory<
 function visitNodeAndChildren(node: ts.SourceFile, context: ts.TransformationContext): ts.SourceFile;
 function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext): ts.Node;
 function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext): ts.Node {
-    return ts.visitEachChild(visitNode(node), childNode => visitNodeAndChildren(childNode, context), context);
+    return ts.visitEachChild(visitNode(node), (childNode: ts.Node) => visitNodeAndChildren(childNode, context), context);
 }
 
 function visitNode(node: ts.Node): ts.Node {
@@ -34,11 +34,11 @@ function visitNode(node: ts.Node): ts.Node {
         return node;
     }
 
-    const nodeToMock = node.typeArguments[0];
+    const nodeToMock: ts.TypeNode = node.typeArguments[0];
     TypeReferenceCache.instance.clear();
     MockDefiner.instance.setFileNameFromNode(nodeToMock);
     MockDefiner.instance.setTsAutoMockImportIdentifier();
-    
+
     if (isTypeReusable(nodeToMock)) {
         return GetMockFactoryCall(nodeToMock);
     } else {
@@ -47,21 +47,23 @@ function visitNode(node: ts.Node): ts.Node {
 }
 
 function isCreateMockCallExpression(node: ts.Node): node is ts.CallExpression {
-	const indexTs = path.join(__dirname, 'src/transformer/create-mock.ts');
+    const indexTs: string = path.join(__dirname, 'src/transformer/create-mock.ts');
 
-	if (node.kind !== ts.SyntaxKind.CallExpression) {
+    if (node.kind !== ts.SyntaxKind.CallExpression) {
         return false;
     }
 
-    const typeChecker = TypeChecker();
-    const signature = typeChecker.getResolvedSignature(node as ts.CallExpression);
+    const typeChecker: ts.TypeChecker = TypeChecker();
+    const signature: ts.Signature = typeChecker.getResolvedSignature(node as ts.CallExpression);
     if (typeof signature === 'undefined') {
         return false;
     }
 
-    const { declaration } = signature;
+    const { declaration }: ts.Signature = signature;
     return !!declaration
         && (path.join(declaration.getSourceFile().fileName) === indexTs)
+        // tslint:disable-next-line:no-string-literal
         && !!declaration['name']
+        // tslint:disable-next-line:no-string-literal
         && (declaration['name'].getText() === 'createMock');
 }
