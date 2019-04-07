@@ -1,28 +1,28 @@
 import * as ts from 'typescript';
-import { TypeChecker } from "../../typeChecker/typeChecker";
-import { GetMockPropertiesFromSymbol } from "../mock/mockProperties";
-import { GetUndefinedDescriptor } from "../undefined/undefined";
-import { TypescriptHelper } from "../helper/helper";
-import { GetType, GetTypes } from '../type/type';
+import { TypeChecker } from '../../typeChecker/typeChecker';
+import { TypescriptHelper } from '../helper/helper';
+import { GetMockPropertiesFromSymbol } from '../mock/mockProperties';
+import { GetTypes } from '../type/type';
+import { GetUndefinedDescriptor } from '../undefined/undefined';
 
-export function GetIntersectionDescriptor(node: ts.IntersectionTypeNode): ts.Expression {
-    const typeChecker = TypeChecker();
-    let hasLiteralOrPrimitive = false;
-    const symbols = GetTypes(node.types).map((node: ts.Node) => {
+export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionTypeNode): ts.Expression {
+    const typeChecker: ts.TypeChecker = TypeChecker();
+    let hasLiteralOrPrimitive: boolean = false;
+    const symbols: ts.Symbol[] = GetTypes(intersectionTypeNode.types).map((node: ts.Node) => {
         if (TypescriptHelper.IsLiteralOrPrimitive(node)) {
-			hasLiteralOrPrimitive = true;
+            hasLiteralOrPrimitive = true;
         } else {
-            const type = typeChecker.getTypeAtLocation(node);
+            const type: ts.Type = typeChecker.getTypeAtLocation(node);
             return typeChecker.getPropertiesOfType(type);
         }
-    }).reduce((acc, symbolList: ts.Symbol[]) => {
+    }).reduce((acc: ts.Symbol[], symbolList: ts.Symbol[]) => {
         acc = acc.concat(symbolList);
         return acc;
     }, []);
-    
+
     if (hasLiteralOrPrimitive) {
         return GetUndefinedDescriptor();
     }
-    
+
     return GetMockPropertiesFromSymbol(symbols);
 }

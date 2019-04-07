@@ -1,9 +1,10 @@
 import * as ts from 'typescript';
-import { TypescriptHelper } from "../helper/helper";
+import { TypescriptHelper } from '../helper/helper';
 
 export class PropertySignatureCache {
-    private static _instance: PropertySignatureCache;
     private _cache: ts.PropertyName;
+
+    private static _instance: PropertySignatureCache;
 
     public static get instance(): PropertySignatureCache {
         this._instance = this._instance || new PropertySignatureCache();

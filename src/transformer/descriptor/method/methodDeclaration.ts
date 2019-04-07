@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
-import {GetMethodDescriptor} from "./method";
-import {GetDescriptor} from "../descriptor";
-import {GetReturnTypeFromBody} from "./bodyReturnType";
+import { GetDescriptor } from '../descriptor';
+import { GetReturnTypeFromBody } from './bodyReturnType';
+import { GetMethodDescriptor } from './method';
 
 export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration): ts.Expression {
     let returnType: ts.Expression;

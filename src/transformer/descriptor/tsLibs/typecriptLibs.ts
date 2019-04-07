@@ -1,12 +1,12 @@
 import * as ts from 'typescript';
-import { TypescriptLibsTypesFolder } from "./typescriptLibsTypes";
-import { TypescriptLibsTypeAdapter } from "./typescriptLibsTypeAdapter";
+import { TypescriptLibsTypeAdapter } from './typescriptLibsTypeAdapter';
+import { TypescriptLibsTypesFolder } from './typescriptLibsTypes';
 
 export function IsTypescriptType(node: ts.Node): boolean {
-    const nodeFile = node.getSourceFile();
+    const nodeFile: ts.SourceFile = node.getSourceFile();
 
     if (nodeFile) {
-        const fileName = nodeFile.fileName;
+        const fileName: string = nodeFile.fileName;
         return fileName.includes(TypescriptLibsTypesFolder);
     }
 

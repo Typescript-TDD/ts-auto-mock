@@ -1,15 +1,15 @@
-import { GetType } from "../descriptor/type/type";
 import * as ts from 'typescript';
+import { GetType } from '../descriptor/type/type';
 
-const reusableTypes = [
+const reusableTypes: ts.SyntaxKind[] = [
     ts.SyntaxKind.ClassDeclaration,
     ts.SyntaxKind.InterfaceDeclaration,
     ts.SyntaxKind.TypeLiteral,
-    ts.SyntaxKind.MappedType
+    ts.SyntaxKind.MappedType,
 ];
 
 export function isTypeReusable(node: ts.Node): boolean {
-    const nodeResolved = GetType(node);
+    const nodeResolved: ts.Node = GetType(node);
     return reusableTypes.includes(nodeResolved.kind) && !hasTypeArguments(node);
 }
 
