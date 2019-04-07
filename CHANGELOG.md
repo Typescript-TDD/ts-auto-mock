@@ -1,3 +1,13 @@
+<a name="0.0.27"></a>
+## [0.0.27](https://github.com/uittorio/ts-auto-mock/compare/v0.0.26...v0.0.27) (2019-04-07)
+
+
+### Bug Fixes
+
+* **tslinttest:** fix another unit test ([5b84a55](https://github.com/uittorio/ts-auto-mock/commit/5b84a55))
+
+
+
 <a name="0.0.26"></a>
 ## [0.0.26](https://github.com/uittorio/ts-auto-mock/compare/v0.0.25...v0.0.26) (2019-04-07)
 
