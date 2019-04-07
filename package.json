@@ -46,6 +46,7 @@
     "@types/webpack-env": "1.13.6",
     "awesome-typescript-loader": "5.2.1",
     "conventional-changelog-cli": "2.0.12",
+    "git-branch-is": "2.1.0",
     "husky": "1.3.1",
     "jasmine": "3.3.1",
     "karma": "3.1.4",
@@ -70,7 +71,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi"
     }
   }
 }
