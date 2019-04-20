@@ -10,7 +10,7 @@ export function isCreateMockList(declaration: ts.FunctionDeclaration): boolean {
 }
 
 export function isFromTsAutoMock(signature: ts.Signature): boolean {
-    if (!isDeclarationDefined(signature) || !isFunctionDeclaration(signature.declaration)) {
+    if (!isDeclarationDefined(signature)) {
         return false;
     }
 
