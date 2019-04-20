@@ -14,7 +14,7 @@ export function isFromTsAutoMock(signature: ts.Signature): boolean {
         return false;
     }
 
-    if (!isFunctionDeclaration(signature.declaration)) {
+    if (!ts.isFunctionDeclaration(signature.declaration)) {
         return false;
     }
 
@@ -23,10 +23,6 @@ export function isFromTsAutoMock(signature: ts.Signature): boolean {
     const fileName: string = signature.declaration.getSourceFile().fileName;
 
     return fileName === createMockTs || fileName === createMockListTs;
-}
-
-function isFunctionDeclaration(declaration: ts.Declaration): declaration is ts.FunctionDeclaration {
-    return ts.isFunctionDeclaration(declaration);
 }
 
 function isDeclarationDefined(signature: ts.Signature): boolean {
