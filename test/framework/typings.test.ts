@@ -16,8 +16,7 @@ describe('when creating a mock', () => {
         }
 
         const mock: Interface = createMock<Interface>();
-        //tslint:disable
-        const spy: jasmine.Spy = On(mock).get(method((x) => x.methodExpectJasmineExtension));
+        const spy: jasmine.Spy = On(mock).get(method((x: Interface) => x.methodExpectJasmineExtension));
         spy.and.returnValue('');
         // mock.arrayExpectGenerateMethod.generateList(3); //TODO Implements functionality
         // mock.methodReturnMockedType().a.and.returnValue(2);

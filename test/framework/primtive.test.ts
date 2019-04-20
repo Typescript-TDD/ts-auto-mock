@@ -11,9 +11,8 @@ describe('primitives', () => {
 
     it('should not be able to get the mock', () => {
         expect(() => {
-            // tslint:disable
             // @ts-ignore
-            On(mock).get(method((x) => x.apply));
+            On(mock).get(method((x: string) => x.apply));
         }).toThrow();
     });
 });

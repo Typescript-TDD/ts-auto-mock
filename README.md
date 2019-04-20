@@ -17,6 +17,7 @@ A Transformer needs to be provided at compile time. There are different ways to 
 [Please read the following guide to find your configuration](docs/TRANSFORMER.md)
 
 ## Usage
+#### Create mock
 ```ts
 import { createMock } from 'ts-auto-mock';
 
@@ -31,6 +32,18 @@ const mock = createMock<Person>();
 mock.id // ""
 mock.getName() // ""
 mock.details // "{phone: 0} "
+```
+
+#### Create mock list
+createMock list it will create a list of mocks automatically
+```ts
+import { createMockList } from 'ts-auto-mock';
+
+interface Person {
+  id: string;
+}
+const mockList = createMockList<Person>(2);
+mockList.length // 2
 ```
 
 ## Type Examples
