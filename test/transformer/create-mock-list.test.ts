@@ -18,17 +18,18 @@ describe('create-mock-list', () => {
         expect(properties.length).toBe(2);
     });
 
-    it('should create an array of 1 mocks', () => {
-        const properties: Interface[] = createMockList<Interface>();
-        expect(properties.length).toBe(1);
-    });
-
     it('should create an array of 10 mocks', () => {
         const properties: Interface[] = createMockList<Interface>(10);
         expect(properties.length).toBe(10);
     });
 
-    it('should create an empty array', () => {
+    it('should create an empty array when number is not provided', () => {
+        // @ts-ignore
+        const properties: Interface[] = createMockList<Interface>();
+        expect(properties.length).toBe(0);
+    });
+
+    it('should create an empty array when number is negative', () => {
         const properties: Interface[] = createMockList<Interface>(-10);
         expect(properties.length).toBe(0);
     });

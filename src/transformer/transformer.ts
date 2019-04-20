@@ -63,8 +63,7 @@ function visitNode(node: ts.Node): ts.Node {
 }
 
 function getListOfMockExpression(nodeToMock: ts.TypeNode, lengthLiteral: ts.NumericLiteral): ts.Expression[] {
-    const defaultLengthOfArray: number = 1;
-    const length: number = lengthLiteral ? parseInt(lengthLiteral.text, 10) : defaultLengthOfArray;
+    const length: number = lengthLiteral ? parseInt(lengthLiteral.text, 10) : 0;
     const mocks: ts.Expression[] = [];
     const mock: ts.Expression = getMockExpression(nodeToMock);
 
