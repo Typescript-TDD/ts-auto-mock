@@ -1,6 +1,6 @@
 {
   "name": "ts-auto-mock",
-  "version": "0.0.27",
+  "version": "0.1.0",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "src/mockMarker/*.d.ts",
     "src/transformer/transformer.d.ts",
     "src/transformer/create-mock.ts",
+    "src/transformer/create-mock-list.ts",
     "index.d.ts",
     "index.js",
     "transformer.js"
@@ -36,7 +37,7 @@
     "type": "git",
     "url": "https://github.com/uittorio/ts-auto-mock.git"
   },
-  "author": "Vittorio Guerriero",
+  "author": "Vittorio Guerriero & Giulio Caprino",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "7.5.2",

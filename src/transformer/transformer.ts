@@ -1,7 +1,7 @@
-import * as path from 'path';
 import * as ts from 'typescript';
 import { GetDescriptor } from './descriptor/descriptor';
 import { TypeReferenceCache } from './descriptor/typeReference/cache';
+import { isCreateMock, isCreateMockList, isFromTsAutoMock, } from './matcher/matcher';
 import { MockDefiner } from './mockDefiner/mockDefiner';
 import { GetMockFactoryCall } from './mockFactoryCall/mockFactoryCall';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
@@ -30,40 +30,60 @@ function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext):
 }
 
 function visitNode(node: ts.Node): ts.Node {
-    if (!isCreateMockCallExpression(node)) {
+    if (!ts.isCallExpression(node)) {
+        return node;
+    }
+
+    const signature: ts.Signature = getSignature(node);
+
+    if (!isFromTsAutoMock(signature)) {
         return node;
     }
 
     const nodeToMock: ts.TypeNode = node.typeArguments[0];
+
     TypeReferenceCache.instance.clear();
     MockDefiner.instance.setFileNameFromNode(nodeToMock);
     MockDefiner.instance.setTsAutoMockImportIdentifier();
 
-    if (isTypeReusable(nodeToMock)) {
-        return GetMockFactoryCall(nodeToMock);
-    } else {
-        return GetDescriptor(nodeToMock);
+    const declaration: ts.FunctionDeclaration = signature.declaration as ts.FunctionDeclaration;
+
+    if (isCreateMock(declaration)) {
+        return getMockExpression(nodeToMock);
     }
+
+    if (isCreateMockList(declaration)) {
+        const lengthLiteral: ts.NumericLiteral = node.arguments[0] as ts.NumericLiteral;
+        const mocks: ts.Expression[] = getListOfMockExpression(nodeToMock, lengthLiteral);
+
+        return ts.createArrayLiteral(mocks);
+    }
+
+    return node;
 }
 
-function isCreateMockCallExpression(node: ts.Node): node is ts.CallExpression {
-    const indexTs: string = path.join(__dirname, 'src/transformer/create-mock.ts');
+function getListOfMockExpression(nodeToMock: ts.TypeNode, lengthLiteral: ts.NumericLiteral): ts.Expression[] {
+    const length: number = lengthLiteral ? parseInt(lengthLiteral.text, 10) : 0;
+    const mocks: ts.Expression[] = [];
+    const mock: ts.Expression = getMockExpression(nodeToMock);
 
-    if (node.kind !== ts.SyntaxKind.CallExpression) {
-        return false;
+    for (let i: number = 0; i <= length - 1; i++) {
+        mocks.push(mock);
     }
 
+    return mocks;
+}
+
+function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
+    if (isTypeReusable(nodeToMock)) {
+        return GetMockFactoryCall(nodeToMock);
+    }
+
+    return GetDescriptor(nodeToMock);
+}
+
+function getSignature(node: ts.CallExpression): ts.Signature {
     const typeChecker: ts.TypeChecker = TypeChecker();
-    const signature: ts.Signature = typeChecker.getResolvedSignature(node as ts.CallExpression);
-    if (typeof signature === 'undefined') {
-        return false;
-    }
 
-    const { declaration }: ts.Signature = signature;
-    return !!declaration
-        && (path.join(declaration.getSourceFile().fileName) === indexTs)
-        // tslint:disable-next-line:no-string-literal
-        && !!declaration['name']
-        // tslint:disable-next-line:no-string-literal
-        && (declaration['name'].getText() === 'createMock');
+    return typeChecker.getResolvedSignature(node);
 }

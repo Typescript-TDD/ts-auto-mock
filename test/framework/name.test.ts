@@ -1,4 +1,4 @@
-import { createMock, method, On } from "ts-auto-mock";
+import { createMock, method, On } from 'ts-auto-mock';
 
 describe('names', () => {
     it('should give a name to the spy', () => {
@@ -8,10 +8,10 @@ describe('names', () => {
         }
 
         const mock: Interface = createMock<Interface>();
-        const spyA: jasmine.Spy = On(mock).get(method(x => x.a));
-        const spyB: jasmine.Spy = On(mock).get(method(x => x.b));
+        const spyA: jasmine.Spy = On(mock).get(method((x: Interface) => x.a));
+        const spyB: jasmine.Spy = On(mock).get(method((x: Interface) => x.b));
 
-        expect(spyA.and.identity).toBe("a");
-        expect(spyB.and.identity).toBe("b");
+        expect(spyA.and.identity).toBe('a');
+        expect(spyB.and.identity).toBe('b');
     });
 });

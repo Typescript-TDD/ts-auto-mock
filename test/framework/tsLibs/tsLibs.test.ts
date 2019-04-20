@@ -1,17 +1,17 @@
-import { createMock, method, On } from "ts-auto-mock";
+import { createMock, method, On } from 'ts-auto-mock';
 
 describe('tsLib', () => {
-	it('should return a spy with a name', () => {
-		interface Interface {
-			a: Function;
-		}
-		
-		const mock: Interface = createMock<Interface>();
-		const spy = On(mock).get(method(x => x.a));
+    it('should return a spy with a name', () => {
+        interface Interface {
+            a: Function;
+        }
 
-		expect(spy.and.identity).toBe("a");
-		
-		mock.a();
-		expect(mock.a).toHaveBeenCalledWith();
-	});
+        const mock: Interface = createMock<Interface>();
+        const spy: jasmine.Spy = On(mock).get(method((x: Interface) => x.a));
+
+        expect(spy.and.identity).toBe('a');
+
+        mock.a();
+        expect(mock.a).toHaveBeenCalledWith();
+    });
 });

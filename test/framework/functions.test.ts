@@ -9,8 +9,8 @@ describe('functions', () => {
     });
 
     it('should work as a spy', () => {
-        function hello(a: a) {
-            a();
+        function hello(myMethod: a): void {
+            myMethod();
         }
 
         hello(mock);
@@ -19,18 +19,18 @@ describe('functions', () => {
 
     it('should not be able to get the mock', () => {
         expect(() => {
-            On(mock).get(method((x) => x.apply));
+            On(mock).get(method((x: a) => x.apply));
         }).toThrow();
     });
 
     it('should create different factories for different functions mock', () => {
-        interface Mock {
+        interface AMock {
             first: Function;
             second: Function;
         }
-        const mock: Mock = createMock<Mock>();
+        const anotherMock: AMock = createMock<AMock>();
 
-        expect((mock.first as jasmine.Spy).and.identity).toBe('first');
-        expect((mock.second as jasmine.Spy).and.identity).toBe('second');
+        expect((anotherMock.first as jasmine.Spy).and.identity).toBe('first');
+        expect((anotherMock.second as jasmine.Spy).and.identity).toBe('second');
     });
 });
