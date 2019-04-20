@@ -1,3 +1,13 @@
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/uittorio/ts-auto-mock/compare/v0.0.27...v0.1.0) (2019-04-20)
+
+
+### Features
+
+* **createMockList:** add createMockList functionality, add typings to framework tests ([095bd8f](https://github.com/uittorio/ts-auto-mock/commit/095bd8f))
+
+
+
 <a name="0.0.27"></a>
 ## [0.0.27](https://github.com/uittorio/ts-auto-mock/compare/v0.0.26...v0.0.27) (2019-04-07)
 
