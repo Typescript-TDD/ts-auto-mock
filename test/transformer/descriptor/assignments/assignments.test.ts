@@ -47,6 +47,7 @@ describe('when assigned directly', () => {
 
     describe('return object', () => {
         class MyClass {
+            // tslint:disable-next-line
             public value = {};
         }
 
@@ -58,6 +59,7 @@ describe('when assigned directly', () => {
 
     describe('return object with properties', () => {
         class MyClass {
+            // tslint:disable-next-line
             public value = {
                 a: 2,
                 b: false,

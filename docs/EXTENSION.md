@@ -9,9 +9,9 @@ To extend a method you need to:
 1) set your spy function (jasmine.createSpy(name))
 
 ```ts
-import { MockFactory } from "ts-auto-mock";
+import { Provider } from "ts-auto-mock";
 
-MockFactory.instance.registerFactory((name: string, value: any) => {
+Provider.instance.provideMethod((name: string, value: any) => {
     return jasmine.createSpy(name).and.returnValue(value);
 });
 ```
@@ -20,7 +20,7 @@ MockFactory.instance.registerFactory((name: string, value: any) => {
 type ReturnType = jasmine.Spy;
 
 declare module 'ts-auto-mock' {
-  interface MockMethod<TR> extends ReturnType {}
+  interface Method<TR> extends ReturnType {}
 }
 ```
 ### Method Usage

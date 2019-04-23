@@ -6,11 +6,11 @@ export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: 
     const statementFactory: ts.PropertyAccessExpression = ts.createPropertyAccess(
         ts.createPropertyAccess(
             ts.createPropertyAccess(
-                MockDefiner.instance.currentTsAutoMockImportName,
-                ts.createIdentifier('MockFactory'),
+                MockDefiner.instance.currentProviderImportName,
+                ts.createIdentifier('Provider'),
             ),
             ts.createIdentifier('instance')),
-        ts.createIdentifier('getFactory'));
+        ts.createIdentifier('getMethod'));
 
     const propertyNameString: ts.StringLiteral = ts.createStringLiteral('' + (propertyName as ts.Identifier).escapedText);
     const callToFactory: ts.CallExpression = ts.createCall(statementFactory, [], [propertyNameString, returnValue]);

@@ -10,8 +10,8 @@ export function GetMockMarkerProperty(): Property {
     const propertyAccessExpression: ts.PropertyAccessExpression = ts.createPropertyAccess(
         ts.createPropertyAccess(
             ts.createPropertyAccess(
-                MockDefiner.instance.currentTsAutoMockImportName,
-                ts.createIdentifier('MockMarker'),
+                MockDefiner.instance.currentExtensionImportName,
+                ts.createIdentifier('Marker'),
             ),
             ts.createIdentifier('instance')),
         ts.createIdentifier('get'));

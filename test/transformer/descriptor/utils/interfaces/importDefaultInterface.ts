@@ -1,3 +1,3 @@
 export default interface ImportDefaultInterface {
-	a: string;
+    a: string;
 }
