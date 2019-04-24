@@ -4,7 +4,6 @@
     "paths": {
       "ts-auto-mock": ["dist/index"],
       "ts-auto-mock/extension": ["dist/extension"],
-      "ts-auto-mock/provider": ["dist/provider"],
       "ts-auto-mock/repository": ["dist/repository"]
     }
   }

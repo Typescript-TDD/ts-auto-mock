@@ -5,6 +5,9 @@ import { GetTypeReferenceDescriptor } from '../descriptor/typeReference/typeRefe
 import { createImportOnIdentifier } from '../helper/import';
 import { TypeChecker } from '../typeChecker/typeChecker';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
+import { ModuleName } from './modules/moduleName';
+import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
+import { ModulesImportUrl } from './modules/modulesImportUrl';
 
 // tslint:disable-next-line:no-any
 const urlSlug: any = require('url-slug');
@@ -20,9 +23,7 @@ function GetPossibleDescriptor(node: ts.Node): ts.Expression {
 }
 
 export class MockDefiner {
-    private _neededImportIdentifierPerFile: { [key: string]: ts.Identifier } = {};
-    private _neededImportProviderIdentifierPerFile: { [key: string]: ts.Identifier } = {};
-    private _neededImportExtensionIdentifierPerFile: { [key: string]: ts.Identifier } = {};
+    private _neededImportIdentifierPerFile: { [key: string]: Array<ModuleNameIdentifier> } = {};
     private _factoryRegistrationsPerFile: { [key: string]: Array<{ key: ts.Declaration; factory: ts.Expression }> } = {};
     private _factoryCache: FactoryDefinitionCache;
     private _fileName: string;
@@ -38,23 +39,31 @@ export class MockDefiner {
         return this._instance;
     }
 
-    public currentProviderImportName: ts.Identifier;
-    public currentExtensionImportName: ts.Identifier;
-
     public setFileNameFromNode(node: ts.TypeNode): void {
-        // tslint:disable-next-line:no-any
-        const thisFile: any = node.getSourceFile();
+        const thisFile: ts.SourceFile = node.getSourceFile();
         this._fileName = thisFile.fileName;
     }
 
     public setTsAutoMockImportIdentifier(): void {
         if (!this._neededImportIdentifierPerFile[this._fileName]) {
-            this._neededImportIdentifierPerFile[this._fileName] = ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_repository`);
-            this._neededImportProviderIdentifierPerFile[this._fileName] = ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_provider`);
-            this._neededImportExtensionIdentifierPerFile[this._fileName] = ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_extension`);
+            this._neededImportIdentifierPerFile[this._fileName] = Object.keys(ModulesImportUrl).map((key: ModuleName) => {
+                return {
+                    name: key,
+                    moduleUrl: ModulesImportUrl[key],
+                    identifier: this._createUniqueFileName(key),
+                };
+            });
         }
-        this.currentProviderImportName = this._neededImportProviderIdentifierPerFile[this._fileName];
-        this.currentExtensionImportName = this._neededImportExtensionIdentifierPerFile[this._fileName];
+    }
+
+    private _getModuleIdentifier(fileName: string, module: ModuleName): ts.Identifier {
+        return this._neededImportIdentifierPerFile[fileName].find((moduleNameIdentifier: ModuleNameIdentifier) => {
+            return moduleNameIdentifier.name === module;
+        }).identifier;
+    }
+
+    public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
+        return this._getModuleIdentifier(this._fileName, module);
     }
 
     public getTopStatementsForFile(sourceFile: ts.SourceFile): ts.Statement[] {
@@ -86,10 +95,16 @@ export class MockDefiner {
         );
     }
 
+    private _createUniqueFileName(name: string): ts.Identifier {
+        return ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_${name}`);
+    }
+
     private _mockRepositoryAccess(filename: string): ts.Expression {
+        const repository: ts.Identifier = this._getModuleIdentifier(filename, ModuleName.Repository);
+
         return ts.createPropertyAccess(
             ts.createPropertyAccess(
-                this._neededImportIdentifierPerFile[filename],
+                repository,
                 ts.createIdentifier('Repository'),
             ),
             ts.createIdentifier('instance'),
@@ -124,11 +139,9 @@ export class MockDefiner {
 
     private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
         if (this._neededImportIdentifierPerFile[sourceFile.fileName]) {
-            return [
-                createImportOnIdentifier('ts-auto-mock/repository', this._neededImportIdentifierPerFile[sourceFile.fileName]),
-                createImportOnIdentifier('ts-auto-mock/provider', this._neededImportProviderIdentifierPerFile[sourceFile.fileName]),
-                createImportOnIdentifier('ts-auto-mock/extension', this._neededImportExtensionIdentifierPerFile[sourceFile.fileName]),
-            ];
+            return this._neededImportIdentifierPerFile[sourceFile.fileName].map((moduleIdentifier: ModuleNameIdentifier) => {
+                return createImportOnIdentifier(moduleIdentifier.moduleUrl, moduleIdentifier.identifier);
+            });
         }
 
         return [];

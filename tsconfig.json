@@ -16,7 +16,6 @@
     "paths": {
       "ts-auto-mock": ["src/mock"],
       "ts-auto-mock/extension": ["src/extension"],
-      "ts-auto-mock/provider": ["src/provider"],
       "ts-auto-mock/repository": ["src/repository"]
     },
     "baseUrl": "./"

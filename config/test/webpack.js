@@ -9,7 +9,6 @@ module.exports = {
             ['ts-auto-mock']: path.join(__dirname, '../../dist'),
             ['ts-auto-mock/repository']: path.join(__dirname, '../../dist/repository'),
             ['ts-auto-mock/extension']: path.join(__dirname, '../../dist/extension'),
-            ['ts-auto-mock/provider']: path.join(__dirname, '../../dist/provider')
         }
     },
     module: {

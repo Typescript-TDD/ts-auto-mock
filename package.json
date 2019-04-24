@@ -6,10 +6,9 @@
   "scripts": {
     "build:transformer": "webpack --config config/modules/transformer/webpack.js",
     "build:mock": "webpack --config config/modules/mock/webpack.js",
-    "build:provider": "webpack --config config/modules/provider/webpack.js",
     "build:repository": "webpack --config config/modules/repository/webpack.js",
     "build:extension": "webpack --config config/modules/extension/webpack.js",
-    "build": "npm run build:mock && npm run build:transformer && npm run build:provider && npm run build:repository && npm run build:extension",
+    "build": "npm run build:mock && npm run build:transformer && npm run build:repository && npm run build:extension",
     "test": "npm run test:transformer && npm run test:framework",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
     "test:framework": "karma start config/karma/karma.config.framework.js",

@@ -1,5 +1,6 @@
 import { functionMethod } from './functionMethod';
-import { Method } from './method';
+// tslint:disable-next-line:no-any
+type Method = (name: string, value: any) => () => any;
 
 export class Provider {
     private _method: Method;

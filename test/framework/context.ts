@@ -1,4 +1,4 @@
-import { Provider } from 'ts-auto-mock/provider';
+import { Provider } from 'ts-auto-mock/extension';
 
 // tslint:disable:no-any
 Provider.instance.provideMethod((name: string, value: any) => {

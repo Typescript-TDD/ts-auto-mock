@@ -1,12 +1,13 @@
 import * as ts from 'typescript';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
+import { ModuleName } from '../../mockDefiner/modules/moduleName';
 import { TypescriptHelper } from '../helper/helper';
 
 export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: ts.Expression): ts.Expression {
     const statementFactory: ts.PropertyAccessExpression = ts.createPropertyAccess(
         ts.createPropertyAccess(
             ts.createPropertyAccess(
-                MockDefiner.instance.currentProviderImportName,
+                MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
                 ts.createIdentifier('Provider'),
             ),
             ts.createIdentifier('instance')),
