@@ -17,6 +17,6 @@ module.exports = merge(base({
         index: './src/transformer/transformer.ts',
     },
     output: {
-        filename: "transformer.js"
+        filename: "index.js"
     }
 });

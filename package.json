@@ -2,7 +2,6 @@
   "name": "ts-auto-mock",
   "version": "1.0.0",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
-  "main": "dist/index.js",
   "scripts": {
     "build:transformer": "webpack --config config/modules/transformer/webpack.js",
     "build:mock": "webpack --config config/modules/mock/webpack.js",
@@ -12,17 +11,15 @@
     "test": "npm run test:transformer && npm run test:framework",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
     "test:framework": "karma start config/karma/karma.config.framework.js",
-    "prepublishOnly": "npm run build",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "prepublishOnly": "npm run build && npm run copyForPublish",
+    "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist"
   },
   "keywords": [
     "typescript",
     "spy",
     "mock",
     "auto"
-  ],
-  "files": [
-    "dist/**/*.ts"
   ],
   "repository": {
     "type": "git",
