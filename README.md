@@ -55,6 +55,8 @@ The library try to convert the type given to createMock so you dont need to crea
 The library allows you to extends some functionality to work nicely with framework like jasmine or jest
 [Open this link to see more examples](docs/EXTENSION.md)
 
+## [Changelog](CHANGELOG.md)
+
 ## Authors
 
 * **Vittorio Guerriero**

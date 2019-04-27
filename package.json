@@ -12,8 +12,8 @@
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
     "test:framework": "karma start config/karma/karma.config.framework.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "prepublishOnly": "npm run build && npm run copyForPublish",
-    "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist"
+    "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
+    "preparePublish": "npm run build && npm run copyForPublish"
   },
   "keywords": [
     "typescript",
