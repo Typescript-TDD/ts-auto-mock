@@ -53,13 +53,7 @@ export class MockDefiner {
                     identifier: this._createUniqueFileName(key),
                 };
             });
-        }
-    }
-
-    private _getModuleIdentifier(fileName: string, module: ModuleName): ts.Identifier {
-        return this._neededImportIdentifierPerFile[fileName].find((moduleNameIdentifier: ModuleNameIdentifier) => {
-            return moduleNameIdentifier.name === module;
-        }).identifier;
+           }
     }
 
     public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
@@ -109,6 +103,12 @@ export class MockDefiner {
             ),
             ts.createIdentifier('instance'),
         );
+    }
+
+    private _getModuleIdentifier(fileName: string, module: ModuleName): ts.Identifier {
+        return this._neededImportIdentifierPerFile[fileName].find((moduleNameIdentifier: ModuleNameIdentifier) => {
+            return moduleNameIdentifier.name === module;
+        }).identifier;
     }
 
     private _getMockFactoryId(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
