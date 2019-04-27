@@ -1,4 +1,4 @@
-const transformer = require('../../dist/transformer/transformer');
+const transformer = require('../../dist/transformer');
 const path = require('path');
 
 module.exports = {
