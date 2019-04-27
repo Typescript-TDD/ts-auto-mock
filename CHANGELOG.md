@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/uittorio/ts-auto-mock/compare/v1.0.0...v1.1.0) (2019-04-27)
+
+
+### Bug Fixes
+
+* **modules:** make sure transformer is exported in the right folder ([832afc1](https://github.com/uittorio/ts-auto-mock/commit/832afc1))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/uittorio/ts-auto-mock/compare/v0.0.27...v1.0.0) (2019-04-27)
 
