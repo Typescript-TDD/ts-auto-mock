@@ -2,8 +2,8 @@ import { createMock } from 'ts-auto-mock';
 import { method, On } from 'ts-auto-mock/extension';
 
 describe('functions', () => {
-    type a = () => void;
     let mock: a;
+    type a = () => void;
 
     beforeEach(() => {
         mock = createMock<a>();
