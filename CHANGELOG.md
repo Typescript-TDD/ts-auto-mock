@@ -20,28 +20,34 @@ mockFactory changed interface, name (Provider) and module
 Importing On, method changed:
 
 Before:
+```ts
 import { On, method } from "ts-auto-mock";
+```
 
 After:
+```ts
 import { On, method } from "ts-auto-mock/extension";
+```
 
 MockFactory changed name, module and interface:
 
 Before:
+```ts
 import { MockFactory } from "ts-auto-mock";
 
 MockFactory.instance.registerFactory((name: string, value: any) => {
     ...
 });
+```
 
 After:
+```ts
 import { Provider } from "ts-auto-mock/extension";
 
 Provider.instance.provideMethod((name: string, value: any) => {
     ...
 });
-
-
+```
 
 <a name="0.0.27"></a>
 ## [0.0.27](https://github.com/uittorio/ts-auto-mock/compare/v0.0.26...v0.0.27) (2019-04-07)
