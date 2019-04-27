@@ -7,6 +7,7 @@ import { GetMockFactoryCall } from './mockFactoryCall/mockFactoryCall';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
 import { isTypeReusable } from './typeValidator/typeValidator';
 
+
 export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
     SetTypeChecker(program.getTypeChecker());
 
