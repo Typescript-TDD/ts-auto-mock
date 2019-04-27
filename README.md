@@ -1,5 +1,9 @@
 # Ts Auto Mock
-[![CircleCI](https://circleci.com/gh/uittorio/ts-auto-mock/tree/master.svg?style=svg)](https://circleci.com/gh/uittorio/ts-auto-mock/tree/master) [![Greenkeeper badge](https://badges.greenkeeper.io/uittorio/ts-auto-mock.svg)](https://greenkeeper.io/)
+[![CircleCI](https://circleci.com/gh/uittorio/ts-auto-mock/tree/master.svg?style=svg)](https://circleci.com/gh/uittorio/ts-auto-mock/tree/master) 
+[![Greenkeeper badge](https://badges.greenkeeper.io/uittorio/ts-auto-mock.svg)](https://greenkeeper.io/)
+[![npm version](https://badge.fury.io/js/ts-auto-mock.svg)](https://badge.fury.io/js/ts-auto-mock)
+[![Downloads](https://img.shields.io/npm/dt/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock)
+
 
 A Typescript transformer that will allow you to create mock for any types (Interfaces, Classes, ...) without need to create manual fakes/mocks.
 
