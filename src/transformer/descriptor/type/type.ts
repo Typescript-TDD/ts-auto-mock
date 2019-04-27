@@ -32,14 +32,13 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>): ts.Node[] {
 
 export function GetType(node: ts.Node): ts.Node {
     if (ts.isTypeReferenceNode(node)) {
-        const identifier: ts.EntityName = (node as ts.TypeReferenceNode).typeName;
+        const identifier: ts.EntityName = node.typeName;
         const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(identifier);
         return GetType(declaration);
     }
 
     if (ts.isTypeAliasDeclaration(node)) {
-        const typeCast: ts.TypeAliasDeclaration = node as ts.TypeAliasDeclaration;
-        return GetType(typeCast.type);
+        return GetType(node.type);
     }
 
     if (ts.isImportSpecifier(node) || ts.isImportClause(node)) {
@@ -48,8 +47,7 @@ export function GetType(node: ts.Node): ts.Node {
     }
 
     if (ts.isTypeOperatorNode(node)) {
-        const operatorNodeType: ts.TypeNode = (node as ts.TypeOperatorNode).type;
-        return GetType(operatorNodeType);
+        return GetType(node.type);
     }
 
     if (ts.isInterfaceDeclaration(node) && IsTypescriptType(node)) {
