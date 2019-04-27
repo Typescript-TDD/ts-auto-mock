@@ -1,10 +1,45 @@
-<a name="0.1.0"></a>
-# [0.1.0](https://github.com/uittorio/ts-auto-mock/compare/v0.0.27...v0.1.0) (2019-04-20)
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/uittorio/ts-auto-mock/compare/v0.0.27...v1.0.0) (2019-04-27)
+
+
+### Code Refactoring
+
+* **module division:** modules divisions ([54575a7](https://github.com/uittorio/ts-auto-mock/commit/54575a7))
 
 
 ### Features
 
-* **createMockList:** add createMockList functionality, add typings to framework tests ([095bd8f](https://github.com/uittorio/ts-auto-mock/commit/095bd8f))
+* **createMockList:** add createMockList functionality, add typings to framework test ([#34](https://github.com/uittorio/ts-auto-mock/issues/34)) ([3030ba5](https://github.com/uittorio/ts-auto-mock/commit/3030ba5))
+
+
+### BREAKING CHANGES
+
+* **module division:** extensions (On, method) are in a separate modules,
+mockFactory changed interface, name (Provider) and module
+
+Importing On, method changed:
+
+Before:
+import { On, method } from "ts-auto-mock";
+
+After:
+import { On, method } from "ts-auto-mock/extension";
+
+MockFactory changed name, module and interface:
+
+Before:
+import { MockFactory } from "ts-auto-mock";
+
+MockFactory.instance.registerFactory((name: string, value: any) => {
+    ...
+});
+
+After:
+import { Provider } from "ts-auto-mock/extension";
+
+Provider.instance.provideMethod((name: string, value: any) => {
+    ...
+});
 
 
 
