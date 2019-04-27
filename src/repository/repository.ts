@@ -1,16 +1,16 @@
 type Factory = Function;
 
-export class MockRepository {
-    private _repository: { [key: string]: Factory };
+export class Repository {
+    private readonly _repository: { [key: string]: Factory };
 
     private constructor() {
         this._repository = {};
     }
 
-    private static _instance: MockRepository;
+    private static _instance: Repository;
 
-    public static get instance(): MockRepository {
-        this._instance = this._instance || new MockRepository();
+    public static get instance(): Repository {
+        this._instance = this._instance || new Repository();
         return this._instance;
     }
 

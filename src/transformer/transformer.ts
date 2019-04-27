@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { GetDescriptor } from './descriptor/descriptor';
 import { TypeReferenceCache } from './descriptor/typeReference/cache';
-import { isCreateMock, isCreateMockList, isFromTsAutoMock, } from './matcher/matcher';
+import { isCreateMock, isCreateMockList, isFromTsAutoMock } from './matcher/matcher';
 import { MockDefiner } from './mockDefiner/mockDefiner';
 import { GetMockFactoryCall } from './mockFactoryCall/mockFactoryCall';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';

@@ -1,4 +1,5 @@
-import { createMock, method, On } from 'ts-auto-mock';
+import { createMock } from 'ts-auto-mock';
+import { method, On } from 'ts-auto-mock/extension';
 
 describe('when creating a mock', () => {
     it('should compile when accessing to extended typings', () => {

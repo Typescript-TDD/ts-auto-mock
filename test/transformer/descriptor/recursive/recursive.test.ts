@@ -1,5 +1,5 @@
-import { createMock } from "ts-auto-mock";
-import { InterfaceRecursive } from "../utils/interfaces/recursive";
+import { createMock } from 'ts-auto-mock';
+import { InterfaceRecursive } from '../utils/interfaces/recursive';
 
 describe('recursive', () => {
     interface Interface {
@@ -9,7 +9,7 @@ describe('recursive', () => {
 
     interface InterfaceInternal {
         a: string;
-        b: Interface
+        b: Interface;
     }
 
     it('should not fail for simple recursive', () => {
@@ -21,7 +21,7 @@ describe('recursive', () => {
 
     it('should not fail for internal recursive', () => {
         const mock: InterfaceInternal = createMock<InterfaceInternal>();
-        expect(mock.a).toBe("");
+        expect(mock.a).toBe('');
         expect(mock.b.a).toBe(0);
         expect(mock.b.b.b.b.b.a).toBe(0);
     });

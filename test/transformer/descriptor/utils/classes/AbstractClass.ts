@@ -1,3 +1,4 @@
+// tslint:disable
 export abstract class AbstractClass {
 	abstract abstractProperty: string;
 	property: string;

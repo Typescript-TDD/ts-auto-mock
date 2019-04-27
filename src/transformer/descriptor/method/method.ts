@@ -1,16 +1,17 @@
 import * as ts from 'typescript';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
+import { ModuleName } from '../../mockDefiner/modules/moduleName';
 import { TypescriptHelper } from '../helper/helper';
 
 export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: ts.Expression): ts.Expression {
     const statementFactory: ts.PropertyAccessExpression = ts.createPropertyAccess(
         ts.createPropertyAccess(
             ts.createPropertyAccess(
-                MockDefiner.instance.currentTsAutoMockImportName,
-                ts.createIdentifier('MockFactory'),
+                MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
+                ts.createIdentifier('Provider'),
             ),
             ts.createIdentifier('instance')),
-        ts.createIdentifier('getFactory'));
+        ts.createIdentifier('getMethod'));
 
     const propertyNameString: ts.StringLiteral = ts.createStringLiteral('' + (propertyName as ts.Identifier).escapedText);
     const callToFactory: ts.CallExpression = ts.createCall(statementFactory, [], [propertyNameString, returnValue]);

@@ -1,4 +1,4 @@
-import { createMock } from "ts-auto-mock";
+import { createMock } from 'ts-auto-mock';
 
 describe('for reserverd words', () => {
     interface WithReservedWord {
@@ -7,10 +7,10 @@ describe('for reserverd words', () => {
         constant: boolean;
     }
 
-    it("should work normally", () => {
-        const mock = createMock<WithReservedWord>();
+    it('should work normally', () => {
+        const mock: WithReservedWord = createMock<WithReservedWord>();
         expect(mock.catch()).toBeUndefined();
-        expect(mock.class()).toBe("");
+        expect(mock.class()).toBe('');
         expect(mock.constant).toBe(false);
     });
 });

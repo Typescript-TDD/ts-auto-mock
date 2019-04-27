@@ -18,8 +18,8 @@ export function isFromTsAutoMock(signature: ts.Signature): boolean {
         return false;
     }
 
-    const createMockTs: string = path.join(__dirname, `src/transformer/create-mock.ts`);
-    const createMockListTs: string = path.join(__dirname, `src/transformer/create-mock-list.ts`);
+    const createMockTs: string = path.join(__dirname, `../create-mock.d.ts`);
+    const createMockListTs: string = path.join(__dirname, `../create-mock-list.d.ts`);
     const fileName: string = signature.declaration.getSourceFile().fileName;
 
     return fileName === createMockTs || fileName === createMockListTs;

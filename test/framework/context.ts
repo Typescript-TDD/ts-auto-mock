@@ -1,7 +1,7 @@
-import { MockFactory } from 'ts-auto-mock';
+import { Provider } from 'ts-auto-mock/extension';
 
 // tslint:disable:no-any
-MockFactory.instance.registerFactory((name: string, value: any) => {
+Provider.instance.provideMethod((name: string, value: any) => {
     return jasmine.createSpy(name).and.returnValue(value);
 });
 

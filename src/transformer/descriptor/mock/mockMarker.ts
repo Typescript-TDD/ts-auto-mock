@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
+import { ModuleName } from '../../mockDefiner/modules/moduleName';
 
 export interface Property {
     name: ts.Expression;
@@ -10,8 +11,8 @@ export function GetMockMarkerProperty(): Property {
     const propertyAccessExpression: ts.PropertyAccessExpression = ts.createPropertyAccess(
         ts.createPropertyAccess(
             ts.createPropertyAccess(
-                MockDefiner.instance.currentTsAutoMockImportName,
-                ts.createIdentifier('MockMarker'),
+                MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
+                ts.createIdentifier('Marker'),
             ),
             ts.createIdentifier('instance')),
         ts.createIdentifier('get'));

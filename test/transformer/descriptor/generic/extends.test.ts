@@ -1,74 +1,74 @@
-import { createMock } from "ts-auto-mock";
+import { createMock } from 'ts-auto-mock';
 
 describe('for generic', () => {
     describe('interfaces', () => {
-        interface toBeExtended {
+        interface ToBeExtended {
             a: string;
         }
 
-        interface ItWillExtend extends toBeExtended {
-            b: boolean
+        interface ItWillExtend extends ToBeExtended {
+            b: boolean;
         }
 
-        interface WithExtends<T extends toBeExtended> {
-            iAmGeneric: T
+        interface WithExtends<T extends ToBeExtended> {
+            iAmGeneric: T;
         }
 
         interface WithExtendsMethod<T> {
-            method<S extends T>(): S
+            method<S extends T>(): S;
         }
 
         it('should set the generic value', () => {
             const properties: WithExtends<ItWillExtend> = createMock<WithExtends<ItWillExtend>>();
             expect(properties.iAmGeneric.b).toBe(false);
-            expect(properties.iAmGeneric.a).toBe("");
+            expect(properties.iAmGeneric.a).toBe('');
         });
 
         it('should return the value as null', () => { // we do not know the type at runtime of the invoke function
-            const properties: WithExtendsMethod<toBeExtended> = createMock<WithExtendsMethod<toBeExtended>>();
+            const properties: WithExtendsMethod<ToBeExtended> = createMock<WithExtendsMethod<ToBeExtended>>();
             expect(properties.method()).toBeNull();
         });
     });
 
-    describe("with nested generics", () => {
+    describe('with nested generics', () => {
         interface A<T> {
-            a: T
+            a: T;
         }
 
         interface B<T> extends A<T> {
-            b: number
-        } 
+            b: number;
+        }
         it('should set the generic value', () => {
             const properties: B<string> = createMock<B<string>>();
-            expect(properties.a).toBe("");
+            expect(properties.a).toBe('');
             expect(properties.b).toBe(0);
         });
     });
 
-    describe("with nested generics declared", () => {
+    describe('with nested generics declared', () => {
         interface A<T> {
-            a: T
+            a: T;
         }
 
         interface B<T> extends A<string> {
-            b: number
-        } 
+            b: number;
+        }
 
         it('should set the generic value', () => {
             const properties: B<string> = createMock<B<string>>();
-            expect(properties.a).toBe("");
+            expect(properties.a).toBe('');
             expect(properties.b).toBe(0);
         });
     });
 
-    describe("with nested generics declared with a type", () => {
-        type Type = {
+    describe('with nested generics declared with a type', () => {
+        interface Type {
             value: string;
         }
 
         type Test = number;
         interface A<T> {
-            a: T
+            a: T;
         }
 
         interface C<T> {
@@ -76,25 +76,25 @@ describe('for generic', () => {
         }
 
         interface B<T> extends A<Type>, C<Test> {
-            b: number
-        } 
+            b: number;
+        }
 
         it('should set the generic value', () => {
             const properties: B<string> = createMock<B<string>>();
-            expect(properties.a.value).toBe("");
+            expect(properties.a.value).toBe('');
             expect(properties.c).toBe(0);
             expect(properties.b).toBe(0);
         });
     });
 
-    describe("with nested generics declared with literal type", () => {    
+    describe('with nested generics declared with literal type', () => {
         interface A<T> {
-            a: T
-        }            
+            a: T;
+        }
 
         interface B<T> extends A<{a: number}> {
-            b: number
-        } 
+            b: number;
+        }
 
         it('should set the generic value', () => {
             const properties: B<string> = createMock<B<string>>();

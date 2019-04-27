@@ -2,6 +2,6 @@ export {};
 
 type ReturnType = jasmine.Spy;
 
-declare module 'ts-auto-mock' {
-  interface MockMethod<TR> extends ReturnType {}
+declare module 'ts-auto-mock/extension' {
+  interface Method<TR> extends ReturnType {}
 }

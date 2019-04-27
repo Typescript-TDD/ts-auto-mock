@@ -1,4 +1,5 @@
-import { createMock, method, On } from 'ts-auto-mock';
+import { createMock } from 'ts-auto-mock';
+import { method, On } from 'ts-auto-mock/extension';
 
 describe('tsLib', () => {
     it('should return a spy with a name', () => {
