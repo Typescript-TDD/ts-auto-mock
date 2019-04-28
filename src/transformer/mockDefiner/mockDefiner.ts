@@ -99,7 +99,7 @@ export class MockDefiner {
         return ts.createPropertyAccess(
             ts.createPropertyAccess(
                 repository,
-                ts.createIdentifier('Repository'),
+                ts.createIdentifier('ɵRepository'),
             ),
             ts.createIdentifier('instance'),
         );
