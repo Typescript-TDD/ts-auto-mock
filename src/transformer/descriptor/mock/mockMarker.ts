@@ -12,7 +12,7 @@ export function GetMockMarkerProperty(): Property {
         ts.createPropertyAccess(
             ts.createPropertyAccess(
                 MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
-                ts.createIdentifier('Marker'),
+                ts.createIdentifier('ɵMarker'),
             ),
             ts.createIdentifier('instance')),
         ts.createIdentifier('get'));
