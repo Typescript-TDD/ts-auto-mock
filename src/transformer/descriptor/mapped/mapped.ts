@@ -11,8 +11,7 @@ export function GetMappedDescriptor(node: ts.MappedTypeNode): ts.Expression {
 
     const properties: ts.PropertyDeclaration[] = types.reduce((acc: ts.PropertyDeclaration[], possibleType: ts.Node) => {
         if (ts.isLiteralTypeNode(possibleType)) {
-            const literal: ts.LiteralTypeNode = possibleType as ts.LiteralTypeNode;
-            const property: ts.PropertyDeclaration = TypescriptHelper.createProperty((literal.literal as ts.StringLiteral).text, node.type);
+            const property: ts.PropertyDeclaration = TypescriptHelper.createProperty((possibleType.literal as ts.StringLiteral).text, node.type);
             acc.push(property);
             return acc;
         }

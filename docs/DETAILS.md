@@ -96,7 +96,7 @@ mock // { a: "" }
 ```ts
 type Keys = "a" | "b";
 type myType = {[key in Keys]: string}
-const mock = createMock<{a: string}>();
+const mock = createMock<myType>();
 mock // { a: "", b: "" }
 ```
 
@@ -106,7 +106,7 @@ type Keys = {
 	a: number;
 }		
 type keyInKeyof = {[key in keyof Keys]: string}
-const mock = createMock<{a: string}>();
+const mock = createMock<keyInKeyof>();
 mock // { a: "" }
 ```
 
@@ -115,8 +115,7 @@ mock // { a: "" }
 class MyClass {
 	test?: string;
 }	
-type keyInKeyof = {[key in keyof Keys]: string}
-const mock = createMock<{a: string}>();
+const mock = createMock<MyClass>();
 mock // { test: undefined }
 ```
 

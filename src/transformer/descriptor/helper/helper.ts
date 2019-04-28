@@ -9,7 +9,7 @@ export namespace TypescriptHelper {
     }
 
     export function createSetAccessor(name: ts.PropertyName, block: ts.Block, parameterName: ts.Identifier): ts.SetAccessorDeclaration {
-        const parameterDeclaration: ts.ParameterDeclaration = ts.createParameter([], [], undefined, parameterName, undefined, undefined, undefined);
+        const parameterDeclaration: ts.ParameterDeclaration = ts.createParameter([], [], undefined, parameterName);
         return ts.createSetAccessor([], [], name, [parameterDeclaration], block);
     }
 
