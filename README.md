@@ -63,8 +63,8 @@ The library allows you to extends some functionality to work nicely with framewo
 
 ## Authors
 
-* **Vittorio Guerriero**
-* **Giulio Caprino** 
+* [**Vittorio Guerriero**](https://github.com/uittorio)
+* [**Giulio Caprino**](https://github.com/pmyl)
 
 ## License
 
