@@ -56,7 +56,7 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
-    "url-slug": "2.0.0",
+    "url-slug": "2.1.0",
     "path": "0.12.7"
   },
   "peerDependencies": {
