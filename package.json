@@ -44,13 +44,13 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^2.0.1",
     "karma-webpack": "^3.0.5",
-    "puppeteer": "^1.16.0",
-    "ts-loader": "^5.4.5",
-    "ts-node": "^8.1.0",
+    "puppeteer": "^1.17.0",
+    "ts-loader": "^6.0.1",
+    "ts-node": "^8.2.0",
     "tslint": "^5.16.0",
     "tslint-loader": "^3.5.4",
     "typescript": "^3.4.5",
-    "webpack": "^4.31.0",
+    "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
     "webpack-merge": "^4.2.1",
     "webpack-node-externals": "^1.7.2"
@@ -59,7 +59,7 @@
     "url-slug": "^2.1.1"
   },
   "peerDependencies": {
-    "typescript": "^3.2.2"
+    "typescript": "^3.4.5"
   },
   "husky": {
     "hooks": {
