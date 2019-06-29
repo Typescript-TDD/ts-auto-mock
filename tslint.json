@@ -8,7 +8,7 @@
     "max-line-length": [true, 200],
     "quotemark": [true, "single"],
     "no-consecutive-blank-lines":[true],
-    "interface-name": [true, "never-prefix"],
+    "interface-name": [false],
     "max-classes-per-file": false,
     "only-arrow-functions": false,
     "array-type": false,

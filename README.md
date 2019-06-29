@@ -59,6 +59,21 @@ The library try to convert the type given to createMock so you dont need to crea
 The library allows you to extends some functionality to work nicely with framework like jasmine or jest
 [Open this link to see more examples](docs/EXTENSION.md)
 
+## Options 
+```ts
+tsAutoMockTransformer(program: ts.Program, options: TsAutoMockOptions)
+
+interface TsAutoMockOptions {
+    debug: boolean | 'file' | 'console'
+}
+```
+options:
+
+| Name          | Default                     |  Description    |
+| ------------- | --------------------------- | --------------- |
+| `debug`       | `false`                     | When set to `true` or `console` it will log to the console
+|               |                             | When set to `file` it will log to a file (tsAutoMock.log)
+
 ## [Changelog](CHANGELOG.md)
 
 ## Authors

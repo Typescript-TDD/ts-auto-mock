@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { SetTsAutoMockOptions, TsAutoMockOptions } from '../options/options';
 import { GetDescriptor } from './descriptor/descriptor';
 import { TypeReferenceCache } from './descriptor/typeReference/cache';
 import { isCreateMock, isCreateMockList, isFromTsAutoMock } from './matcher/matcher';
@@ -7,7 +8,8 @@ import { GetMockFactoryCall } from './mockFactoryCall/mockFactoryCall';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
 import { isTypeReusable } from './typeValidator/typeValidator';
 
-export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
+export default function transformer(program: ts.Program, options?: TsAutoMockOptions): ts.TransformerFactory<ts.SourceFile> {
+    SetTsAutoMockOptions(options);
     SetTypeChecker(program.getTypeChecker());
 
     return (context: ts.TransformationContext): (file: ts.SourceFile) => ts.SourceFile => (file: ts.SourceFile): ts.SourceFile => {
