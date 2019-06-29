@@ -25,9 +25,7 @@ module.exports = {
                 options: {
                     configFileName: "test/tsconfig.json",
                     getCustomTransformers: (program) => ({
-                        before: [ transformer.default(program, {
-                            debug: true
-                        }) ]
+                        before: [ transformer.default(program) ]
                     })
                 }
             }

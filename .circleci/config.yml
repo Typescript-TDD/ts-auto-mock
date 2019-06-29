@@ -10,7 +10,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: npm install
+      - run: npm install --silent
       - save_cache:
           paths:
             - node_modules
