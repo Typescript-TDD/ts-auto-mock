@@ -1,11 +1,14 @@
 const webpackConfig = require('../test/webpack.js');
+const ProcessService = require('../process/process');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config, url) {
+    const debug = ProcessService(process).getArgument('DEBUG');
+
     return {
         basePath: '',
         frameworks: ['jasmine'],
-        webpack: webpackConfig,
+        webpack: webpackConfig(debug),
         webpackMiddleware: {
             stats: 'errors-only'
         },

@@ -9,6 +9,7 @@
     "build:extension": "webpack --config config/modules/extension/webpack.js",
     "build": "npm run build:mock && npm run build:transformer && npm run build:repository && npm run build:extension",
     "test": "npm run test:transformer && npm run test:framework",
+    "test:debug": "npm run test:transformer DEBUG=true && npm run test:framework DEBUG=true",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
     "test:framework": "karma start config/karma/karma.config.framework.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
