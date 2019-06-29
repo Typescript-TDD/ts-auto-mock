@@ -1,5 +1,6 @@
 const transformer = require('../../dist/transformer');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     mode: "development",
@@ -24,7 +25,9 @@ module.exports = {
                 options: {
                     configFileName: "test/tsconfig.json",
                     getCustomTransformers: (program) => ({
-                        before: [ transformer.default(program) ]
+                        before: [ transformer.default(program, {
+                            debug: true
+                        }) ]
                     })
                 }
             }
