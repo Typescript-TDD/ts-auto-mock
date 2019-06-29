@@ -1,3 +1,13 @@
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/uittorio/ts-auto-mock/compare/v1.1.2...v1.1.3) (2019-06-29)
+
+
+### Features
+
+* **log:** logging feature, remove npm i logs for ci ([0cdfa27](https://github.com/uittorio/ts-auto-mock/commit/0cdfa27))
+
+
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/uittorio/ts-auto-mock/compare/v1.1.1...v1.1.2) (2019-05-18)
 
