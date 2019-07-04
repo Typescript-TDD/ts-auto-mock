@@ -57,6 +57,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "slash": "^3.0.0",
     "url-slug": "^2.1.1",
     "winston": "^3.2.1"
   },
