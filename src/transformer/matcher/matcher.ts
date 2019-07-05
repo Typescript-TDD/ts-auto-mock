@@ -23,13 +23,13 @@ export function isFromTsAutoMock(signature: ts.Signature): boolean {
     const createMockListTs: string = path.join(__dirname, `../create-mock-list.d.ts`);
     const fileName: string = signature.declaration.getSourceFile().fileName;
 
-    const isCreateMockUrl: boolean = fileName.indexOf('create-mock.d.ts') > -1 && path.relative(fileName, createMockTs) === '';
-    if (!isCreateMockUrl) {
+    const isCreateMockUrl: boolean = path.relative(fileName, createMockTs) === '';
+    if (fileName.indexOf('create-mock.d.ts') > -1 && isCreateMockUrl) {
         TransformerLogger().unexpectedCreateMock(fileName, createMockTs);
     }
 
-    const isCreateMockListUrl: boolean = fileName.indexOf('create-mock-list.d.ts') > -1 && path.relative(fileName, createMockListTs) === '';
-    if (!isCreateMockListUrl) {
+    const isCreateMockListUrl: boolean = path.relative(fileName, createMockListTs) === '';
+    if (fileName.indexOf('create-mock-list.d.ts') > -1 && !isCreateMockListUrl) {
         TransformerLogger().unexpectedCreateMock(fileName, createMockListTs);
     }
 
