@@ -1,3 +1,18 @@
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/uittorio/ts-auto-mock/compare/v1.1.3...v1.1.4) (2019-07-06)
+
+
+### Bug Fixes
+
+* **core:** use path.relative to check if two urls are the same ([#69](https://github.com/uittorio/ts-auto-mock/issues/69)) ([e79b29c](https://github.com/uittorio/ts-auto-mock/commit/e79b29c))
+
+
+### Features
+
+* **log:** add test script that will output logs ([d577cf8](https://github.com/uittorio/ts-auto-mock/commit/d577cf8))
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/uittorio/ts-auto-mock/compare/v1.1.2...v1.1.3) (2019-06-29)
 
