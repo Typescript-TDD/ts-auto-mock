@@ -41,6 +41,7 @@ mock.details // "{phone: 0} "
 
 ##### Default values
 You can also define default values to overrides specific fields
+You dont have to provide the entire interface, just a partial of the one to mock
 ```ts
 import { createMock } from 'ts-auto-mock';
 
@@ -63,6 +64,8 @@ mock.details // "{phone: 07423232323} "
 
 #### Create mock list
 createMock list it will create a list of mocks automatically
+You dont have to provide the entire interface, just a partial of the one to mock
+
 ```ts
 import { createMockList } from 'ts-auto-mock';
 
