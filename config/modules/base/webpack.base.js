@@ -3,13 +3,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (options) => {
-    const module = options.module;
-    const dist = "../../../dist/";
-
-    let output = path.resolve(__dirname, dist + module);
-
-    const entry = `./src/${module}/index.ts`;
-    const tsConfigFile = `config/modules/${module}/tsconfig.json`;
+    const tsConfigFile = options.tsConfigFile;
 
     return {
         mode: "production",
@@ -35,13 +29,9 @@ module.exports = (options) => {
                 }
             ]
         },
-        entry: {
-            index: [entry],
-        },
         output: {
             libraryTarget: "commonjs",
-            filename: "[name].js",
-            path: output
+            filename: "[name].js"
         },
         plugins: [
             new CleanWebpackPlugin(),
