@@ -39,6 +39,28 @@ mock.getName() // ""
 mock.details // "{phone: 0} "
 ```
 
+##### Default values
+You can also define default values to overrides specific fields
+```ts
+import { createMock } from 'ts-auto-mock';
+
+interface Person {
+  id: string;
+  getName(): string;
+  details: {
+      phone: number
+  }
+}
+const mock = createMock<Person>({
+details: {
+    phone: 07423232323
+}
+});
+mock.id // ""
+mock.getName() // ""
+mock.details // "{phone: 07423232323} "
+```
+
 #### Create mock list
 createMock list it will create a list of mocks automatically
 ```ts
@@ -49,6 +71,24 @@ interface Person {
 }
 const mockList = createMockList<Person>(2);
 mockList.length // 2
+```
+
+##### Default values
+You can define a function to overrides specific fields
+The function will have access to the current index
+```ts
+import { createMockList } from 'ts-auto-mock';
+
+interface Person {
+  id: string;
+}
+const mockList = createMockList<Person>(2, (index: number) => {
+    return {
+        id: "id" + index
+    }
+});
+mockList[0].id // id0
+mockList[1].id // id1
 ```
 
 ## Type Examples
