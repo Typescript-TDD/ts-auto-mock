@@ -44,7 +44,7 @@ describe('for methods', () => {
             const properties: MyClass = createMock<MyClass>();
             expect(properties.method()).toBe(0);
         });
-});
+    });
 
     describe('for undeclared return value', () => {
         class MyClass {

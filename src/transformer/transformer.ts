@@ -1,12 +1,10 @@
 import * as ts from 'typescript';
 import { SetTsAutoMockOptions, TsAutoMockOptions } from '../options/options';
-import { GetDescriptor } from './descriptor/descriptor';
 import { TypeReferenceCache } from './descriptor/typeReference/cache';
 import { isCreateMock, isCreateMockList, isFromTsAutoMock } from './matcher/matcher';
+import { getMock, getMockForList } from './mock/mock';
 import { MockDefiner } from './mockDefiner/mockDefiner';
-import { GetMockFactoryCall } from './mockFactoryCall/mockFactoryCall';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
-import { isTypeReusable } from './typeValidator/typeValidator';
 
 export default function transformer(program: ts.Program, options?: TsAutoMockOptions): ts.TransformerFactory<ts.SourceFile> {
     SetTsAutoMockOptions(options);
@@ -51,37 +49,14 @@ function visitNode(node: ts.Node): ts.Node {
     const declaration: ts.FunctionDeclaration = signature.declaration as ts.FunctionDeclaration;
 
     if (isCreateMock(declaration)) {
-        return getMockExpression(nodeToMock);
+        return getMock(nodeToMock, node);
     }
 
     if (isCreateMockList(declaration)) {
-        const lengthLiteral: ts.NumericLiteral = node.arguments[0] as ts.NumericLiteral;
-        const mocks: ts.Expression[] = getListOfMockExpression(nodeToMock, lengthLiteral);
-
-        return ts.createArrayLiteral(mocks);
+        return getMockForList(nodeToMock, node);
     }
 
     return node;
-}
-
-function getListOfMockExpression(nodeToMock: ts.TypeNode, lengthLiteral: ts.NumericLiteral): ts.Expression[] {
-    const length: number = lengthLiteral ? parseInt(lengthLiteral.text, 10) : 0;
-    const mocks: ts.Expression[] = [];
-    const mock: ts.Expression = getMockExpression(nodeToMock);
-
-    for (let i: number = 0; i <= length - 1; i++) {
-        mocks.push(mock);
-    }
-
-    return mocks;
-}
-
-function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
-    if (isTypeReusable(nodeToMock)) {
-        return GetMockFactoryCall(nodeToMock);
-    }
-
-    return GetDescriptor(nodeToMock);
 }
 
 function getSignature(node: ts.CallExpression): ts.Signature {
