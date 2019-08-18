@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/uittorio/ts-auto-mock/compare/v1.1.4...v1.2.0) (2019-08-18)
+
+
+### Features
+
+* **defaultValues:** merge default values ([#78](https://github.com/uittorio/ts-auto-mock/issues/78)) ([e5a7424](https://github.com/uittorio/ts-auto-mock/commit/e5a7424))
+
+
+
 <a name="1.1.4"></a>
 ## [1.1.4](https://github.com/uittorio/ts-auto-mock/compare/v1.1.3...v1.1.4) (2019-07-06)
 
