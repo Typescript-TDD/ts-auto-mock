@@ -1,7 +1,6 @@
 name: Release
 
-on:
-  release:   
+on: [release]   
     types: [created]
 
 jobs:
