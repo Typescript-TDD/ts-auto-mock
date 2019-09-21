@@ -1,7 +1,6 @@
 name: Release
 
-on: [release]   
-    types: [created]
+on: [release]
 
 jobs:
   build:
@@ -20,6 +19,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
       run: |
-        git tag
+        npm install
       env:
         CI: true
