@@ -1,8 +1,7 @@
 name: Release
 
 on: 
-  reelease
-    # Only use the types keyword to narrow down the activity types that will trigger your workflow.
+  reelease   
     types: [created]
 
 jobs:
