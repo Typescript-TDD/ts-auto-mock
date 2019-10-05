@@ -40,7 +40,7 @@ mock.details // "{phone: 0} "
 ```
 
 ##### Default values
-s
+
 You can also define default values to overrides specific fields
 You dont have to provide the entire interface, just a partial of the one to mock
 ```ts
