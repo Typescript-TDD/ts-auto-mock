@@ -58,6 +58,22 @@ describe('for methods', () => {
         });
     });
 
+    describe('for interface call signature with overload', () => {
+        interface InterfaceWithCallSignature {
+            (a: number): number;
+            (a: string): string;
+            b: string;
+        }
+
+        it('should only consider the first signature declaration', () => {
+            const properties: InterfaceWithCallSignature = createMock<InterfaceWithCallSignature>();
+            expect(properties(2)).toBe(0);
+            // @ts-ignore
+            expect(properties('2')).toBe(0);
+            expect(properties.b).toBe('');
+        });
+    });
+
     describe('for declaration', () => {
         class MyClass {
             public method(): number {
