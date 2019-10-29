@@ -25,6 +25,20 @@ interface Person {
 } 
 */
 ```
+## Interfaces with call signatures
+For overload methods it will use the first one
+```ts
+interface Person {
+    (): number
+    (): string
+    name: string 
+}
+
+const mock = createMock<Person>();
+mock() // 0
+mock.name // ""
+
+```
 ## Classes
 ```ts
 interface Person {
