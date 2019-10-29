@@ -15,9 +15,9 @@ export function GetMockCall(
     const returnStatement: ts.ReturnStatement = ts.createReturn(uniqueVariable);
     const statements: Array<ts.VariableStatement | ts.ExpressionStatement | ts.ReturnStatement> = [
         listOfVariables,
-        mockMarkerAssignedToUniqueVariable,
         uniqueVariableAssignmentToProperties,
         uniqueVariableAssignmentToObjectAssign,
+        mockMarkerAssignedToUniqueVariable,
         returnStatement,
     ];
 
@@ -40,9 +40,13 @@ function assignPropertiesToUniqueVariable(uniqueVariable: ts.Identifier, propert
 }
 
 function assignObjectSignatureToUniqueVariable(uniqueVariable: ts.Identifier, signatures: ReadonlyArray<ts.Signature>): ts.ExpressionStatement {
-    const objectAssign: ts.CallExpression = GetObjectAssign(signatures, uniqueVariable);
+    if (signatures.length > 0) {
+        const objectAssign: ts.CallExpression = GetObjectAssign(signatures, uniqueVariable);
 
-    return assignVariableTo(uniqueVariable, objectAssign);
+        return assignVariableTo(uniqueVariable, objectAssign);
+    }
+
+    return ts.createExpressionStatement(uniqueVariable);
 }
 
 function assignVariableTo(variable: ts.Identifier, expression: ts.Expression): ts.ExpressionStatement {
