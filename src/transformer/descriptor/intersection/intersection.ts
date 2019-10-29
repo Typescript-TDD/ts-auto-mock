@@ -24,5 +24,5 @@ export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionT
         return GetUndefinedDescriptor();
     }
 
-    return GetMockPropertiesFromSymbol(symbols);
+    return GetMockPropertiesFromSymbol(symbols, []);
 }

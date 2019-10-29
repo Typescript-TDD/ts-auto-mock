@@ -11,5 +11,5 @@ export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration): ts.Exp
 
     const properties: ts.Symbol[] = typeChecker.getPropertiesOfType(type);
 
-    return GetMockPropertiesFromSymbol(properties);
+    return GetMockPropertiesFromSymbol(properties, []);
 }
