@@ -1,3 +1,13 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/uittorio/ts-auto-mock/compare/0.0.2...1.2.1) (2019-10-29)
+
+
+### Features
+
+* **interfaceCallSignature:** add support for interface call signature ([#82](https://github.com/uittorio/ts-auto-mock/issues/82)) ([a00ff55](https://github.com/uittorio/ts-auto-mock/commit/a00ff55))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/uittorio/ts-auto-mock/compare/v1.1.4...v1.2.0) (2019-08-18)
 
