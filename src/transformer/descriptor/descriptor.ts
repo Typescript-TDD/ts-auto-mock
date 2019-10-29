@@ -65,6 +65,8 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
             return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration);
         case ts.SyntaxKind.FunctionType:
             return GetFunctionTypeDescriptor(node as ts.FunctionTypeNode);
+        case ts.SyntaxKind.CallSignature:
+            return GetFunctionTypeDescriptor(node as ts.CallSignatureDeclaration);
         case ts.SyntaxKind.ArrowFunction:
         case ts.SyntaxKind.FunctionExpression:
             return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction);
@@ -95,7 +97,7 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
         case ts.SyntaxKind.BooleanKeyword:
             return GetBooleanDescriptor();
         case ts.SyntaxKind.ObjectKeyword:
-            return GetMockPropertiesFromSymbol([]);
+            return GetMockPropertiesFromSymbol([], []);
         case ts.SyntaxKind.NullKeyword:
             return GetNullDescriptor();
         case ts.SyntaxKind.AnyKeyword:

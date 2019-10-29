@@ -1,23 +1,23 @@
 import * as ts from 'typescript';
+import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 
-export function GetMockCall(declarations: ts.VariableDeclaration[], properties: ts.AccessorDeclaration[]): ts.CallExpression {
-    const uniqueNameVariable: string = '__tsAutoMockObjectReturnValue';
-    const identifierUniqueNameVariable: ts.Identifier = ts.createIdentifier(uniqueNameVariable);
-
-    const listOfVariables: ts.VariableStatement = GetListOfVariables(declarations, identifierUniqueNameVariable);
-
-    const mockMarkerPropertyAssigned: ts.ExpressionStatement = GetMockMarkerPropertyAssignedTo(identifierUniqueNameVariable);
-
-    const objectToReturn: ts.ExpressionStatement = GetObjectWithPropertiesToReturn(properties, identifierUniqueNameVariable);
-
-    const returnStatement: ts.ReturnStatement = ts.createReturn(identifierUniqueNameVariable);
-
+export function GetMockCall(
+    declarations: ts.VariableDeclaration[],
+    properties: ts.AccessorDeclaration[],
+    signatures: ReadonlyArray<ts.Signature>): ts.CallExpression {
+    const uniqueVariable: ts.Identifier = CreateUniqueTsAutoMockVariable();
+    const listOfVariables: ts.VariableStatement = GetListOfVariables(declarations, uniqueVariable);
+    const mockMarkerAssignedToUniqueVariable: ts.ExpressionStatement = GetMockMarkerPropertyAssignedTo(uniqueVariable);
+    const uniqueVariableAssignmentToProperties: ts.ExpressionStatement = assignPropertiesToUniqueVariable(uniqueVariable, properties);
+    const uniqueVariableAssignmentToObjectAssign: ts.ExpressionStatement = assignObjectSignatureToUniqueVariable(uniqueVariable, signatures);
+    const returnStatement: ts.ReturnStatement = ts.createReturn(uniqueVariable);
     const statements: Array<ts.VariableStatement | ts.ExpressionStatement | ts.ReturnStatement> = [
         listOfVariables,
-        objectToReturn,
-        mockMarkerPropertyAssigned,
+        uniqueVariableAssignmentToProperties,
+        uniqueVariableAssignmentToObjectAssign,
+        mockMarkerAssignedToUniqueVariable,
         returnStatement,
     ];
 
@@ -33,9 +33,24 @@ function GetListOfVariables(declarations: ts.VariableDeclaration[], identifierUn
     return ts.createVariableStatement([], variables);
 }
 
-function GetObjectWithPropertiesToReturn(properties: ts.AccessorDeclaration[], identifierUniqueNameVariable: ts.Identifier): ts.ExpressionStatement {
-    const returnObject: ts.ObjectLiteralExpression = ts.createObjectLiteral(properties, true);
-    const binaryExpression: ts.BinaryExpression = ts.createBinary(identifierUniqueNameVariable, ts.SyntaxKind.EqualsToken, returnObject);
+function assignPropertiesToUniqueVariable(uniqueVariable: ts.Identifier, properties: ts.AccessorDeclaration[]): ts.ExpressionStatement {
+    const propertiesObject: ts.ObjectLiteralExpression = ts.createObjectLiteral(properties, true);
+
+    return assignVariableTo(uniqueVariable, propertiesObject);
+}
+
+function assignObjectSignatureToUniqueVariable(uniqueVariable: ts.Identifier, signatures: ReadonlyArray<ts.Signature>): ts.ExpressionStatement {
+    if (signatures.length > 0) {
+        const objectAssign: ts.CallExpression = GetObjectAssign(signatures, uniqueVariable);
+
+        return assignVariableTo(uniqueVariable, objectAssign);
+    }
+
+    return ts.createExpressionStatement(uniqueVariable);
+}
+
+function assignVariableTo(variable: ts.Identifier, expression: ts.Expression): ts.ExpressionStatement {
+    const binaryExpression: ts.BinaryExpression = ts.createBinary(variable, ts.SyntaxKind.EqualsToken, expression);
     return ts.createExpressionStatement(binaryExpression);
 }
 
@@ -51,4 +66,22 @@ function GetMockMarkerPropertyAssignedTo(identifier: ts.Identifier): ts.Expressi
     const objectDefineProperty: ts.PropertyAccessExpression = ts.createPropertyAccess(ts.createIdentifier('Object'), ts.createIdentifier('defineProperty'));
     const objectDefinePropertyCall: ts.CallExpression = ts.createCall(objectDefineProperty, [], argumentsDefineProperty);
     return ts.createExpressionStatement(objectDefinePropertyCall);
+}
+
+function CreateUniqueTsAutoMockVariable(): ts.Identifier  {
+    return ts.createIdentifier('__tsAutoMockObjectReturnValue');
+}
+
+function GetObjectAssign(signatures: ReadonlyArray<ts.Signature>, uniqueVariable: ts.Identifier): ts.CallExpression {
+    return ts.createCall(
+        ts.createPropertyAccess(
+            ts.createIdentifier('Object'),
+            ts.createIdentifier('assign'),
+        ),
+        undefined,
+        [
+            GetDescriptor(signatures[0].declaration),
+            uniqueVariable,
+        ],
+    );
 }

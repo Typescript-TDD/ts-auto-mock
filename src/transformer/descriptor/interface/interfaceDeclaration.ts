@@ -16,6 +16,7 @@ export function GetInterfaceDeclarationDescriptor(node: ts.InterfaceDeclaration)
     StoreGenericsFromHeritage(node.heritageClauses);
 
     const properties: ts.Symbol[] = typeChecker.getPropertiesOfType(type);
+    const signatures: ReadonlyArray<ts.Signature> = type.getCallSignatures();
 
-    return GetMockPropertiesFromSymbol(properties);
+    return GetMockPropertiesFromSymbol(properties, signatures);
 }

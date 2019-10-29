@@ -26,5 +26,5 @@ export function GetMappedDescriptor(node: ts.MappedTypeNode): ts.Expression {
         return acc;
     }, []);
 
-    return GetMockPropertiesFromDeclarations(properties);
+    return GetMockPropertiesFromDeclarations(properties, []);
 }

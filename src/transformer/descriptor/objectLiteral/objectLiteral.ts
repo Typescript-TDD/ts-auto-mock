@@ -7,5 +7,5 @@ export function GetObjectLiteralDescriptor(node: ts.ObjectLiteralExpression): ts
     const type: ts.Type = typeChecker.getTypeAtLocation(node);
     const symbols: ts.Symbol[] = TypeChecker().getPropertiesOfType(type);
 
-    return GetMockPropertiesFromSymbol(symbols);
+    return GetMockPropertiesFromSymbol(symbols, []);
 }

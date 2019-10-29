@@ -4,15 +4,15 @@ import { GetMockCall } from './mockCall';
 import { GetMockDeclarationName } from './mockDeclarationName';
 import { GetMockProperty } from './mockProperty';
 
-export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[]): ts.Expression {
+export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>): ts.Expression {
     const properties: ts.Declaration[] = propertiesSymbol.map((prop: ts.Symbol) => {
         return prop.declarations[0];
     });
 
-    return GetMockPropertiesFromDeclarations(properties);
+    return GetMockPropertiesFromDeclarations(properties, signatures);
 }
 
-export function GetMockPropertiesFromDeclarations(list: ts.Declaration[]): ts.CallExpression {
+export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signatures: ReadonlyArray<ts.Signature>): ts.CallExpression {
     const properties: ts.Declaration[] = list.filter((member: ts.PropertyDeclaration) => {
         const hasModifiers: boolean = !!member.modifiers;
 
@@ -44,5 +44,5 @@ export function GetMockPropertiesFromDeclarations(list: ts.Declaration[]): ts.Ca
         return acc;
     }, []);
 
-    return GetMockCall(variableDeclarations, accessorDeclaration);
+    return GetMockCall(variableDeclarations, accessorDeclaration, signatures);
 }
