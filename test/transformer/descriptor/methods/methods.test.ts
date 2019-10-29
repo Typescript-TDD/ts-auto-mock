@@ -41,8 +41,8 @@ describe('for methods', () => {
 
         it('should set the functions', () => {
             const properties: InterfaceWithCallSignature = createMock<InterfaceWithCallSignature>();
-            console.log(properties);
             expect(properties(2)).toBe(0);
+            expect(properties.b).toBe('');
         });
     });
 
