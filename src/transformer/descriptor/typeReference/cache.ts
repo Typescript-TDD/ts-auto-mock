@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { IScope } from '../../scope/scope.interface';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
@@ -9,33 +10,18 @@ export interface TypeReferenceCacheElement {
 }
 
 export class TypeReferenceCache {
-    private _cache: TypeReferenceCacheElement[];
+    private _cache: TypeReferenceCacheElement[] = [];
 
-    private static _instance: TypeReferenceCache;
+    public addForTypeReference(node: ts.TypeReferenceNode, scope: IScope): void {
+        const declarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.findParameterOfNode(node.typeName);
 
-    public static get instance(): TypeReferenceCache {
-        this._instance = this._instance || new TypeReferenceCache();
-        return this._instance;
+        this._addFromTypeArguments(node, declarationTypeParameters, scope);
     }
 
-    public clear(): void {
-        this._cache = [];
-    }
+    public addForExpression(node: ts.ExpressionWithTypeArguments, scope: IScope): void {
+        const declarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.findParameterOfNode(node.expression as ts.Identifier);
 
-    public addIfPresentForTypeReference(node: ts.TypeReferenceNode): void {
-        if (node.typeArguments) {
-            const declarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.findParameterOfNode(node.typeName);
-
-            this._addFromTypeArguments(node, declarationTypeParameters);
-        }
-    }
-
-    public addIfPresentForExpression(node: ts.ExpressionWithTypeArguments): void {
-        if (node.typeArguments) {
-            const declarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.findParameterOfNode(node.expression as ts.Identifier);
-
-            this._addFromTypeArguments(node, declarationTypeParameters);
-        }
+        this._addFromTypeArguments(node, declarationTypeParameters, scope);
     }
 
     public get(type: ts.Type): TypeReferenceCacheElement {
@@ -44,9 +30,12 @@ export class TypeReferenceCache {
         });
     }
 
-    private _addFromTypeArguments(node: ts.TypeReferenceNode | ts.ExpressionWithTypeArguments, declarations: ts.NodeArray<ts.TypeParameterDeclaration>): void {
+    private _addFromTypeArguments(
+        node: ts.TypeReferenceNode | ts.ExpressionWithTypeArguments,
+        declarations: ts.NodeArray<ts.TypeParameterDeclaration>,
+        scope: IScope): void {
         node.typeArguments.forEach((typeArgument: ts.Node, index: number) => {
-            const descriptor: ts.Expression = GetDescriptor(typeArgument);
+            const descriptor: ts.Expression = GetDescriptor(typeArgument, scope);
             const type: ts.Type = TypeChecker().getTypeAtLocation(declarations[index]);
 
             this._add(type, descriptor);

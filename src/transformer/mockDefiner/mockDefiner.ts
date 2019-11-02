@@ -3,6 +3,7 @@ import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { GetTypeReferenceDescriptor } from '../descriptor/typeReference/typeReference';
 import { createImportOnIdentifier } from '../helper/import';
+import { Scope } from '../scope/scope';
 import { TypeChecker } from '../typeChecker/typeChecker';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
 import { ModuleName } from './modules/moduleName';
@@ -15,11 +16,12 @@ const urlSlug: any = require('url-slug');
 type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLiteralNode;
 
 function GetPossibleDescriptor(node: ts.Node): ts.Expression {
-    if (node.kind === ts.SyntaxKind.TypeReference) {
-        return GetTypeReferenceDescriptor((node as ts.TypeReferenceNode));
+    if (ts.isTypeReferenceNode(node)) {
+
+        return GetTypeReferenceDescriptor(node, new Scope());
     }
 
-    return GetDescriptor(node);
+    return GetDescriptor(node, new Scope());
 }
 
 export class MockDefiner {

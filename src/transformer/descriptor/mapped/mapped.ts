@@ -1,13 +1,14 @@
 import * as ts from 'typescript';
+import { IScope } from '../../scope/scope.interface';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { GetTypes } from '../type/type';
 
-export function GetMappedDescriptor(node: ts.MappedTypeNode): ts.Expression {
+export function GetMappedDescriptor(node: ts.MappedTypeNode, scope: IScope): ts.Expression {
     const typeParameter: ts.TypeNode = node.typeParameter.constraint;
     const typeChecker: ts.TypeChecker = TypeChecker();
-    const types: ts.Node[] = GetTypes(ts.createNodeArray([typeParameter]));
+    const types: ts.Node[] = GetTypes(ts.createNodeArray([typeParameter]), scope);
 
     const properties: ts.PropertyDeclaration[] = types.reduce((acc: ts.PropertyDeclaration[], possibleType: ts.Node) => {
         if (ts.isLiteralTypeNode(possibleType)) {
@@ -26,5 +27,5 @@ export function GetMappedDescriptor(node: ts.MappedTypeNode): ts.Expression {
         return acc;
     }, []);
 
-    return GetMockPropertiesFromDeclarations(properties, []);
+    return GetMockPropertiesFromDeclarations(properties, [], scope);
 }

@@ -1,18 +1,20 @@
 import * as ts from 'typescript';
+import { IScope } from '../../scope/scope.interface';
+import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetMockCall } from './mockCall';
 import { GetMockDeclarationName } from './mockDeclarationName';
 import { GetMockProperty } from './mockProperty';
 
-export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>): ts.Expression {
+export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>, scope: IScope): ts.Expression {
     const properties: ts.Declaration[] = propertiesSymbol.map((prop: ts.Symbol) => {
         return prop.declarations[0];
     });
 
-    return GetMockPropertiesFromDeclarations(properties, signatures);
+    return GetMockPropertiesFromDeclarations(properties, signatures, scope);
 }
 
-export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signatures: ReadonlyArray<ts.Signature>): ts.CallExpression {
+export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signatures: ReadonlyArray<ts.Signature>, scope: IScope): ts.CallExpression {
     const properties: ts.Declaration[] = list.filter((member: ts.PropertyDeclaration) => {
         const hasModifiers: boolean = !!member.modifiers;
 
@@ -36,7 +38,7 @@ export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signat
 
     const accessorDeclaration: ts.AccessorDeclaration[] = properties.map(
         (member: ts.Declaration): ts.AccessorDeclaration[] =>  {
-            return GetMockProperty(member as ts.PropertyDeclaration);
+            return GetMockProperty(member as ts.PropertyDeclaration, scope);
         },
     ).reduce((acc: ts.AccessorDeclaration[], declarations: ts.AccessorDeclaration[]) => {
         acc = acc.concat(declarations);
@@ -44,5 +46,7 @@ export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signat
         return acc;
     }, []);
 
-    return GetMockCall(variableDeclarations, accessorDeclaration, signatures);
+    const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0].declaration, scope) : null;
+
+    return GetMockCall(variableDeclarations, accessorDeclaration, signaturesDescriptor);
 }

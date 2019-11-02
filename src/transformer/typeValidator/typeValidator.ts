@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import { GetType } from '../descriptor/type/type';
+import { IScope } from '../scope/scope.interface';
 
 const reusableTypes: ts.SyntaxKind[] = [
     ts.SyntaxKind.ClassDeclaration,
@@ -8,8 +9,8 @@ const reusableTypes: ts.SyntaxKind[] = [
     ts.SyntaxKind.MappedType,
 ];
 
-export function isTypeReusable(node: ts.Node): boolean {
-    const nodeResolved: ts.Node = GetType(node);
+export function isTypeReusable(node: ts.Node, scope: IScope): boolean {
+    const nodeResolved: ts.Node = GetType(node, scope);
     return reusableTypes.includes(nodeResolved.kind) && !hasTypeArguments(node);
 }
 

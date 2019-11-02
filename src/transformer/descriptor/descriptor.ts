@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import { GetMockFactoryCall } from '../mockFactoryCall/mockFactoryCall';
+import { IScope } from '../scope/scope.interface';
 import { GetArrayDescriptor } from './array/array';
 import { GetBooleanDescriptor } from './boolean/boolean';
 import { GetBooleanFalseDescriptor } from './boolean/booleanFalse';
@@ -29,55 +30,55 @@ import { GetTypeReferenceDescriptorReusable } from './typeReference/typeReferenc
 import { GetUndefinedDescriptor } from './undefined/undefined';
 import { GetUnionDescriptor } from './union/union';
 
-export function GetDescriptor(node: ts.Node): ts.Expression {
+export function GetDescriptor(node: ts.Node, scope: IScope): ts.Expression {
     switch (node.kind) {
         case ts.SyntaxKind.TypeAliasDeclaration:
-            return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration);
+            return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration, scope);
         case ts.SyntaxKind.TypeReference:
-            return GetTypeReferenceDescriptorReusable(node as ts.TypeReferenceNode);
+            return GetTypeReferenceDescriptorReusable(node as ts.TypeReferenceNode, scope);
         case ts.SyntaxKind.TypeLiteral:
         case ts.SyntaxKind.InterfaceDeclaration:
-            return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration);
+            return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration, scope);
         case ts.SyntaxKind.ClassDeclaration:
-            return GetClassDeclarationDescriptor(node as ts.ClassDeclaration);
+            return GetClassDeclarationDescriptor(node as ts.ClassDeclaration, scope);
         case ts.SyntaxKind.PropertySignature:
         case ts.SyntaxKind.PropertyAssignment:
-            return GetPropertyDescriptor(node as ts.PropertySignature);
+            return GetPropertyDescriptor(node as ts.PropertySignature, scope);
         case ts.SyntaxKind.PropertyDeclaration:
-            return GetPropertyDescriptor(node as ts.PropertyDeclaration);
+            return GetPropertyDescriptor(node as ts.PropertyDeclaration, scope);
         case ts.SyntaxKind.LiteralType:
-            return GetLiteralDescriptor(node as ts.LiteralTypeNode);
+            return GetLiteralDescriptor(node as ts.LiteralTypeNode, scope);
         case ts.SyntaxKind.ExpressionWithTypeArguments:
-            return GetExpressionWithTypeArgumentsDescriptor(node as ts.ExpressionWithTypeArguments);
+            return GetExpressionWithTypeArgumentsDescriptor(node as ts.ExpressionWithTypeArguments, scope);
         case ts.SyntaxKind.Identifier:
-            return GetIdentifierDescriptor(node as ts.Identifier);
+            return GetIdentifierDescriptor(node as ts.Identifier, scope);
         case ts.SyntaxKind.ThisType:
-            return GetMockFactoryCall(node);
+            return GetMockFactoryCall(scope.declarationNode);
         case ts.SyntaxKind.ImportSpecifier:
-            return GetImportDescriptor(node as ts.ImportSpecifier);
+            return GetImportDescriptor(node as ts.ImportSpecifier, scope);
         case ts.SyntaxKind.TypeParameter:
-            return GetTypeParameterDescriptor(node as ts.TypeParameterDeclaration);
+            return GetTypeParameterDescriptor(node as ts.TypeParameterDeclaration, scope);
         case ts.SyntaxKind.ImportClause:
-            return GetImportDescriptor(node as ts.ImportClause);
+            return GetImportDescriptor(node as ts.ImportClause, scope);
         case ts.SyntaxKind.MethodSignature:
-            return GetMethodSignatureDescriptor(node as ts.MethodSignature);
+            return GetMethodSignatureDescriptor(node as ts.MethodSignature, scope);
         case ts.SyntaxKind.MethodDeclaration:
-            return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration);
+            return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration, scope);
         case ts.SyntaxKind.FunctionType:
-            return GetFunctionTypeDescriptor(node as ts.FunctionTypeNode);
+            return GetFunctionTypeDescriptor(node as ts.FunctionTypeNode, scope);
         case ts.SyntaxKind.CallSignature:
-            return GetFunctionTypeDescriptor(node as ts.CallSignatureDeclaration);
+            return GetFunctionTypeDescriptor(node as ts.CallSignatureDeclaration, scope);
         case ts.SyntaxKind.ArrowFunction:
         case ts.SyntaxKind.FunctionExpression:
-            return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction);
+            return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction, scope);
         case ts.SyntaxKind.UnionType:
-            return GetUnionDescriptor(node as ts.UnionTypeNode);
+            return GetUnionDescriptor(node as ts.UnionTypeNode, scope);
         case ts.SyntaxKind.IntersectionType:
-            return GetIntersectionDescriptor(node as ts.IntersectionTypeNode);
+            return GetIntersectionDescriptor(node as ts.IntersectionTypeNode, scope);
         case ts.SyntaxKind.EnumDeclaration:
             return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
         case ts.SyntaxKind.MappedType:
-            return GetMappedDescriptor(node as ts.MappedTypeNode);
+            return GetMappedDescriptor(node as ts.MappedTypeNode, scope);
         case ts.SyntaxKind.ArrayType:
         case ts.SyntaxKind.TupleType:
             return GetArrayDescriptor();
@@ -91,13 +92,13 @@ export function GetDescriptor(node: ts.Node): ts.Expression {
             return GetBooleanFalseDescriptor();
         case ts.SyntaxKind.NumericLiteral:
         case ts.SyntaxKind.StringLiteral:
-            return GetLiteralDescriptor(node as ts.LiteralTypeNode);
+            return GetLiteralDescriptor(node as ts.LiteralTypeNode, scope);
         case ts.SyntaxKind.ObjectLiteralExpression:
-            return GetObjectLiteralDescriptor(node as ts.ObjectLiteralExpression);
+            return GetObjectLiteralDescriptor(node as ts.ObjectLiteralExpression, scope);
         case ts.SyntaxKind.BooleanKeyword:
             return GetBooleanDescriptor();
         case ts.SyntaxKind.ObjectKeyword:
-            return GetMockPropertiesFromSymbol([], []);
+            return GetMockPropertiesFromSymbol([], [], scope);
         case ts.SyntaxKind.NullKeyword:
             return GetNullDescriptor();
         case ts.SyntaxKind.AnyKeyword:

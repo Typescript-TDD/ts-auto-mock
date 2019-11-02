@@ -1,8 +1,9 @@
 import * as ts from 'typescript';
+import { IScope } from '../../scope/scope.interface';
 import { GetDescriptor } from '../descriptor';
 import { GetNullDescriptor } from '../null/null';
 
-export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration): ts.Expression {
+export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration, scope: IScope): ts.Expression {
     let returnValue: ts.Expression;
 
     const functionBody: ts.FunctionBody = node.body as ts.FunctionBody;
@@ -11,12 +12,12 @@ export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpres
         const returnStatement: ts.ReturnStatement = GetReturnStatement(functionBody);
 
         if (returnStatement) {
-            returnValue = GetDescriptor(returnStatement.expression);
+            returnValue = GetDescriptor(returnStatement.expression, scope);
         } else {
             returnValue = GetNullDescriptor();
         }
     } else {
-        returnValue = GetDescriptor(node.body);
+        returnValue = GetDescriptor(node.body, scope);
     }
 
     return returnValue;

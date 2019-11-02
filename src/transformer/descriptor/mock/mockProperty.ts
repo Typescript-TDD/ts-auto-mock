@@ -1,10 +1,11 @@
 import * as ts from 'typescript';
+import { IScope } from '../../scope/scope.interface';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockDeclarationName, GetMockSetParameterName } from './mockDeclarationName';
 
-export function GetMockProperty(member: ts.PropertyDeclaration): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
-    const descriptor: ts.Expression = GetDescriptor(member);
+export function GetMockProperty(member: ts.PropertyDeclaration, scope: IScope): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
+    const descriptor: ts.Expression = GetDescriptor(member, scope);
 
     const propertyName: ts.Identifier = member.name as ts.Identifier;
     const variableDeclarationName: ts.Identifier = GetMockDeclarationName(propertyName);

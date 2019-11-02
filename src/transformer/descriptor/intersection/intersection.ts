@@ -1,13 +1,14 @@
 import * as ts from 'typescript';
+import { IScope } from '../../scope/scope.interface';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromSymbol } from '../mock/mockProperties';
 import { GetTypes } from '../type/type';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 
-export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionTypeNode): ts.Expression {
+export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionTypeNode, scope: IScope): ts.Expression {
     const typeChecker: ts.TypeChecker = TypeChecker();
-    const nodes: ts.Node[] = GetTypes(intersectionTypeNode.types);
+    const nodes: ts.Node[] = GetTypes(intersectionTypeNode.types, scope);
 
     const hasInvalidIntersections: boolean = nodes.some((node: ts.Node) => {
         return TypescriptHelper.IsLiteralOrPrimitive(node);
@@ -35,5 +36,5 @@ export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionT
         return acc;
     });
 
-    return GetMockPropertiesFromSymbol(symbols, signatures);
+    return GetMockPropertiesFromSymbol(symbols, signatures, scope);
 }

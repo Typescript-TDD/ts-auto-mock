@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import { SetTsAutoMockOptions, TsAutoMockOptions } from '../options/options';
-import { TypeReferenceCache } from './descriptor/typeReference/cache';
 import { isCreateMock, isCreateMockList, isFromTsAutoMock } from './matcher/matcher';
 import { getMock, getMockForList } from './mock/mock';
 import { MockDefiner } from './mockDefiner/mockDefiner';
@@ -42,7 +41,6 @@ function visitNode(node: ts.Node): ts.Node {
 
     const nodeToMock: ts.TypeNode = node.typeArguments[0];
 
-    TypeReferenceCache.instance.clear();
     MockDefiner.instance.setFileNameFromNode(nodeToMock);
     MockDefiner.instance.setTsAutoMockImportIdentifier();
 

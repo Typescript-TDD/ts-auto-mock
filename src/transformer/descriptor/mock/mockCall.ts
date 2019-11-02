@@ -1,17 +1,16 @@
 import * as ts from 'typescript';
-import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 
 export function GetMockCall(
     declarations: ts.VariableDeclaration[],
     properties: ts.AccessorDeclaration[],
-    signatures: ReadonlyArray<ts.Signature>): ts.CallExpression {
+    signature: ts.Expression): ts.CallExpression {
     const uniqueVariable: ts.Identifier = CreateUniqueTsAutoMockVariable();
     const listOfVariables: ts.VariableStatement = GetListOfVariables(declarations, uniqueVariable);
     const mockMarkerAssignedToUniqueVariable: ts.ExpressionStatement = GetMockMarkerPropertyAssignedTo(uniqueVariable);
     const uniqueVariableAssignmentToProperties: ts.ExpressionStatement = assignPropertiesToUniqueVariable(uniqueVariable, properties);
-    const uniqueVariableAssignmentToObjectAssign: ts.ExpressionStatement = assignObjectSignatureToUniqueVariable(uniqueVariable, signatures);
+    const uniqueVariableAssignmentToObjectAssign: ts.ExpressionStatement = assignObjectSignatureToUniqueVariable(uniqueVariable, signature);
     const returnStatement: ts.ReturnStatement = ts.createReturn(uniqueVariable);
     const statements: Array<ts.VariableStatement | ts.ExpressionStatement | ts.ReturnStatement> = [
         listOfVariables,
@@ -39,9 +38,9 @@ function assignPropertiesToUniqueVariable(uniqueVariable: ts.Identifier, propert
     return assignVariableTo(uniqueVariable, propertiesObject);
 }
 
-function assignObjectSignatureToUniqueVariable(uniqueVariable: ts.Identifier, signatures: ReadonlyArray<ts.Signature>): ts.ExpressionStatement {
-    if (signatures.length > 0) {
-        const objectAssign: ts.CallExpression = GetObjectAssign(signatures, uniqueVariable);
+function assignObjectSignatureToUniqueVariable(uniqueVariable: ts.Identifier, signature: ts.Expression): ts.ExpressionStatement {
+    if (signature) {
+        const objectAssign: ts.CallExpression = GetObjectAssign(signature, uniqueVariable);
 
         return assignVariableTo(uniqueVariable, objectAssign);
     }
@@ -72,7 +71,7 @@ function CreateUniqueTsAutoMockVariable(): ts.Identifier  {
     return ts.createIdentifier('__tsAutoMockObjectReturnValue');
 }
 
-function GetObjectAssign(signatures: ReadonlyArray<ts.Signature>, uniqueVariable: ts.Identifier): ts.CallExpression {
+function GetObjectAssign(signature: ts.Expression, uniqueVariable: ts.Identifier): ts.CallExpression {
     return ts.createCall(
         ts.createPropertyAccess(
             ts.createIdentifier('Object'),
@@ -80,7 +79,7 @@ function GetObjectAssign(signatures: ReadonlyArray<ts.Signature>, uniqueVariable
         ),
         undefined,
         [
-            GetDescriptor(signatures[0].declaration),
+            signature,
             uniqueVariable,
         ],
     );

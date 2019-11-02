@@ -1,9 +1,10 @@
 import * as ts from 'typescript';
+import { IScope } from '../../scope/scope.interface';
 import { TypeChecker } from '../../typeChecker/typeChecker';
-import { TypeReferenceCache, TypeReferenceCacheElement } from '../typeReference/cache';
+import { TypeReferenceCacheElement } from '../typeReference/cache';
 import { TypescriptLibsTypes } from './typescriptLibsTypes';
 
-export function TypescriptLibsTypeAdapter(node: ts.Node): ts.Node {
+export function TypescriptLibsTypeAdapter(node: ts.Node, scope: IScope): ts.Node {
     const typeChecker: ts.TypeChecker = TypeChecker();
     const type: ts.Type = typeChecker.getTypeAtLocation(node);
     const typeScriptType: TypescriptLibsTypes = TypescriptLibsTypes[type.symbol.name];
@@ -27,7 +28,7 @@ export function TypescriptLibsTypeAdapter(node: ts.Node): ts.Node {
             const parameter: ts.TypeParameterDeclaration = (node as ts.TypeAliasDeclaration).typeParameters[0];
             const typeParameter: ts.Type = typeChecker.getTypeAtLocation(parameter);
 
-            const promiseResolveType: TypeReferenceCacheElement = TypeReferenceCache.instance.get(typeParameter);
+            const promiseResolveType: TypeReferenceCacheElement = scope.getTypeReference(typeParameter);
             const promiseAccess: ts.PropertyAccessExpression = ts.createPropertyAccess(ts.createIdentifier('Promise'), ts.createIdentifier('resolve'));
 
             return ts.createCall(

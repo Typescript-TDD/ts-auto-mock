@@ -3,14 +3,18 @@ import { ArrayFromLength } from '../array/array';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { getMockMergeExpression, getMockMergeIteratorExpression } from '../mergeExpression/mergeExpression';
 import { GetMockFactoryCall } from '../mockFactoryCall/mockFactoryCall';
+import { Scope } from '../scope/scope';
+import { IScope } from '../scope/scope.interface';
 import { isTypeReusable } from '../typeValidator/typeValidator';
 
 function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
-    if (isTypeReusable(nodeToMock)) {
+    const scope: IScope = new Scope();
+
+    if (isTypeReusable(nodeToMock, scope)) {
         return GetMockFactoryCall(nodeToMock);
     }
 
-    return GetDescriptor(nodeToMock);
+    return GetDescriptor(nodeToMock, scope);
 }
 
 function hasDefaultValues(node: ts.CallExpression): boolean {
