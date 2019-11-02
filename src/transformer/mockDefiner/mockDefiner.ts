@@ -4,6 +4,7 @@ import { TypescriptHelper } from '../descriptor/helper/helper';
 import { GetTypeReferenceDescriptor } from '../descriptor/typeReference/typeReference';
 import { createImportOnIdentifier } from '../helper/import';
 import { Scope } from '../scope/scope';
+import { IScope } from '../scope/scope.interface';
 import { TypeChecker } from '../typeChecker/typeChecker';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
 import { ModuleName } from './modules/moduleName';
@@ -16,11 +17,13 @@ const urlSlug: any = require('url-slug');
 type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLiteralNode;
 
 function GetPossibleDescriptor(node: ts.Node): ts.Expression {
+    const scope: IScope = new Scope();
+
     if (ts.isTypeReferenceNode(node)) {
-        return GetTypeReferenceDescriptor(node, new Scope());
+        return GetTypeReferenceDescriptor(node, scope);
     }
 
-    return GetDescriptor(node, new Scope());
+    return GetDescriptor(node, scope);
 }
 
 export class MockDefiner {
