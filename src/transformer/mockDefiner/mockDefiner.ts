@@ -17,7 +17,6 @@ type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLite
 
 function GetPossibleDescriptor(node: ts.Node): ts.Expression {
     if (ts.isTypeReferenceNode(node)) {
-
         return GetTypeReferenceDescriptor(node, new Scope());
     }
 
