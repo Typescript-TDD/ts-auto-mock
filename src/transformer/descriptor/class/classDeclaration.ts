@@ -1,14 +1,11 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
-import { StoreGenericsFromHeritage } from '../heritage/heritage';
 import { GetMockPropertiesFromSymbol } from '../mock/mockProperties';
 
-export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration, scope: IScope): ts.Expression {
+export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration, scope: Scope): ts.Expression {
     const typeChecker: ts.TypeChecker = TypeChecker();
     const type: ts.Type = typeChecker.getTypeAtLocation(node);
-
-    StoreGenericsFromHeritage(node.heritageClauses, scope);
 
     const properties: ts.Symbol[] = typeChecker.getPropertiesOfType(type);
 

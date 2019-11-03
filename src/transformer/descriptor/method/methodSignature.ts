@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { GetNullDescriptor } from '../null/null';
 import { GetMethodDescriptor } from './method';
 
-export function GetMethodSignatureDescriptor(node: ts.MethodSignature, scope: IScope): ts.Expression {
+export function GetMethodSignatureDescriptor(node: ts.MethodSignature, scope: Scope): ts.Expression {
     let returnType: ts.Expression;
 
     if (node.type) {

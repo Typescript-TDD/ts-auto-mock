@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { GetNullDescriptor } from '../null/null';
 
-export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration, scope: IScope): ts.Expression {
+export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration, scope: Scope): ts.Expression {
     let returnValue: ts.Expression;
 
     const functionBody: ts.FunctionBody = node.body as ts.FunctionBody;

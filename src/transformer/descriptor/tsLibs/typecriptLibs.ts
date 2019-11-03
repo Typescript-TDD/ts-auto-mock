@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { TypescriptLibsTypeAdapter } from './typescriptLibsTypeAdapter';
 import { TypescriptLibsTypesFolder } from './typescriptLibsTypes';
 
@@ -14,6 +14,6 @@ export function IsTypescriptType(node: ts.Node): boolean {
     return false;
 }
 
-export function GetTypescriptType(node: ts.Node, scope: IScope): ts.Node {
+export function GetTypescriptType(node: ts.Node, scope: Scope): ts.Node {
     return TypescriptLibsTypeAdapter(node, scope);
 }

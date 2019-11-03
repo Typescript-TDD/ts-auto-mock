@@ -1,20 +1,39 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { SyntaxKind } from 'typescript';
+import { MockGenericParameter } from '../../mockGeneric/mockGenericParameter';
+import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
-import {TypeReferenceCacheElement } from '../typeReference/cache';
+import { GetNullDescriptor } from '../null/null';
 
-export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, scope: IScope): ts.Expression {
-    const typeChecker: ts.TypeChecker = TypeChecker();
-    const type: ts.Type = typeChecker.getTypeAtLocation(node);
+export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, scope: Scope): ts.Expression {
+    const type: ts.TypeParameter = TypeChecker().getTypeAtLocation(node);
 
-    const cacheType: TypeReferenceCacheElement = scope.getTypeReference(type);
-    if (!cacheType) {
-        if (node.default) {
-            return GetDescriptor(node.default, scope);
-        }
-        return ts.createNull();
-    }
+    const declr: ts.Declaration = type.symbol.declarations[0];
+    const test: ts.Declaration = ts.getTypeParameterOwner(declr);
 
-    return cacheType.descriptor;
+
+    const element: number = (test as ts.InterfaceDeclaration).typeParameters.findIndex((tp: ts.TypeParameterDeclaration) => {
+        return tp.name === (declr as ts.TypeParameterDeclaration).name;
+    });
+
+    const descriptor: ts.Expression = node.default ? GetDescriptor(node.default, scope) : GetNullDescriptor();
+
+    return ts.createConditional(
+        ts.createBinary(
+            MockGenericParameter,
+            ts.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            ts.createElementAccess(
+                MockGenericParameter,
+                ts.createNumericLiteral(element.toString())
+            )
+        ),
+        ts.createToken(SyntaxKind.QuestionToken),
+        ts.createCall(ts.createElementAccess(
+            MockGenericParameter,
+            ts.createNumericLiteral(element.toString())
+        ), [], []),
+        ts.createToken(SyntaxKind.ColonToken),
+        descriptor
+    )
 }

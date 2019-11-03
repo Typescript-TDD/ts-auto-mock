@@ -1,12 +1,12 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetMockCall } from './mockCall';
 import { GetMockDeclarationName } from './mockDeclarationName';
 import { GetMockProperty } from './mockProperty';
 
-export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>, scope: IScope): ts.Expression {
+export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.Expression {
     const properties: ts.Declaration[] = propertiesSymbol.map((prop: ts.Symbol) => {
         return prop.declarations[0];
     });
@@ -14,7 +14,7 @@ export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signa
     return GetMockPropertiesFromDeclarations(properties, signatures, scope);
 }
 
-export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signatures: ReadonlyArray<ts.Signature>, scope: IScope): ts.CallExpression {
+export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.CallExpression {
     const properties: ts.Declaration[] = list.filter((member: ts.PropertyDeclaration) => {
         const hasModifiers: boolean = !!member.modifiers;
 

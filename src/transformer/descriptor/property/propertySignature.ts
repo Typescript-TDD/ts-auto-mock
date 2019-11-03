@@ -1,12 +1,12 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 import { PropertySignatureCache } from './cache';
 
 type PropertyNode = ts.PropertySignature | ts.PropertyDeclaration;
 
-export function GetPropertyDescriptor(node: PropertyNode, scope: IScope): ts.Expression {
+export function GetPropertyDescriptor(node: PropertyNode, scope: Scope): ts.Expression {
     PropertySignatureCache.instance.set(node.name);
 
     if (node.type) {

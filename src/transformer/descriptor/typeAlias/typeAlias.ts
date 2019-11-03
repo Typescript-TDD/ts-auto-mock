@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 
-export function GetTypeAliasDescriptor(node: ts.TypeAliasDeclaration, scope: IScope): ts.Expression {
+export function GetTypeAliasDescriptor(node: ts.TypeAliasDeclaration, scope: Scope): ts.Expression {
     return GetDescriptor(node.type, scope);
 }

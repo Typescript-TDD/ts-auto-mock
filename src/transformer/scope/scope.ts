@@ -1,13 +1,21 @@
 import * as ts from 'typescript';
-import { TypeReferenceCache, TypeReferenceCacheElement } from '../descriptor/typeReference/cache';
-import { IScope } from './scope.interface';
+import { MockGeneric } from '../mockGeneric/mockGeneric';
 
-export class Scope implements IScope {
+export interface CacheTest {
+    key1?: string;
+    escapedName?: ts.__String;
+    descriptor: ts.Expression;
+    type: ts.Type;
+}
+
+export class Scope {
     private _declarationNode: ts.Node;
-    private _typeReferenceCache: TypeReferenceCache;
+    private _mockGeneric: MockGeneric;
+    private _anotherCacheTest: CacheTest[];
 
     constructor() {
-        this._typeReferenceCache = new TypeReferenceCache();
+        this._mockGeneric = new MockGeneric();
+        this._anotherCacheTest = [];
     }
 
     set declarationNode(node: ts.Node) {
@@ -18,19 +26,37 @@ export class Scope implements IScope {
         return this._declarationNode;
     }
 
-    public addTypeReferenceCacheIfPresentForTypeReference(node: ts.TypeReferenceNode): void {
-        if (node.typeArguments) {
-            this._typeReferenceCache.addForTypeReference(node, this);
-        }
+    public addGeneric(node: ts.TypeReferenceNode): void {
+        this._mockGeneric.addGeneric(node, this);
     }
 
-    public addTypeReferenceCacheIfPresentForExpression(node: ts.ExpressionWithTypeArguments): void {
-        if (node.typeArguments) {
-            this._typeReferenceCache.addForExpression(node, this);
-        }
+    public getAllGenerics(): ts.ObjectLiteralExpression {
+        return this._mockGeneric.getAll();
     }
 
-    public getTypeReference(type: ts.Type): TypeReferenceCacheElement {
-        return this._typeReferenceCache.get(type);
+    public hasGeneric(name: ts.TypeParameter): boolean {
+        return this._mockGeneric.has(name);
+    }
+
+    public hasGenerics(): boolean {
+        return this._anotherCacheTest.length > 0;
+    }
+
+    public addTest(type: ts.Type, descriptor: ts.Expression): void {
+        this._anotherCacheTest.push({type, descriptor});
+    }
+
+    public checkTest(type: ts.Type): boolean {
+        return !!this.getTest(type);
+    }
+
+    public getTest(type: ts.Type): CacheTest {
+        return this._anotherCacheTest.find((c: CacheTest) => {
+            return c.type === type;
+        });
+    }
+
+    public getTypes(): CacheTest[] {
+        return this._anotherCacheTest;
     }
 }

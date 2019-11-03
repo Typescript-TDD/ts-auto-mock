@@ -1,11 +1,11 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { GetTypes } from '../type/type';
 
-export function GetMappedDescriptor(node: ts.MappedTypeNode, scope: IScope): ts.Expression {
+export function GetMappedDescriptor(node: ts.MappedTypeNode, scope: Scope): ts.Expression {
     const typeParameter: ts.TypeNode = node.typeParameter.constraint;
     const typeChecker: ts.TypeChecker = TypeChecker();
     const types: ts.Node[] = GetTypes(ts.createNodeArray([typeParameter]), scope);

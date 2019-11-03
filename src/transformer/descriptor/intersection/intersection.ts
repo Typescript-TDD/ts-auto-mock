@@ -1,12 +1,12 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromSymbol } from '../mock/mockProperties';
 import { GetTypes } from '../type/type';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 
-export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionTypeNode, scope: IScope): ts.Expression {
+export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionTypeNode, scope: Scope): ts.Expression {
     const typeChecker: ts.TypeChecker = TypeChecker();
     const nodes: ts.Node[] = GetTypes(intersectionTypeNode.types, scope);
 

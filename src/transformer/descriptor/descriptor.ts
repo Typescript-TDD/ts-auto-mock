@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { GetMockFactoryCall } from '../mockFactoryCall/mockFactoryCall';
-import { IScope } from '../scope/scope.interface';
+import { Scope } from '../scope/scope';
 import { GetArrayDescriptor } from './array/array';
 import { GetBooleanDescriptor } from './boolean/boolean';
 import { GetBooleanFalseDescriptor } from './boolean/booleanFalse';
@@ -30,7 +30,7 @@ import { GetTypeReferenceDescriptorReusable } from './typeReference/typeReferenc
 import { GetUndefinedDescriptor } from './undefined/undefined';
 import { GetUnionDescriptor } from './union/union';
 
-export function GetDescriptor(node: ts.Node, scope: IScope): ts.Expression {
+export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     switch (node.kind) {
         case ts.SyntaxKind.TypeAliasDeclaration:
             return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration, scope);
@@ -53,7 +53,7 @@ export function GetDescriptor(node: ts.Node, scope: IScope): ts.Expression {
         case ts.SyntaxKind.Identifier:
             return GetIdentifierDescriptor(node as ts.Identifier, scope);
         case ts.SyntaxKind.ThisType:
-            return GetMockFactoryCall(scope.declarationNode);
+            return GetMockFactoryCall(scope.declarationNode, scope);
         case ts.SyntaxKind.ImportSpecifier:
             return GetImportDescriptor(node as ts.ImportSpecifier, scope);
         case ts.SyntaxKind.TypeParameter:

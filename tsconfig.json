@@ -18,6 +18,9 @@
       "ts-auto-mock/extension": ["src/extension"],
       "ts-auto-mock/repository": ["src/repository"]
     },
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "plugins": [
+      { "transform": "../dist/transformer" }
+    ]
   }
 }

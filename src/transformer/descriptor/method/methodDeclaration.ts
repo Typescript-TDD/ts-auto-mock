@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { GetReturnTypeFromBody } from './bodyReturnType';
 import { GetMethodDescriptor } from './method';
 
-export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration, scope: IScope): ts.Expression {
+export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration, scope: Scope): ts.Expression {
     let returnType: ts.Expression;
 
     if (node.type) {

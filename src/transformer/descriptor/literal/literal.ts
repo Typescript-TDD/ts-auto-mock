@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
 
-export function GetLiteralDescriptor(node: ts.LiteralTypeNode, scope: IScope): ts.Expression {
+export function GetLiteralDescriptor(node: ts.LiteralTypeNode, scope: Scope): ts.Expression {
     const typeChecker: ts.TypeChecker = TypeChecker();
     const type: ts.Type = typeChecker.getTypeAtLocation(node);
     const literalType: ts.LiteralType = type as ts.LiteralType;

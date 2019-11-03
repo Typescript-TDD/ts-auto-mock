@@ -3,8 +3,8 @@ import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { GetTypeReferenceDescriptor } from '../descriptor/typeReference/typeReference';
 import { createImportOnIdentifier } from '../helper/import';
+import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
 import { Scope } from '../scope/scope';
-import { IScope } from '../scope/scope.interface';
 import { TypeChecker } from '../typeChecker/typeChecker';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
 import { ModuleName } from './modules/moduleName';
@@ -17,7 +17,7 @@ const urlSlug: any = require('url-slug');
 type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLiteralNode;
 
 function GetPossibleDescriptor(node: ts.Node): ts.Expression {
-    const scope: IScope = new Scope();
+    const scope: Scope = new Scope();
 
     if (ts.isTypeReferenceNode(node)) {
         return GetTypeReferenceDescriptor(node, scope);
@@ -129,9 +129,10 @@ export class MockDefiner {
 
         const descriptor: ts.Expression = GetPossibleDescriptor(type);
 
+        const mockGenericVariable: ts.ParameterDeclaration = ts.createParameter([], [], undefined, MockGenericParameter);
         this._factoryRegistrationsPerFile[thisFileName].push({
             key: declaration,
-            factory: ts.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined,
+            factory: ts.createFunctionExpression(undefined, undefined, undefined, undefined, [mockGenericVariable], undefined,
                 ts.createBlock(
                     [ts.createReturn(descriptor)],
                 ),

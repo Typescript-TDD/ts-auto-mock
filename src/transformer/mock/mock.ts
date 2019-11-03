@@ -4,14 +4,13 @@ import { GetDescriptor } from '../descriptor/descriptor';
 import { getMockMergeExpression, getMockMergeIteratorExpression } from '../mergeExpression/mergeExpression';
 import { GetMockFactoryCall } from '../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../scope/scope';
-import { IScope } from '../scope/scope.interface';
 import { isTypeReusable } from '../typeValidator/typeValidator';
 
 function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
-    const scope: IScope = new Scope();
+    const scope: Scope = new Scope();
 
     if (isTypeReusable(nodeToMock, scope)) {
-        return GetMockFactoryCall(nodeToMock);
+        return GetMockFactoryCall(nodeToMock, scope);
     }
 
     return GetDescriptor(nodeToMock, scope);

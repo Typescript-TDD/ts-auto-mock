@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
-import { IScope } from '../../scope/scope.interface';
+import { Scope } from '../../scope/scope';
 import { TypescriptHelper } from '../helper/helper';
 import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetTypeImport } from './typeImport';
 
-export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: IScope): ts.Node[] {
+export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: Scope): ts.Node[] {
     let newNodes: ts.Node[] = [];
 
     nodes.forEach((node: ts.Node) => {
@@ -31,7 +31,7 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: IScope): ts.Node[]
     return newNodes;
 }
 
-export function GetType(node: ts.Node, scope: IScope): ts.Node {
+export function GetType(node: ts.Node, scope: Scope): ts.Node {
     if (ts.isTypeReferenceNode(node)) {
         const identifier: ts.EntityName = node.typeName;
         const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(identifier);
