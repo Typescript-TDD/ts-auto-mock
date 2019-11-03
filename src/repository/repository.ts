@@ -23,18 +23,4 @@ export class Repository {
     public getFactory(key: string): Factory {
         return this._repository[key];
     }
-
-    public registerGenericFactory(factoryName: string, genericName: string, factory: Factory): void {
-        if (this._repositoryGeneric[factoryName]) {
-            this._repositoryGeneric[factoryName][genericName] = factory;
-        } else {
-            this._repositoryGeneric[factoryName] = {
-                [genericName]: factory,
-            };
-        }
-    }
-
-    public getGenericFactory(factoryName: string): {[key: string]: Factory } {
-        return this._repositoryGeneric[factoryName];
-    }
 }
