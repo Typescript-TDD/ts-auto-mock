@@ -72,4 +72,13 @@ export namespace TypescriptHelper {
         return TypeChecker().typeToTypeNode(type);
 
     }
+
+    export function GetTypeParameterOwnerIndexOfType(typeNode: ts.TypeParameter): number {
+        const declaration: ts.Declaration = typeNode.symbol.declarations[0];
+        const typeDeclaration: ts.Declaration = ts.getTypeParameterOwner(declaration);
+
+        return (typeDeclaration as Declaration).typeParameters.findIndex((tp: ts.TypeParameterDeclaration) => {
+            return tp.name === (declaration as ts.TypeParameterDeclaration).name;
+        });
+    }
 }

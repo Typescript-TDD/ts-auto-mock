@@ -56,7 +56,6 @@ describe('for generic', () => {
            expect(properties.b).toBe('');
        });
 
-
        it('should set the value for default generics when provided', () => {
            const propertiesWithGeneric: GenericDefault<number> = createMock<GenericDefault<number>>();
 
@@ -158,6 +157,26 @@ describe('for generic', () => {
            expect(properties.a).toEqual(0);
            expect(properties.b.a).toEqual(0);
            expect(properties.b.b).toEqual('');
+       });
+
+       it('should set the value for child generics', () => {
+           interface Generic<T, T2> {
+               property: T;
+               property2: T2;
+           }
+
+           interface UseGeneric<T, T2> {
+               generic: Generic<T, T2>;
+               property: T2;
+           }
+           const properties: UseGeneric<number, string> = createMock<UseGeneric<number, string>>();
+           const properties2: UseGeneric<string, number> = createMock<UseGeneric<string, number>>();
+           expect(properties.generic.property).toEqual(0);
+           expect(properties.generic.property2).toEqual('');
+           expect(properties.property).toEqual('');
+           expect(properties2.generic.property).toEqual('');
+           expect(properties2.generic.property2).toEqual(0);
+           expect(properties2.property).toEqual(0);
        });
    });
 });
