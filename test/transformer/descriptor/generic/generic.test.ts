@@ -200,6 +200,26 @@ describe('for generic', () => {
            expect(properties.a.a).toBe('');
            expect(properties.a.b.a).toBe(0);
        });
+
+       // FIX ME
+       // it('should set the value for type generic', () => {
+       //     interface Generic<T2> {
+       //         e: T2;
+       //     }
+       //
+       //     type test<T4> = T4;
+       //     interface InterfaceWithCallSignature<T, T3, T2 = boolean> {
+       //         a: T;
+       //         b: Generic<T3>;
+       //         c: test<T2>;
+       //     }
+       //
+       //     const propertiesWithGeneric: InterfaceWithCallSignature<number, string> = createMock<InterfaceWithCallSignature<number, string>>();
+       //     expect(propertiesWithGeneric.a).toBe(0);
+       //     expect(propertiesWithGeneric.b.e).toBe('');
+       //     expect(propertiesWithGeneric.c).toBe(false);
+       //
+       // });
    });
 
    describe('classes', () => {

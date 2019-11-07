@@ -67,6 +67,7 @@ describe('typescript lib', () => {
         expect(properties.a).toBeUndefined();
     });
 
+    // FIX ME
     // it('should set a promise resolved for a promise', async () => {
     //     interface Interface {
     //         a(): Promise<string>;
