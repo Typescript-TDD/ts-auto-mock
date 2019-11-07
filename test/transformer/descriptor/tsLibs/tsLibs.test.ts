@@ -1,72 +1,72 @@
 import { createMock } from 'ts-auto-mock';
 
 describe('typescript lib', () => {
-    // it('should set an empty array', () => {
-    //     interface Interface {
-    //         // tslint:disable-next-line
-    //         a: Array<boolean>;
-    //     }
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a).toEqual([]);
-    // });
-    //
-    // it('should set the default value for a number', () => {
-    //     interface Interface {
-    //         a: Number;
-    //     }
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a).toBe(0);
-    // });
-    //
-    // it('should set the default value for a string', () => {
-    //     interface Interface {
-    //         a: String;
-    //     }
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a).toBe('');
-    // });
-    //
-    // it('should set the default value for a boolean', () => {
-    //     interface Interface {
-    //         a: Boolean;
-    //     }
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a).toBe(false);
-    // });
-    //
-    // it('should set the default value for empty object', () => {
-    //     interface Interface {
-    //         a: object;
-    //     }
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a).toEqual({});
-    // });
-    //
-    // it('should set an empty function for a function', () => {
-    //     interface Interface {
-    //         a: Function;
-    //     }
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a()).toBeUndefined();
-    // });
-    //
-    // it('should set an empty array for a ReadOnlyArray', () => {
-    //     interface Interface {
-    //         a: ReadonlyArray<boolean>;
-    //     }
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a).toEqual([]);
-    // });
-    //
-    // it('should set undefined for a Date', () => {
-    //     interface Interface {
-    //         a: Date;
-    //     }
-    //
-    //     const properties: Interface = createMock<Interface>();
-    //     expect(properties.a).toBeUndefined();
-    // });
-    //
+    it('should set an empty array', () => {
+        interface Interface {
+            // tslint:disable-next-line
+            a: Array<boolean>;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a).toEqual([]);
+    });
+
+    it('should set the default value for a number', () => {
+        interface Interface {
+            a: Number;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a).toBe(0);
+    });
+
+    it('should set the default value for a string', () => {
+        interface Interface {
+            a: String;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a).toBe('');
+    });
+
+    it('should set the default value for a boolean', () => {
+        interface Interface {
+            a: Boolean;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a).toBe(false);
+    });
+
+    it('should set the default value for empty object', () => {
+        interface Interface {
+            a: object;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a).toEqual({});
+    });
+
+    it('should set an empty function for a function', () => {
+        interface Interface {
+            a: Function;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a()).toBeUndefined();
+    });
+
+    it('should set an empty array for a ReadOnlyArray', () => {
+        interface Interface {
+            a: ReadonlyArray<boolean>;
+        }
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a).toEqual([]);
+    });
+
+    it('should set undefined for a Date', () => {
+        interface Interface {
+            a: Date;
+        }
+
+        const properties: Interface = createMock<Interface>();
+        expect(properties.a).toBeUndefined();
+    });
+
     // it('should set a promise resolved for a promise', async () => {
     //     interface Interface {
     //         a(): Promise<string>;
@@ -80,7 +80,7 @@ describe('typescript lib', () => {
     //     expect(result).toBe('');
     // });
     //
-    // it('should set a promise resolved for a promise wit array', async () => {
+    // it('should set a promise resolved for a promise with array', async () => {
     //     interface Interface {
     //         a(): Promise<string[]>;
     //     }
@@ -92,7 +92,7 @@ describe('typescript lib', () => {
     //     const result: Array<string> = await interfaceCast.a();
     //     expect(result).toEqual([]);
     // });
-    //
+
     // it('should set a promise resolved for a promise with more generics', async () => {
     //     interface WithGenerics<T> {
     //         generic: T;
@@ -110,7 +110,7 @@ describe('typescript lib', () => {
     //         generic: '',
     //     });
     // });
-    //
+
     // it('should set a promise resolved for a promise with more promise', async () => {
     //     interface WithGenerics {
     //         generic(): Promise<number>;

@@ -127,3 +127,13 @@ options:
 ## License
 
 This project is licensed under the MIT License
+
+
+// TODO before this branch is ready
+ enable tests:
+ extends
+ tsLibs 
+ function ref
+ function ref recursive
+ type on generics
+ class and interface extends with generics
