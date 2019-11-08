@@ -1,13 +1,14 @@
 import * as ts from 'typescript';
+import { TypescriptCreator } from '../../helper/creator';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
-import { TypescriptHelper } from '../helper/helper';
 import { GetMockDeclarationName, GetMockSetParameterName } from './mockDeclarationName';
 
-export function GetMockProperty(member: ts.PropertyDeclaration, scope: Scope): Array<ts.GetAccessorDeclaration | ts.SetAccessorDeclaration> {
+export function GetMockProperty(member: ts.PropertySignature, scope: Scope): ts.PropertyAssignment {
     const descriptor: ts.Expression = GetDescriptor(member, scope);
 
     const propertyName: ts.Identifier = member.name as ts.Identifier;
+
     const variableDeclarationName: ts.Identifier = GetMockDeclarationName(propertyName);
     const setVariableParameterName: ts.Identifier = GetMockSetParameterName(propertyName);
 
@@ -22,7 +23,12 @@ export function GetMockProperty(member: ts.PropertyDeclaration, scope: Scope): A
     const returnSetStatement: ts.Statement = ts.createExpressionStatement(setExpressionBody);
     const setBody: ts.Block = ts.createBlock([returnSetStatement]);
 
-    const getAccessor: ts.GetAccessorDeclaration = TypescriptHelper.createGetAccessor(propertyName, getBody);
-    const setAccessor: ts.SetAccessorDeclaration = TypescriptHelper.createSetAccessor(propertyName, setBody, setVariableParameterName);
-    return [getAccessor, setAccessor];
+    const get: ts.MethodDeclaration = TypescriptCreator.createMethod('get', getBody, []);
+    const set: ts.MethodDeclaration = TypescriptCreator.createMethod('set', setBody, [setVariableParameterName]);
+    const literal: ts.ObjectLiteralExpression = ts.createObjectLiteral([get, set, ts.createPropertyAssignment(
+        ts.createIdentifier('enumerable'),
+        ts.createTrue(),
+    )]);
+
+    return ts.createPropertyAssignment(propertyName, literal);
 }

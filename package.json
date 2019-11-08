@@ -13,7 +13,7 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
     "preparePublish": "npm run build && npm run copyForPublish",
-    "build:test": "ttsc test/transformer/descriptor/generic/generic2.test.ts"
+    "build:test": "ttsc test/transformer/playground.test.ts --pretty true"
   },
   "keywords": [
     "typescript",

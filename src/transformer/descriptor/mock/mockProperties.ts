@@ -15,7 +15,7 @@ export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signa
 }
 
 export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.CallExpression {
-    const properties: ts.Declaration[] = list.filter((member: ts.PropertyDeclaration) => {
+    const propertiesFilter: ts.Declaration[] = list.filter((member: ts.PropertyDeclaration) => {
         const hasModifiers: boolean = !!member.modifiers;
 
         if (IsTypescriptType(member)) { // This is a current workaround to safe fail extends of TypescriptLibs
@@ -31,22 +31,17 @@ export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signat
         }).length === 0;
     });
 
-    const variableDeclarations: ts.VariableDeclaration[] = properties.map((member: ts.PropertyDeclaration) => {
+    const variableDeclarations: ts.VariableDeclaration[] = propertiesFilter.map((member: ts.PropertySignature) => {
         const name: ts.Identifier = GetMockDeclarationName(member.name as ts.Identifier);
         return ts.createVariableDeclaration(name);
     });
 
-    const accessorDeclaration: ts.AccessorDeclaration[] = properties.map(
-        (member: ts.Declaration): ts.AccessorDeclaration[] =>  {
-            return GetMockProperty(member as ts.PropertyDeclaration, scope);
+    const accessorDeclaration: ts.PropertyAssignment[] = propertiesFilter.map(
+        (member: ts.PropertySignature): ts.PropertyAssignment => {
+            return GetMockProperty(member, scope);
         },
-    ).reduce((acc: ts.AccessorDeclaration[], declarations: ts.AccessorDeclaration[]) => {
-        acc = acc.concat(declarations);
-
-        return acc;
-    }, []);
+    );
 
     const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0].declaration, scope) : null;
-
     return GetMockCall(variableDeclarations, accessorDeclaration, signaturesDescriptor);
 }

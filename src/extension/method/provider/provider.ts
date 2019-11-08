@@ -1,6 +1,6 @@
 import { functionMethod } from './functionMethod';
 // tslint:disable-next-line:no-any
-type Method = (name: string, value: any) => () => any;
+type Method = (name: string, value: () => any) => () => any;
 
 export class Provider {
     private _method: Method;
@@ -19,7 +19,7 @@ export class Provider {
     }
 
     // tslint:disable-next-line:no-any
-    public getMethod(name: string, value: any): Method {
+    public getMethod(name: string, value: () => any): Method {
         this._method = this._method || functionMethod;
 
         return this._method(name, value);

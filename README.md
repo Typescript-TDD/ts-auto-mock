@@ -129,11 +129,24 @@ options:
 This project is licensed under the MIT License
 
 
-// TODO before this branch is ready
- enable tests:
- extends
- tsLibs 
- function ref
- function ref recursive
- type on generics
- class and interface extends with generics
+
+
+// TODO before this branch is ready 
+ type on generics -> check the test that is failing
+ class and interface extends with generics -> good luck
+ extends generics more tests
+ 
+ --------
+ 
+ test_transformer_playground_test_ts_Repository.ɵRepository.instance.getFactory("create__interface__mock_1")([
+         {
+             ids: ['1', '2']
+             value: 0 // ts.Expression
+         }
+     ]);
+ 
+     registerFactory("", function(arr) {
+         return {
+             a: arr.find('1').value || ""
+         }
+     })_

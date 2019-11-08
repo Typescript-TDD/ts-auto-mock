@@ -4,43 +4,6 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
 export namespace TypescriptHelper {
-    export function createGetAccessor(name: ts.PropertyName, block: ts.Block): ts.GetAccessorDeclaration {
-        return ts.createGetAccessor([], [], name, [], undefined, block);
-    }
-
-    export function createSetAccessor(name: ts.PropertyName, block: ts.Block, parameterName: ts.Identifier): ts.SetAccessorDeclaration {
-        const parameterDeclaration: ts.ParameterDeclaration = ts.createParameter([], [], undefined, parameterName);
-        return ts.createSetAccessor([], [], name, [parameterDeclaration], block);
-    }
-
-    export function createArrowFunction(block: ts.Block): ts.ArrowFunction {
-        return ts.createArrowFunction([], [], [], undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
-    }
-
-    export function createFunctionExpression(block: ts.Block, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.FunctionExpression {
-        return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
-    }
-
-    export function createEmptyProperty(): ts.PropertyDeclaration {
-        return createProperty('', undefined);
-    }
-
-    export function createProperty(propertyName: string, type: ts.TypeNode): ts.PropertyDeclaration {
-        return ts.createProperty([], [], propertyName, undefined, type, undefined);
-    }
-
-    export function findParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
-        const declaration: ts.Declaration = GetDeclarationFromNode(node);
-
-        if (declaration.kind === ts.SyntaxKind.ImportSpecifier) {
-            const importDeclaration: ts.Node = GetDeclarationForImport(declaration as ts.ImportSpecifier);
-
-            return (importDeclaration as Declaration).typeParameters;
-        }
-
-        return (declaration as Declaration).typeParameters;
-    }
-
     export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
         return ts.isLiteralTypeNode(typeNode) ||
             typeNode.kind === ts.SyntaxKind.StringKeyword ||
