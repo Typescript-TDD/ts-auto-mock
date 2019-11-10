@@ -1,6 +1,6 @@
 
 describe('for generic', () => {
-    // FIX ME
+    // TODO
     // describe('interfaces', () => {
     //     interface ToBeExtended {
     //         a: string;

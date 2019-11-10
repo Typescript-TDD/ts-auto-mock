@@ -65,6 +65,7 @@ describe('for intersection', () => {
     });
 
     describe('with typescript lib', () => {
+        // TODO
         // type TypeIntersection = {} & Promise<string>;
         //
         // interface Intersection {

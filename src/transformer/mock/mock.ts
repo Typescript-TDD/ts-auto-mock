@@ -2,18 +2,10 @@ import * as ts from 'typescript';
 import { ArrayFromLength } from '../array/array';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { getMockMergeExpression, getMockMergeIteratorExpression } from '../mergeExpression/mergeExpression';
-import { GetMockFactoryCall } from '../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../scope/scope';
-import { isTypeReusable } from '../typeValidator/typeValidator';
 
 function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
-    const scope: Scope = new Scope();
-
-    if (isTypeReusable(nodeToMock, scope)) {
-        return GetMockFactoryCall(nodeToMock, scope);
-    }
-
-    return GetDescriptor(nodeToMock, scope);
+    return GetDescriptor(nodeToMock, new Scope());
 }
 
 function hasDefaultValues(node: ts.CallExpression): boolean {
