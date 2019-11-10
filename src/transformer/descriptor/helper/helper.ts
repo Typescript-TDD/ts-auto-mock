@@ -33,7 +33,6 @@ export namespace TypescriptHelper {
         }
 
         return TypeChecker().typeToTypeNode(type);
-
     }
 
     export function GetTypeParameterOwnerIndexOfType(typeNode: ts.TypeParameter): number {

@@ -1,11 +1,9 @@
 import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
-import { TypescriptHelper } from '../descriptor/helper/helper';
 import { GetTypeReferenceDescriptor } from '../descriptor/typeReference/typeReference';
 import { createImportOnIdentifier } from '../helper/import';
 import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
 import { Scope } from '../scope/scope';
-import { TypeChecker } from '../typeChecker/typeChecker';
 import { FactoryDefinitionCache } from './factoryDefinitionCache';
 import { ModuleName } from './modules/moduleName';
 import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
@@ -13,8 +11,6 @@ import { ModulesImportUrl } from './modules/modulesImportUrl';
 
 // tslint:disable-next-line:no-any
 const urlSlug: any = require('url-slug');
-
-type PossibleTypeNode = ts.TypeReferenceNode | ts.FunctionTypeNode | ts.TypeLiteralNode;
 
 function GetPossibleDescriptor(node: ts.Node): ts.Expression {
     const scope: Scope = new Scope();
@@ -57,7 +53,7 @@ export class MockDefiner {
                     identifier: this._createUniqueFileName(key),
                 };
             });
-           }
+        }
     }
 
     public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
@@ -72,16 +68,12 @@ export class MockDefiner {
         this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
     }
 
-    public getMockFactory(node: PossibleTypeNode): ts.Expression {
-        const typeChecker: ts.TypeChecker = TypeChecker();
-        const definedType: ts.Type = typeChecker.getTypeAtLocation(node);
-        const declaration: ts.TypeNode | ts.Declaration = TypescriptHelper.GetDeclarationFromType(definedType);
-
+    public getMockFactory(declaration: ts.Declaration): ts.Expression {
         const thisFileName: string = this._fileName;
 
         this.setTsAutoMockImportIdentifier();
 
-        const key: string = this._getMockFactoryId(thisFileName, node, declaration as ts.Declaration);
+        const key: string = this._getMockFactoryId(thisFileName, declaration);
 
         return ts.createCall(
             ts.createPropertyAccess(
@@ -115,7 +107,7 @@ export class MockDefiner {
         }).identifier;
     }
 
-    private _getMockFactoryId(thisFileName: string, type: PossibleTypeNode, declaration: ts.Declaration): string {
+    private _getMockFactoryId(thisFileName: string, declaration: ts.Declaration): string {
         if (this._factoryCache.hasFactoryForTypeMock(declaration)) {
             return this._factoryCache.getFactoryKeyForTypeMock(declaration);
         }
@@ -127,7 +119,7 @@ export class MockDefiner {
 
         this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
 
-        const descriptor: ts.Expression = GetPossibleDescriptor(type);
+        const descriptor: ts.Expression = GetPossibleDescriptor(declaration);
 
         const mockGenericVariable: ts.ParameterDeclaration = ts.createParameter([], [], undefined, MockGenericParameter);
         this._factoryRegistrationsPerFile[thisFileName].push({

@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { GetMockFactoryCall } from '../mockFactoryCall/mockFactoryCall';
+import { GetMockFactoryCallForDeclaration } from '../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../scope/scope';
 import { GetArrayDescriptor } from './array/array';
 import { GetBooleanDescriptor } from './boolean/boolean';
@@ -53,7 +53,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.Identifier:
             return GetIdentifierDescriptor(node as ts.Identifier, scope);
         case ts.SyntaxKind.ThisType:
-            return GetMockFactoryCall(scope.declarationNode, scope);
+            return GetMockFactoryCallForDeclaration(scope.declarationNode);
         case ts.SyntaxKind.ImportSpecifier:
             return GetImportDescriptor(node as ts.ImportSpecifier, scope);
         case ts.SyntaxKind.TypeParameter:

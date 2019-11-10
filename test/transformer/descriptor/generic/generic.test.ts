@@ -201,6 +201,18 @@ describe('for generic', () => {
            expect(properties.a.b.a).toBe(0);
        });
 
+       it('should set the value in sub interfaces', () => {
+           interface InterfaceWithThis<T> {
+               property: this;
+               propertyGeneric: T;
+           }
+
+           const properties: InterfaceWithThis<string> = createMock<InterfaceWithThis<string>>();
+
+           expect(properties.propertyGeneric).toBe('');
+           expect(properties.property.propertyGeneric).toBe('');
+       });
+
        it('should set the value for type generic', () => {
            interface Generic<T2> {
                e: T2;
