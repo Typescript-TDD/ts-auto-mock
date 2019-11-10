@@ -4,7 +4,7 @@ import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
-import { InterfaceOrClassDeclaration, Scope } from '../scope/scope';
+import { Scope } from '../scope/scope';
 
 export function GetMockFactoryCall(node: ts.TypeReferenceNode, scope: Scope): ts.Expression {
     const genericsFunctions: ts.FunctionExpression[] = [];
@@ -33,7 +33,7 @@ export function GetMockFactoryCall(node: ts.TypeReferenceNode, scope: Scope): ts
     );
 }
 
-export function GetMockFactoryCallForDeclaration(declaration: ts.Declaration): ts.Expression {
+export function GetMockFactoryCallForThis(declaration: ts.Declaration): ts.Expression {
     const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration);
 
     return ts.createCall(
