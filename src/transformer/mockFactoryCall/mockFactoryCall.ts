@@ -48,7 +48,7 @@ export function GetMockFactoryCall(node: ts.TypeReferenceNode, scope: Scope): ts
                                     const typeParameterDeclaration: ts.TypeParameterDeclaration = TypescriptHelper.GetDeclarationFromNode(typeArgument.typeName) as ts.TypeParameterDeclaration;
                                     if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
                                         const owner: ts.Declaration = TypescriptHelper.getTypeParameterOwnerMock(typeParameterDeclaration);
-                                        if (ts.isInterfaceDeclaration(owner)) {
+                                        if (TypescriptHelper.IsInterfaceOrClassDeclaration(owner)) {
                                             const ownerTypeParameterDeclaration: ts.TypeParameterDeclaration = nodeOwnerParameters[index];
 
                                             const existingUniqueName: string = key + typeParameterDeclaration.name.escapedText;

@@ -129,7 +129,10 @@ options:
 This project is licensed under the MIT License
 
 
-// TODO before this branch is ready 
+// TODO before this branch is ready
+    // add a test for recursive generic interface
     // a generic that extends another class
-    // clean the code
-    // test the mongoose library missing features
+    // clean the code 
+    // FIX TODO
+
+       

@@ -5,7 +5,7 @@ type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasD
 
 export namespace TypescriptHelper {
     export function IsInterfaceOrClassDeclaration(node: ts.Node): boolean {
-        return ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node);
+        return ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node);
     }
 
     export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
