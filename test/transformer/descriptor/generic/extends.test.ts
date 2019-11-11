@@ -176,4 +176,25 @@ describe('for generic', () => {
             expect(properties).not.toBe([]);
         });
     });
+
+    describe('with multiple extends', () => {
+        interface A<T> {
+            a: T;
+        }
+
+        interface C<T> {
+            c: T;
+        }
+
+        interface B<T1, T2, T3> extends A<T1>, C<T2> {
+            b: T3;
+        }
+
+        it('should not consider typescript library', () => {
+            const properties: B<number, string, boolean> = createMock<B<number, string, boolean>>();
+            expect(properties.c).toBe('');
+            expect(properties.a).toBe(0);
+            expect(properties.b).toBe(false);
+        });
+    });
 });
