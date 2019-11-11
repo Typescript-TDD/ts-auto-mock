@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { MockGenericParameter } from '../../mockGeneric/mockGenericParameter';
 import { Scope } from '../../scope/scope';
@@ -15,105 +16,90 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
     const declaration: ts.Declaration = type.symbol.declarations[0];
     const typeDeclaration: ts.Declaration = TypescriptHelper.getTypeParameterOwnerMock(declaration);
 
-    const mockDeck: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
-
-    if (!mockDeck) {
+    if (!MockDefiner.instance.hasDeclarationKeyMap(typeDeclaration)) {
         return descriptor;
     }
 
-    const key: string = mockDeck + node.name.escapedText;
+    const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration) + node.name.escapedText;
 
+    return createFunctionToAccessToGenericValue(genericKey, descriptor);
+}
+
+function createFunctionToAccessToGenericValue(key: string, descriptor: ts.Expression): ts.CallExpression {
+    const returnWhenGenericDoesNotExist: ts.ReturnStatement = ts.createReturn(descriptor);
+
+    const expressionWhenGenericExist: ts.IfStatement = getValueFromGenericIfExist();
+
+    const findGenericCall: ts.CallExpression = createFindGeneric(key);
+
+    const generic: ts.VariableStatement = assignGenericConstToCall(findGenericCall);
+
+    return TypescriptCreator.createIIFE(ts.createBlock(
+        [
+            generic,
+            expressionWhenGenericExist,
+            returnWhenGenericDoesNotExist,
+        ],
+        true,
+    ));
+}
+
+function createFindGeneric(genericKey: string): ts.CallExpression {
     return ts.createCall(
-        ts.createParen(ts.createFunctionExpression(
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            [],
-            undefined,
-            ts.createBlock(
-                [ts.createIf(
-                    MockGenericParameter,
-                    ts.createBlock(
-                        [
-                            ts.createVariableStatement(
-                                undefined,
-                                ts.createVariableDeclarationList(
-                                    [ts.createVariableDeclaration(
-                                        ts.createIdentifier('result'),
-                                        undefined,
-                                        ts.createCall(
-                                            ts.createPropertyAccess(
-                                                MockGenericParameter,
-                                                ts.createIdentifier('find'),
-                                            ),
-                                            undefined,
-                                            [ts.createArrowFunction(
-                                                undefined,
-                                                undefined,
-                                                [ts.createParameter(
-                                                    undefined,
-                                                    undefined,
-                                                    undefined,
-                                                    ts.createIdentifier('value'),
-                                                    undefined,
-                                                    undefined,
-                                                    undefined,
-                                                )],
-                                                undefined,
-                                                ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                                                ts.createBlock(
-                                                    [ts.createReturn(ts.createBinary(
-                                                        ts.createCall(
-                                                            ts.createPropertyAccess(
-                                                                ts.createPropertyAccess(
-                                                                    ts.createIdentifier('value'),
-                                                                    ts.createIdentifier('ids'),
-                                                                ),
-                                                                ts.createIdentifier('indexOf'),
-                                                            ),
-                                                            undefined,
-                                                            [ts.createStringLiteral(key)],
-                                                        ),
-                                                        ts.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-                                                        ts.createNumericLiteral('0'),
-                                                        ),
-                                                    )],
-                                                    true,
-                                                ),
-                                            )],
-                                        ),
-                                    )],
-                                    ts.NodeFlags.Const,
-                                ),
-                            ),
-                            ts.createIf(
-                                ts.createIdentifier('result'),
-                                ts.createBlock(
-                                    [ts.createReturn(
-                                        ts.createCall(
-                                            ts.createPropertyAccess(
-                                                ts.createIdentifier('result'),
-                                                ts.createIdentifier('value'),
-                                            ),
-                                            undefined,
-                                            [],
-                                        ))],
-                                    true,
-                                ),
-                                undefined,
-                            ),
-                            ts.createReturn(descriptor),
-                        ],
-                        true,
+        ts.createPropertyAccess(
+            MockGenericParameter,
+            ts.createIdentifier('find'),
+        ),
+        undefined,
+        [TypescriptCreator.createArrowFunction(ts.createBlock(
+            [ts.createReturn(ts.createBinary(
+                ts.createCall(
+                    ts.createPropertyAccess(
+                        ts.createPropertyAccess(
+                            ts.createIdentifier('generic'),
+                            ts.createIdentifier('ids'),
+                        ),
+                        ts.createIdentifier('indexOf'),
                     ),
                     undefined,
+                    [ts.createStringLiteral(genericKey)],
                 ),
-                    ts.createReturn(descriptor)],
-                true,
-            ),
-        )),
+                ts.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
+                ts.createNumericLiteral('0'),
+            ))],
+            true,
+        ), [TypescriptCreator.createParameter('generic')])],
+    );
+}
+
+function assignGenericConstToCall(call: ts.CallExpression): ts.VariableStatement {
+    return ts.createVariableStatement(
         undefined,
-        [],
+        ts.createVariableDeclarationList(
+            [ts.createVariableDeclaration(
+                ts.createIdentifier('generic'),
+                undefined,
+                call,
+            )],
+            ts.NodeFlags.Const,
+        ),
+    );
+}
+
+function getValueFromGenericIfExist(): ts.IfStatement {
+    return ts.createIf(
+        ts.createIdentifier('generic'),
+        ts.createBlock(
+            [ts.createReturn(ts.createCall(
+                ts.createPropertyAccess(
+                    ts.createIdentifier('generic'),
+                    ts.createIdentifier('value'),
+                ),
+                undefined,
+                [],
+            ))],
+            true,
+        ),
+        undefined,
     );
 }

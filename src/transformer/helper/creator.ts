@@ -1,12 +1,28 @@
 import * as ts from 'typescript';
 
 export namespace TypescriptCreator {
-    export function createArrowFunction(block: ts.Block): ts.ArrowFunction {
-        return ts.createArrowFunction([], [], [], undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
+    export function createArrowFunction(block: ts.Block, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.ArrowFunction {
+        return ts.createArrowFunction([], [], parameter, undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
     }
 
     export function createFunctionExpression(block: ts.Block, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.FunctionExpression {
         return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
+    }
+
+    export function createIIFE(block: ts.Block): ts.CallExpression {
+        return ts.createCall(
+            ts.createParen(ts.createFunctionExpression(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                [],
+                undefined,
+                block,
+            )),
+            undefined,
+            [],
+        );
     }
 
     export function createEmptyProperty(): ts.PropertyDeclaration {
@@ -15,6 +31,18 @@ export namespace TypescriptCreator {
 
     export function createProperty(propertyName: string, type: ts.TypeNode): ts.PropertyDeclaration {
         return ts.createProperty([], [], propertyName, undefined, type, undefined);
+    }
+
+    export function createParameter(parameterName: string): ts.ParameterDeclaration {
+        return ts.createParameter(
+            undefined,
+            undefined,
+            undefined,
+            ts.createIdentifier(parameterName),
+            undefined,
+            undefined,
+            undefined,
+        );
     }
 
     export function createMethod(methodName: string, body: ts.Block, parameterNames: ts.Identifier[] = []): ts.MethodDeclaration {
