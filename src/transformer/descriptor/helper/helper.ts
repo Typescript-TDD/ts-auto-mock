@@ -4,6 +4,10 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
 export namespace TypescriptHelper {
+    export function IsInterfaceOrClassDeclaration(node: ts.Node): boolean {
+        return ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node);
+    }
+
     export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
         return ts.isLiteralTypeNode(typeNode) ||
             typeNode.kind === ts.SyntaxKind.StringKeyword ||
@@ -25,6 +29,18 @@ export namespace TypescriptHelper {
         return GetDeclarationFromType(declaredType);
     }
 
+    export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
+        const declaration: ts.Declaration = GetDeclarationFromNode(node);
+
+        if (ts.isImportSpecifier(declaration)) {
+            const importDeclaration: ts.Node = GetDeclarationForImport(declaration);
+
+            return (importDeclaration as Declaration).typeParameters;
+        }
+
+        return (declaration as Declaration).typeParameters;
+    }
+
     export function GetDeclarationFromType(type: ts.Type): ts.TypeNode | ts.Declaration {
         if (type.symbol && type.symbol.declarations) {
             return type.symbol.declarations[0];
@@ -33,15 +49,6 @@ export namespace TypescriptHelper {
         }
 
         return TypeChecker().typeToTypeNode(type);
-    }
-
-    export function GetTypeParameterOwnerIndexOfType(typeNode: ts.TypeParameter): number {
-        const declaration: ts.Declaration = typeNode.symbol.declarations[0];
-        const typeDeclaration: ts.Declaration = getTypeParameterOwnerMock(declaration);
-
-        return (typeDeclaration as Declaration).typeParameters.findIndex((tp: ts.TypeParameterDeclaration) => {
-            return tp.name === (declaration as ts.TypeParameterDeclaration).name;
-        });
     }
 
     export function getTypeParameterOwnerMock(d: ts.Declaration): ts.Declaration {

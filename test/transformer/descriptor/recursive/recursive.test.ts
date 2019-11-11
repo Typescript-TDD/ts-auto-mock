@@ -39,13 +39,14 @@ describe('recursive', () => {
         }
 
         interface UiCalculator {
-            method(): Promise<BasicCalculator>;
+            method(): BasicCalculator;
             b: string;
         }
 
         it('should be able to reference to itself ', () => {
             const properties: BasicCalculator = createMock<BasicCalculator>();
             expect(properties.b).toBe('');
+            expect(properties.method().method().b).toBe('');
         });
     });
 });

@@ -25,7 +25,7 @@ function GetPossibleDescriptor(node: ts.Node): ts.Expression {
 export class MockDefiner {
     private _neededImportIdentifierPerFile: { [key: string]: Array<ModuleNameIdentifier> } = {};
     private _factoryRegistrationsPerFile: { [key: string]: Array<{ key: ts.Declaration; factory: ts.Expression }> } = {};
-    private _factoryCache: FactoryDefinitionCache;
+    public _factoryCache: FactoryDefinitionCache;
     private _fileName: string;
 
     private constructor() {
@@ -108,13 +108,12 @@ export class MockDefiner {
     }
 
     private _getMockFactoryId(thisFileName: string, declaration: ts.Declaration): string {
-        if (this._factoryCache.hasFactoryForTypeMock(declaration)) {
-            return this._factoryCache.getFactoryKeyForTypeMock(declaration);
+        if (this._factoryCache.isFactoryForTypeMock2Enabled(declaration)) {
+            return this._factoryCache.getFactoryKeyForTypeMock2(declaration).key;
         }
 
-        this._factoryCache.setFactoryKeyForTypeMock(
+        this._factoryCache.enableFactoryKeyForTypeMock2(
             declaration,
-            this._factoryCache.createUniqueKeyForFactory(declaration),
         );
 
         this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
@@ -131,7 +130,7 @@ export class MockDefiner {
             ),
         });
 
-        return this._factoryCache.getFactoryKeyForTypeMock(declaration);
+        return this._factoryCache.getFactoryKeyForTypeMock2(declaration).key;
     }
 
     private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
@@ -161,7 +160,7 @@ export class MockDefiner {
                     ts.createIdentifier('registerFactory'),
                 ),
                 [],
-                [ts.createStringLiteral(this._factoryCache.getFactoryKeyForTypeMock(key)), factory],
+                [ts.createStringLiteral(this._factoryCache.getFactoryKeyForTypeMock2(key).key), factory],
             ),
         );
     }

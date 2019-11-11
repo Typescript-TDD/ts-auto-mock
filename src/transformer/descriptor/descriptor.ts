@@ -109,6 +109,10 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetUndefinedDescriptor();
         case ts.SyntaxKind.CallExpression:
             return node as ts.Expression;
+        case ts.SyntaxKind.VariableDeclaration:
+            return GetDescriptor((node as ts.VariableDeclaration).type, scope);
+        case ts.SyntaxKind.TypeQuery:
+            return GetDescriptor((node as ts.TypeQueryNode).exprName, scope);
         default:
             // tslint:disable-next-line:no-console
             console.log('NOT IMPLEMENTED ' + ts.SyntaxKind[node.kind]);

@@ -9,11 +9,12 @@
     "test": "npm run test:transformer && npm run test:framework",
     "test:debug": "npm run test:transformer DEBUG=true && npm run test:framework DEBUG=true",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
+    "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
     "test:framework": "karma start config/karma/karma.config.framework.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
     "preparePublish": "npm run build && npm run copyForPublish",
-    "build:test": "ttsc test/transformer/playground.test.ts --pretty true"
+    "build:playground": "ttsc test/transformer/playground.test.ts --pretty true"
   },
   "keywords": [
     "typescript",
