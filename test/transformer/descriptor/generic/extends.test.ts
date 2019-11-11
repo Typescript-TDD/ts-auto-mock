@@ -163,8 +163,6 @@ describe('for generic', () => {
     });
 
     describe('with generics that extends typescript libraries', () => {
-        // tslint:disable-next-line
-
         interface B<T> extends Array<T> {
             c: number;
             d: T;

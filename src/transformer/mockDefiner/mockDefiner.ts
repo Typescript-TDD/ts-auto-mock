@@ -25,7 +25,7 @@ function GetPossibleDescriptor(node: ts.Node): ts.Expression {
 export class MockDefiner {
     private _neededImportIdentifierPerFile: { [key: string]: Array<ModuleNameIdentifier> } = {};
     private _factoryRegistrationsPerFile: { [key: string]: Array<{ key: ts.Declaration; factory: ts.Expression }> } = {};
-    public _factoryCache: FactoryDefinitionCache;
+    private _factoryCache: FactoryDefinitionCache;
     private _fileName: string;
 
     private constructor() {
@@ -85,6 +85,18 @@ export class MockDefiner {
         );
     }
 
+    public setDeclarationKeyMap(typeMocked: ts.Declaration): void {
+        this._factoryCache.setDeclarationKeyMap(typeMocked, this._factoryCache.createUniqueKeyForFactory(typeMocked));
+    }
+
+    public getDeclarationKeyMap(typeMocked: ts.Declaration): string {
+        return this._factoryCache.getDeclarationKeyMap(typeMocked);
+    }
+
+    public hasDeclarationKeyMap(typeMocked: ts.Declaration): boolean {
+        return this._factoryCache.hasDeclarationKeyMap(typeMocked);
+    }
+
     private _createUniqueFileName(name: string): ts.Identifier {
         return ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_${name}`);
     }
@@ -108,11 +120,11 @@ export class MockDefiner {
     }
 
     private _getMockFactoryId(thisFileName: string, declaration: ts.Declaration): string {
-        if (this._factoryCache.isFactoryForTypeMock2Enabled(declaration)) {
-            return this._factoryCache.getFactoryKeyForTypeMock2(declaration).key;
+        if (this._factoryCache.hasFactoryForTypeMock(declaration)) {
+            return this._factoryCache.getFactoryKeyForTypeMock(declaration);
         }
 
-        this._factoryCache.enableFactoryKeyForTypeMock2(
+        this._factoryCache.setFactoryKeyForTypeMock(
             declaration,
         );
 
@@ -130,7 +142,7 @@ export class MockDefiner {
             ),
         });
 
-        return this._factoryCache.getFactoryKeyForTypeMock2(declaration).key;
+        return this._factoryCache.getFactoryKeyForTypeMock(declaration);
     }
 
     private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
@@ -160,7 +172,7 @@ export class MockDefiner {
                     ts.createIdentifier('registerFactory'),
                 ),
                 [],
-                [ts.createStringLiteral(this._factoryCache.getFactoryKeyForTypeMock2(key).key), factory],
+                [ts.createStringLiteral(this._factoryCache.getFactoryKeyForTypeMock(key)), factory],
             ),
         );
     }

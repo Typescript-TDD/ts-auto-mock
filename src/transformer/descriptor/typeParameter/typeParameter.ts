@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import { KeyMap } from '../../mockDefiner/factoryDefinitionCache';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { MockGenericParameter } from '../../mockGeneric/mockGenericParameter';
 import { Scope } from '../../scope/scope';
@@ -16,15 +15,13 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
     const declaration: ts.Declaration = type.symbol.declarations[0];
     const typeDeclaration: ts.Declaration = TypescriptHelper.getTypeParameterOwnerMock(declaration);
 
-    //
-    const mockDeck: KeyMap = MockDefiner.instance._factoryCache.getFactoryKeyForTypeMock2(typeDeclaration);
-    //
+    const mockDeck: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
 
     if (!mockDeck) {
         return descriptor;
     }
 
-    const key: string = mockDeck.key + node.name.escapedText;
+    const key: string = mockDeck + node.name.escapedText;
 
     return ts.createCall(
         ts.createParen(ts.createFunctionExpression(
@@ -48,7 +45,7 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
                                         ts.createCall(
                                             ts.createPropertyAccess(
                                                 MockGenericParameter,
-                                                ts.createIdentifier('find')
+                                                ts.createIdentifier('find'),
                                             ),
                                             undefined,
                                             [ts.createArrowFunction(
@@ -61,7 +58,7 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
                                                     ts.createIdentifier('value'),
                                                     undefined,
                                                     undefined,
-                                                    undefined
+                                                    undefined,
                                                 )],
                                                 undefined,
                                                 ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
@@ -71,24 +68,24 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
                                                             ts.createPropertyAccess(
                                                                 ts.createPropertyAccess(
                                                                     ts.createIdentifier('value'),
-                                                                    ts.createIdentifier('ids')
+                                                                    ts.createIdentifier('ids'),
                                                                 ),
-                                                                ts.createIdentifier('indexOf')
+                                                                ts.createIdentifier('indexOf'),
                                                             ),
                                                             undefined,
-                                                            [ts.createStringLiteral(key)]
+                                                            [ts.createStringLiteral(key)],
                                                         ),
                                                         ts.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-                                                        ts.createNumericLiteral('0')
-                                                        )
+                                                        ts.createNumericLiteral('0'),
+                                                        ),
                                                     )],
-                                                    true
-                                                )
-                                            )]
-                                        )
+                                                    true,
+                                                ),
+                                            )],
+                                        ),
                                     )],
-                                    ts.NodeFlags.Const
-                                )
+                                    ts.NodeFlags.Const,
+                                ),
                             ),
                             ts.createIf(
                                 ts.createIdentifier('result'),
@@ -97,44 +94,26 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
                                         ts.createCall(
                                             ts.createPropertyAccess(
                                                 ts.createIdentifier('result'),
-                                                ts.createIdentifier('value')
+                                                ts.createIdentifier('value'),
                                             ),
                                             undefined,
-                                            []
+                                            [],
                                         ))],
-                                    true
+                                    true,
                                 ),
-                                undefined
+                                undefined,
                             ),
-                            ts.createReturn(descriptor)
+                            ts.createReturn(descriptor),
                         ],
-                        true
+                        true,
                     ),
-                    undefined
+                    undefined,
                 ),
                     ts.createReturn(descriptor)],
-                true
-            )
+                true,
+            ),
         )),
         undefined,
-        []
+        [],
     );
-
-    // return ts.createConditional(
-    //     ts.createBinary(
-    //         MockGenericParameter,
-    //         ts.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
-    //         ts.createElementAccess(
-    //             MockGenericParameter,
-    //             ts.createNumericLiteral(typeParameterOwnerIndex.toString()),
-    //         ),
-    //     ),
-    //     ts.createToken(SyntaxKind.QuestionToken),
-    //     ts.createCall(ts.createElementAccess(
-    //         MockGenericParameter,
-    //         ts.createNumericLiteral(typeParameterOwnerIndex.toString()),
-    //     ), [], []),
-    //     ts.createToken(SyntaxKind.ColonToken),
-    //     descriptor,
-    // );
 }

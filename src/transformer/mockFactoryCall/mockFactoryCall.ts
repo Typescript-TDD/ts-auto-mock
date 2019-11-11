@@ -11,16 +11,18 @@ interface GenericParameter {
     value: ts.Expression;
 }
 
+function createAndGetKeyMap(declaration: ts.Declaration): string {
+    if (!MockDefiner.instance.hasDeclarationKeyMap(declaration)) {
+        MockDefiner.instance.setDeclarationKeyMap(declaration);
+    }
+
+    return MockDefiner.instance.getDeclarationKeyMap(declaration);
+}
 export function GetMockFactoryCall(node: ts.TypeReferenceNode, scope: Scope): ts.Expression {
     const genericsParameters: GenericParameter[] = [];
     const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
 
-    const hasMockKey: boolean = MockDefiner.instance._factoryCache.hasFactoryForTypeMock2(declaration);
-    if (!hasMockKey) {
-        MockDefiner.instance._factoryCache.setFactoryKeyForTypeMock2(declaration, MockDefiner.instance._factoryCache.createUniqueKeyForFactory(declaration));
-    }
-
-    const key: string = MockDefiner.instance._factoryCache.getFactoryKeyForTypeMock2(declaration).key;
+    const key: string = createAndGetKeyMap(declaration);
 
     const typeParameterDeclarations: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.GetParameterOfNode(node.typeName);
 
@@ -33,12 +35,7 @@ export function GetMockFactoryCall(node: ts.TypeReferenceNode, scope: Scope): ts
                         const nodeOwner: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(expression.expression);
 
                         if (TypescriptHelper.IsInterfaceOrClassDeclaration(nodeOwner)) {
-                            const hasMockKey2: boolean = MockDefiner.instance._factoryCache.hasFactoryForTypeMock2(nodeOwner);
-                            if (!hasMockKey2) {
-                                MockDefiner.instance._factoryCache.setFactoryKeyForTypeMock2(nodeOwner, MockDefiner.instance._factoryCache.createUniqueKeyForFactory(nodeOwner));
-                            }
-
-                            const newKey: string = MockDefiner.instance._factoryCache.getFactoryKeyForTypeMock2(nodeOwner).key;
+                            const newKey: string = createAndGetKeyMap(nodeOwner);
 
                             const intOrClassDeclarationOwner: InterfaceOrClassDeclaration = nodeOwner as InterfaceOrClassDeclaration;
                             const nodeOwnerParameters: ts.NodeArray<ts.TypeParameterDeclaration> = intOrClassDeclarationOwner.typeParameters;
