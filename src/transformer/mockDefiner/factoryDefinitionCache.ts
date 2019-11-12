@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import { MockDefiner } from './mockDefiner';
 
 // tslint:disable-next-line:no-any
 const urlSlug: any = require('url-slug');
