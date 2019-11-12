@@ -128,11 +128,4 @@ options:
 
 This project is licensed under the MIT License
 
-
-// TODO before this branch is ready
-    // add a test for recursive generic interface
-    // a generic that extends another class
-    // clean the code 
-    // FIX TODO
-
        
