@@ -98,5 +98,3 @@ describe('for intersection', () => {
         });
     });
 });
-
-// WRITE SOME TEST WITH INTERSECTION AND GENERICS
