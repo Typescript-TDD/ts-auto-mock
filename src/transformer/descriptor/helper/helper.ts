@@ -4,7 +4,7 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
 export namespace TypescriptHelper {
-    export function IsInterfaceOrClassDeclaration(node: ts.Node): boolean {
+    export function IsDeclarationThatSupportsGenerics(node: ts.Node): boolean {
         return ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node);
     }
 
@@ -19,10 +19,16 @@ export namespace TypescriptHelper {
     export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node);
-        return symbol.declarations[0];
+        const declaration: ts.Declaration = symbol.declarations[0];
+
+        if (ts.isImportSpecifier(declaration)) {
+            return GetDeclarationForImport(declaration) as ts.Declaration;
+        }
+
+        return declaration;
     }
 
-    export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier): ts.Node {
+    export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier): ts.TypeNode | ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
         const declaredType: ts.Type = typeChecker.getDeclaredTypeOfSymbol(symbol);

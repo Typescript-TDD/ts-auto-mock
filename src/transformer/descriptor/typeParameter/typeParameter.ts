@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
-import { MockGenericParameter } from '../../mockGeneric/mockGenericParameter';
+import { MockGenericParameter, MockGenericParameterIds, MockGenericParameterValue } from '../../mockGeneric/mockGenericParameter';
 import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
@@ -57,7 +57,7 @@ function createFindGeneric(genericKey: string): ts.CallExpression {
                     ts.createPropertyAccess(
                         ts.createPropertyAccess(
                             ts.createIdentifier('generic'),
-                            ts.createIdentifier('ids'),
+                            MockGenericParameterIds,
                         ),
                         ts.createIdentifier('indexOf'),
                     ),
@@ -93,7 +93,7 @@ function getValueFromGenericIfExist(): ts.IfStatement {
             [ts.createReturn(ts.createCall(
                 ts.createPropertyAccess(
                     ts.createIdentifier('generic'),
-                    ts.createIdentifier('value'),
+                    MockGenericParameterValue,
                 ),
                 undefined,
                 [],

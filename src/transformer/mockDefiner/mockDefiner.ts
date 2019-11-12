@@ -85,16 +85,16 @@ export class MockDefiner {
         );
     }
 
-    public setDeclarationKeyMap(typeMocked: ts.Declaration): void {
-        this._factoryCache.setDeclarationKeyMap(typeMocked, this._factoryCache.createUniqueKeyForFactory(typeMocked));
-    }
-
     public getDeclarationKeyMap(typeMocked: ts.Declaration): string {
+        if (!this._factoryCache.hasDeclarationKeyMap(typeMocked)) {
+            this._factoryCache.setDeclarationKeyMap(typeMocked, this._factoryCache.createUniqueKeyForFactory(typeMocked));
+        }
+
         return this._factoryCache.getDeclarationKeyMap(typeMocked);
     }
 
-    public hasDeclarationKeyMap(typeMocked: ts.Declaration): boolean {
-        return this._factoryCache.hasDeclarationKeyMap(typeMocked);
+    public hasDeclarationKeyMap(type: ts.Declaration): boolean {
+        return this._factoryCache.hasDeclarationKeyMap(type);
     }
 
     private _createUniqueFileName(name: string): ts.Identifier {

@@ -1,142 +1,26 @@
 import * as ts from 'typescript';
-import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
-import { TypescriptCreator } from '../helper/creator';
+import { GenericDeclaration } from '../genericDeclaration/genericDeclaration';
+import { IGenericDeclaration } from '../genericDeclaration/genericDeclaration.interface';
+import { GenericDeclarationSupported } from '../genericDeclaration/genericDeclarationSupported';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
-import { InterfaceOrClassDeclaration, Scope } from '../scope/scope';
+import { Scope } from '../scope/scope';
 
-interface GenericParameter {
-    ids: string[];
-    value: ts.Expression;
-}
+export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
+    const genericDeclaration: IGenericDeclaration = GenericDeclaration(scope);
+    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeReferenceNode.typeName);
+    const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
-function createAndGetKeyMap(declaration: ts.Declaration): string {
-    if (!MockDefiner.instance.hasDeclarationKeyMap(declaration)) {
-        MockDefiner.instance.setDeclarationKeyMap(declaration);
+    if (typeReferenceNode.typeArguments) {
+        genericDeclaration.addFromTypeReferenceNode(typeReferenceNode, declarationKey);
     }
 
-    return MockDefiner.instance.getDeclarationKeyMap(declaration);
-}
-export function GetMockFactoryCall(node: ts.TypeReferenceNode, scope: Scope): ts.Expression {
-    const genericsParameters: GenericParameter[] = [];
-    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
-
-    const key: string = createAndGetKeyMap(declaration);
-
-    const typeParameterDeclarations: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.GetParameterOfNode(node.typeName);
-
-    function test(intOrClassDeclaration: InterfaceOrClassDeclaration): void {
-        if (intOrClassDeclaration.heritageClauses) {
-            intOrClassDeclaration.heritageClauses.forEach((clause: ts.HeritageClause) => {
-                clause.types.forEach((expression: ts.ExpressionWithTypeArguments) => {
-                    if (expression.typeArguments) {
-
-                        const nodeOwner: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(expression.expression);
-
-                        if (TypescriptHelper.IsInterfaceOrClassDeclaration(nodeOwner)) {
-                            const newKey: string = createAndGetKeyMap(nodeOwner);
-
-                            const intOrClassDeclarationOwner: InterfaceOrClassDeclaration = nodeOwner as InterfaceOrClassDeclaration;
-                            const nodeOwnerParameters: ts.NodeArray<ts.TypeParameterDeclaration> = intOrClassDeclarationOwner.typeParameters;
-
-                            expression.typeArguments.forEach((typeArgument: ts.TypeNode, index: number) => {
-                                if (ts.isTypeReferenceNode(typeArgument)) {
-                                    const typeParameterDeclaration: ts.TypeParameterDeclaration = TypescriptHelper.GetDeclarationFromNode(typeArgument.typeName) as ts.TypeParameterDeclaration;
-                                    if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
-                                        const owner: ts.Declaration = TypescriptHelper.getTypeParameterOwnerMock(typeParameterDeclaration);
-                                        if (TypescriptHelper.IsInterfaceOrClassDeclaration(owner)) {
-                                            const ownerTypeParameterDeclaration: ts.TypeParameterDeclaration = nodeOwnerParameters[index];
-
-                                            const existingUniqueName: string = key + typeParameterDeclaration.name.escapedText;
-                                            const uniqueName: string = newKey + ownerTypeParameterDeclaration.name.escapedText;
-
-                                            const parameterToAdd: GenericParameter = genericsParameters.find((v: GenericParameter) => {
-                                                return v.ids.indexOf(existingUniqueName) >= 0;
-                                            });
-
-                                            parameterToAdd.ids.push(uniqueName);
-                                        }
-                                    } else {
-                                        const ownerTypeParameterDeclaration: ts.TypeParameterDeclaration = nodeOwnerParameters[index];
-                                        const uniqueName: string = newKey + ownerTypeParameterDeclaration.name.escapedText;
-                                        const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(ts.createBlock(
-                                            [ts.createReturn(GetDescriptor(typeArgument, scope))],
-                                        ));
-                                        genericsParameters.push({
-                                            ids: [uniqueName],
-                                            value: genericFunction,
-                                        });
-                                    }
-
-                                } else {
-                                    const ownerTypeParameterDeclaration: ts.TypeParameterDeclaration = nodeOwnerParameters[index];
-                                    const uniqueName: string = newKey + ownerTypeParameterDeclaration.name.escapedText;
-                                    const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(ts.createBlock(
-                                        [ts.createReturn(GetDescriptor(typeArgument, scope))],
-                                    ));
-                                    genericsParameters.push({
-                                        ids: [uniqueName],
-                                        value: genericFunction,
-                                    });
-
-                                }
-                            });
-                            test(nodeOwner as InterfaceOrClassDeclaration);
-                        }
-
-                    }
-                });
-            });
-        }
+    if (TypescriptHelper.IsDeclarationThatSupportsGenerics(declaration)) {
+        addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
     }
 
-    // extensionssss
-
-    if (node.typeArguments) {
-        node.typeArguments.forEach((argument: ts.TypeNode, index: number) => {
-            let genericDescriptor: ts.Expression;
-
-            genericDescriptor = GetDescriptor(argument, scope);
-
-            const uniqueName: string = key + typeParameterDeclarations[index].name.escapedText;
-
-            const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(ts.createBlock(
-                [ts.createReturn(genericDescriptor)],
-            ));
-
-            genericsParameters.push({
-                ids: [uniqueName],
-                value: genericFunction,
-            });
-        });
-    }
-
-    if (TypescriptHelper.IsInterfaceOrClassDeclaration(declaration)) {
-        const intOrClassDeclaration: InterfaceOrClassDeclaration = declaration as InterfaceOrClassDeclaration;
-        test(intOrClassDeclaration);
-    }
-
-    const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericsParameters.map((s: GenericParameter) => {
-        return ts.createObjectLiteral(
-            [
-                ts.createPropertyAssignment(
-                    ts.createIdentifier('ids'),
-                    ts.createArrayLiteral(
-                        s.ids.map((arr: string) => {
-                            return ts.createStringLiteral(arr);
-                        }),
-                        false,
-                    ),
-                ),
-                ts.createPropertyAssignment(
-                    ts.createIdentifier('value'),
-                    s.value,
-                ),
-            ],
-            true,
-        );
-    });
+    const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
     const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration);
 
     return ts.createCall(
@@ -154,4 +38,28 @@ export function GetMockFactoryCallForThis(declaration: ts.Declaration): ts.Expre
         [],
         [MockGenericParameter],
     );
+}
+
+function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, declarationKey: string, genericDeclaration: IGenericDeclaration): void {
+    if (declaration.heritageClauses) {
+        declaration.heritageClauses.forEach((clause: ts.HeritageClause) => {
+            clause.types.forEach((extension: ts.ExpressionWithTypeArguments) => {
+                if (extension.typeArguments) {
+                    const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(extension.expression);
+
+                    if (TypescriptHelper.IsDeclarationThatSupportsGenerics(extensionDeclaration)) {
+                        const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
+
+                        genericDeclaration.addFromDeclarationExtension(
+                            declarationKey,
+                            extensionDeclaration as GenericDeclarationSupported,
+                            extensionDeclarationKey,
+                            extension);
+
+                        addFromDeclarationExtensions(extensionDeclaration as GenericDeclarationSupported, extensionDeclarationKey, genericDeclaration);
+                    }
+                }
+            });
+        });
+    }
 }

@@ -195,4 +195,38 @@ describe('for generic', () => {
             expect(properties.b).toBe(false);
         });
     });
+
+    describe('with multiple types', () => {
+        interface A<TA, TD2> {
+            a: TA;
+            a2: TD2;
+        }
+
+        interface B<TB, TA> extends A<TB, TA> {
+            b: TB;
+            b2: TA;
+        }
+
+        interface C<TC, TD> extends B<TC, TD> {
+            c: TC;
+            c2: TD;
+        }
+        interface D<TD, TD2> extends C<TD, TD2> {
+            d: TD;
+            d2: TD2;
+        }
+
+        it('should set the generic value', () => {
+            const properties: D<boolean, string> = createMock<D<boolean, string>>();
+            expect(properties.d).toBe(false);
+            expect(properties.d2).toBe('');
+            expect(properties.a).toBe(false);
+            expect(properties.a2).toBe('');
+            expect(properties.b).toBe(false);
+            expect(properties.b2).toBe('');
+            expect(properties.c).toBe(false);
+            expect(properties.c2).toBe('');
+        });
+    });
+
 });
