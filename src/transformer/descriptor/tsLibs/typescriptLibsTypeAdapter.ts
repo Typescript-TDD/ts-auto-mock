@@ -1,11 +1,15 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
+import { GetDescriptor } from '../descriptor';
+import { TypescriptHelper } from '../helper/helper';
+import { GetUndefinedDescriptor } from '../undefined/undefined';
 import { TypescriptLibsTypes } from './typescriptLibsTypes';
 
-export function TypescriptLibsTypeAdapter(node: ts.Node, scope: Scope): ts.Node {
+export function TypescriptLibsTypeAdapter(node: ts.TypeReferenceNode, scope: Scope): ts.Node {
+    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
     const typeChecker: ts.TypeChecker = TypeChecker();
-    const type: ts.Type = typeChecker.getTypeAtLocation(node);
+    const type: ts.Type = typeChecker.getTypeAtLocation(declaration);
     const typeScriptType: TypescriptLibsTypes = TypescriptLibsTypes[type.symbol.name];
 
     switch (typeScriptType) {
@@ -24,19 +28,15 @@ export function TypescriptLibsTypeAdapter(node: ts.Node, scope: Scope): ts.Node 
             const functionNode: ts.Node = ts.createNode(ts.SyntaxKind.VoidKeyword);
             return ts.createFunctionTypeNode([], [], functionNode as ts.TypeNode);
         case(TypescriptLibsTypes.Promise):
-            const parameter: ts.TypeParameterDeclaration = (node as ts.TypeAliasDeclaration).typeParameters[0];
+            const dataResolved: ts.Expression = node.typeArguments && node.typeArguments[0] ? GetDescriptor(node.typeArguments[0], scope) : GetUndefinedDescriptor();
 
-            return ts.createNode(ts.SyntaxKind.VoidKeyword);
-            // const typeParameter: ts.Type = typeChecker.getTypeAtLocation(parameter);
-            //
-            // const promiseResolveType: TypeReferenceCacheElement = scope.getTypeReference(typeParameter);
-            // const promiseAccess: ts.PropertyAccessExpression = ts.createPropertyAccess(ts.createIdentifier('Promise'), ts.createIdentifier('resolve'));
-            //
-            // return ts.createCall(
-            //     promiseAccess,
-            //     [],
-            //     promiseResolveType ? [promiseResolveType.descriptor] : [],
-            // );
+            const promiseAccess: ts.PropertyAccessExpression = ts.createPropertyAccess(ts.createIdentifier('Promise'), ts.createIdentifier('resolve'));
+
+            return ts.createCall(
+                promiseAccess,
+                [],
+                [dataResolved],
+            );
         default:
             return ts.createNode(ts.SyntaxKind.UndefinedKeyword);
     }

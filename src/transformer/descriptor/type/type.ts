@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetTypeImport } from './typeImport';
@@ -33,8 +34,12 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: Scope): ts.Node[] 
 
 export function GetType(node: ts.Node, scope: Scope): ts.Node {
     if (ts.isTypeReferenceNode(node)) {
-        const identifier: ts.EntityName = node.typeName;
-        const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(identifier);
+        const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
+
+        if (IsTypescriptType(declaration)) {
+            return GetTypescriptType(node, scope);
+        }
+
         return GetType(declaration, scope);
     }
 
@@ -54,10 +59,6 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
 
     if (ts.isTypeOperatorNode(node)) {
         return GetType(node.type, scope);
-    }
-
-    if (ts.isInterfaceDeclaration(node) && IsTypescriptType(node)) {
-        return GetTypescriptType(node, scope);
     }
 
     return node;

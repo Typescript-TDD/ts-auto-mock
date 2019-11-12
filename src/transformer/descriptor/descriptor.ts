@@ -107,6 +107,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.UndefinedKeyword:
         case ts.SyntaxKind.VoidKeyword:
             return GetUndefinedDescriptor();
+        case ts.SyntaxKind.CallExpression:
+            return node as ts.CallExpression;
         default:
             // tslint:disable-next-line:no-console
             console.log('NOT IMPLEMENTED ' + ts.SyntaxKind[node.kind]);

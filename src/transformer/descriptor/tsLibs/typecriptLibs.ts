@@ -14,6 +14,6 @@ export function IsTypescriptType(node: ts.Node): boolean {
     return false;
 }
 
-export function GetTypescriptType(node: ts.Node, scope: Scope): ts.Node {
+export function GetTypescriptType(node: ts.TypeReferenceNode, scope: Scope): ts.Node {
     return TypescriptLibsTypeAdapter(node, scope);
 }

@@ -4,12 +4,18 @@ import { Scope } from '../../scope/scope';
 import { isTypeReferenceReusable } from '../../typeReferenceReusable/typeReferenceReusable';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
+import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
 
 export function GetTypeReferenceDescriptorReusable(node: ts.TypeReferenceNode, scope: Scope): ts.Expression {
-    if (isTypeReferenceReusable(node)) {
-        return GetMockFactoryCall(node, scope);
-    } else {
-        const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
-        return GetDescriptor(declaration, scope);
+    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
+
+    if (IsTypescriptType(declaration)) {
+        return GetDescriptor(GetTypescriptType(node, scope), scope);
     }
+
+    if (isTypeReferenceReusable(declaration)) {
+        return GetMockFactoryCall(node, scope);
+    }
+
+    return GetDescriptor(declaration, scope);
 }

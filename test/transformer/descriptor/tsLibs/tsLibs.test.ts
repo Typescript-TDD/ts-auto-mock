@@ -67,85 +67,130 @@ describe('typescript lib', () => {
         expect(properties.a).toBeUndefined();
     });
 
-    // TODO
-    // it('should set a promise resolved for a promise', async () => {
-    //     interface Interface {
-    //         a(): Promise<string>;
-    //     }
-    //
-    //     const properties: Interface = createMock<Interface>();
-    //
-    //     const interfaceCast: Interface = properties as unknown as Interface;
-    //
-    //     const result: string = await interfaceCast.a();
-    //     expect(result).toBe('');
-    // });
-    //
-    // it('should set a promise resolved for a promise with array', async () => {
-    //     interface Interface {
-    //         a(): Promise<string[]>;
-    //     }
-    //
-    //     const properties: Interface = createMock<Interface>();
-    //
-    //     const interfaceCast: Interface = properties as unknown as Interface;
-    //
-    //     const result: Array<string> = await interfaceCast.a();
-    //     expect(result).toEqual([]);
-    // });
+    it('should set a promise resolved for a promise', async () => {
+        interface Interface {
+            a(): Promise<string>;
+        }
 
-    // it('should set a promise resolved for a promise with more generics', async () => {
-    //     interface WithGenerics<T> {
-    //         generic: T;
-    //     }
-    //     interface Interface {
-    //         a(): Promise<WithGenerics<string>>;
-    //     }
-    //
-    //     const properties: Interface = createMock<Interface>();
-    //
-    //     const interfaceCast: Interface = properties as unknown as Interface;
-    //
-    //     const result: WithGenerics<string> = await interfaceCast.a();
-    //     expect(result).toEqual({
-    //         generic: '',
-    //     });
-    // });
+        const properties: Interface = createMock<Interface>();
 
-    // it('should set a promise resolved for a promise with more promise', async () => {
-    //     interface WithGenerics {
-    //         generic(): Promise<number>;
-    //     }
-    //
-    //     interface Interface {
-    //         a(): Promise<WithGenerics>;
-    //     }
-    //
-    //     const properties: Interface = createMock<Interface>();
-    //     const interfaceCast: Interface = properties as unknown as Interface;
-    //     const result: WithGenerics = await interfaceCast.a();
-    //     const secondPromise: number = await result.generic();
-    //
-    //     expect(secondPromise).toBe(0);
-    // });
-    //
-    // it('should set a promise resolved for a promise with more promise with generics', async () => {
-    //     interface WithGenerics<T> {
-    //         generic(): Promise<T>;
-    //         generic2(): Promise<number>;
-    //     }
-    //
-    //     interface Interface {
-    //         a(): Promise<WithGenerics<string>>;
-    //     }
-    //
-    //     const properties: Interface = createMock<Interface>();
-    //     const interfaceCast: Interface = properties as unknown as Interface;
-    //     const result: WithGenerics<string> = await interfaceCast.a();
-    //     const secondPromise: string = await result.generic();
-    //     const secondPromise2: number = await result.generic2();
-    //
-    //     expect(secondPromise).toBe('');
-    //     expect(secondPromise2).toBe(0);
-    // });
+        const interfaceCast: Interface = properties as unknown as Interface;
+
+        const result: string = await interfaceCast.a();
+        expect(result).toBe('');
+    });
+
+    it('should set a promise resolved for a promise with array', async () => {
+        interface Interface {
+            a(): Promise<string[]>;
+        }
+
+        const properties: Interface = createMock<Interface>();
+
+        const interfaceCast: Interface = properties as unknown as Interface;
+
+        const result: Array<string> = await interfaceCast.a();
+        expect(result).toEqual([]);
+    });
+
+    it('should set a promise resolved for a promise with more generics', async () => {
+        interface WithGenerics<T> {
+            generic: T;
+        }
+        interface Interface {
+            a(): Promise<WithGenerics<string>>;
+        }
+
+        const properties: Interface = createMock<Interface>();
+
+        const interfaceCast: Interface = properties as unknown as Interface;
+
+        const result: WithGenerics<string> = await interfaceCast.a();
+        expect(result).toEqual({
+            generic: '',
+        });
+    });
+
+    it('should set a promise resolved for a promise with more promise', async () => {
+        interface WithGenerics {
+            generic(): Promise<number>;
+        }
+
+        interface Interface {
+            a(): Promise<WithGenerics>;
+        }
+
+        const properties: Interface = createMock<Interface>();
+        const interfaceCast: Interface = properties as unknown as Interface;
+        const result: WithGenerics = await interfaceCast.a();
+        const secondPromise: number = await result.generic();
+
+        expect(secondPromise).toBe(0);
+    });
+
+    it('should set a promise resolved for a promise with more promise with generics', async () => {
+        interface WithGenerics<T> {
+            generic(): Promise<T>;
+            generic2(): Promise<number>;
+        }
+
+        interface Interface {
+            a(): Promise<WithGenerics<string>>;
+        }
+
+        const properties: Interface = createMock<Interface>();
+        const interfaceCast: Interface = properties as unknown as Interface;
+        const result: WithGenerics<string> = await interfaceCast.a();
+        const secondPromise: string = await result.generic();
+        const secondPromise2: number = await result.generic2();
+
+        expect(secondPromise).toBe('');
+        expect(secondPromise2).toBe(0);
+    });
+
+    it('should set a promise resolved for a promise without type', async () => {
+        interface Interface {
+            // @ts-ignore
+            method(): Promise;
+        }
+
+        const properties: Interface = createMock<Interface>();
+        const result: Interface = await properties.method();
+        expect(result).toBeUndefined();
+    });
+
+    it('should set a promise resolved for a promise with multiple type parameter', async () => {
+        interface Interface<T, T2> {
+            a: T2;
+            method(): Promise<Interface<T, T2>>;
+        }
+
+        const properties: Interface<string, number> = createMock<Interface<string, number>>();
+        const result: Interface<string, number> = await properties.method();
+        expect(result.a).toBe(0);
+    });
+
+    it('should set different promises resolved for a promise with type parameter', async () => {
+        interface Interface<T> {
+            method(): Promise<T>;
+        }
+
+        createMock<Interface<string>>();
+        const propertiesReuse: Interface<number> = createMock<Interface<number>>();
+        const result: number = await propertiesReuse.method();
+        expect(result).toBe(0);
+    });
+
+    it('should set a promise for multiple type reference', async () => {
+        type B<T1> = Promise<T1>;
+        type A<T> = B<T>;
+
+        interface Interface {
+            method(): A<string>;
+        }
+
+        const properties: Interface = createMock<Interface>();
+        const result: string = await properties.method();
+        expect(result).toBe('');
+    });
 });

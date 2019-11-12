@@ -65,17 +65,16 @@ describe('for intersection', () => {
     });
 
     describe('with typescript lib', () => {
-        // TODO
-        // type TypeIntersection = {} & Promise<string>;
-        //
-        // interface Intersection {
-        //     a: TypeIntersection;
-        // }
-        //
-        // it('should ignore the types typescript lib', () => {
-        //     const properties: Intersection = createMock<Intersection>();
-        //     expect(properties.a.then).toBeUndefined();
-        // });
+        type TypeIntersection = {} & Promise<string>;
+
+        interface Intersection {
+            a: TypeIntersection;
+        }
+
+        it('should ignore the types typescript lib', () => {
+            const properties: Intersection = createMock<Intersection>();
+            expect(properties.a.then).toBeUndefined();
+        });
     });
 
     describe('with interface call signature', () => {
