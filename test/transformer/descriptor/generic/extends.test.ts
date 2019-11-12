@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { ClassWithGenerics } from '../../utilities/classWithGenerics';
 
 describe('for generic', () => {
     describe('interfaces', () => {
@@ -226,6 +227,20 @@ describe('for generic', () => {
             expect(properties.b2).toBe('');
             expect(properties.c).toBe(false);
             expect(properties.c2).toBe('');
+        });
+    });
+
+    describe('with import and generics', () => {
+        interface D<TD, TD2> extends ClassWithGenerics<TD> {
+            d: TD;
+            d2: TD2;
+        }
+
+        it('should set the generic value', () => {
+            const properties: D<boolean, string> = createMock<D<boolean, string>>();
+            expect(properties.d).toBe(false);
+            expect(properties.d2).toBe('');
+            expect(properties.a).toBe(false);
         });
     });
 
