@@ -2,11 +2,9 @@ type Factory = Function;
 
 export class Repository {
     private readonly _repository: { [key: string]: Factory };
-    private readonly _repositoryGeneric: { [key: string]: {[key: string]: Factory} };
 
     private constructor() {
         this._repository = {};
-        this._repositoryGeneric = {};
     }
 
     private static _instance: Repository;
