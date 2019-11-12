@@ -315,5 +315,14 @@ describe('for generic', () => {
             const properties: WithGenericsSubInterface<string> = createMock<WithGenericsSubInterface<string>>();
             expect(properties.sub.iAmAString).toBe('');
         });
+
+        it('should set the value for types functions', () => {
+            type Test<T = number> = () => T;
+
+            const properties: Test<string> = createMock<Test<string>>();
+            const propertiesDefault: Test = createMock<Test>();
+            expect(properties()).toBe('');
+            expect(propertiesDefault()).toBe(0);
+        });
     });
 });
