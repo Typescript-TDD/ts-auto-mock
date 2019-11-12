@@ -1,13 +1,19 @@
 import { createMock } from 'ts-auto-mock';
-import { ClassWithGenerics } from './utilities/classWithGenerics';
 
-describe('with import and generics', () => {
-    interface B<T> {
-        c: number;
+/*
+ USE THIS FILE ONLY FOR TESTING NEW IMPLEMENTATION
+ 1) build the module you need
+ 2) run test:playground to see if it pass
+ 3) run build:playground to see the output generated
+
+ */
+
+it('should work', () => {
+    interface Interface {
+        a: string;
     }
 
-    it('should set the generic value', () => {
-        const properties: B<boolean> = createMock<B<boolean>>();
-        expect(properties.c).toBe(0);
-    });
+    const properties: Interface = createMock<Interface>();
+
+    expect(properties.a).toEqual('');
 });
