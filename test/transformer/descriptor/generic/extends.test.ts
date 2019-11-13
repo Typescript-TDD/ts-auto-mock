@@ -189,7 +189,7 @@ describe('for generic', () => {
             b: T3;
         }
 
-        it('should not consider typescript library', () => {
+        it('should assign the correct values to generics', () => {
             const properties: B<number, string, boolean> = createMock<B<number, string, boolean>>();
             expect(properties.c).toBe('');
             expect(properties.a).toBe(0);

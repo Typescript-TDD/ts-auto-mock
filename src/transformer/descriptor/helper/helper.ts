@@ -38,12 +38,6 @@ export namespace TypescriptHelper {
     export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
         const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
-        if (ts.isImportSpecifier(declaration)) {
-            const importDeclaration: ts.Node = GetDeclarationForImport(declaration);
-
-            return (importDeclaration as Declaration).typeParameters;
-        }
-
         return (declaration as Declaration).typeParameters;
     }
 
@@ -57,17 +51,15 @@ export namespace TypescriptHelper {
         return TypeChecker().typeToTypeNode(type);
     }
 
-    export function getTypeParameterOwnerMock(d: ts.Declaration): ts.Declaration {
-        const typeDeclaration: ts.Declaration = ts.getTypeParameterOwner(d);
+    export function GetTypeParameterOwnerMock(declaration: ts.Declaration): ts.Declaration {
+        const typeDeclaration: ts.Declaration = ts.getTypeParameterOwner(declaration);
 
         // THIS IS TO FIX A MISSING IMPLEMENTATION IN TYPESCRIPT https://github.com/microsoft/TypeScript/blob/ba5e86f1406f39e89d56d4b32fd6ff8de09a0bf3/src/compiler/utilities.ts#L5138
         if ((typeDeclaration as Declaration).typeParameters) {
             return typeDeclaration;
         }
 
-        const parent: ts.Node = d.parent;
-
-        for (let current: ts.Node = parent; current; current = current.parent) {
+        for (let current: ts.Node = declaration; current; current = current.parent) {
             if (current.kind === ts.SyntaxKind.TypeAliasDeclaration) {
                 return current as ts.Declaration;
             }

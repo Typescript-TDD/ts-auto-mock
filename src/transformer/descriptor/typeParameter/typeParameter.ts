@@ -14,7 +14,7 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
     const descriptor: ts.Expression = node.default ? GetDescriptor(node.default, scope) : GetNullDescriptor();
 
     const declaration: ts.Declaration = type.symbol.declarations[0];
-    const typeDeclaration: ts.Declaration = TypescriptHelper.getTypeParameterOwnerMock(declaration);
+    const typeDeclaration: ts.Declaration = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
     if (!MockDefiner.instance.hasDeclarationKeyMap(typeDeclaration)) {
         return descriptor;

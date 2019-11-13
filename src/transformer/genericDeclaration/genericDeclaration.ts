@@ -59,7 +59,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
                 if (ts.isTypeReferenceNode(typeArgument)) {
                     const typeParameterDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeArgument.typeName);
                     if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
-                        const ownerTypeParameter: ts.Declaration = TypescriptHelper.getTypeParameterOwnerMock(typeParameterDeclaration);
+                        const ownerTypeParameter: ts.Declaration = TypescriptHelper.GetTypeParameterOwnerMock(typeParameterDeclaration);
                         if (TypescriptHelper.IsDeclarationThatSupportsGenerics(ownerTypeParameter)) {
                             addGenericParameterToExisting(
                                 extensionDeclarationTypeParameters[index],
