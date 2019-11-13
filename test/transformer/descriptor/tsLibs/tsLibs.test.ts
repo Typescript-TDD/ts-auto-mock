@@ -198,7 +198,6 @@ describe('typescript lib', () => {
     it('should set a promise resolved for a type mocked directly', async () => {
         type S<T> = Promise<T>;
         const properties: S<string> = createMock<S<string>>();
-        createMock<S<number>>();
         const result: string = await properties;
         expect(result).toBe('');
     });
