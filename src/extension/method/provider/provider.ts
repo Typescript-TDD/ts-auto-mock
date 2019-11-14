@@ -21,7 +21,7 @@ export class Provider {
 
     /**
      * @deprecated ts-auto-mock will disable this functionality from version 2 because is not fully compatible with
-     * call signatures. It will cause an [issue].
+     * call signatures. It will cause an maximum call stack exceeded error.
      * @see (https://github.com/uittorio/ts-auto-mock/blob/master/test/framework/recursive/recursive.deprecated.ts)
      *
      * Please use provideMethodWithDeferredValue instead
