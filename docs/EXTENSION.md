@@ -8,11 +8,17 @@ For this reason if you need your custom spies you need to use our framework to s
 To extend a method you need to: 
 1) set your spy function (jasmine.createSpy(name))
 
+Please note that the value returned from provideMethodWithDeferredValue will be a function.
+You will need to make sure that the method you are providing will not execute the function directly because it will cause Maximum call stack size.
+
+In the example below it's using callFake that will prevent to execute the function directly.
+
+
 ```ts
 import { Provider } from "ts-auto-mock/extension";
 
-Provider.instance.provideMethod((name: string, value: any) => {
-    return jasmine.createSpy(name).and.returnValue(value);
+Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any)) => {
+    return jasmine.createSpy(name).and.callFake(value);
 });
 ```
 2) override the type of the return value 

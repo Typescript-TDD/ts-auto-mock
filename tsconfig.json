@@ -1,23 +1,10 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "esModuleInterop": true,
-    "noImplicitAny": false,
-    "lib": [
-      "es2017",
-      "dom"
-    ],
-    "paths": {
-      "ts-auto-mock": ["src"],
-      "ts-auto-mock/extension": ["src/extension"],
-      "ts-auto-mock/repository": ["src/repository"]
-    },
-    "baseUrl": "./"
+    "sourceMap": false,
+    "plugins": [
+      { "transform": "../dist/transformer" }
+    ]
   }
 }
+

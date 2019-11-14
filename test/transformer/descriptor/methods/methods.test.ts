@@ -74,6 +74,20 @@ describe('for methods', () => {
         });
     });
 
+    describe('for interface call signature with recursive', () => {
+        interface InterfaceWithCallSignature<T>  {
+            (a: number): InterfaceWithCallSignature<T>;
+            b: InterfaceWithCallSignature<T>;
+            c: string;
+            d: T;
+        }
+
+        it('should set the value for same interface with generic', () => {
+            const propertiesWithGeneric: InterfaceWithCallSignature<number> = createMock<InterfaceWithCallSignature<number>>();
+            expect(propertiesWithGeneric(2)(2)(2).b.b.b.d).toBe(0);
+        });
+    });
+
     describe('for declaration', () => {
         class MyClass {
             public method(): number {

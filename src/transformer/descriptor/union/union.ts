@@ -1,10 +1,11 @@
 import * as ts from 'typescript';
+import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { GetTypes } from '../type/type';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 
-export function GetUnionDescriptor(node: ts.UnionTypeNode): ts.Expression {
-    const findNodes: ts.Node[] = GetTypes(node.types);
+export function GetUnionDescriptor(node: ts.UnionTypeNode, scope: Scope): ts.Expression {
+    const findNodes: ts.Node[] = GetTypes(node.types, scope);
 
     const notDefinedType: ts.Node[] = findNodes.filter((typeNode: ts.TypeNode) => {
         return isNotDefinedType(typeNode);
@@ -14,7 +15,7 @@ export function GetUnionDescriptor(node: ts.UnionTypeNode): ts.Expression {
         return GetUndefinedDescriptor();
     }
 
-    return GetDescriptor(node.types[0]);
+    return GetDescriptor(node.types[0], scope);
 }
 
 function isNotDefinedType(typeNode: ts.Node): boolean {

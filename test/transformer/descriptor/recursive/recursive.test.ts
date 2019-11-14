@@ -32,4 +32,21 @@ describe('recursive', () => {
         expect(mock.b.a).toBe(false);
         expect(mock.b.b.b.b.b.a).toBe(false);
     });
+
+    describe('with extends', () => {
+        interface BasicCalculator extends UiCalculator {
+            a: string;
+        }
+
+        interface UiCalculator {
+            method(): BasicCalculator;
+            b: string;
+        }
+
+        it('should be able to reference to itself ', () => {
+            const properties: BasicCalculator = createMock<BasicCalculator>();
+            expect(properties.b).toBe('');
+            expect(properties.method().method().b).toBe('');
+        });
+    });
 });

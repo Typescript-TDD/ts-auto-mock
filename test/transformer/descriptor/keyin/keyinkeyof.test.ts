@@ -14,6 +14,7 @@ describe('for keyin keyof', () => {
         });
     });
 
+    // https://github.com/uittorio/ts-auto-mock/issues/3
     // describe('of class with return type', () => {
     // 	class Test {
     // 		a: number;

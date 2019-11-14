@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { TypescriptHelper } from '../helper/helper';
+import { TypescriptCreator } from '../../helper/creator';
 
 export class PropertySignatureCache {
     private _cache: ts.PropertyName;
@@ -16,6 +16,6 @@ export class PropertySignatureCache {
     }
 
     public get(): ts.PropertyName {
-        return this._cache || TypescriptHelper.createEmptyProperty().name;
+        return this._cache || TypescriptCreator.createEmptyProperty().name;
     }
 }

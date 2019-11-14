@@ -80,7 +80,7 @@ describe('typescript lib', () => {
         expect(result).toBe('');
     });
 
-    it('should set a promise resolved for a promise wit array', async () => {
+    it('should set a promise resolved for a promise with array', async () => {
         interface Interface {
             a(): Promise<string[]>;
         }
@@ -146,5 +146,59 @@ describe('typescript lib', () => {
 
         expect(secondPromise).toBe('');
         expect(secondPromise2).toBe(0);
+    });
+
+    it('should set a promise resolved for a promise without type', async () => {
+        interface Interface {
+            // @ts-ignore
+            method(): Promise;
+        }
+
+        const properties: Interface = createMock<Interface>();
+        const result: Interface = await properties.method();
+        expect(result).toBeUndefined();
+    });
+
+    it('should set a promise resolved for a promise with multiple type parameter', async () => {
+        interface Interface<T, T2> {
+            a: T2;
+            method(): Promise<Interface<T, T2>>;
+        }
+
+        const properties: Interface<string, number> = createMock<Interface<string, number>>();
+        const result: Interface<string, number> = await properties.method();
+        expect(result.a).toBe(0);
+    });
+
+    it('should set different promises resolved for a promise with type parameter', async () => {
+        interface Interface<T> {
+            method(): Promise<T>;
+        }
+
+        createMock<Interface<string>>();
+        const propertiesReuse: Interface<number> = createMock<Interface<number>>();
+        const result: number = await propertiesReuse.method();
+        expect(result).toBe(0);
+    });
+
+    it('should set a promise for multiple type reference', async () => {
+        type B<T1> = Promise<T1>;
+        type A<T> = B<T>;
+
+        interface Interface {
+            method(): A<string>;
+        }
+
+        const properties: Interface = createMock<Interface>();
+        const result: string = await properties.method();
+        expect(result).toBe('');
+    });
+
+
+    it('should set a promise resolved for a type mocked directly', async () => {
+        type S<T> = Promise<T>;
+        const properties: S<string> = createMock<S<string>>();
+        const result: string = await properties;
+        expect(result).toBe('');
     });
 });

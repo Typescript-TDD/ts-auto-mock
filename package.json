@@ -6,13 +6,16 @@
     "build:transformer": "webpack --config config/modules/transformer/webpack.js",
     "build:modules": "webpack --config config/modules/webpack.js",
     "build": "npm run build:modules && npm run build:transformer",
-    "test": "npm run test:transformer && npm run test:framework",
+    "test": "npm run test:transformer && npm run test:framework && npm run test:frameworkDeprecated",
     "test:debug": "npm run test:transformer DEBUG=true && npm run test:framework DEBUG=true",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
+    "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
     "test:framework": "karma start config/karma/karma.config.framework.js",
+    "test:frameworkDeprecated": "karma start config/karma/karma.config.framework.deprecated.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
-    "preparePublish": "npm run build && npm run copyForPublish"
+    "preparePublish": "npm run build && npm run copyForPublish",
+    "build:playground": "ttsc test/transformer/playground.test.ts"
   },
   "keywords": [
     "typescript",
@@ -48,6 +51,7 @@
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "tslint-loader": "^3.5.4",
+    "ttypescript": "1.5.7",
     "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
