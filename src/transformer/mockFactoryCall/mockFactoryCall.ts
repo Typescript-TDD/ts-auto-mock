@@ -16,9 +16,7 @@ export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scop
         genericDeclaration.addFromTypeReferenceNode(typeReferenceNode, declarationKey);
     }
 
-    if (TypescriptHelper.IsDeclarationThatSupportsGenerics(declaration)) {
-        addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
-    }
+    addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
 
     const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
     const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration);
@@ -47,17 +45,15 @@ function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, 
                 if (extension.typeArguments) {
                     const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(extension.expression);
 
-                    if (TypescriptHelper.IsDeclarationThatSupportsGenerics(extensionDeclaration)) {
-                        const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
+                    const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
 
-                        genericDeclaration.addFromDeclarationExtension(
-                            declarationKey,
-                            extensionDeclaration as GenericDeclarationSupported,
-                            extensionDeclarationKey,
-                            extension);
+                    genericDeclaration.addFromDeclarationExtension(
+                        declarationKey,
+                        extensionDeclaration as GenericDeclarationSupported,
+                        extensionDeclarationKey,
+                        extension);
 
-                        addFromDeclarationExtensions(extensionDeclaration as GenericDeclarationSupported, extensionDeclarationKey, genericDeclaration);
-                    }
+                    addFromDeclarationExtensions(extensionDeclaration as GenericDeclarationSupported, extensionDeclarationKey, genericDeclaration);
                 }
             });
         });

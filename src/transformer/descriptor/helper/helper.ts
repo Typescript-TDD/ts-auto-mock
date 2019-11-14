@@ -4,10 +4,6 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
 export namespace TypescriptHelper {
-    export function IsDeclarationThatSupportsGenerics(node: ts.Node): boolean {
-        return ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node);
-    }
-
     export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
         return ts.isLiteralTypeNode(typeNode) ||
             typeNode.kind === ts.SyntaxKind.StringKeyword ||
