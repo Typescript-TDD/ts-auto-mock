@@ -63,8 +63,8 @@ export namespace TypescriptHelper {
     }
 
     function GetFirstValidDeclaration(declarations: ts.Declaration[]): ts.Declaration {
-        return declarations.filter((declaration: ts.Declaration) => {
+        return declarations.find((declaration: ts.Declaration) => {
             return !ts.isVariableDeclaration(declaration);
-        })[0];
+        });
     }
 }
