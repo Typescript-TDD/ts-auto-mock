@@ -38,6 +38,26 @@ export function GetMockFactoryCallForThis(declaration: ts.Declaration): ts.Expre
     );
 }
 
+export function GetMockFactoryCallIntersection(intersection: ts.IntersectionTypeNode): ts.Expression {
+    const declarations: ts.Declaration[] | ts.TypeLiteralNode[] = intersection.types.map((type: ts.TypeNode) => {
+        if (ts.isTypeReferenceNode(type)) {
+            return TypescriptHelper.GetDeclarationFromNode((type as ts.TypeReferenceNode).typeName);
+        }
+
+        return type as ts.TypeLiteralNode;
+    });
+
+    MockDefiner.instance.getDeclarationIntersectionKeyMap(declarations);
+
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(declarations, intersection);
+
+    return ts.createCall(
+        mockFactoryCall,
+        [],
+        [ts.createArrayLiteral([])],
+    );
+}
+
 function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, declarationKey: string, genericDeclaration: IGenericDeclaration): void {
     if (declaration.heritageClauses) {
         declaration.heritageClauses.forEach((clause: ts.HeritageClause) => {

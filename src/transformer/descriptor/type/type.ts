@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
-import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetTypeImport } from './typeImport';
