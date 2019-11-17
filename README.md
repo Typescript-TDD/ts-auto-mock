@@ -5,6 +5,9 @@
 [![Downloads](https://img.shields.io/npm/dt/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock)
 
 
+![slack](docs/slack_small.png) Need help? Join us on Slack [link](https://join.slack.com/t/typescripttdd/shared_invite/enQtODM3MzExODE0NTk2LTNmYzRhM2M1ZDc5ODVkMmVlZWFjMTM4ZDFhNWU2NDdiYWY1MGMxZjE2ZDE0ZDZlYjY1MTkyYjRhYTQ1NjA1MWQ)
+
+
 A Typescript transformer that will allow you to create mock for any types (Interfaces, Classes, ...) without need to create manual fakes/mocks.
 
 Let's have a look.
