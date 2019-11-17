@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import { GetMockFactoryCallIntersection } from '../../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../../scope/scope';
 import { TypescriptHelper } from '../helper/helper';
-import { GetProperties } from '../properties/properties';
 import { GetTypes } from '../type/type';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 
@@ -17,9 +16,5 @@ export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionT
         return GetUndefinedDescriptor();
     }
 
-    return GetMockFactoryCallIntersection(intersectionTypeNode);
-}
-
-export function GetIntersectionsProperties(node: ts.IntersectionTypeNode): ts.Expression {
-    return GetProperties(node, new Scope());
+    return GetMockFactoryCallIntersection(intersectionTypeNode, scope);
 }

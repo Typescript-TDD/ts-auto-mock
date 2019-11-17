@@ -1,7 +1,7 @@
 import { createMock } from 'ts-auto-mock';
 
 describe('for intersection', () => {
-    describe('interface', () => {
+    describe('different interfaces', () => {
         interface IntersectionA {
             a: string;
         }
