@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { ArrayHelper } from '../../array/array';
 
 export interface DeclarationListCacheElement {
     declarations: ts.Declaration[];
@@ -29,16 +30,7 @@ export class DeclarationListCache {
 
     private _find(declarations: ts.Declaration[]): DeclarationListCacheElement {
         return this._cache.find((intersection: DeclarationListCacheElement) => {
-            const declarationsCopy: ts.Declaration[] = [...declarations];
-
-            intersection.declarations.forEach((declaration: ts.Declaration) => {
-                const indexOfDeclaration: number = declarationsCopy.indexOf(declaration);
-                if (indexOfDeclaration >= 0) {
-                    declarationsCopy.splice(indexOfDeclaration, 1);
-                }
-            });
-
-            return declarationsCopy.length === 0;
+            return ArrayHelper.AreEqual(declarations, intersection.declarations);
         });
     }
 }

@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { ArrayFromLength } from '../array/array';
+import { ArrayHelper } from '../array/array';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { getMockMergeExpression, getMockMergeIteratorExpression } from '../mergeExpression/mergeExpression';
 import { Scope } from '../scope/scope';
@@ -22,13 +22,13 @@ function getNumberFromNumericLiteral(numericLiteral: ts.NumericLiteral): number 
 }
 
 function getMockMergeListExpression(mock: ts.Expression, length: number, defaultValues: ts.Expression): ts.Expression[] {
-    return ArrayFromLength(length).map((index: number) => {
+    return ArrayHelper.ArrayFromLength(length).map((index: number) => {
         return getMockMergeIteratorExpression(mock, defaultValues, ts.createNumericLiteral('' + index));
     });
 }
 
 function getMockListExpression(mock: ts.Expression, length: number): ts.Expression[] {
-    return ArrayFromLength(length).map(() => {
+    return ArrayHelper.ArrayFromLength(length).map(() => {
         return mock;
     });
 }
