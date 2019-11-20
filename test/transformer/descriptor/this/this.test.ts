@@ -145,4 +145,18 @@ describe('This', () => {
             expect(properties.another2.getThis.prop).toBe(0);
         });
     });
+
+    describe('for interface that contains a type literal', () => {
+        interface BaseInterface {
+            getThis: this;
+            typeLiteral: { a: string };
+        }
+
+        it('should be able to reference to itself ', () => {
+            const properties: BaseInterface = createMock<BaseInterface>();
+            expect(properties.typeLiteral.a).toBe('');
+            expect(properties.getThis.typeLiteral.a).toBe('');
+            expect(properties.getThis.getThis.getThis.typeLiteral.a).toBe('');
+        });
+    });
 });
