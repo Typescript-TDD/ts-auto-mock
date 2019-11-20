@@ -6,7 +6,7 @@ import { createImportOnIdentifier } from '../helper/import';
 import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
 import { Scope } from '../scope/scope';
 import { DeclarationCache } from './cache/declarationCache';
-import { FactoryDeclarationListCache } from './cache/factoryDeclarationListCache';
+import { DeclarationListCache } from './cache/declarationListCache';
 import { FactoryUniqueName, PossibleDeclaration } from './factoryUniqueName';
 import { ModuleName } from './modules/moduleName';
 import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
@@ -35,14 +35,14 @@ export class MockDefiner {
     private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
     private _factoryCache: DeclarationCache;
     private _declarationCache: DeclarationCache;
-    private _factoryIntersectionCache: FactoryDeclarationListCache;
+    private _factoryIntersectionCache: DeclarationListCache;
     private _fileName: string;
     private _factoryUniqueName: FactoryUniqueName;
 
     private constructor() {
         this._factoryCache = new DeclarationCache();
         this._declarationCache = new DeclarationCache();
-        this._factoryIntersectionCache = new FactoryDeclarationListCache();
+        this._factoryIntersectionCache = new DeclarationListCache();
         this._factoryUniqueName = new FactoryUniqueName();
     }
 

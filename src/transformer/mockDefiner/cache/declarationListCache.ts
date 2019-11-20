@@ -1,12 +1,12 @@
 import * as ts from 'typescript';
 
-export interface DeclarationCache {
+export interface DeclarationListCacheElement {
     declarations: ts.Declaration[];
     key: string;
 }
 
-export class FactoryDeclarationListCache {
-    private _cache: DeclarationCache[];
+export class DeclarationListCache {
+    private _cache: DeclarationListCacheElement[];
 
     constructor() {
         this._cache = [];
@@ -27,8 +27,8 @@ export class FactoryDeclarationListCache {
         return !!this._find(declarations);
     }
 
-    private _find(declarations: ts.Declaration[]): DeclarationCache {
-        return this._cache.find((intersection: DeclarationCache) => {
+    private _find(declarations: ts.Declaration[]): DeclarationListCacheElement {
+        return this._cache.find((intersection: DeclarationListCacheElement) => {
             const declarationsCopy: ts.Declaration[] = [...declarations];
 
             intersection.declarations.forEach((declaration: ts.Declaration) => {
