@@ -28,6 +28,35 @@ export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scop
     );
 }
 
+export function GetMockFactoryCallIntersection(intersection: ts.IntersectionTypeNode, scope: Scope): ts.Expression {
+    const genericDeclaration: IGenericDeclaration = GenericDeclaration(scope);
+
+    const declarations: ts.Declaration[] | ts.TypeLiteralNode[] = intersection.types.map((type: ts.TypeNode) => {
+        if (ts.isTypeReferenceNode(type)) {
+            const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode((type as ts.TypeReferenceNode).typeName);
+            const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(declaration);
+
+            if (type.typeArguments) {
+                genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
+            }
+
+            addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
+
+            return declaration;
+        }
+
+        return type as ts.TypeLiteralNode;
+    });
+    const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(declarations, intersection);
+
+    return ts.createCall(
+        mockFactoryCall,
+        [],
+        [ts.createArrayLiteral(genericsParametersExpression)],
+    );
+}
+
 export function GetMockFactoryCallForThis(declaration: ts.Declaration): ts.Expression {
     const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration);
 

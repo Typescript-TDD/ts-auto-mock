@@ -3,8 +3,6 @@ import * as ts from 'typescript';
 const reusableTypes: ts.SyntaxKind[] = [
     ts.SyntaxKind.ClassDeclaration,
     ts.SyntaxKind.InterfaceDeclaration,
-    ts.SyntaxKind.TypeLiteral,
-    ts.SyntaxKind.MappedType,
     ts.SyntaxKind.TypeAliasDeclaration,
 ];
 

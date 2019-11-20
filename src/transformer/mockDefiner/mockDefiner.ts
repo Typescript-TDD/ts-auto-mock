@@ -1,10 +1,13 @@
 import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
-import { GetTypeReferenceDescriptor } from '../descriptor/typeReference/typeReference';
+import { GetProperties } from '../descriptor/properties/properties';
+import { TypescriptCreator } from '../helper/creator';
 import { createImportOnIdentifier } from '../helper/import';
 import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
 import { Scope } from '../scope/scope';
-import { FactoryDefinitionCache } from './factoryDefinitionCache';
+import { DeclarationCache } from './cache/declarationCache';
+import { DeclarationListCache } from './cache/declarationListCache';
+import { FactoryUniqueName, PossibleDeclaration } from './factoryUniqueName';
 import { ModuleName } from './modules/moduleName';
 import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
 import { ModulesImportUrl } from './modules/modulesImportUrl';
@@ -12,24 +15,35 @@ import { ModulesImportUrl } from './modules/modulesImportUrl';
 // tslint:disable-next-line:no-any
 const urlSlug: any = require('url-slug');
 
-function GetPossibleDescriptor(node: ts.Node): ts.Expression {
-    const scope: Scope = new Scope();
+interface FactoryRegistrationPerFile {
+    [key: string]: Array<{
+        key: ts.Declaration;
+        factory: ts.Expression
+    }>;
+}
 
-    if (ts.isTypeReferenceNode(node)) {
-        return GetTypeReferenceDescriptor(node, scope);
-    }
-
-    return GetDescriptor(node, scope);
+interface FactoryIntersectionRegistrationPerFile {
+    [key: string]: Array<{
+        keys: ts.Declaration[];
+        factory: ts.Expression
+    }>;
 }
 
 export class MockDefiner {
     private _neededImportIdentifierPerFile: { [key: string]: Array<ModuleNameIdentifier> } = {};
-    private _factoryRegistrationsPerFile: { [key: string]: Array<{ key: ts.Declaration; factory: ts.Expression }> } = {};
-    private _factoryCache: FactoryDefinitionCache;
+    private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
+    private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
+    private _factoryCache: DeclarationCache;
+    private _declarationCache: DeclarationCache;
+    private _factoryIntersectionCache: DeclarationListCache;
     private _fileName: string;
+    private _factoryUniqueName: FactoryUniqueName;
 
     private constructor() {
-        this._factoryCache = new FactoryDefinitionCache();
+        this._factoryCache = new DeclarationCache();
+        this._declarationCache = new DeclarationCache();
+        this._factoryIntersectionCache = new DeclarationListCache();
+        this._factoryUniqueName = new FactoryUniqueName();
     }
 
     private static _instance: MockDefiner;
@@ -61,40 +75,38 @@ export class MockDefiner {
     }
 
     public getTopStatementsForFile(sourceFile: ts.SourceFile): ts.Statement[] {
-        return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile)];
+        return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile), ...this._getExportsIntersectionToAddInFile(sourceFile)];
     }
 
     public initFile(sourceFile: ts.SourceFile): void {
         this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
+        this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName] = [];
     }
 
     public getMockFactory(declaration: ts.Declaration): ts.Expression {
-        const thisFileName: string = this._fileName;
-
         this.setTsAutoMockImportIdentifier();
 
-        const key: string = this._getMockFactoryId(thisFileName, declaration);
+        const key: string = this._getMockFactoryId(declaration);
 
-        return ts.createCall(
-            ts.createPropertyAccess(
-                this._mockRepositoryAccess(thisFileName),
-                ts.createIdentifier('getFactory'),
-            ),
-            [],
-            [ts.createStringLiteral(key)],
-        );
+        return this._getCallGetFactory(key);
     }
 
-    public getDeclarationKeyMap(typeMocked: ts.Declaration): string {
-        if (!this._factoryCache.hasDeclarationKeyMap(typeMocked)) {
-            this._factoryCache.setDeclarationKeyMap(typeMocked, this._factoryCache.createUniqueKeyForFactory(typeMocked));
+    public getMockFactoryIntersection(declarations: ts.Declaration[], type: ts.IntersectionTypeNode): ts.Expression {
+        this.setTsAutoMockImportIdentifier();
+
+        const key: string = this._getMockFactoryIdForIntersections(declarations, type);
+
+        return this._getCallGetFactory(key);
+    }
+
+    public getDeclarationKeyMap(declaration: ts.Declaration): string {
+        if (!this._declarationCache.has(declaration)) {
+            const key: string = this._factoryUniqueName.createForDeclaration(declaration as PossibleDeclaration);
+
+            this._declarationCache.set(declaration, key);
         }
 
-        return this._factoryCache.getDeclarationKeyMap(typeMocked);
-    }
-
-    public hasDeclarationKeyMap(type: ts.Declaration): boolean {
-        return this._factoryCache.hasDeclarationKeyMap(type);
+        return this._declarationCache.get(declaration);
     }
 
     private _createUniqueFileName(name: string): ts.Identifier {
@@ -119,30 +131,58 @@ export class MockDefiner {
         }).identifier;
     }
 
-    private _getMockFactoryId(thisFileName: string, declaration: ts.Declaration): string {
-        if (this._factoryCache.hasFactoryForTypeMock(declaration)) {
-            return this._factoryCache.getFactoryKeyForTypeMock(declaration);
+    private _getMockFactoryId(declaration: ts.Declaration): string {
+        const thisFileName: string = this._fileName;
+
+        if (this._factoryCache.has(declaration)) {
+            return this._factoryCache.get(declaration);
         }
 
-        this._factoryCache.setFactoryKeyForTypeMock(
-            declaration,
-        );
+        const key: string = this._declarationCache.get(declaration);
+
+        this._factoryCache.set(declaration, key);
 
         this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
 
-        const descriptor: ts.Expression = GetPossibleDescriptor(declaration);
+        const descriptor: ts.Expression = GetDescriptor(declaration, new Scope());
 
-        const mockGenericVariable: ts.ParameterDeclaration = ts.createParameter([], [], undefined, MockGenericParameter);
+        const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+
+        const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(descriptor, [mockGenericParameter]);
+
         this._factoryRegistrationsPerFile[thisFileName].push({
             key: declaration,
-            factory: ts.createFunctionExpression(undefined, undefined, undefined, undefined, [mockGenericVariable], undefined,
-                ts.createBlock(
-                    [ts.createReturn(descriptor)],
-                ),
-            ),
+            factory,
         });
 
-        return this._factoryCache.getFactoryKeyForTypeMock(declaration);
+        return key;
+    }
+
+    private _getMockFactoryIdForIntersections(declarations: ts.Declaration[], intersectionTypeNode: ts.IntersectionTypeNode): string {
+        const thisFileName: string = this._fileName;
+
+        if (this._factoryIntersectionCache.has(declarations)) {
+            return this._factoryIntersectionCache.get(declarations);
+        }
+
+        const key: string = this._factoryUniqueName.createForIntersection(declarations);
+
+        this._factoryIntersectionCache.set(declarations, key);
+
+        this._factoryIntersectionsRegistrationsPerFile[thisFileName] = this._factoryIntersectionsRegistrationsPerFile[thisFileName] || [];
+
+        const descriptor: ts.Expression = GetProperties(intersectionTypeNode, new Scope());
+
+        const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+
+        const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(descriptor, [mockGenericParameter]);
+
+        this._factoryIntersectionsRegistrationsPerFile[thisFileName].push({
+            keys: declarations,
+            factory,
+        });
+
+        return key;
     }
 
     private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
@@ -158,22 +198,54 @@ export class MockDefiner {
     private _getExportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
         if (this._factoryRegistrationsPerFile[sourceFile.fileName]) {
             return this._factoryRegistrationsPerFile[sourceFile.fileName]
-                .map((reg: { key: ts.Declaration; factory: ts.Expression }) => this._createRegistration(sourceFile.fileName, reg.key, reg.factory));
+                .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
+                    const key: string = this._factoryCache.get(reg.key);
+
+                    return this._createRegistration(sourceFile.fileName, key, reg.factory);
+                });
         }
 
         return [];
     }
 
-    private _createRegistration(filename: string, key: ts.Declaration, factory: ts.Expression): ts.Statement {
+    private _getExportsIntersectionToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
+        if (this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]) {
+            return this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]
+                .map((reg: { keys: ts.Declaration[]; factory: ts.Expression }) => {
+                    const key: string = this._factoryIntersectionCache.get(reg.keys);
+
+                    return this._createRegistration(sourceFile.fileName, key, reg.factory);
+                });
+        }
+
+        return [];
+    }
+
+    private _createRegistration(fileName: string, key: string, factory: ts.Expression): ts.Statement {
         return ts.createExpressionStatement(
             ts.createCall(
                 ts.createPropertyAccess(
-                    this._mockRepositoryAccess(filename),
+                    this._mockRepositoryAccess(fileName),
                     ts.createIdentifier('registerFactory'),
                 ),
                 [],
-                [ts.createStringLiteral(this._factoryCache.getFactoryKeyForTypeMock(key)), factory],
+                [ts.createStringLiteral(key), factory],
             ),
         );
+    }
+
+    private _getCallGetFactory(key: string): ts.CallExpression {
+        return ts.createCall(
+            ts.createPropertyAccess(
+                this._mockRepositoryAccess(this._fileName),
+                ts.createIdentifier('getFactory'),
+            ),
+            [],
+            [ts.createStringLiteral(key)],
+        );
+    }
+
+    private _getMockGenericParameter(): ts.ParameterDeclaration {
+        return ts.createParameter([], [], undefined, MockGenericParameter);
     }
 }

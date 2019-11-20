@@ -9,6 +9,12 @@ export namespace TypescriptCreator {
         return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
     }
 
+    export function createFunctionExpressionReturn(descriptorToReturn: ts.Expression, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.FunctionExpression {
+        const block: ts.Block = ts.createBlock([ts.createReturn(descriptorToReturn)]);
+
+        return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
+    }
+
     export function createIIFE(block: ts.Block): ts.CallExpression {
         return ts.createCall(
             ts.createParen(ts.createFunctionExpression(

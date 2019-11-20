@@ -16,10 +16,6 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
     const declaration: ts.Declaration = type.symbol.declarations[0];
     const typeDeclaration: ts.Declaration = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
-    if (!MockDefiner.instance.hasDeclarationKeyMap(typeDeclaration)) {
-        return descriptor;
-    }
-
     const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration) + node.name.escapedText;
 
     return createFunctionToAccessToGenericValue(genericKey, descriptor);
