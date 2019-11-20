@@ -25,6 +25,7 @@ import { GetObjectLiteralDescriptor } from './objectLiteral/objectLiteral';
 import { GetPropertyDescriptor } from './property/propertySignature';
 import { GetStringDescriptor } from './string/string';
 import { GetTypeAliasDescriptor } from './typeAlias/typeAlias';
+import { GetTypeLiteralDeclarationDescriptor } from './typeLiteral/typeLiteralDeclaration';
 import { GetTypeParameterDescriptor } from './typeParameter/typeParameter';
 import { GetTypeReferenceDescriptorReusable } from './typeReference/typeReferenceReusable';
 import { GetUndefinedDescriptor } from './undefined/undefined';
@@ -37,6 +38,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.TypeReference:
             return GetTypeReferenceDescriptorReusable(node as ts.TypeReferenceNode, scope);
         case ts.SyntaxKind.TypeLiteral:
+            return GetTypeLiteralDeclarationDescriptor(node as ts.InterfaceDeclaration, scope);
         case ts.SyntaxKind.InterfaceDeclaration:
             return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration, scope);
         case ts.SyntaxKind.ClassDeclaration:
