@@ -101,6 +101,10 @@ mockList[1].id // id1
 The library try to convert the type given to createMock so you dont need to create concrete mock manually.
 [Open this link to see more examples](docs/DETAILS.md)
 
+## Type Not Supported
+The library will convert to null when the type is not supported.
+[Open this link to see what is not supported](docs/NOT_SUPPORTED.md)
+
 ## Extension
 The library allows you to extends some functionality to work nicely with framework like jasmine or jest
 [Open this link to see more examples](docs/EXTENSION.md)
