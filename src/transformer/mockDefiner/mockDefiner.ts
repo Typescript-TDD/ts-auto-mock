@@ -91,6 +91,12 @@ export class MockDefiner {
         return this._getCallGetFactory(key);
     }
 
+    public getMockFactoryByKey(key: string): ts.Expression {
+        this.setTsAutoMockImportIdentifier();
+
+        return this._getCallGetFactory(key);
+    }
+
     public getMockFactoryIntersection(declarations: ts.Declaration[], type: ts.IntersectionTypeNode): ts.Expression {
         this.setTsAutoMockImportIdentifier();
 
@@ -144,7 +150,7 @@ export class MockDefiner {
 
         this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
 
-        const descriptor: ts.Expression = GetDescriptor(declaration, new Scope());
+        const descriptor: ts.Expression = GetDescriptor(declaration, new Scope(key));
 
         const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
@@ -171,7 +177,7 @@ export class MockDefiner {
 
         this._factoryIntersectionsRegistrationsPerFile[thisFileName] = this._factoryIntersectionsRegistrationsPerFile[thisFileName] || [];
 
-        const descriptor: ts.Expression = GetProperties(intersectionTypeNode, new Scope());
+        const descriptor: ts.Expression = GetProperties(intersectionTypeNode, new Scope(key));
 
         const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 

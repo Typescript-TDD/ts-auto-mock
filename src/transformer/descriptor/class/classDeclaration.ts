@@ -3,7 +3,5 @@ import { Scope } from '../../scope/scope';
 import { GetProperties } from '../properties/properties';
 
 export function GetClassDeclarationDescriptor(node: ts.ClassDeclaration, scope: Scope): ts.Expression {
-    scope.declarationNode = node;
-
     return GetProperties(node, scope);
 }

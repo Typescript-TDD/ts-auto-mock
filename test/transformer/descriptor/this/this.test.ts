@@ -161,4 +161,25 @@ describe('This', () => {
             expect(properties.getThisAfter.getThisBefore.getThisAfter.typeLiteral.a).toBe('');
         });
     });
+
+    describe('for intersections', () => {
+        interface A {
+            intersection: A & B;
+            mySelfA: this;
+            a: string;
+        }
+
+        interface B {
+            mySelfB: this;
+            b: number;
+        }
+
+        it('should be able to reference to itself', () => {
+            const properties: A = createMock<A>();
+            expect(properties.mySelfA.a).toBe('');
+            expect(properties.a).toBe('');
+            expect(properties.intersection.mySelfB.b).toBe(0);
+            expect(properties.intersection.mySelfB.a).toBe('');
+        });
+    });
 });

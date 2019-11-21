@@ -57,8 +57,8 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
     );
 }
 
-export function GetMockFactoryCallForThis(declaration: ts.Declaration): ts.Expression {
-    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration);
+export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(mockKey);
 
     return ts.createCall(
         mockFactoryCall,
