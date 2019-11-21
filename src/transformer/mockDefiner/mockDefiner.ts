@@ -84,23 +84,19 @@ export class MockDefiner {
     }
 
     public getMockFactory(declaration: ts.Declaration): ts.Expression {
-        this.setTsAutoMockImportIdentifier();
-
         const key: string = this._getMockFactoryId(declaration);
 
-        return this._getCallGetFactory(key);
+        return this.getMockFactoryByKey(key);
+    }
+
+    public getMockFactoryIntersection(declarations: ts.Declaration[], type: ts.IntersectionTypeNode): ts.Expression {
+        const key: string = this._getMockFactoryIdForIntersections(declarations, type);
+
+        return this.getMockFactoryByKey(key);
     }
 
     public getMockFactoryByKey(key: string): ts.Expression {
         this.setTsAutoMockImportIdentifier();
-
-        return this._getCallGetFactory(key);
-    }
-
-    public getMockFactoryIntersection(declarations: ts.Declaration[], type: ts.IntersectionTypeNode): ts.Expression {
-        this.setTsAutoMockImportIdentifier();
-
-        const key: string = this._getMockFactoryIdForIntersections(declarations, type);
 
         return this._getCallGetFactory(key);
     }
