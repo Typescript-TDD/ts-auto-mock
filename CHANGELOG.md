@@ -19,92 +19,18 @@ future releases in favour of provideMethodWithDeferredValue
 
 Provider.provideMethod is deprecated changed:
 Before:
-        Provider.instance.provideMethod((name: string, value: any) => {
-            ...
-        });
+```ts
+Provider.instance.provideMethod((name: string, value: any) => {
+    ...
+});
+```
 After:
-    Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any) => {
-        ...
-    });
-
-Read the DOCS for more information
-
-* add global scope and move type reference cache in the scope
-
-* remove space
-
-* init scope
-
-* add first version - extend generic still doesnt work
-
-* remove unused method
-
-* add back the new generic tests
-
-* remove unused file, disable extensions, intersection and ts lib (WIP)
-
-* simplify generic function
-
-* merge generic tests and add reuse test
-
-* remove unused files
-
-* re enable working tests and add some info for this branch
-
-* add test and comment to find test to fix
-
-* add enumerable to object so it will have the correct output and add support to recursive call signatures
-
-* fix type generic case
-
-* restric interface to specific types so it will be easier to extend it
-
-* rename function
-
-* first working version generic extends
-
-* remove unused descriptor and add more test to support types
-
-* add more tests
-
-* make sure factory cache is not exposed, divide caches
-
-* refactor type parameter
-
-* add more test and refactor the mess in mock factory call
-
-* add more tests
-
-* add more tests
-
-* added back promises implementation and all test
-
-* remove comment we will write test scenario when available
-
-* add direct type test mock
-
-* remove unused import
-
-* remove comments
-
-* remove unused field
-
-* document playground command
-
-* Update README.md
-
-* remove unnecessary code, rename text and simplify for
-
-* remove unnecessary create mock in the test
-
-* remove unnecessary if
-
-* deprecate getMethod and add new method to make sure with don't introduce breaking changes
-
-* update deprecated comment
-
-* update
-
+```ts
+Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any) => {
+    ...
+});
+```
+Read the documentation for more information
 
 
 <a name="1.2.1"></a>
