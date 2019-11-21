@@ -55,7 +55,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.Identifier:
             return GetIdentifierDescriptor(node as ts.Identifier, scope);
         case ts.SyntaxKind.ThisType:
-            return GetMockFactoryCallForThis(scope.declarationNode);
+            return GetMockFactoryCallForThis(scope.currentMockKey);
         case ts.SyntaxKind.ImportSpecifier:
             return GetImportDescriptor(node as ts.ImportSpecifier, scope);
         case ts.SyntaxKind.TypeParameter:

@@ -2,13 +2,13 @@ import * as ts from 'typescript';
 
 export type InterfaceOrClassDeclaration = ts.InterfaceDeclaration | ts.ClassDeclaration;
 export class Scope {
-    private _declarationNode: InterfaceOrClassDeclaration;
-
-    set declarationNode(node: InterfaceOrClassDeclaration) {
-        this._declarationNode = node;
+    constructor(currentMockKey?: string) {
+        this._currentMockKey = currentMockKey;
     }
 
-    get declarationNode(): InterfaceOrClassDeclaration {
-        return this._declarationNode;
+    private readonly _currentMockKey: string;
+
+    get currentMockKey(): string {
+        return this._currentMockKey;
     }
 }
