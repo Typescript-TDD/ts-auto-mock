@@ -10,7 +10,7 @@ class Class {
 
 type KeyOf = {[key in keyof Class]: Class[key]};
 const mock = createMock<KeyOf>();
-mock.a will be null
+mock.a // will be null
 ```
 
 ## ConditionalType

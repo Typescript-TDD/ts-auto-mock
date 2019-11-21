@@ -102,7 +102,7 @@ The library try to convert the type given to createMock so you dont need to crea
 [Open this link to see more examples](docs/DETAILS.md)
 
 ## Type Not Supported
-The library will convert to null when the type is not recognized yet.
+The library will convert to null when the type is not supported.
 [Open this link to see what is not supported](docs/NOT_SUPPORTED.md)
 
 ## Extension
