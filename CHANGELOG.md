@@ -1,3 +1,112 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/uittorio/ts-auto-mock/compare/v1.2.1...v1.3.0) (2019-11-21)
+
+
+### Bug Fixes
+
+* **this:** make sure literal type will not interfere with "this" reference ([fd2270b](https://github.com/uittorio/ts-auto-mock/commit/fd2270b)), closes [#88](https://github.com/uittorio/ts-auto-mock/issues/88) [#88](https://github.com/uittorio/ts-auto-mock/issues/88)
+
+
+### feature
+
+* **genericReuse:** add types with generic to mock factory ([ddd94b0](https://github.com/uittorio/ts-auto-mock/commit/ddd94b0))
+
+
+### BREAKING CHANGES
+
+* **genericReuse:** extensions (Provider) provideMethod will be deprecated in
+future releases in favour of provideMethodWithDeferredValue
+
+Provider.provideMethod is deprecated changed:
+Before:
+        Provider.instance.provideMethod((name: string, value: any) => {
+            ...
+        });
+After:
+    Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any) => {
+        ...
+    });
+
+Read the DOCS for more information
+
+* add global scope and move type reference cache in the scope
+
+* remove space
+
+* init scope
+
+* add first version - extend generic still doesnt work
+
+* remove unused method
+
+* add back the new generic tests
+
+* remove unused file, disable extensions, intersection and ts lib (WIP)
+
+* simplify generic function
+
+* merge generic tests and add reuse test
+
+* remove unused files
+
+* re enable working tests and add some info for this branch
+
+* add test and comment to find test to fix
+
+* add enumerable to object so it will have the correct output and add support to recursive call signatures
+
+* fix type generic case
+
+* restric interface to specific types so it will be easier to extend it
+
+* rename function
+
+* first working version generic extends
+
+* remove unused descriptor and add more test to support types
+
+* add more tests
+
+* make sure factory cache is not exposed, divide caches
+
+* refactor type parameter
+
+* add more test and refactor the mess in mock factory call
+
+* add more tests
+
+* add more tests
+
+* added back promises implementation and all test
+
+* remove comment we will write test scenario when available
+
+* add direct type test mock
+
+* remove unused import
+
+* remove comments
+
+* remove unused field
+
+* document playground command
+
+* Update README.md
+
+* remove unnecessary code, rename text and simplify for
+
+* remove unnecessary create mock in the test
+
+* remove unnecessary if
+
+* deprecate getMethod and add new method to make sure with don't introduce breaking changes
+
+* update deprecated comment
+
+* update
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/uittorio/ts-auto-mock/compare/0.0.2...1.2.1) (2019-10-29)
 
