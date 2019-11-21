@@ -24,7 +24,7 @@ export function isFromTsAutoMock(signature: ts.Signature): boolean {
     const fileName: string = signature.declaration.getSourceFile().fileName;
 
     const isCreateMockUrl: boolean = path.relative(fileName, createMockTs) === '';
-    if (fileName.indexOf('create-mock.d.ts') > -1 && isCreateMockUrl) {
+    if (fileName.indexOf('create-mock.d.ts') > -1 && !isCreateMockUrl) {
         TransformerLogger().unexpectedCreateMock(fileName, createMockTs);
     }
 
