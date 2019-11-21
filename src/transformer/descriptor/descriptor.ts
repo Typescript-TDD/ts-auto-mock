@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { TransformerLogger } from '../logger/transformerLogger';
 import { GetMockFactoryCallForThis } from '../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../scope/scope';
 import { GetArrayDescriptor } from './array/array';
@@ -112,8 +113,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.CallExpression:
             return node as ts.CallExpression;
         default:
-            // tslint:disable-next-line:no-console
-            console.log('NOT IMPLEMENTED ' + ts.SyntaxKind[node.kind]);
+            TransformerLogger().typeNotSupported(ts.SyntaxKind[node.kind]);
             return GetNullDescriptor();
     }
 }
