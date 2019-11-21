@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 
 export type InterfaceOrClassDeclaration = ts.InterfaceDeclaration | ts.ClassDeclaration;
 export class Scope {
-    constructor(currentMockKey: string) {
+    constructor(currentMockKey?: string) {
         this._currentMockKey = currentMockKey;
     }
 
