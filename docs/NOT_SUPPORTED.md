@@ -24,12 +24,13 @@ type TypeName<T> =
     T extends Function ? "function" :
     "object";
 
+interface Test {
+  conditional: TypeName<string>;
+}
 
-type T0 = TypeName<string>;  // will be null
-type T1 = TypeName<"a">;  // will be null
-type T2 = TypeName<true>;  // will be null
-type T3 = TypeName<() => void>;  // will be null
-type T4 = TypeName<string[]>;  // will be null
+const mock = createMock<Test>();
+
+mock.conditional // should be string. It will be null
 ```
 
 ## ConstructorType
