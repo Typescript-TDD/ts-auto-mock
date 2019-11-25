@@ -7,7 +7,7 @@ function ProcessService(process) {
             processArguments.forEach((argument) => {
                 const values = argument.split('=');
                 if (argumentName === values[0])
-                    valueToFind =  values[1];
+                    valueToFind = values[1];
             });
 
             return valueToFind;

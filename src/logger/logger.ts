@@ -1,6 +1,6 @@
 import * as winston from 'winston';
 import { AbstractConfigSet } from 'winston/lib/winston/config';
-import { GetTsAutoMockDebugOptions, TsAutoMockDebugOptions } from '../options/options';
+import { GetTsAutoMockDebugOptions, TsAutoMockDebugOptions } from '../options/debug';
 import { ConsoleLogger } from './consoleLogger';
 import { FileLogger } from './fileLogger';
 import { ILogger } from './logger.interface';

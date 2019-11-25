@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { GetTsAutoMockCacheOptions, TsAutoMockCacheOptions } from '../../options/cache';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { GetProperties } from '../descriptor/properties/properties';
 import { TypescriptCreator } from '../helper/creator';
@@ -38,12 +39,14 @@ export class MockDefiner {
     private _factoryIntersectionCache: DeclarationListCache;
     private _fileName: string;
     private _factoryUniqueName: FactoryUniqueName;
+    private readonly _cacheEnabled: TsAutoMockCacheOptions;
 
     private constructor() {
         this._factoryCache = new DeclarationCache();
         this._declarationCache = new DeclarationCache();
         this._factoryIntersectionCache = new DeclarationListCache();
         this._factoryUniqueName = new FactoryUniqueName();
+        this._cacheEnabled = GetTsAutoMockCacheOptions();
     }
 
     private static _instance: MockDefiner;
@@ -75,10 +78,20 @@ export class MockDefiner {
     }
 
     public getTopStatementsForFile(sourceFile: ts.SourceFile): ts.Statement[] {
-        return [...this._getImportsToAddInFile(sourceFile), ...this._getExportsToAddInFile(sourceFile), ...this._getExportsIntersectionToAddInFile(sourceFile)];
+        return [
+            ...this._getImportsToAddInFile(sourceFile),
+            ...this._getExportsToAddInFile(sourceFile),
+            ...this._getExportsIntersectionToAddInFile(sourceFile),
+        ];
     }
 
     public initFile(sourceFile: ts.SourceFile): void {
+        if (!this._cacheEnabled) {
+            this._factoryCache = new DeclarationCache();
+            this._declarationCache = new DeclarationCache();
+            this._factoryIntersectionCache = new DeclarationListCache();
+            this._factoryUniqueName = new FactoryUniqueName();
+        }
         this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
         this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName] = [];
     }

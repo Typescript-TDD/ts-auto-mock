@@ -1,26 +1,21 @@
+import { TsAutoMockCacheOptions } from './cache';
+import { TsAutoMockDebugOptions } from './debug';
+import { defaultOptions } from './default';
+
 export interface TsAutoMockOptions {
     debug: TsAutoMockDebugOptions;
+    cacheBetweenTests: TsAutoMockCacheOptions;
 }
 
-const defaultOptions: TsAutoMockOptions = {
-    debug: false,
-};
-
 let options: TsAutoMockOptions = null;
-
-export type TsAutoMockDebugOptions = 'file' | 'console' | boolean;
 
 export function SetTsAutoMockOptions(_options: TsAutoMockOptions): void {
     options = _options;
 }
 
-export function GetTsAutoMockDebugOptions(): TsAutoMockDebugOptions {
-    return GetOptionByKey('debug');
-}
-
-function GetOptionByKey<T extends keyof TsAutoMockOptions>(optionKey: keyof TsAutoMockOptions): TsAutoMockOptions[T] {
+export function GetOptionByKey<T extends keyof TsAutoMockOptions>(optionKey: T): TsAutoMockOptions[T] {
     if (options) {
-        return options[optionKey] || defaultOptions[optionKey];
+        return options.hasOwnProperty(optionKey) ? options[optionKey] : defaultOptions[optionKey];
     }
 
     return defaultOptions[optionKey];
