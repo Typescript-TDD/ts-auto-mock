@@ -1,5 +1,5 @@
 # Ts Auto Mock
-[![CircleCI](https://circleci.com/gh/uittorio/ts-auto-mock/tree/master.svg?style=svg)](https://circleci.com/gh/uittorio/ts-auto-mock/tree/master) 
+[![CircleCI](https://circleci.com/gh/Typescript-TDD/ts-auto-mock.svg?style=svg)](https://circleci.com/gh/Typescript-TDD/ts-auto-mock)
 [![npm version](https://badge.fury.io/js/ts-auto-mock.svg)](https://badge.fury.io/js/ts-auto-mock)
 [![Downloads](https://img.shields.io/npm/dt/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock)
 
