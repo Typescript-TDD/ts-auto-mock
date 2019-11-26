@@ -1,3 +1,13 @@
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/uittorio/ts-auto-mock/compare/v1.3.1...v1.4.0) (2019-11-26)
+
+
+### Features
+
+* **config:** add option to disable cache between files as a workaround until [#101](https://github.com/uittorio/ts-auto-mock/issues/101) is completed ([92cd1d7](https://github.com/uittorio/ts-auto-mock/commit/92cd1d7))
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/uittorio/ts-auto-mock/compare/v1.3.0...v1.3.1) (2019-11-21)
 
