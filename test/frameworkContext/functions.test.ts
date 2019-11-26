@@ -29,6 +29,7 @@ describe('functions', () => {
             first: Function;
             second: Function;
         }
+
         const anotherMock: AMock = createMock<AMock>();
 
         expect((anotherMock.first as jasmine.Spy).and.identity).toBe('first');

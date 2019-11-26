@@ -3,12 +3,14 @@ const ProcessService = require('../process/process');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config, url) {
-    const debug = ProcessService(process).getArgument('DEBUG');
+    const processService = ProcessService(process);
+    const debug = processService.getArgument('DEBUG');
+    const disableCache = processService.getArgument('DISABLECACHE');
 
     return {
         basePath: '',
         frameworks: ['jasmine'],
-        webpack: webpackConfig(debug),
+        webpack: webpackConfig(debug, disableCache),
         webpackMiddleware: {
             stats: 'errors-only'
         },
@@ -38,5 +40,4 @@ module.exports = function(config, url) {
         browsers: ['ChromeHeadless'],
         singleRun: true
     }
-
 };
