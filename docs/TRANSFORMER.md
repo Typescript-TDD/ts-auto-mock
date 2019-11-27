@@ -33,11 +33,31 @@ module.exports = {
 ```
 
 ### ttypescript
-
-See [examples/ttypescript](examples/ttypescript) for detail.
 See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/README.md) for how to use this with module bundlers such as webpack or Rollup.
 
 tsconfig.json
+```json
+{
+  "compilerOptions": {
+    ...,
+    "plugins": [
+      { "transform": "ts-auto-mock/transformer" }
+    ]
+  },
+  ...
+}
+```
+
+### ts-patch
+See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md) 
+
+```js 
+npm i -g ts-patch
+ts-patch install
+```
+
+tsconfig.json
+
 ```json
 {
   "compilerOptions": {
