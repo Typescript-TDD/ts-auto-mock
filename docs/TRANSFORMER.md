@@ -69,3 +69,45 @@ tsconfig.json
   ...
 }
 ```
+
+### ts-node
+#### mocha
+tsnode.js
+```js
+const tsAutoMockTransformer = require('ts-auto-mock/transformer').default;
+
+require("ts-node").register({
+  transformers: program => ({
+    before: [
+      tsAutoMockTransformer(program)
+    ]
+  })
+});
+```
+
+Command to run
+
+`mocha --require './tsnode.js' --watch-extensions ts,tsx "test/**/*.{ts,tsx}"`
+
+#### mocha + ttypescript
+tsnode.js
+```js
+require("ts-node").register({ compiler: 'ttypescript' });
+```
+
+tsconfig.json
+```json
+{
+  "compilerOptions": {
+    ...,
+    "plugins": [
+      { "transform": "ts-auto-mock/transformer" }
+    ]
+  },
+  ...
+}
+```
+
+Command to run
+
+`mocha --require './tsnode.js' --watch-extensions ts,tsx "test/**/*.{ts,tsx}"`
