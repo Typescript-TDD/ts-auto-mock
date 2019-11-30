@@ -2,7 +2,7 @@
 [![Actions Status](https://github.com/Typescript-TDD/ts-auto-mock/workflows/Develop/badge.svg)](https://github.com/Typescript-TDD/ts-auto-mock/actions)
 [![CircleCI](https://circleci.com/gh/Typescript-TDD/ts-auto-mock.svg?style=svg)](https://circleci.com/gh/Typescript-TDD/ts-auto-mock)
 [![npm version](https://badge.fury.io/js/ts-auto-mock.svg)](https://badge.fury.io/js/ts-auto-mock)
-[![Downloads](https://img.shields.io/npm/dt/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock)
+[![Downloads](https://img.shields.io/npm/dt/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock) [![Greenkeeper badge](https://badges.greenkeeper.io/Typescript-TDD/ts-auto-mock.svg)](https://greenkeeper.io/)
 
 ![slack](docs/slack_small.png) Need help? Join us on Slack [link](https://join.slack.com/t/typescripttdd/shared_invite/enQtODM3MzExODE0NTk2LTNmYzRhM2M1ZDc5ODVkMmVlZWFjMTM4ZDFhNWU2NDdiYWY1MGMxZjE2ZDE0ZDZlYjY1MTkyYjRhYTQ1NjA1MWQ)
 
