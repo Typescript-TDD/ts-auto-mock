@@ -23,7 +23,6 @@ module.exports = function (debug, disableCache) {
                     test: /\.ts$/,
                     loader: 'awesome-typescript-loader',
                     options: {
-                        configFileName: "test/tsconfig.json",
                         getCustomTransformers: (program) => ({
                             before: [transformer.default(program, {
                                 debug: debug ? 'file' : false,
