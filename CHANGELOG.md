@@ -1,3 +1,13 @@
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/uittorio/ts-auto-mock/compare/v1.4.0...v1.4.1) (2019-11-30)
+
+
+### Bug Fixes
+
+* **enum:** add module declaration enum support ([4642520](https://github.com/uittorio/ts-auto-mock/commit/4642520))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/uittorio/ts-auto-mock/compare/v1.3.1...v1.4.0) (2019-11-26)
 
