@@ -16,7 +16,7 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
     "preparePublish": "npm run build && npm run copyForPublish",
-    "build:playground": "ttsc test/transformer/playground.test.ts"
+    "build:playground": "ttsc --project tsconfig.playground.json"
   },
   "keywords": [
     "typescript",

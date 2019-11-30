@@ -14,9 +14,9 @@
       "dom"
     ],
     "paths": {
-      "ts-auto-mock": ["src"],
-      "ts-auto-mock/extension": ["src/extension"],
-      "ts-auto-mock/repository": ["src/repository"]
+      "ts-auto-mock": ["dist"],
+      "ts-auto-mock/extension": ["dist/extension"],
+      "ts-auto-mock/repository": ["dist/repository"]
     },
     "baseUrl": "./"
   }
