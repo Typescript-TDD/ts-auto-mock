@@ -1,8 +1,8 @@
 import { createMock } from 'ts-auto-mock';
 
 describe('constructorType', () => {
-  describe('of an interface', function() {
-    it('should create a concrete newable type of the interface', function() {
+  describe('of an interface', () => {
+    it('should create a concrete newable type of the interface', () => {
       interface Test {
         a: string;
         b: number;
@@ -15,7 +15,7 @@ describe('constructorType', () => {
       expect(mockInstance.b).toEqual(0);
     });
     
-    it('should not create a singleton newable type of the interface', function() {
+    it('should not create a singleton newable type of the interface', () => {
       interface Test {
         a: string;
         b: number;
@@ -36,8 +36,8 @@ describe('constructorType', () => {
     });
   });
   
-  describe('of an class', function() {
-    it('should create a concrete newable type of the class', function() {
+  describe('of an class', () => {
+    it('should create a concrete newable type of the class', () => {
       class Test {
         a: string;
         b: number;
@@ -51,8 +51,8 @@ describe('constructorType', () => {
     });
   });
 
-  describe('in a property', function() {
-    it('should create a concrete newable type in the property', function() {
+  describe('in a property', () => {
+    it('should create a concrete newable type in the property', () => {
       interface Test {
         a: string;
         b: number;
@@ -67,8 +67,8 @@ describe('constructorType', () => {
     });
   });
 
-  describe('in a method', function() {
-    it('should create a concrete newable type as a method returned value', function() {
+  describe('in a method', () => {
+    it('should create a concrete newable type as a method returned value', () => {
       interface Test {
         a: string;
         b: number;
@@ -83,8 +83,8 @@ describe('constructorType', () => {
     });
   });
 
-  describe('from a type', function() {
-    it('should create a concrete newable type', function() {
+  describe('from a type', () => {
+    it('should create a concrete newable type', () => {
       interface Test {
         a: string;
         b: number;
