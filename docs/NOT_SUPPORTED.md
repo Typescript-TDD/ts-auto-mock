@@ -33,18 +33,6 @@ const mock = createMock<Test>();
 mock.conditional // should be string. It will be null
 ```
 
-## ConstructorType
-
-This scenario needs to be investigated
-
-```ts
-interface Test {
-    toConstructor(): new (): Test
-}
-const mock = createMock<Test>();
-mock.toConstructor() // will be null
-```
-
 ## TypeQuery
 [bug](https://github.com/uittorio/ts-auto-mock/issues/91)
 
