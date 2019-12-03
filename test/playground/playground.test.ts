@@ -9,11 +9,16 @@ import { createMock } from 'ts-auto-mock';
  */
 
 it('should work', () => {
+    interface Newable {
+        b: string;
+    }
+    
     interface Interface {
-        a: string;
+        a: new () => Newable;
+        b: Newable;
     }
 
     const properties: Interface = createMock<Interface>();
 
-    expect(properties.a).toEqual('');
+    expect(new (properties.a)().b).toEqual('');
 });
