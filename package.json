@@ -10,6 +10,7 @@
     "test:unit": "karma start config/karma/karma.config.unit.js",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
     "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
+    "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js",
     "test:framework:context": "karma start config/karma/karma.config.framework.context.js",
     "test:frameworkDeprecated": "karma start config/karma/karma.config.framework.deprecated.js",
     "test:framework": "karma start config/karma/karma.config.framework.js DISABLECACHE=true",

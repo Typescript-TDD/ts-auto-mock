@@ -7,6 +7,7 @@ import { GetBooleanDescriptor } from './boolean/boolean';
 import { GetBooleanFalseDescriptor } from './boolean/booleanFalse';
 import { GetBooleanTrueDescriptor } from './boolean/booleanTrue';
 import { GetClassDeclarationDescriptor } from './class/classDeclaration';
+import { GetConstructorTypeDescriptor } from './constructor/constructorType';
 import { GetEnumDeclarationDescriptor } from './enum/enumDeclaration';
 import { GetExpressionWithTypeArgumentsDescriptor } from './expression/expressionWithTypeArguments';
 import { GetIdentifierDescriptor } from './identifier/identifier';
@@ -74,6 +75,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.ArrowFunction:
         case ts.SyntaxKind.FunctionExpression:
             return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction, scope);
+        case ts.SyntaxKind.ConstructorType:
+            return GetConstructorTypeDescriptor(node as ts.ConstructorTypeNode, scope);
         case ts.SyntaxKind.UnionType:
             return GetUnionDescriptor(node as ts.UnionTypeNode, scope);
         case ts.SyntaxKind.IntersectionType:

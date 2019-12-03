@@ -41,7 +41,7 @@ mock.name // ""
 ```
 ## Classes
 ```ts
-interface Person {
+class Person {
     private _id: string;
     name: string 
 }
@@ -211,4 +211,16 @@ interface Interface {
 
 const mock = createMock<Interface>();
 mock // { intersection: { a: "", b: 0 } }
+```
+
+## ConstructorType
+
+```ts
+interface Test {
+    a: string;
+}
+const mockType = createMock<new () => Test>();
+const mock = new mockType();
+
+mock = // { a: "" }
 ```
