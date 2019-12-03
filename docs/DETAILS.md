@@ -39,6 +39,28 @@ mock() // 0
 mock.name // ""
 
 ```
+## Interfaces with construct signatures
+For overload constructors it will use the first one
+```ts
+interface PersonWithHat {
+    hatSize: number;
+}
+
+interface PersonWithoutHat {
+    shirtSize: number;
+}
+
+interface Person {
+    new (hatSize: number): PersonWithHat
+    new (): PersonWithoutHat
+    name: string
+}
+
+const mock = createMock<Person>();
+new mock() // { hatSize: 0 }
+mock.name // ""
+
+```
 ## Classes
 ```ts
 class Person {
