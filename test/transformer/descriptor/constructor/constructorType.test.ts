@@ -36,7 +36,7 @@ describe('constructorType', () => {
     });
   });
   
-  describe('of an class', () => {
+  describe('of a class', () => {
     it('should create a concrete newable type of the class', () => {
       class Test {
         a: string;
