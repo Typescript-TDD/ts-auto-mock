@@ -70,6 +70,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration, scope);
         case ts.SyntaxKind.FunctionType:
             return GetFunctionTypeDescriptor(node as ts.FunctionTypeNode, scope);
+        case ts.SyntaxKind.ConstructSignature:
+            return GetFunctionTypeDescriptor(node as ts.ConstructSignatureDeclaration, scope);
         case ts.SyntaxKind.CallSignature:
             return GetFunctionTypeDescriptor(node as ts.CallSignatureDeclaration, scope);
         case ts.SyntaxKind.ArrowFunction:

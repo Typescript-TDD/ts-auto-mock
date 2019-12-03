@@ -88,6 +88,68 @@ describe('for methods', () => {
         });
     });
 
+    describe('for interface construct signature', () => {
+        interface InterfaceWithConstructSignature {
+            new (a: number): { a: number };
+            b: string;
+        }
+
+        interface InterfaceWithConstructSignatureReturn {
+            new (a: number): InterfaceWithConstructSignature;
+            b: string;
+        }
+
+        interface InterfaceWithConstructSignatureOverload {
+            new (a: number): { a: number };
+            new (b: string): { b: string };
+            new (): { c: Date };
+        }
+
+        it('should set the constructor and properties', () => {
+            const properties: InterfaceWithConstructSignature = createMock<InterfaceWithConstructSignature>();
+            expect(new properties(2).a).toBe(0);
+            expect(properties.b).toBe('');
+        });
+
+        it('should set the constructor with return value constructor', () => {
+            const properties: InterfaceWithConstructSignatureReturn = createMock<InterfaceWithConstructSignatureReturn>();
+            expect(new (new properties(2))(2).a).toBe(0);
+            expect(new properties(2).b).toBe('');
+            expect(properties.b).toBe('');
+        });
+
+        it('should use the first overload if any', () => {
+            const properties: InterfaceWithConstructSignatureOverload = createMock<InterfaceWithConstructSignatureOverload>();
+            //tslint:disable-next-line
+            expect((new properties() as any).a).toBe(0);
+        });
+    });
+
+    describe('for interface construct signature', () => {
+        interface InterfaceWithCallSignature {
+            new (a: number): { a: number };
+            b: string;
+        }
+
+        interface InterfaceWithCallSignatureReturn {
+            new (a: number): InterfaceWithCallSignature;
+            b: string;
+        }
+
+        it('should set the constructor and properties', () => {
+            const properties: InterfaceWithCallSignature = createMock<InterfaceWithCallSignature>();
+            expect(new properties(2).a).toBe(0);
+            expect(properties.b).toBe('');
+        });
+
+        it('should set the constructor with return value constructor', () => {
+            const properties: InterfaceWithCallSignatureReturn = createMock<InterfaceWithCallSignatureReturn>();
+            expect(new (new properties(2))(2).a).toBe(0);
+            expect(new properties(2).b).toBe('');
+            expect(properties.b).toBe('');
+        });
+    });
+
     describe('for declaration', () => {
         class MyClass {
             public method(): number {

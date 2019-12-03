@@ -9,7 +9,9 @@ export function GetProperties(node: ts.Node, scope: Scope): ts.Expression {
     const type: ts.Type = typeChecker.getTypeAtLocation(node);
     const symbols: ts.Symbol[] = typeChecker.getPropertiesOfType(type);
 
-    const signatures: ReadonlyArray<ts.Signature> = typeChecker.getSignaturesOfType(type, SignatureKind.Call);
+    const signatures: Array<ts.Signature> = [];
+    Array.prototype.push.apply(signatures, typeChecker.getSignaturesOfType(type, SignatureKind.Call));
+    Array.prototype.push.apply(signatures, typeChecker.getSignaturesOfType(type, SignatureKind.Construct));
 
     return GetMockPropertiesFromSymbol(symbols, signatures, scope);
 }
