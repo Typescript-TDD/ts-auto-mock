@@ -82,4 +82,21 @@ describe('constructorType', () => {
       expect(instance.b).toEqual(0);
     });
   });
+
+  describe('from a type', function() {
+    it('should create a concrete newable type', function() {
+      interface Test {
+        a: string;
+        b: number;
+      }
+
+      type TestType = new () => Test;
+
+      const mockType: TestType = createMock<TestType>();
+      const instance: Test = new mockType();
+
+      expect(instance.a).toEqual('');
+      expect(instance.b).toEqual(0);
+    });
+  });
 });
