@@ -1,7 +1,11 @@
 import * as ts from 'typescript';
+import { printer } from '../../printer';
+import { TypescriptCreator } from '../helper/creator';
 import { TransformerLogger } from '../logger/transformerLogger';
-import { GetMockFactoryCallForThis } from '../mockFactoryCall/mockFactoryCall';
+import { MockDefiner } from '../mockDefiner/mockDefiner';
+import { GetMockFactoryCall, GetMockFactoryCallForThis } from '../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../scope/scope';
+import { TypeChecker } from '../typeChecker/typeChecker';
 import { GetArrayDescriptor } from './array/array';
 import { GetBooleanDescriptor } from './boolean/boolean';
 import { GetBooleanFalseDescriptor } from './boolean/booleanFalse';
@@ -10,6 +14,7 @@ import { GetClassDeclarationDescriptor } from './class/classDeclaration';
 import { GetConstructorTypeDescriptor } from './constructor/constructorType';
 import { GetEnumDeclarationDescriptor } from './enum/enumDeclaration';
 import { GetExpressionWithTypeArgumentsDescriptor } from './expression/expressionWithTypeArguments';
+import { TypescriptHelper } from './helper/helper';
 import { GetIdentifierDescriptor } from './identifier/identifier';
 import { GetImportDescriptor } from './import/import';
 import { GetImportEqualsDescriptor } from './import/importEquals';
@@ -30,10 +35,29 @@ import { GetStringDescriptor } from './string/string';
 import { GetTypeAliasDescriptor } from './typeAlias/typeAlias';
 import { GetTypeLiteralDescriptor } from './typeLiteral/typeLiteral';
 import { GetTypeParameterDescriptor } from './typeParameter/typeParameter';
-import { GetTypeQueryDescriptor } from './typeQuery/typeQuery';
 import { GetTypeReferenceDescriptor } from './typeReference/typeReference';
 import { GetUndefinedDescriptor } from './undefined/undefined';
 import { GetUnionDescriptor } from './union/union';
+import GetFirstValidDeclaration = TypescriptHelper.GetFirstValidDeclaration;
+
+function GetTypeQueryDescriptor(node: ts.TypeQueryNode, scope: Scope): ts.Expression {
+    const declaration = TypescriptHelper.GetDeclarationFromNode(node.exprName);
+    
+    switch(declaration.kind) {
+        case ts.SyntaxKind.ClassDeclaration:
+            return TypescriptCreator.createFunctionExpressionReturn(GetClassDeclarationDescriptor(declaration as ts.ClassDeclaration, scope));
+        case ts.SyntaxKind.EnumDeclaration:
+            // MockDefiner.instance.addImportIdentifierOnFile('./enums', node.exprName as ts.Identifier);
+            // const typeChecker: ts.TypeChecker = TypeChecker();
+            // const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.exprName);
+            // printer(GetFirstValidDeclaration(symbol.declarations).parent.parent);
+            // console.log(GetFirstValidDeclaration(symbol.declarations).parent.parent);
+            // GetFirstValidDeclaration(symbol.declarations).parent.parent.flags, ts.EmitFlags.);
+            return node.exprName as ts.Identifier;
+    }
+    
+    return GetNullDescriptor();
+}
 
 export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     switch (node.kind) {

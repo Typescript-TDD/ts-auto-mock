@@ -32,6 +32,7 @@ interface FactoryIntersectionRegistrationPerFile {
 
 export class MockDefiner {
     private _neededImportIdentifierPerFile: { [key: string]: Array<ModuleNameIdentifier> } = {};
+    private _internalModuleImportIdentifierPerFile: { [key: string]: { [key in ModuleName]: ts.Identifier } } = {};
     private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
     private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
     private _factoryCache: DeclarationCache;
@@ -62,24 +63,23 @@ export class MockDefiner {
     }
 
     public setTsAutoMockImportIdentifier(): void {
+        if (this._internalModuleImportIdentifierPerFile[this._fileName])
+            return;
+
+        this._internalModuleImportIdentifierPerFile[this._fileName] = {
+            [ModuleName.Extension]: this._createUniqueFileName(ModuleName.Extension),
+            [ModuleName.Merge]: this._createUniqueFileName(ModuleName.Merge),
+            [ModuleName.Repository]: this._createUniqueFileName(ModuleName.Repository)
+        };
+        
         this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
         
         Array.prototype.push.apply(this._neededImportIdentifierPerFile[this._fileName], Object.keys(ModulesImportUrl).map((key: ModuleName) => {
             return {
-                name: key,
                 moduleUrl: ModulesImportUrl[key],
-                identifier: this._createUniqueFileName(key),
+                identifier: this._internalModuleImportIdentifierPerFile[this._fileName][key],
             };
         }));
-    }
-
-    public addImportIdentifierOnFile(name: string, url: string, identifier: ts.Identifier): void {
-        this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
-        this._neededImportIdentifierPerFile[this._fileName].push({
-            name: name as any,
-            moduleUrl: url as any,
-            identifier: identifier,
-        });
     }
 
     public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
@@ -149,9 +149,7 @@ export class MockDefiner {
     }
 
     private _getModuleIdentifier(fileName: string, module: ModuleName): ts.Identifier {
-        return this._neededImportIdentifierPerFile[fileName].find((moduleNameIdentifier: ModuleNameIdentifier) => {
-            return moduleNameIdentifier.name === module;
-        }).identifier;
+        return this._internalModuleImportIdentifierPerFile[fileName][module];
     }
 
     private _getMockFactoryId(declaration: ts.Declaration): string {
