@@ -30,6 +30,7 @@ import { GetStringDescriptor } from './string/string';
 import { GetTypeAliasDescriptor } from './typeAlias/typeAlias';
 import { GetTypeLiteralDescriptor } from './typeLiteral/typeLiteral';
 import { GetTypeParameterDescriptor } from './typeParameter/typeParameter';
+import { GetTypeQueryDescriptor } from './typeQuery/typeQuery';
 import { GetTypeReferenceDescriptor } from './typeReference/typeReference';
 import { GetUndefinedDescriptor } from './undefined/undefined';
 import { GetUnionDescriptor } from './union/union';
@@ -80,6 +81,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction, scope);
         case ts.SyntaxKind.ConstructorType:
             return GetConstructorTypeDescriptor(node as ts.ConstructorTypeNode, scope);
+        case ts.SyntaxKind.TypeQuery:
+            return GetTypeQueryDescriptor(node as ts.TypeQueryNode, scope);
         case ts.SyntaxKind.UnionType:
             return GetUnionDescriptor(node as ts.UnionTypeNode, scope);
         case ts.SyntaxKind.IntersectionType:

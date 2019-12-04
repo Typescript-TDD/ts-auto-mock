@@ -62,15 +62,24 @@ export class MockDefiner {
     }
 
     public setTsAutoMockImportIdentifier(): void {
-        if (!this._neededImportIdentifierPerFile[this._fileName]) {
-            this._neededImportIdentifierPerFile[this._fileName] = Object.keys(ModulesImportUrl).map((key: ModuleName) => {
-                return {
-                    name: key,
-                    moduleUrl: ModulesImportUrl[key],
-                    identifier: this._createUniqueFileName(key),
-                };
-            });
-        }
+        this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
+        
+        Array.prototype.push.apply(this._neededImportIdentifierPerFile[this._fileName], Object.keys(ModulesImportUrl).map((key: ModuleName) => {
+            return {
+                name: key,
+                moduleUrl: ModulesImportUrl[key],
+                identifier: this._createUniqueFileName(key),
+            };
+        }));
+    }
+
+    public addImportIdentifierOnFile(name: string, url: string, identifier: ts.Identifier): void {
+        this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
+        this._neededImportIdentifierPerFile[this._fileName].push({
+            name: name as any,
+            moduleUrl: url as any,
+            identifier: identifier,
+        });
     }
 
     public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
