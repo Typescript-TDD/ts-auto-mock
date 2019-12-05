@@ -57,6 +57,16 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
     );
 }
 
+export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration): ts.Expression {
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(declaration);
+
+    return ts.createCall(
+        mockFactoryCall,
+        [],
+        [],
+    );
+}
+
 export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
     const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(mockKey);
 

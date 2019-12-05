@@ -3,7 +3,7 @@ import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { GetNullDescriptor } from '../null/null';
 
-export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration, scope: Scope): ts.Expression {
+export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
     let returnValue: ts.Expression;
 
     const functionBody: ts.FunctionBody = node.body as ts.FunctionBody;

@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import { GetTsAutoMockCacheOptions, TsAutoMockCacheOptions } from '../../options/cache';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { GetProperties } from '../descriptor/properties/properties';
+import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
 import { TypescriptCreator } from '../helper/creator';
 import { createImportOnIdentifier } from '../helper/import';
 import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
@@ -63,17 +64,18 @@ export class MockDefiner {
     }
 
     public setTsAutoMockImportIdentifier(): void {
-        if (this._internalModuleImportIdentifierPerFile[this._fileName])
+        if (this._internalModuleImportIdentifierPerFile[this._fileName]) {
             return;
+        }
 
         this._internalModuleImportIdentifierPerFile[this._fileName] = {
             [ModuleName.Extension]: this._createUniqueFileName(ModuleName.Extension),
             [ModuleName.Merge]: this._createUniqueFileName(ModuleName.Merge),
-            [ModuleName.Repository]: this._createUniqueFileName(ModuleName.Repository)
+            [ModuleName.Repository]: this._createUniqueFileName(ModuleName.Repository),
         };
-        
+
         this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
-        
+
         Array.prototype.push.apply(this._neededImportIdentifierPerFile[this._fileName], Object.keys(ModulesImportUrl).map((key: ModuleName) => {
             return {
                 moduleUrl: ModulesImportUrl[key],
@@ -106,6 +108,12 @@ export class MockDefiner {
 
     public getMockFactory(declaration: ts.Declaration): ts.Expression {
         const key: string = this._getMockFactoryId(declaration);
+
+        return this.getMockFactoryByKey(key);
+    }
+
+    public getMockFactoryTypeofEnum(declaration: ts.EnumDeclaration): ts.Expression {
+        const key: string = this._getMockFactoryIdForTypeofEnum(declaration);
 
         return this.getMockFactoryByKey(key);
     }
@@ -170,6 +178,29 @@ export class MockDefiner {
         const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
         const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(descriptor, [mockGenericParameter]);
+
+        this._factoryRegistrationsPerFile[thisFileName].push({
+            key: declaration,
+            factory,
+        });
+
+        return key;
+    }
+
+    private _getMockFactoryIdForTypeofEnum(declaration: ts.EnumDeclaration): string {
+        const thisFileName: string = this._fileName;
+
+        if (this._factoryCache.has(declaration)) {
+            return this._factoryCache.get(declaration);
+        }
+
+        const key: string = this.getDeclarationKeyMap(declaration);
+
+        this._factoryCache.set(declaration, key);
+
+        this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
+
+        const factory: ts.Expression = GetTypeofEnumDescriptor(declaration, new Scope(key));
 
         this._factoryRegistrationsPerFile[thisFileName].push({
             key: declaration,
