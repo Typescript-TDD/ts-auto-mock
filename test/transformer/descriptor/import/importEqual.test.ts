@@ -1,12 +1,12 @@
 import { createMock } from 'ts-auto-mock';
 import { NameSpaceInterfaceImport } from '../utils/namespace/namespace';
-import Interface2 = NameSpaceInterfaceImport.Interface2;
+import Interface = NameSpaceInterfaceImport.Interface;
 import SubInterface = NameSpaceInterfaceImport.SubNamespace.SubInterface;
 import Enum = NameSpaceInterfaceImport.Enum;
 
 describe('import equal', () => {
     it('should use the correct import for an interface', () => {
-        const mock: Interface2 = createMock<Interface2>();
+        const mock: Interface = createMock<Interface>();
         expect(mock.a).toBe('');
     });
 
