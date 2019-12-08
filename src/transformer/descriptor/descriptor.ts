@@ -12,6 +12,7 @@ import { GetEnumDeclarationDescriptor } from './enum/enumDeclaration';
 import { GetExpressionWithTypeArgumentsDescriptor } from './expression/expressionWithTypeArguments';
 import { GetIdentifierDescriptor } from './identifier/identifier';
 import { GetImportDescriptor } from './import/import';
+import { GetImportEqualsDescriptor } from './import/importEquals';
 import { GetInterfaceDeclarationDescriptor } from './interface/interfaceDeclaration';
 import { GetIntersectionDescriptor } from './intersection/intersection';
 import { GetLiteralDescriptor } from './literal/literal';
@@ -109,6 +110,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetMockPropertiesFromSymbol([], [], scope);
         case ts.SyntaxKind.NullKeyword:
             return GetNullDescriptor();
+        case ts.SyntaxKind.ImportEqualsDeclaration:
+            return GetImportEqualsDescriptor(node as ts.ImportEqualsDeclaration, scope);
         case ts.SyntaxKind.AnyKeyword:
         case ts.SyntaxKind.NeverKeyword:
         case ts.SyntaxKind.UnknownKeyword:

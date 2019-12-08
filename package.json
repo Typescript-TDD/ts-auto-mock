@@ -54,7 +54,7 @@
     "tslint": "^5.20.1",
     "tslint-loader": "^3.5.4",
     "ttypescript": "1.5.8",
-    "typescript": "^3.7.2",
+    "typescript": "^3.7.3",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-merge": "^4.2.2",
@@ -66,7 +66,7 @@
     "winston": "^3.2.1"
   },
   "peerDependencies": {
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.3"
   },
   "husky": {
     "hooks": {

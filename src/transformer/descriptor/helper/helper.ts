@@ -21,6 +21,10 @@ export namespace TypescriptHelper {
             return GetDeclarationForImport(declaration) as ts.Declaration;
         }
 
+        if (ts.isImportEqualsDeclaration(declaration)) {
+            return GetDeclarationFromNode(declaration.moduleReference);
+        }
+
         return declaration;
     }
 

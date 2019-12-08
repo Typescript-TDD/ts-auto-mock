@@ -1,8 +1,8 @@
 import { createMock } from 'ts-auto-mock';
-import ImportDefaultInterface from './utils/interfaces/importDefaultInterface';
-import { ImportInterface, ImportInterfaceWithNestedInterface } from './utils/interfaces/importInterface';
-import { ImportNamespace } from './utils/interfaces/importNameSpace';
-import { ImportType, Type } from './utils/types/type';
+import ImportDefaultInterface from '../utils/interfaces/importDefaultInterface';
+import { ImportInterface, ImportInterfaceWithNestedInterface } from '../utils/interfaces/importInterface';
+import { ImportNamespace } from '../utils/interfaces/importNameSpace';
+import { ImportType, Type } from '../utils/types/type';
 
 describe('with import', () => {
     describe('for interfaces', () => {
