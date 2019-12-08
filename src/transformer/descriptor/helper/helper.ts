@@ -15,6 +15,10 @@ export namespace TypescriptHelper {
     export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node);
+        return GetDeclarationFromSymbol(symbol);
+    }
+
+    export function GetDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
         const declaration: ts.Declaration = GetFirstValidDeclaration(symbol.declarations);
 
         if (ts.isImportSpecifier(declaration)) {
@@ -60,6 +64,6 @@ export namespace TypescriptHelper {
     function GetFirstValidDeclaration(declarations: ts.Declaration[]): ts.Declaration {
         return declarations.find((declaration: ts.Declaration) => {
             return !ts.isVariableDeclaration(declaration);
-        });
+        }) || declarations[0];
     }
 }

@@ -1,4 +1,6 @@
 import { createMock } from 'ts-auto-mock';
+import { MyEnum } from '../../../playground/enums';
+import { ImportInterface } from '../utils/interfaces/importInterface';
 import {
   ExportedClass,
   ExportedDeclaredClass,
@@ -96,6 +98,58 @@ describe('typeQuery', () => {
       expect(enumMock.A).toEqual(0);
       expect(enumMock.B).toEqual('B');
       expect(enumMock.C).toEqual('MaybeC');
+    });
+  });
+
+  describe('for variable', () => {
+    it('should create the imported interface mock from the type of a variable', () => {
+      let aVariable: ImportInterface;
+
+      const mock: typeof aVariable = createMock<typeof aVariable>();
+
+      expect(mock.a.b).toEqual('');
+    });
+
+    it('should create the imported typeof enum mock from the type of a variable', () => {
+      let aVariable: WrapExportedEnum;
+
+      const mock: typeof aVariable = createMock<typeof aVariable>();
+
+      expect(mock.A).toEqual(0);
+    });
+
+    describe('inferred type', () => {
+      it('should work for inferred object', () => {
+        const aVariable = { prop: 'asd' };
+
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(mock.prop).toEqual('');
+      });
+      
+      it('should work for enum', () => {
+        const aVariable = MyEnum;
+
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(mock.A).toEqual(0);
+      });
+      
+      it('should work for function call', () => {
+        function test(value) {
+          if(value) {
+            return { prop: 'asd' };
+          }
+          
+          return { second: 7 };
+        }
+
+        const aVariable = test(true);
+
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(mock.prop).toEqual('');
+      });
     });
   });
 });
