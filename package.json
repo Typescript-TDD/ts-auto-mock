@@ -8,7 +8,7 @@
     "build": "npm run build:modules && npm run build:transformer",
     "test": "npm run test:transformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:unit",
     "test:unit": "karma start config/karma/karma.config.unit.js",
-    "test:transformer": "karma start config/karma/karma.config.transformer.js DISABLECACHE=true",
+    "test:transformer": "karma start config/karma/karma.config.transformer.js",
     "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
     "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js",
     "test:framework:context": "karma start config/karma/karma.config.framework.context.js",

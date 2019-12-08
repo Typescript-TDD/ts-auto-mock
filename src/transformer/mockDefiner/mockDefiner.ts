@@ -90,7 +90,6 @@ export class MockDefiner {
             this._factoryCache = new DeclarationCache();
             this._declarationCache = new DeclarationCache();
             this._factoryIntersectionCache = new DeclarationListCache();
-            this._factoryUniqueName = new FactoryUniqueName();
         }
         this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
         this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName] = [];
