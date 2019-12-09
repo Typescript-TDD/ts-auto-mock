@@ -4,7 +4,7 @@ import { GetDescriptor } from '../descriptor';
 import { GetReturnTypeFromBody } from './bodyReturnType';
 import { GetMethodDescriptor } from './method';
 
-export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration, scope: Scope): ts.Expression {
+export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
     let returnType: ts.Expression;
 
     if (node.type) {

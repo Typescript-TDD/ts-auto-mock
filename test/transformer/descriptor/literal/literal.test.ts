@@ -82,9 +82,9 @@ describe('for literal', () => {
             literal: TypeUnionTokenAllBoolean;
         }
 
-        it('should treat it as if it is boolean and set false', () => {
+        it('should set the first boolean value', () => {
             const properties: Interface = createMock<Interface>();
-            expect(properties.literal).toBe(false);
+            expect(properties.literal).toBe(true);
         });
     });
 

@@ -246,3 +246,28 @@ const mock = new mockType();
 
 mock = // { a: "" }
 ```
+
+## TypeQuery
+```ts
+enum AnEnum {
+    a,
+    b = 'something',
+}
+
+const mock = createMock<typeof AnEnum>();
+mock.a // 0
+mock.b // 'something'
+mock[0] // 'a'
+
+class AClass {
+    a: string
+}
+
+const mockClass = createMock<typeof AClass>();
+new mockClass().a // ''
+
+function AFunction(): number;
+
+const mockFunction = createMock<typeof AFunction>();
+mockFunction() // 0
+```

@@ -15,6 +15,10 @@ export namespace TypescriptHelper {
     export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node);
+        return GetDeclarationFromSymbol(symbol);
+    }
+
+    export function GetDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
         const declaration: ts.Declaration = GetFirstValidDeclaration(symbol.declarations);
 
         if (ts.isImportSpecifier(declaration)) {
@@ -31,24 +35,15 @@ export namespace TypescriptHelper {
     export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier): ts.TypeNode | ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
-        const declaredType: ts.Type = typeChecker.getDeclaredTypeOfSymbol(symbol);
-        return GetDeclarationFromType(declaredType);
+        const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
+
+        return GetFirstValidDeclaration(originalSymbol.declarations);
     }
 
     export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
         const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
         return (declaration as Declaration).typeParameters;
-    }
-
-    export function GetDeclarationFromType(type: ts.Type): ts.TypeNode | ts.Declaration {
-        if (type.symbol && type.symbol.declarations) {
-            return GetFirstValidDeclaration(type.symbol.declarations);
-        } else if (type.aliasSymbol && type.aliasSymbol.declarations) {
-            return GetFirstValidDeclaration(type.aliasSymbol.declarations);
-        }
-
-        return TypeChecker().typeToTypeNode(type);
     }
 
     export function GetTypeParameterOwnerMock(declaration: ts.Declaration): ts.Declaration {
@@ -69,6 +64,6 @@ export namespace TypescriptHelper {
     function GetFirstValidDeclaration(declarations: ts.Declaration[]): ts.Declaration {
         return declarations.find((declaration: ts.Declaration) => {
             return !ts.isVariableDeclaration(declaration);
-        });
+        }) || declarations[0];
     }
 }

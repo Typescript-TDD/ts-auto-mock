@@ -10,11 +10,14 @@ export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signa
     const properties: ts.Declaration[] = propertiesSymbol.map((prop: ts.Symbol) => {
         return prop.declarations[0];
     });
+    const signaturesDeclarations: ts.Declaration[] = signatures.map((signature: ts.Signature) => {
+        return signature.declaration;
+    });
 
-    return GetMockPropertiesFromDeclarations(properties, signatures, scope);
+    return GetMockPropertiesFromDeclarations(properties, signaturesDeclarations, scope);
 }
 
-export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.CallExpression {
+export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<ts.Declaration>, signatures: ReadonlyArray<ts.Declaration>, scope: Scope): ts.CallExpression {
     const propertiesFilter: ts.Declaration[] = list.filter((member: ts.PropertyDeclaration) => {
         const hasModifiers: boolean = !!member.modifiers;
 
@@ -42,6 +45,6 @@ export function GetMockPropertiesFromDeclarations(list: ts.Declaration[], signat
         },
     );
 
-    const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0].declaration, scope) : null;
+    const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0], scope) : null;
     return GetMockCall(variableDeclarations, accessorDeclaration, signaturesDescriptor);
 }
