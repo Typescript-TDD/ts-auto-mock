@@ -30,7 +30,7 @@
     "url": "https://github.com/uittorio/ts-auto-mock.git"
   },
   "author": "Vittorio Guerriero & Giulio Caprino",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-angular": "^8.2.0",

@@ -1,0 +1,15 @@
+{
+  "name": "ts-auto-mock-performance",
+  "version": "1.0.0",
+  "description": "ts auto mock performance",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Vittorio Guerriero & Giulio Caprino",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.7.3",
+    "del": "^5.1.0",
+    "ncp": "^2.0.0"
+  }
+}

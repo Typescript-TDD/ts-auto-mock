@@ -1,0 +1,26 @@
+{
+  "volume": 1000,
+  "features": [
+    {
+      "name": "no createMock",
+      "tsConfig": "tsconfig.performance.json",
+      "types": ["withoutTsAutoMock"]
+    },
+    {
+      "name": "no transformer",
+      "tsConfig": "tsconfig.performance.notransformer.json",
+      "types": ["withoutTsAutoMock"]
+    },
+    {
+      "name": "One interface per file",
+      "tsConfig": "tsconfig.performance.json",
+      "types": ["oneInterfacePerFile", "reuseInterface"]
+    },
+    {
+
+      "name": "Interface reuse",
+      "tsConfig": "tsconfig.performance.json",
+      "types": ["reuseInterface"]
+    }
+  ]
+}

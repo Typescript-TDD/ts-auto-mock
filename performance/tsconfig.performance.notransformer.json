@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "extendedDiagnostics": true,
+    "sourceMap": false
+  },
+  "include": [
+    "dist-performance/**/*.ts"
+  ]
+}
+
