@@ -8,8 +8,9 @@
   "author": "Vittorio Guerriero & Giulio Caprino",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^3.7.3",
     "del": "^5.1.0",
-    "ncp": "^2.0.0"
+    "ncp": "^2.0.0",
+    "ttypescript": "1.5.8",
+    "typescript": "^3.7.3"
   }
 }
