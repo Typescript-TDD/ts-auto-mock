@@ -271,3 +271,14 @@ function AFunction(): number;
 const mockFunction = createMock<typeof AFunction>();
 mockFunction() // 0
 ```
+
+## IndexedAccessType
+```ts
+class Class {
+ a: string
+}
+
+type KeyOf = {[key in keyof Class]: Class[key]};
+const mock = createMock<KeyOf>();
+mock.a // ''
+```
