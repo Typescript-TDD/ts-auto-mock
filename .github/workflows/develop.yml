@@ -23,12 +23,12 @@ jobs:
         npm run build
         npm test
     - name: performance
-        run: |
-          cd performance
-          npm install
-          node index.js
-          cd app
-          npm install
-          npm run build
+      run: |
+        cd performance
+        npm install
+        node index.js
+        cd app
+        npm install
+        npm run build
       env:
         CI: true
