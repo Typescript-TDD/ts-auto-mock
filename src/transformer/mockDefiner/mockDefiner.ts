@@ -14,9 +14,6 @@ import { ModuleName } from './modules/moduleName';
 import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
 import { ModulesImportUrl } from './modules/modulesImportUrl';
 
-// tslint:disable-next-line:no-any
-const urlSlug: any = require('url-slug');
-
 interface FactoryRegistrationPerFile {
     [key: string]: Array<{
         key: ts.Declaration;
@@ -69,9 +66,9 @@ export class MockDefiner {
         }
 
         this._internalModuleImportIdentifierPerFile[this._fileName] = {
-            [ModuleName.Extension]: this._createUniqueFileName(ModuleName.Extension),
-            [ModuleName.Merge]: this._createUniqueFileName(ModuleName.Merge),
-            [ModuleName.Repository]: this._createUniqueFileName(ModuleName.Repository),
+            [ModuleName.Extension]: ts.createFileLevelUniqueName(ModuleName.Extension),
+            [ModuleName.Merge]: ts.createFileLevelUniqueName(ModuleName.Merge),
+            [ModuleName.Repository]: ts.createFileLevelUniqueName(ModuleName.Repository),
         };
 
         this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
@@ -138,10 +135,6 @@ export class MockDefiner {
         }
 
         return this._declarationCache.get(declaration);
-    }
-
-    private _createUniqueFileName(name: string): ts.Identifier {
-        return ts.createFileLevelUniqueName(`${urlSlug(this._fileName, '_')}_${name}`);
     }
 
     private _mockRepositoryAccess(filename: string): ts.Expression {
