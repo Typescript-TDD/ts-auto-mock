@@ -13,6 +13,7 @@ import { GetExpressionWithTypeArgumentsDescriptor } from './expression/expressio
 import { GetIdentifierDescriptor } from './identifier/identifier';
 import { GetImportDescriptor } from './import/import';
 import { GetImportEqualsDescriptor } from './import/importEquals';
+import { GetIndexedAccessTypeDescriptor } from './indexedAccess/indexedAccess';
 import { GetInterfaceDeclarationDescriptor } from './interface/interfaceDeclaration';
 import { GetIntersectionDescriptor } from './intersection/intersection';
 import { GetLiteralDescriptor } from './literal/literal';
@@ -109,6 +110,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetLiteralDescriptor(node as ts.LiteralTypeNode, scope);
         case ts.SyntaxKind.ObjectLiteralExpression:
             return GetObjectLiteralDescriptor(node as ts.ObjectLiteralExpression, scope);
+        case ts.SyntaxKind.IndexedAccessType:
+            return GetIndexedAccessTypeDescriptor(node as ts.IndexedAccessTypeNode, scope);
         case ts.SyntaxKind.BooleanKeyword:
             return GetBooleanDescriptor();
         case ts.SyntaxKind.ObjectKeyword:
