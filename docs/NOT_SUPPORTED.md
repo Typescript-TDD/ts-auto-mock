@@ -1,18 +1,5 @@
 # Not supported types 
 
-## IndexedAccessType
-
-[bug](https://github.com/uittorio/ts-auto-mock/issues/3)
-```ts
-class Class {
- a: string
-}
-
-type KeyOf = {[key in keyof Class]: Class[key]};
-const mock = createMock<KeyOf>();
-mock.a // will be null
-```
-
 ## ConditionalType
 
 ```ts
