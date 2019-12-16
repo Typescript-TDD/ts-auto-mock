@@ -62,7 +62,6 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.15",
-    "url-slug": "^2.2.0",
     "winston": "^3.2.1"
   },
   "peerDependencies": {
