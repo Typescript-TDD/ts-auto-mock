@@ -1,11 +1,15 @@
 import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
+import { Scope } from '../../scope/scope';
 import { GetMockInternalValuesName, GetMockObjectReturnValueName } from './mockDeclarationName';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 
 export function GetMockCall(
-    properties: ts.PropertyAssignment[],
-    signature: ts.Expression): ts.CallExpression {
+  
+  properties: ts.PropertyAssignment[],
+  signature: ts.Expression,
+  scope: Scope): ts.CallExpression {
+    scope.isThisObjectAvailable = true;
     const mockObjectReturnValueName: ts.Identifier = GetMockObjectReturnValueName();
     const mockInternalValuesName: ts.Identifier = GetMockInternalValuesName();
 

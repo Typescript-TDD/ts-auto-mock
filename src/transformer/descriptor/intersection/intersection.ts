@@ -9,12 +9,12 @@ export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionT
     const nodes: ts.Node[] = GetTypes(intersectionTypeNode.types, scope);
 
     const hasInvalidIntersections: boolean = nodes.some((node: ts.Node) => {
-        return TypescriptHelper.IsLiteralOrPrimitive(node);
+        return TypescriptHelper.IsLiteralOrPrimitive(node) || node.kind === ts.SyntaxKind.TypeQuery;
     });
 
     if (hasInvalidIntersections) {
         return GetUndefinedDescriptor();
     }
 
-    return GetMockFactoryCallIntersection(intersectionTypeNode, scope);
+    return GetMockFactoryCallIntersection(intersectionTypeNode, new Scope(scope.depth - 1, scope.currentMockKey));
 }

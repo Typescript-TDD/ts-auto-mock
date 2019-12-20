@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import { TypescriptHelper } from '../descriptor/helper/helper';
+import { PropertySignatureCache } from '../descriptor/property/cache';
 import { GenericDeclaration } from '../genericDeclaration/genericDeclaration';
 import { IGenericDeclaration } from '../genericDeclaration/genericDeclaration.interface';
 import { GenericDeclarationSupported } from '../genericDeclaration/genericDeclarationSupported';
@@ -19,13 +20,37 @@ export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scop
     addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
 
     const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
-    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration);
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration, scope);
 
     return ts.createCall(
         mockFactoryCall,
         [],
-        [ts.createArrayLiteral(genericsParametersExpression)],
+        scope.depth == 0 ? getFirstLineParameters(genericsParametersExpression) : scope.isThisObjectAvailable ? getDeepParameters(genericsParametersExpression) : getDeepParametersFromParameters(genericsParametersExpression),
     );
+}
+
+function getDeepParametersFromParameters(genericsParametersExpression: ts.ObjectLiteralExpression[]) {
+    return [
+        ts.createIdentifier('_'),
+        ts.createIdentifier('__'),
+        ts.createArrayLiteral(genericsParametersExpression),
+    ];
+}
+
+function getDeepParameters(genericsParametersExpression: ts.ObjectLiteralExpression[]) {
+    return [
+        ts.createIdentifier('__tsAutoMockObjectReturnValue'),
+        ts.createStringLiteral((PropertySignatureCache.instance.get() as ts.Identifier).text),
+        ts.createArrayLiteral(genericsParametersExpression),
+    ];
+}
+
+function getFirstLineParameters(genericsParametersExpression: ts.ObjectLiteralExpression[]) {
+    return [
+        ts.createNull(),
+        ts.createNull(),
+        ts.createArrayLiteral(genericsParametersExpression),
+    ];
 }
 
 export function GetMockFactoryCallIntersection(intersection: ts.IntersectionTypeNode, scope: Scope): ts.Expression {
@@ -48,17 +73,17 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
         return type as ts.TypeLiteralNode;
     });
     const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
-    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(declarations, intersection);
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(declarations, intersection, scope);
 
     return ts.createCall(
         mockFactoryCall,
         [],
-        [ts.createArrayLiteral(genericsParametersExpression)],
+        scope.depth == 0 ? getFirstLineParameters(genericsParametersExpression) : scope.isThisObjectAvailable ? getDeepParameters(genericsParametersExpression) : getDeepParametersFromParameters(genericsParametersExpression),
     );
 }
 
-export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration): ts.Expression {
-    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(declaration);
+export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration, scope: Scope): ts.Expression {
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(declaration, scope);
 
     return ts.createCall(
         mockFactoryCall,
@@ -73,7 +98,11 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
     return ts.createCall(
         mockFactoryCall,
         [],
-        [MockGenericParameter],
+        [
+            ts.createIdentifier('__tsAutoMockObjectReturnValue'),
+            ts.createStringLiteral((PropertySignatureCache.instance.get() as ts.Identifier).text),
+            MockGenericParameter,
+        ],
     );
 }
 

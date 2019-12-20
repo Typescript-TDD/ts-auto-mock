@@ -10,11 +10,11 @@ import { MyEnum } from './enums';
  */
 
 it('should work', () => {
-    interface A {
+  interface A {
 
-    }
-    const enumm2: typeof MyEnum = createMock<typeof MyEnum>();
-    createMock<A>();
+  }
+  const enumm2: typeof MyEnum = createMock<typeof MyEnum>();
+  createMock<A>();
 
-    expect(enumm2.A).toEqual(0);
+  expect(enumm2.A).toEqual(0);
 });

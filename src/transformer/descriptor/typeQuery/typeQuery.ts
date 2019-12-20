@@ -38,7 +38,7 @@ export function GetTypeQueryDescriptor(node: ts.TypeQueryNode, scope: Scope): ts
       // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
       // TheNewEmitResolver.ensureEmitOf(GetImportDeclarationOf(node.eprName as ts.Identifier);
       // return node.exprName as ts.Identifier;
-      return GetMockFactoryCallTypeofEnum(declaration as ts.EnumDeclaration);
+      return GetMockFactoryCallTypeofEnum(declaration as ts.EnumDeclaration, scope);
     case ts.SyntaxKind.FunctionDeclaration:
       return GetMethodDeclarationDescriptor(declaration as ts.FunctionDeclaration, scope);
     case ts.SyntaxKind.VariableDeclaration:

@@ -40,5 +40,5 @@ export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<ts.Declara
     );
 
     const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0], scope) : null;
-    return GetMockCall(accessorDeclaration, signaturesDescriptor);
+    return GetMockCall(accessorDeclaration, signaturesDescriptor, scope);
 }
