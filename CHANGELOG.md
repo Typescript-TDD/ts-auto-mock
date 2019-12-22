@@ -1,3 +1,16 @@
+<a name="1.4.2"></a>
+## [1.4.2](https://github.com/uittorio/ts-auto-mock/compare/v1.4.1...v1.4.2) (2019-12-22)
+
+
+### Features
+
+* **constructorType:** Add constructor type descriptor ([#115](https://github.com/uittorio/ts-auto-mock/issues/115)) ([8f26218](https://github.com/uittorio/ts-auto-mock/commit/8f26218))
+* **constructSignature:** add construct signature ([#116](https://github.com/uittorio/ts-auto-mock/issues/116)) ([b0aa18a](https://github.com/uittorio/ts-auto-mock/commit/b0aa18a))
+* **import:** add import equals support and make sure transformer test run in a context so the cache system will work ([f23039d](https://github.com/uittorio/ts-auto-mock/commit/f23039d))
+* **indexedAccess:** add indexed access support for mocks ([#119](https://github.com/uittorio/ts-auto-mock/issues/119)) ([a3e9841](https://github.com/uittorio/ts-auto-mock/commit/a3e9841))
+
+
+
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/uittorio/ts-auto-mock/compare/v1.4.0...v1.4.1) (2019-11-30)
 
