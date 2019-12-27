@@ -151,6 +151,7 @@ We are working on an [issue](https://github.com/Typescript-TDD/ts-auto-mock/issu
  
 ## [Changelog](CHANGELOG.md)
 
+## [Roadmap](ROADMAP.md)
 ## Authors
 
 * [**Vittorio Guerriero**](https://github.com/uittorio)

@@ -3,7 +3,6 @@ import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetMockCall } from './mockCall';
-import { GetMockDeclarationName } from './mockDeclarationName';
 import { GetMockProperty } from './mockProperty';
 
 export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.Expression {
@@ -18,7 +17,7 @@ export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signa
 }
 
 export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<ts.Declaration>, signatures: ReadonlyArray<ts.Declaration>, scope: Scope): ts.CallExpression {
-    const propertiesFilter: ts.Declaration[] = list.filter((member: ts.PropertyDeclaration) => {
+    const propertiesFilter: ts.Declaration[] = list.filter((member: ts.PropertySignature) => {
         const hasModifiers: boolean = !!member.modifiers;
 
         if (IsTypescriptType(member)) { // This is a current workaround to safe fail extends of TypescriptLibs
@@ -34,11 +33,6 @@ export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<ts.Declara
         }).length === 0;
     });
 
-    const variableDeclarations: ts.VariableDeclaration[] = propertiesFilter.map((member: ts.PropertySignature) => {
-        const name: ts.Identifier = GetMockDeclarationName(member.name as ts.Identifier);
-        return ts.createVariableDeclaration(name);
-    });
-
     const accessorDeclaration: ts.PropertyAssignment[] = propertiesFilter.map(
         (member: ts.PropertySignature): ts.PropertyAssignment => {
             return GetMockProperty(member, scope);
@@ -46,5 +40,5 @@ export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<ts.Declara
     );
 
     const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0], scope) : null;
-    return GetMockCall(variableDeclarations, accessorDeclaration, signaturesDescriptor);
+    return GetMockCall(accessorDeclaration, signaturesDescriptor);
 }

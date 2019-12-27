@@ -2,18 +2,20 @@ import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
+import { TypescriptHelper } from '../helper/helper';
 
 export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: ts.Expression): ts.Expression {
     const providerGetMethod: ts.PropertyAccessExpression = CreateProviderGetMethod();
 
-    const propertyNameAsString: ts.StringLiteral = ts.createStringLiteral('' + (propertyName as ts.Identifier).escapedText);
+    const propertyNameString: string = TypescriptHelper.GetStringPropertyName(propertyName);
+    const propertyNameStringLiteral: ts.StringLiteral = ts.createStringLiteral(propertyNameString);
 
     const propertyValueFunction: ts.ArrowFunction  = TypescriptCreator.createArrowFunction(ts.createBlock(
         [ts.createReturn(returnValue)],
         true,
     ));
 
-    return ts.createCall(providerGetMethod, [], [propertyNameAsString, propertyValueFunction]);
+    return ts.createCall(providerGetMethod, [], [propertyNameStringLiteral, propertyValueFunction]);
 }
 
 function CreateProviderGetMethod(): ts.PropertyAccessExpression {

@@ -75,4 +75,12 @@ export namespace TypescriptCreator {
             body,
         );
     }
+
+    export function createVariableDeclaration(variableIdentifier: ts.Identifier, initializer: ts.Expression): ts.VariableDeclaration {
+        return ts.createVariableDeclaration(
+            variableIdentifier,
+            undefined,
+            initializer,
+        );
+    }
 }
