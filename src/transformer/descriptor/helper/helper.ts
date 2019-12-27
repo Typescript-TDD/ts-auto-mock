@@ -61,6 +61,15 @@ export namespace TypescriptHelper {
         }
     }
 
+    export function GetStringPropertyName(propertyName: ts.PropertyName): string {
+        if (!ts.isComputedPropertyName(propertyName)) {
+            return propertyName.text;
+        }
+
+        const symbol: ts.Symbol = TypeChecker().getSymbolAtLocation(propertyName);
+        return symbol.escapedName.toString();
+    }
+
     function GetFirstValidDeclaration(declarations: ts.Declaration[]): ts.Declaration {
         return declarations.find((declaration: ts.Declaration) => {
             return !ts.isVariableDeclaration(declaration);

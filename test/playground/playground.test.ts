@@ -11,7 +11,7 @@ import { MyEnum } from './enums';
 
 it('should work', () => {
     interface A {
-        
+
     }
     const enumm2: typeof MyEnum = createMock<typeof MyEnum>();
     createMock<A>();
