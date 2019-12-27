@@ -32,5 +32,5 @@ Creating performance analytics on each build will show us if any particular new 
 
 It will also allow us to improve performance
 
--- ## Write articles about react, angular, vuejs etc
+- ## Write articles about react, angular, vuejs etc
 We truly believe that ts-auto-mock has a lot of potential but we need to increase our exposure on the web to make sure people start using it
