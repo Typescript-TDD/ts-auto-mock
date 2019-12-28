@@ -7,14 +7,10 @@ import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
 
-function isTypeAlreadyMocked(declaration: ts.Declaration): boolean {
-    return MockDefiner.instance.hasMockForDeclaration(declaration);
-}
-
 export function GetTypeReferenceDescriptor(node: ts.TypeReferenceNode, scope: Scope): ts.Expression {
     const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
 
-    if (isTypeAlreadyMocked(declaration)) {
+    if (MockDefiner.instance.hasMockForDeclaration(declaration)) {
         return GetMockFactoryCall(node, scope);
     }
 

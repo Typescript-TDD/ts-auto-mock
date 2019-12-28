@@ -102,10 +102,10 @@ export class MockDefiner {
             this._factoryCache = new DeclarationCache();
             this._declarationCache = new DeclarationCache();
             this._factoryIntersectionCache = new DeclarationListCache();
-            this._registerMockFactoryCache = new DeclarationCache();
         }
         this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
         this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName] = [];
+        this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName] = [];
     }
 
     public getMockFactory(declaration: ts.Declaration): ts.Expression {
@@ -145,13 +145,18 @@ export class MockDefiner {
     public storeRegisterMockFor(declaration: ts.Declaration, factory: ts.FunctionExpression): void {
         const key: string = this.getDeclarationKeyMap(declaration);
 
-        this._factoryCache.set(declaration, key);
+        this._registerMockFactoryCache.set(declaration, key);
+        // this._factoryCache.set(declaration, key);
 
         this._registerMockFactoryRegistrationsPerFile[this._fileName] = this._registerMockFactoryRegistrationsPerFile[this._fileName] || [];
         this._registerMockFactoryRegistrationsPerFile[this._fileName].push({
             key: declaration,
             factory,
         });
+    }
+
+    public hasMockForDeclaration(declaration: ts.Declaration): boolean {
+        return this._factoryCache.has(declaration) || this._registerMockFactoryCache.has(declaration);
     }
 
     private _mockRepositoryAccess(filename: string): ts.Expression {
@@ -175,6 +180,10 @@ export class MockDefiner {
 
         if (this._factoryCache.has(declaration)) {
             return this._factoryCache.get(declaration);
+        }
+
+        if (this._registerMockFactoryCache.has(declaration)) {
+            return this._registerMockFactoryCache.get(declaration);
         }
 
         const key: string = this._declarationCache.get(declaration);
@@ -287,7 +296,8 @@ export class MockDefiner {
         if (this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]) {
             return this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]
                 .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
-                    const key: string = this._factoryCache.get(reg.key);
+                    const key: string = this._registerMockFactoryCache.get(reg.key);
+                    // const key: string = this._factoryCache.get(reg.key);
 
                     return this._createRegistration(sourceFile.fileName, key, reg.factory);
                 });
@@ -322,9 +332,5 @@ export class MockDefiner {
 
     private _getMockGenericParameter(): ts.ParameterDeclaration {
         return ts.createParameter([], [], undefined, MockGenericParameter);
-    }
-
-    public hasMockForDeclaration(declaration: ts.Declaration): boolean {
-        return this._factoryCache.has(declaration);
     }
 }
