@@ -9,7 +9,7 @@ describe('registerMock of typeQuery', () => {
       B = "B"
     }
 
-    registerMock<typeof MyEnum, typeof MyEnum & { C: string; }>(() => ({A: 0, B: MyEnum.B, C: "Something"}));
+    registerMock<typeof MyEnum>(() => ({A: 0, B: MyEnum.B, C: "Something"}));
 
     const mock1: typeof MyEnum = createMock<typeof MyEnum>();
     const mock2: { sub: typeof MyEnum; } = createMock<{ sub: typeof MyEnum; }>();
@@ -37,7 +37,7 @@ describe('registerMock of typeQuery', () => {
       prop: string;
     }
 
-    registerMock<typeof MyClass, typeof MyClass & { C: string; }>(() => (Object.assign(class Some { prop: string; }, { C: 'something' })));
+    registerMock<typeof MyClass>(() => (Object.assign(class Some { prop: string; }, { C: 'something' })));
 
     const mock1: typeof MyClass = createMock<typeof MyClass>();
     const mock2: { sub: typeof MyClass; } = createMock<{ sub: typeof MyClass; }>();
@@ -63,7 +63,7 @@ describe('registerMock of typeQuery', () => {
   it('should not work for variable', () => {
     const a: Interface2 = { b: 23 };
 
-    registerMock<typeof a, typeof a & { C: string; }>(() => ({ b: 45, C: 'something' }));
+    registerMock<typeof a>(() => ({ b: 45, C: 'something' }));
 
     const mock1: typeof a = createMock<typeof a>();
     const mock2: { sub: typeof a; } = createMock<{ sub: typeof a; }>();

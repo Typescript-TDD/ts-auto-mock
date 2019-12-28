@@ -10,7 +10,7 @@ describe('registerMock for type alias', () => {
       prop: APropType;
     }
 
-    registerMock<APropType, APropType>(() => ({ internalProp: 'whaaat' }));
+    registerMock<APropType>(() => ({ internalProp: 'whaaat' }));
     const mock: AParentInterface = createMock<AParentInterface>();
 
     expect(mock.prop.internalProp).toBe('whaaat');
@@ -23,7 +23,7 @@ describe('registerMock for type alias', () => {
       prop: APropType;
     }
 
-    registerMock<APropType, APropType>(() => ({ internalProp: 'whaaat', else: 53 }));
+    registerMock<APropType>(() => ({ internalProp: 'whaaat', else: 53 }));
     const mock: AParentInterface = createMock<AParentInterface>();
 
     expect(mock.prop.internalProp).toBe('whaaat');

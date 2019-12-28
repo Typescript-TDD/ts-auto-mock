@@ -1,7 +1,7 @@
 import { Extension } from './extension';
 import { isFunction } from './method/function';
 
-type AsMockedPropertyHandler<TMockedPropertyHandler, TMock, TPropName extends keyof TMock> = (mock: TMock, propName: TPropName, prop: TMock[TPropName]) => TMockedPropertyHandler;
+type AsMockedPropertyHandler<TMockedPropertyHandler, TMock, TPropName extends keyof TMock> = (prop: TMock[TPropName], mock: TMock, propName: TPropName) => TMockedPropertyHandler;
 
 export class ExtensionHandler<TMock> {
     private readonly _mock: TMock;
@@ -25,6 +25,6 @@ export class ExtensionHandler<TMock> {
             return extensionOrPropertyName(this._mock);
         }
 
-        return maybePropertyHandler(this._mock, extensionOrPropertyName, this._mock[extensionOrPropertyName]);
+        return maybePropertyHandler(this._mock[extensionOrPropertyName], this._mock, extensionOrPropertyName);
     }
 }

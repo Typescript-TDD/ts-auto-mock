@@ -2,7 +2,7 @@ import { createMock, createMockList, registerMock } from 'ts-auto-mock';
 
 describe('registerMock type literal', () => {
   it('should never work', () => {
-    registerMock<{prop: string;},{prop: string;}>(() => ({prop: 'mocked one'}));
+    registerMock<{prop: string;}>(() => ({prop: 'mocked one'}));
     
     const mock1: {prop: string} = createMock<{prop: string;}>();
     const mock2: {prop: string}[] = createMockList<{prop: string;}>(1);
