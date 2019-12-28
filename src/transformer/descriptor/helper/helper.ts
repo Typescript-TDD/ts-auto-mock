@@ -15,24 +15,21 @@ export namespace TypescriptHelper {
     export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node);
+
         return GetDeclarationFromSymbol(symbol);
     }
 
     export function GetDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
         const declaration: ts.Declaration = GetFirstValidDeclaration(symbol.declarations);
 
-        if (ts.isImportSpecifier(declaration)) {
-            return GetDeclarationForImport(declaration) as ts.Declaration;
-        }
-
-        if (ts.isImportEqualsDeclaration(declaration)) {
-            return GetDeclarationFromNode(declaration.moduleReference);
+        if (ts.isImportSpecifier(declaration) || ts.isImportEqualsDeclaration(declaration)) {
+            return GetDeclarationForImport(declaration);
         }
 
         return declaration;
     }
 
-    export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier): ts.TypeNode | ts.Declaration {
+    export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier | ts.ImportEqualsDeclaration): ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
         const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
