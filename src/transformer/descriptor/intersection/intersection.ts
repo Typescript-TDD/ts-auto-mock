@@ -16,5 +16,5 @@ export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionT
         return GetUndefinedDescriptor();
     }
 
-    return GetMockFactoryCallIntersection(intersectionTypeNode, new Scope(scope.depth - 1, scope.currentMockKey));
+    return GetMockFactoryCallIntersection(intersectionTypeNode, scope);
 }

@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import { TypescriptHelper } from '../descriptor/helper/helper';
-import { PropertySignatureCache } from '../descriptor/property/cache';
 import { GenericDeclaration } from '../genericDeclaration/genericDeclaration';
 import { IGenericDeclaration } from '../genericDeclaration/genericDeclaration.interface';
 import { GenericDeclarationSupported } from '../genericDeclaration/genericDeclarationSupported';
@@ -20,37 +19,13 @@ export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scop
     addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
 
     const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
-    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration, scope);
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactory(declaration);
 
     return ts.createCall(
-        mockFactoryCall,
-        [],
-        scope.depth == 0 ? getFirstLineParameters(genericsParametersExpression) : scope.isThisObjectAvailable ? getDeepParameters(genericsParametersExpression) : getDeepParametersFromParameters(genericsParametersExpression),
+      mockFactoryCall,
+      [],
+      [ts.createArrayLiteral(genericsParametersExpression)],
     );
-}
-
-function getDeepParametersFromParameters(genericsParametersExpression: ts.ObjectLiteralExpression[]) {
-    return [
-        ts.createIdentifier('_'),
-        ts.createIdentifier('__'),
-        ts.createArrayLiteral(genericsParametersExpression),
-    ];
-}
-
-function getDeepParameters(genericsParametersExpression: ts.ObjectLiteralExpression[]) {
-    return [
-        ts.createIdentifier('__tsAutoMockObjectReturnValue'),
-        ts.createStringLiteral((PropertySignatureCache.instance.get() as ts.Identifier).text),
-        ts.createArrayLiteral(genericsParametersExpression),
-    ];
-}
-
-function getFirstLineParameters(genericsParametersExpression: ts.ObjectLiteralExpression[]) {
-    return [
-        ts.createNull(),
-        ts.createNull(),
-        ts.createArrayLiteral(genericsParametersExpression),
-    ];
 }
 
 export function GetMockFactoryCallIntersection(intersection: ts.IntersectionTypeNode, scope: Scope): ts.Expression {
@@ -73,22 +48,22 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
         return type as ts.TypeLiteralNode;
     });
     const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
-    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(declarations, intersection, scope);
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(declarations, intersection);
 
     return ts.createCall(
-        mockFactoryCall,
-        [],
-        scope.depth == 0 ? getFirstLineParameters(genericsParametersExpression) : scope.isThisObjectAvailable ? getDeepParameters(genericsParametersExpression) : getDeepParametersFromParameters(genericsParametersExpression),
+      mockFactoryCall,
+      [],
+      [ts.createArrayLiteral(genericsParametersExpression)],
     );
 }
 
-export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration, scope: Scope): ts.Expression {
-    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(declaration, scope);
+export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration): ts.Expression {
+    const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(declaration);
 
     return ts.createCall(
-        mockFactoryCall,
-        [],
-        [],
+      mockFactoryCall,
+      [],
+      [],
     );
 }
 
@@ -96,13 +71,9 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
     const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(mockKey);
 
     return ts.createCall(
-        mockFactoryCall,
-        [],
-        [
-            ts.createIdentifier('__tsAutoMockObjectReturnValue'),
-            ts.createStringLiteral((PropertySignatureCache.instance.get() as ts.Identifier).text),
-            MockGenericParameter,
-        ],
+      mockFactoryCall,
+      [],
+      [MockGenericParameter],
     );
 }
 
@@ -116,10 +87,10 @@ function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, 
                     const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
 
                     genericDeclaration.addFromDeclarationExtension(
-                        declarationKey,
-                        extensionDeclaration as GenericDeclarationSupported,
-                        extensionDeclarationKey,
-                        extension);
+                      declarationKey,
+                      extensionDeclaration as GenericDeclarationSupported,
+                      extensionDeclarationKey,
+                      extension);
 
                     addFromDeclarationExtensions(extensionDeclaration as GenericDeclarationSupported, extensionDeclarationKey, genericDeclaration);
                 }

@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { Logger } from '../../logger/logger';
 import { ArrayHelper } from '../array/array';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
@@ -8,7 +9,7 @@ import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { Scope } from '../scope/scope';
 
 function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
-    return GetDescriptor(nodeToMock, new Scope(0));
+    return GetDescriptor(nodeToMock, new Scope());
 }
 
 function hasDefaultValues(node: ts.CallExpression): boolean {
@@ -51,7 +52,7 @@ export function getMockForList(nodeToMock: ts.TypeNode, node: ts.CallExpression)
     const lengthLiteral: ts.NumericLiteral = node.arguments[0] as ts.NumericLiteral;
 
     if (!lengthLiteral) {
-       return ts.createArrayLiteral([]);
+        return ts.createArrayLiteral([]);
     }
 
     const length: number = getNumberFromNumericLiteral(lengthLiteral);
@@ -66,21 +67,15 @@ export function getMockForList(nodeToMock: ts.TypeNode, node: ts.CallExpression)
 
     return ts.createArrayLiteral(mockList);
 }
- export function storeRegisterMock(typeToMock: ts.TypeNode, node: ts.CallExpression): ts.Node {
+
+export function storeRegisterMock(typeToMock: ts.TypeNode, node: ts.CallExpression): ts.Node {
     if (!ts.isTypeReferenceNode(typeToMock)) {
-      // TODO: add throw exception/loggin of the error
-      return ts.createEmptyStatement();
+        Logger('RegisterMock').error('registerMock can be used only to mock type references.');
+        return ts.createEmptyStatement();
     }
-    
+
     const factory: ts.FunctionExpression = node.arguments[0] as ts.FunctionExpression;
     MockDefiner.instance.storeRegisterMockFor(TypescriptHelper.GetDeclarationFromNode((typeToMock as ts.TypeReferenceNode).typeName), factory);
 
-    return TypescriptCreator.createArrowFunction(
-      ts.createIdentifier("prop"),
-      [
-        TypescriptCreator.createParameter('_'),
-        TypescriptCreator.createParameter('__'),
-        TypescriptCreator.createParameter('prop')
-      ]
-    );
- }
+    return ts.createEmptyStatement();
+}

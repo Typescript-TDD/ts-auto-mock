@@ -10,7 +10,7 @@ export function isCreateMockList(declaration: ts.FunctionDeclaration): boolean {
     return declaration.name && declaration.name.getText() === 'createMockList';
 }
 
-export function isRegisterMock(declaration: ts.FunctionDeclaration) {
+export function isRegisterMock(declaration: ts.FunctionDeclaration): boolean {
     return declaration.name && declaration.name.getText() === 'registerMock';
 }
 

@@ -7,7 +7,7 @@ import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
 
-function isTypeAlreadyMocked(declaration: ts.Declaration) {
+function isTypeAlreadyMocked(declaration: ts.Declaration): boolean {
     return MockDefiner.instance.hasMockForDeclaration(declaration);
 }
 

@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { SetTsAutoMockOptions, TsAutoMockOptions } from '../options/options';
-import { isRegisterMock, isCreateMock, isCreateMockList, isFromTsAutoMock } from './matcher/matcher';
+import { isCreateMock, isCreateMockList, isFromTsAutoMock, isRegisterMock } from './matcher/matcher';
 import { getMock, getMockForList, storeRegisterMock } from './mock/mock';
 import { MockDefiner } from './mockDefiner/mockDefiner';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
