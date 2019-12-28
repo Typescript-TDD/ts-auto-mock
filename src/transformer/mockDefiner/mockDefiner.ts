@@ -146,7 +146,6 @@ export class MockDefiner {
         const key: string = this.getDeclarationKeyMap(declaration);
 
         this._registerMockFactoryCache.set(declaration, key);
-        // this._factoryCache.set(declaration, key);
 
         this._registerMockFactoryRegistrationsPerFile[this._fileName] = this._registerMockFactoryRegistrationsPerFile[this._fileName] || [];
         this._registerMockFactoryRegistrationsPerFile[this._fileName].push({
@@ -297,7 +296,6 @@ export class MockDefiner {
             return this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]
                 .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
                     const key: string = this._registerMockFactoryCache.get(reg.key);
-                    // const key: string = this._factoryCache.get(reg.key);
 
                     return this._createRegistration(sourceFile.fileName, key, reg.factory);
                 });
