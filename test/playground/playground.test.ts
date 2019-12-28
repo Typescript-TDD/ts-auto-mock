@@ -16,7 +16,6 @@ it('should work', () => {
   const enumm2: typeof MyEnum = createMock<typeof MyEnum>();
   expect(createMock<A>().a).toBe("ok");
 
-  registerMock<A, A>(() => ({a: "ok"}));
   expect(enumm2.A).toEqual(0);
   
   expect(createMock<A>().a).toBe("ok");
