@@ -3,10 +3,7 @@ import { TypescriptCreator } from '../../helper/creator';
 import { GetMockInternalValuesName, GetMockObjectReturnValueName } from './mockDeclarationName';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 
-export function GetMockCall(
-    
-    properties: ts.PropertyAssignment[],
-    signature: ts.Expression): ts.CallExpression {
+export function GetMockCall(properties: ts.PropertyAssignment[], signature: ts.Expression): ts.CallExpression {
     const mockObjectReturnValueName: ts.Identifier = GetMockObjectReturnValueName();
     const mockInternalValuesName: ts.Identifier = GetMockInternalValuesName();
 
