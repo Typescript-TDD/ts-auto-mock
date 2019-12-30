@@ -15,6 +15,10 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
         return !!node.typeArguments && !!node.typeArguments[index];
     }
 
+    function getGenericTypeNode(node: ts.TypeReferenceNode | ts.ExpressionWithTypeArguments, nodeDeclaration: ts.TypeParameterDeclaration, index: number): ts.TypeNode {
+        return isGenericProvided(node, index) ? node.typeArguments[index] : nodeDeclaration.default;
+    }
+
     function addGenericParameterToExisting(
         ownerParameterDeclaration: ts.TypeParameterDeclaration,
         typeParameterDeclaration: ts.TypeParameterDeclaration,
@@ -51,18 +55,12 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
             }
 
             typeParameterDeclarations.forEach((argument: ts.TypeParameterDeclaration, index: number) => {
-                let generic: ts.TypeNode;
-
-                if (isGenericProvided(node, index)) {
-                    generic = node.typeArguments[index];
-                } else {
-                    generic = argument.default;
-                }
+                const genericTypeNode: ts.TypeNode = getGenericTypeNode(node, argument, index);
 
                 const genericParameter: GenericParameter = createGenericParameter(
                     declarationKey,
                     typeParameterDeclarations[index],
-                    GetDescriptor(generic, scope));
+                    GetDescriptor(genericTypeNode, scope));
 
                 generics.push(genericParameter);
             });
@@ -80,32 +78,22 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
             }
 
             extensionDeclarationTypeParameters.forEach((argument: ts.TypeParameterDeclaration, index: number) => {
-                if (isGenericProvided(extension, index)) {
-                    const typeArgument: ts.TypeNode = extension.typeArguments[index];
+                const genericTypeNode: ts.TypeNode = getGenericTypeNode(extension, argument, index);
 
-                    if (ts.isTypeReferenceNode(typeArgument)) {
-                        const typeParameterDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeArgument.typeName);
-                        if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
-                            addGenericParameterToExisting(
-                                extensionDeclarationTypeParameters[index],
-                                typeParameterDeclaration,
-                                declarationKey,
-                                extensionDeclarationKey,
-                            );
-                        } else {
-                            const genericParameter: GenericParameter = createGenericParameter(
-                                extensionDeclarationKey,
-                                extensionDeclarationTypeParameters[index],
-                                GetDescriptor(typeArgument, scope),
-                            );
-
-                            generics.push(genericParameter);
-                        }
+                if (ts.isTypeReferenceNode(genericTypeNode)) {
+                    const typeParameterDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(genericTypeNode.typeName);
+                    if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
+                        addGenericParameterToExisting(
+                            extensionDeclarationTypeParameters[index],
+                            typeParameterDeclaration,
+                            declarationKey,
+                            extensionDeclarationKey,
+                        );
                     } else {
                         const genericParameter: GenericParameter = createGenericParameter(
                             extensionDeclarationKey,
                             extensionDeclarationTypeParameters[index],
-                            GetDescriptor(typeArgument, scope),
+                            GetDescriptor(genericTypeNode, scope),
                         );
 
                         generics.push(genericParameter);
@@ -114,7 +102,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
                     const genericParameter: GenericParameter = createGenericParameter(
                         extensionDeclarationKey,
                         extensionDeclarationTypeParameters[index],
-                        GetDescriptor(argument.default, scope),
+                        GetDescriptor(genericTypeNode, scope),
                     );
 
                     generics.push(genericParameter);
