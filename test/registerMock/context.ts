@@ -3,5 +3,7 @@ import { FakePromise } from './fakePromise';
 
 registerMock<Promise<unknown>>(() => new FakePromise<unknown>());
 
-const frameworkContext: __WebpackModuleApi.RequireContext = require.context('./', true, /\.test\.ts$/);
-frameworkContext.keys().map(frameworkContext);
+// @ts-ignore
+// tslint:disable-next-line:typedef
+const registerMockContext = require.context('./', true, /\.test\.ts$/);
+registerMockContext.keys().map(registerMockContext);

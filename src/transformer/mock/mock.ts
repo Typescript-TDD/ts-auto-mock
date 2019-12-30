@@ -75,6 +75,6 @@ export function storeRegisterMock(typeToMock: ts.TypeNode, node: ts.CallExpressi
     } else {
         Logger('RegisterMock').error('registerMock can be used only to mock type references.');
     }
-    
+
     return ts.createEmptyStatement();
 }

@@ -108,10 +108,25 @@ export class MockDefiner {
         this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName] = [];
     }
 
-    public getMockFactory(declaration: ts.Declaration): ts.Expression {
-        const key: string = this._getMockFactoryId(declaration);
+    public createMockFactory(declaration: ts.Declaration): void {
+        const thisFileName: string = this._fileName;
 
-        return this.getMockFactoryByKey(key);
+        const key: string = this.getDeclarationKeyMap(declaration);
+
+        this._factoryCache.set(declaration, key);
+
+        this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
+
+        const descriptor: ts.Expression = GetDescriptor(declaration, new Scope(key));
+
+        const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+
+        const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(descriptor, [mockGenericParameter]);
+
+        this._factoryRegistrationsPerFile[thisFileName].push({
+            key: declaration,
+            factory,
+        });
     }
 
     public getMockFactoryTypeofEnum(declaration: ts.EnumDeclaration): ts.Expression {
@@ -173,38 +188,6 @@ export class MockDefiner {
     private _getModuleIdentifier(fileName: string, module: ModuleName): ts.Identifier {
         return this._internalModuleImportIdentifierPerFile[fileName][module];
     }
-
-    private _getMockFactoryId(declaration: ts.Declaration): string {
-        const thisFileName: string = this._fileName;
-
-        if (this._factoryCache.has(declaration)) {
-            return this._factoryCache.get(declaration);
-        }
-
-        if (this._registerMockFactoryCache.has(declaration)) {
-            return this._registerMockFactoryCache.get(declaration);
-        }
-
-        const key: string = this._declarationCache.get(declaration);
-
-        this._factoryCache.set(declaration, key);
-
-        this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
-
-        const descriptor: ts.Expression = GetDescriptor(declaration, new Scope(key));
-
-        const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
-
-        const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(descriptor, [mockGenericParameter]);
-
-        this._factoryRegistrationsPerFile[thisFileName].push({
-            key: declaration,
-            factory,
-        });
-
-        return key;
-    }
-
     private _getMockFactoryIdForTypeofEnum(declaration: ts.EnumDeclaration): string {
         const thisFileName: string = this._fileName;
 

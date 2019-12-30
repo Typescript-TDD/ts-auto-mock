@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
-import { GetMockFactoryCall } from '../../mockFactoryCall/mockFactoryCall';
+import { CreateMockFactory, GetMockFactoryCall } from '../../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../../scope/scope';
 import { isTypeReferenceReusable } from '../../typeReferenceReusable/typeReferenceReusable';
 import { GetDescriptor } from '../descriptor';
@@ -19,7 +19,7 @@ export function GetTypeReferenceDescriptor(node: ts.TypeReferenceNode, scope: Sc
     }
 
     if (isTypeReferenceReusable(declaration)) {
-        return GetMockFactoryCall(node, scope);
+        return CreateMockFactory(node, scope);
     }
 
     return GetDescriptor(declaration, scope);
