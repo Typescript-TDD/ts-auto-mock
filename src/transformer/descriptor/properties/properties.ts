@@ -9,8 +9,8 @@ export function GetProperties(node: ts.Node, scope: Scope): ts.Expression {
     const type: ts.Type = typeChecker.getTypeAtLocation(node);
     const symbols: ts.Symbol[] = typeChecker.getPropertiesOfType(type);
 
-    if (!symbols.length) {
-        return GetPropertiesFromMembers(node as ts.TypeLiteralNode, scope);
+    if (!symbols.length && ts.isTypeLiteralNode(node)) {
+        return GetPropertiesFromMembers(node, scope);
     } else {
         const signatures: Array<ts.Signature> = [];
 

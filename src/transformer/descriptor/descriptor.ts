@@ -26,6 +26,7 @@ import { GetMockPropertiesFromSymbol } from './mock/mockProperties';
 import { GetNullDescriptor } from './null/null';
 import { GetNumberDescriptor } from './number/number';
 import { GetObjectLiteralDescriptor } from './objectLiteral/objectLiteral';
+import { GetParenthesizedDescriptor } from './parenthesized/parenthesized';
 import { GetPropertyDescriptor } from './property/propertySignature';
 import { GetStringDescriptor } from './string/string';
 import { GetTypeAliasDescriptor } from './typeAlias/typeAlias';
@@ -94,6 +95,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
         case ts.SyntaxKind.MappedType:
             return GetMappedDescriptor(node as ts.MappedTypeNode, scope);
+        case ts.SyntaxKind.ParenthesizedType:
+            return GetParenthesizedDescriptor(node as ts.ParenthesizedTypeNode, scope);
         case ts.SyntaxKind.ArrayType:
         case ts.SyntaxKind.TupleType:
             return GetArrayDescriptor();
