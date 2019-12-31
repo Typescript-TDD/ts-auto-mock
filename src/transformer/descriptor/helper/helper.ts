@@ -47,7 +47,7 @@ export namespace TypescriptHelper {
         const typeDeclaration: ts.Declaration = ts.getTypeParameterOwner(declaration);
 
         // THIS IS TO FIX A MISSING IMPLEMENTATION IN TYPESCRIPT https://github.com/microsoft/TypeScript/blob/ba5e86f1406f39e89d56d4b32fd6ff8de09a0bf3/src/compiler/utilities.ts#L5138
-        if ((typeDeclaration as Declaration).typeParameters) {
+        if (typeDeclaration && (typeDeclaration as Declaration).typeParameters) {
             return typeDeclaration;
         }
 

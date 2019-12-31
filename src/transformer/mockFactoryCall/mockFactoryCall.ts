@@ -28,9 +28,7 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
             const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode((type as ts.TypeReferenceNode).typeName);
             const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
-            if (type.typeArguments) {
-                genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
-            }
+            genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
 
             addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
 
@@ -74,9 +72,7 @@ function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenc
     const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(declarationKey);
     const genericDeclaration: IGenericDeclaration = GenericDeclaration(scope);
 
-    if (typeReferenceNode.typeArguments) {
-        genericDeclaration.addFromTypeReferenceNode(typeReferenceNode, declarationKey);
-    }
+    genericDeclaration.addFromTypeReferenceNode(typeReferenceNode, declarationKey);
 
     addFromDeclarationExtensions(declaration as GenericDeclarationSupported, declarationKey, genericDeclaration);
 
@@ -93,19 +89,17 @@ function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, 
     if (declaration.heritageClauses) {
         declaration.heritageClauses.forEach((clause: ts.HeritageClause) => {
             clause.types.forEach((extension: ts.ExpressionWithTypeArguments) => {
-                if (extension.typeArguments) {
-                    const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(extension.expression);
+                const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(extension.expression);
 
-                    const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
+                const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
 
-                    genericDeclaration.addFromDeclarationExtension(
-                      declarationKey,
-                      extensionDeclaration as GenericDeclarationSupported,
-                      extensionDeclarationKey,
-                      extension);
+                genericDeclaration.addFromDeclarationExtension(
+                    declarationKey,
+                    extensionDeclaration as GenericDeclarationSupported,
+                    extensionDeclarationKey,
+                    extension);
 
-                    addFromDeclarationExtensions(extensionDeclaration as GenericDeclarationSupported, extensionDeclarationKey, genericDeclaration);
-                }
+                addFromDeclarationExtensions(extensionDeclaration as GenericDeclarationSupported, extensionDeclarationKey, genericDeclaration);
             });
         });
     }
