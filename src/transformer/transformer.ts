@@ -1,8 +1,10 @@
 import * as ts from 'typescript';
 import { SetTsAutoMockOptions, TsAutoMockOptions } from '../options/options';
+import { GetDescriptor } from './descriptor/descriptor';
 import { isCreateMock, isCreateMockList, isFromTsAutoMock, isRegisterMock } from './matcher/matcher';
 import { getMock, getMockForList, storeRegisterMock } from './mock/mock';
 import { MockDefiner } from './mockDefiner/mockDefiner';
+import { Scope } from './scope/scope';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
 
 export default function transformer(program: ts.Program, options?: TsAutoMockOptions): ts.TransformerFactory<ts.SourceFile> {
@@ -29,6 +31,12 @@ function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext):
 }
 
 function visitNode(node: ts.Node): ts.Node {
+    if (ts.isImportEqualsDeclaration(node)) {
+        MockDefiner.instance.setFileNameFromNode(node as unknown as ts.TypeNode);
+        MockDefiner.instance.setTsAutoMockImportIdentifier();
+        return GetDescriptor(node, new Scope());
+    }
+
     if (!ts.isCallExpression(node)) {
         return node;
     }

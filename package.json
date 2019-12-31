@@ -4,6 +4,7 @@
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "scripts": {
     "build:transformer": "webpack --config config/modules/transformer/webpack.js",
+    "build:transformer2": "webpack --config config/modules/transformer2/webpack.js",
     "build:modules": "webpack --config config/modules/webpack.js",
     "build": "npm run build:modules && npm run build:transformer",
     "test": "npm run test:transformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:registerMock && npm run test:unit",
@@ -18,7 +19,8 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
     "preparePublish": "npm run build && npm run copyForPublish",
-    "build:playground": "ttsc --project tsconfig.playground.json"
+    "build:playground": "ttsc --project tsconfig.playground.json",
+    "build:types": "ttsc --project test/definitelyType/tsconfig.types.json"
   },
   "keywords": [
     "typescript",
@@ -36,8 +38,8 @@
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-angular": "^8.2.0",
     "@types/jasmine": "^3.5.0",
-    "@types/node": "^13.1.0",
     "awesome-typescript-loader": "^5.2.1",
+    "axios": "0.19.0",
     "clean-webpack-plugin": "^3.0.0",
     "conventional-changelog-cli": "^2.0.31",
     "copy-webpack-plugin": "^5.1.1",
@@ -61,6 +63,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "@types/node": "^13.1.1",
     "lodash-es": "^4.17.15",
     "winston": "^3.2.1"
   },

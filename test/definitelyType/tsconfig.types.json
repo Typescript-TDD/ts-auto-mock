@@ -1,0 +1,12 @@
+{
+  "extends": "DefinitelyTyped/types/7zip-min/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "plugins": [
+      {
+        "transform": "../../dist/transformer",
+        "debug": true
+      }
+    ]
+  }
+}
