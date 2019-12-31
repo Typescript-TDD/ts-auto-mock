@@ -9,7 +9,7 @@ export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionT
     const nodes: ts.Node[] = GetTypes(intersectionTypeNode.types, scope);
 
     const hasInvalidIntersections: boolean = nodes.some((node: ts.Node) => {
-        return TypescriptHelper.IsLiteralOrPrimitive(node);
+        return TypescriptHelper.IsLiteralOrPrimitive(node) || ts.isTypeQueryNode(node);
     });
 
     if (hasInvalidIntersections) {

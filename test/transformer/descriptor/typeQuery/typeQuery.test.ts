@@ -39,9 +39,31 @@ describe('typeQuery', () => {
 
       expect(functionMock()).toEqual(0);
     });
+
+    it('should return undefined for an intersection', () => {
+      function func(): string {
+        return 'ok';
+      }
+      
+      type Intersection = {} & typeof func;
+      
+      const functionMock: Intersection = createMock<Intersection>();
+
+      expect(functionMock).toBeUndefined();
+    });
   });
 
   describe('for class', () => {
+    it('should create a newable class for a class declaration in file', () => {
+      class MyClass {
+        prop: string;
+      }
+
+      const classMock: typeof MyClass = createMock<typeof MyClass>();
+
+      expect(new classMock().prop).toEqual('');
+    });
+    
     it('should create a newable class for an imported class declaration', () => {
       const classMock: typeof ExportedDeclaredClass = createMock<typeof ExportedDeclaredClass>();
 
@@ -58,6 +80,14 @@ describe('typeQuery', () => {
       const classMock: WrapExportedClass = createMock<WrapExportedClass>();
 
       expect(new classMock().prop).toEqual(0);
+    });
+
+    it('should return undefined for an intersection', () => {
+      type Intersection = {} & WrapExportedClass;
+
+      const functionMock: Intersection = createMock<Intersection>();
+
+      expect(functionMock).toBeUndefined();
     });
   });
 
@@ -99,6 +129,14 @@ describe('typeQuery', () => {
       expect(enumMock.B).toEqual('B');
       expect(enumMock.C).toEqual('MaybeC');
     });
+
+    it('should return undefined for an intersection', () => {
+      type Intersection = {} & WrapExportedEnum;
+
+      const functionMock: Intersection = createMock<Intersection>();
+
+      expect(functionMock).toBeUndefined();
+    });
   });
 
   describe('for variable', () => {
@@ -116,6 +154,16 @@ describe('typeQuery', () => {
       const mock: typeof aVariable = createMock<typeof aVariable>();
 
       expect(mock.A).toEqual(0);
+    });
+
+    it('should return undefined for an intersection', () => {
+      let aVariable: WrapExportedEnum;
+      
+      type Intersection = {} & typeof aVariable;
+
+      const functionMock: Intersection = createMock<Intersection>();
+
+      expect(functionMock).toBeUndefined();
     });
 
     describe('inferred type', () => {
