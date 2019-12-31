@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 
 export namespace TypescriptCreator {
-    export function createArrowFunction(block: ts.Block, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.ArrowFunction {
+    export function createArrowFunction(block: ts.ConciseBody, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.ArrowFunction {
         return ts.createArrowFunction([], [], parameter, undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
     }
 
