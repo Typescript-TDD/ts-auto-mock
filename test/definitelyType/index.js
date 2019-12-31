@@ -27,7 +27,7 @@ async function run(dir) {
     const config = {
         "extends": `DefinitelyTyped/types/${dir}/tsconfig.json`,
         "compilerOptions": {
-            "noEmit": ,
+            "noEmit": false,
             "plugins": [
                 {
                     "transform": "../../dist/transformer",
