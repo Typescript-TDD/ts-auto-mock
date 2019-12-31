@@ -1,15 +1,11 @@
 const exec = require('child_process').exec;
 const path = require('path');
 const fs = require('fs');
-const https = require('https');
 
 const getDirectories = source =>
   fs.readdirSync(source, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
-
-
-const axios = require('axios');
 
 
 const folder = path.join("DefinitelyTyped", "types");
@@ -22,7 +18,7 @@ function runAllDir(dirs) {
       },
       Promise.resolve()
     );
-}false
+}
 
 console.log(definitelyTypedDirectories);
 runAllDir([definitelyTypedDirectories[0]]);
