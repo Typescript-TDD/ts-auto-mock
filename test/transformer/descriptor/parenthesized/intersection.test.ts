@@ -9,7 +9,7 @@ describe('parenthesized intersection ', () => {
         expect(createMock<A>()).toBeUndefined();
     });
 
-    it('it should intersect correctly for function and object ', () => {
+    it('should intersect correctly for function and object ', () => {
         interface B {
             prop: number;
         }
@@ -19,5 +19,14 @@ describe('parenthesized intersection ', () => {
         const mock: A = createMock<A>();
         expect(mock()).toBe('');
         expect(mock.prop).toBe(0);
+    });
+
+    it('should return the correct type for objects intersections', () => {
+        type A = ({a: string} & {b: number});
+
+        const mock: A = createMock<A>();
+
+        expect(mock.a).toBe('');
+        expect(mock.b).toBe(0);
     });
 });

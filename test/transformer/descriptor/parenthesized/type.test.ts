@@ -16,13 +16,4 @@ describe('parenthesized type ', () => {
 
         expect(mock.a).toBe('');
     });
-
-    it('should return the correct type for objects intersections', () => {
-        type A = ({a: string} & {b: number});
-
-        const mock: A = createMock<A>();
-
-        expect(mock.a).toBe('');
-        expect(mock.b).toBe(0);
-    });
 });
