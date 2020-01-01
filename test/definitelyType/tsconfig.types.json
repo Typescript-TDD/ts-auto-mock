@@ -1,12 +1,1 @@
-{
-  "extends": "DefinitelyTyped/types/7zip-min/tsconfig.json",
-  "compilerOptions": {
-    "noEmit": false,
-    "plugins": [
-      {
-        "transform": "../../dist/transformer",
-        "debug": true
-      }
-    ]
-  }
-}
+{"extends":"./DefinitelyTyped/types/a11y-dialog/tsconfig.json","compilerOptions":{"noEmit":false,"plugins":[{"transform":"../../dist/transformer","debug":true}]}}
