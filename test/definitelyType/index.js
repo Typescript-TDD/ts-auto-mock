@@ -25,7 +25,7 @@ runAllDir([definitelyTypedDirectories[0]]);
 
 async function run(dir) {
     const config = {
-        "extends": `DefinitelyTyped/types/${dir}/tsconfig.json`,
+        "extends": `./DefinitelyTyped/types/${dir}/tsconfig.json`,
         "compilerOptions": {
             "noEmit": false,
             "plugins": [
@@ -40,7 +40,7 @@ async function run(dir) {
     await fs.writeFileSync('tsconfig.types.json', JSON.stringify(config));
     console.log(`TYPE: ${dir}`);
 
-    return execPromise('ttsc --project tsconfig.types.json');
+    return execPromise('npx ttsc --project tsconfig.types.json');
 }
 
 
