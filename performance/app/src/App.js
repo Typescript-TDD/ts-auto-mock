@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {Chart} from "./Chart";
-import performanceRepository from "./repository/repository";
+const performanceRepository = require("./repository/repository");
 
 function adaptDataForChart(data) {
     return Object.keys(data).reduce(((result, branchKey) => {
