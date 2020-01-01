@@ -10,7 +10,7 @@ const performanceRepository = require("./repository/repository");
     const testResults = await runTestFromConfig(config);
 
     const currentCommit = await gitHelper.getCurrentCommit();
-    const currentBranch = await gitHelper.getCurrentBranchNameFromCommit();
+    const currentBranch = await gitHelper.getCurrentBranchName();
 
     const url = "https://api.jsonbin.io/b/5e0cc11f32536c77d679a2e3";
     const publicUrl = "https://api.jsonbin.io/b/5e0ccffff9369177b27624ce";
