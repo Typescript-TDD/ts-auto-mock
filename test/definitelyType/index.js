@@ -2,6 +2,9 @@ const exec = require('child_process').exec;
 const path = require('path');
 const fs = require('fs');
 
+const PARALLEL_NPM_INSTALL = 20;
+const RUN_NPM_INSTALL = true;
+
 const getDirectories = source =>
   fs.readdirSync(source, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
@@ -18,8 +21,8 @@ function getProcessesCount() {
 
 function getProcessesConfig() {
     const totalTypesCount = getTotalTypesCount();
-    const processesMaximized = maximiseTypesInProcesses(getProcessesCount(), totalTypesCount);
-    const sum = processesMaximized.reduce((previous, current) => previous + current.typesCount, 0);
+    const processesMaximized = miximiseParallelRun(getProcessesCount(), totalTypesCount);
+    const sum = processesMaximized.reduce((previous, current) => previous + current.items, 0);
     const avg = sum / processesMaximized.length;
 
     return {
@@ -29,20 +32,27 @@ function getProcessesConfig() {
     };
 }
 
-function maximiseTypesInProcesses(processesCount, totalTypesCount) {
+function miximiseParallelRun(processesCount, totalItems) {
     const processes = [];
-    const floored = Math.floor(totalTypesCount / processesCount);
-    let remaining = totalTypesCount;
+    const floored = Math.floor(totalItems / processesCount);
+    let remaining = totalItems;
 
     for(let i = 0; i < processesCount; i++) {
         processes.push({
-            typesCount: Math.min(floored, remaining)
+            items: Math.min(floored, remaining)
         });
 
         remaining -= floored;
     }
 
     return processes;
+}
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
 
 function getTotalTypesCount() {
@@ -60,7 +70,7 @@ function getTotalTypesCount() {
 }
 
 function runAllDir(dirs, id) {
-    fs.writeFileSync(`tsLogs.${id}.txt`, "===== Start run " + new Date().toISOString() + " =====\n", { flag: "a+" });
+    fs.writeFileSync(`tsLogs.${id}.txt`, "===== Start run " + new Date().toISOString() + " - " + runUuid + " =====\n", { flag: "a+" });
     fs.writeFileSync(`tsconfig.types.${id}.json`, "");
     
     return dirs.reduce((promise, dir) => promise.then(() => run(dir, id)), Promise.resolve())
@@ -78,14 +88,17 @@ console.log(`Processes: ${processesConfig.processes.length}`);
 console.log(`Average types per process: ${processesConfig.averageTypesCountPerProcess}`);
 console.log();
 
+const runUuid = uuidv4();
 runApp();
 
 async function runApp() {
-    await installDependencies();
+    if (RUN_NPM_INSTALL) {
+        await installDependencies();
+    }
 
     for(let i = 0; i < processesConfig.processes.length; i++) {
-        runAllDir(definitelyTypedDirectories.slice(startDirectoryIndex, startDirectoryIndex + processesConfig.processes[i].typesCount), i);
-        startDirectoryIndex += processesConfig.processes[i].typesCount;
+        runAllDir(definitelyTypedDirectories.slice(startDirectoryIndex, startDirectoryIndex + processesConfig.processes[i].items), i);
+        startDirectoryIndex += processesConfig.processes[i].items;
     }
 }
 
@@ -100,15 +113,30 @@ async function installDependencies() {
         return Promise.resolve();
     }
 
-    console.log(`npm install in:`);
+    console.log(`npm install in ${directoriesWithDependencies.length} folders:`);
 
-    return Promise.all(
-        directoriesWithDependencies
-            .map(dir => {
-                process.stdout.write(`${dir.name} `);
-                return execPromise(`npm --prefix ${dir.path} install ${dir.path}`);
-            })
-    ).then(() => console.log("\n"));
+    const processes = miximiseParallelRun(PARALLEL_NPM_INSTALL, directoriesWithDependencies.length);
+    let startIndex = 0;
+    const processesPromiseList = [];
+
+    for(let i = 0; i < processes.length; i++) {
+        processesPromiseList.push(
+            installDependenciesInDirectories(directoriesWithDependencies.slice(startIndex, startIndex + processes[i].items), i)
+        );
+        startIndex += processes[i].items;
+    }
+
+    return Promise.all(processesPromiseList).then(() => console.log("\n"));
+}
+
+let installedDependencyIndex = 0;
+function installDependenciesInDirectories(directories) {
+    return directories.reduce((promise, dir) => promise.then(() => {
+        process.stdout.write(`(${++installedDependencyIndex}):${dir.name} `);
+        return execPromise(`(cd ./${dir.path} && npm install)`).catch(err => {
+            fs.writeFileSync(`tsLogs.npmErrors.txt`, "Error in run " + runUuid + " :: " + err, { flag: "a+" });
+        });
+    }), Promise.resolve())
 }
 
 async function run(dir, id) {
