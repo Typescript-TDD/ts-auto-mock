@@ -2,16 +2,15 @@ const path = require('path');
 const fileSystem = require('./core/fs/fileSystem');
 const gitHelper = require('./core/git/gitHelper');
 const testRunner = require('./testRunner/testRunner');
-const performanceRepository = require("./app/src/repository/repository");
+const performanceRepository = require("./repository/repository");
 
 (async function () {
     const secret = process.argv[2];
-    console.log(secret);
     const config = getPerformanceConfig();
     const testResults = await runTestFromConfig(config);
 
-    const currentBranch = await gitHelper.getCurrentBranchName();
     const currentCommit = await gitHelper.getCurrentCommit();
+    const currentBranch = await gitHelper.getCurrentBranchNameFromCommit();
 
     const url = "https://api.jsonbin.io/b/5e0cc11f32536c77d679a2e3";
     const publicUrl = "https://api.jsonbin.io/b/5e0ccffff9369177b27624ce";

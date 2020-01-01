@@ -47,5 +47,4 @@ function performanceRepository(url, secret) {
         }
     }
 }
-
 module.exports = performanceRepository;

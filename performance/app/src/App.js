@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {Chart} from "./Chart";
-const performanceRepository = require("./repository/repository");
+import axios from "axios";
 
 function adaptDataForChart(data) {
     return Object.keys(data).reduce(((result, branchKey) => {
@@ -28,7 +28,7 @@ function App() {
     const [branchNames, setBranches] = React.useState([]);
 
     useEffect(() => {
-        performanceRepository("https://api.jsonbin.io/b/5e0ccffff9369177b27624ce").get().then((result) => {
+        axios.get("https://api.jsonbin.io/b/5e0ccffff9369177b27624ce/latest").then((result) => {
             const dataAdapted = adaptDataForChart(result.data['performance-tests']);
             const branches = result.data['performance-tests'];
 
