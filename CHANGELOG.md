@@ -1,3 +1,16 @@
+<a name="1.4.4"></a>
+## [1.4.4](https://github.com/uittorio/ts-auto-mock/compare/v1.4.3...v1.4.4) (2020-01-01)
+
+
+### Features
+
+* **genericDefault:** add support for default generics on declaration and extensions ([#126](https://github.com/uittorio/ts-auto-mock/issues/126)) ([a9df32a](https://github.com/uittorio/ts-auto-mock/commit/a9df32a))
+* **importequal:** add support for export equals and remove webpack env types that were conflicting with types node ([#124](https://github.com/uittorio/ts-auto-mock/issues/124)) ([990ecf1](https://github.com/uittorio/ts-auto-mock/commit/990ecf1))
+* **intersectionsfunction:** add support for function intersections and parenthesised type in intersections ([#127](https://github.com/uittorio/ts-auto-mock/issues/127)) ([5572631](https://github.com/uittorio/ts-auto-mock/commit/5572631))
+* **registerMock:** add registerMock functionality to register custom mocks per project ([#125](https://github.com/uittorio/ts-auto-mock/issues/125)) ([0feb05a](https://github.com/uittorio/ts-auto-mock/commit/0feb05a))
+
+
+
 <a name="1.4.3"></a>
 ## [1.4.3](https://github.com/uittorio/ts-auto-mock/compare/v1.4.2...v1.4.3) (2019-12-27)
 
