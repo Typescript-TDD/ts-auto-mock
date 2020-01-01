@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Chart} from "./Chart";
-import data from '../src/result/data';
+import performanceRepository from "./repository/repository";
 
 function adaptDataForChart(data) {
     return Object.keys(data).reduce(((result, branchKey) => {
@@ -17,18 +17,31 @@ function adaptDataForChart(data) {
         });
 
         return result;
-    }), []);
+    }), []).sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+    })
 }
 
 function App() {
-    const dataAdapted = adaptDataForChart(data);
     const [branch, selectBranch] = React.useState('master');
+    const [data, setData] = React.useState([]);
+    const [branchNames, setBranches] = React.useState([]);
 
-    const branches = Object.keys(data).map((branchName, index) => {
+    useEffect(() => {
+        performanceRepository("https://api.jsonbin.io/b/5e0ccffff9369177b27624ce").get().then((result) => {
+            const dataAdapted = adaptDataForChart(result.data['performance-tests']);
+            const branches = result.data['performance-tests'];
+
+            setData(dataAdapted);
+            setBranches(branches);
+        });
+    }, []);
+
+    const branches = Object.keys(branchNames).map((branchName, index) => {
         return <option key={index} value={branchName}>{branchName}</option>
     });
 
-    const charts = dataAdapted
+    const charts = data
       .filter((feature) => feature.branch === branch)
       .map((s, index) => <div key={index}>
           <p>{s.commit}</p>

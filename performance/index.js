@@ -2,9 +2,26 @@ const path = require('path');
 const fileSystem = require('./core/fs/fileSystem');
 const gitHelper = require('./core/git/gitHelper');
 const testRunner = require('./testRunner/testRunner');
+const performanceRepository = require("./app/src/repository/repository");
+
+(async function () {
+    const secret = process.argv[2];
+    console.log(secret);
+    const config = getPerformanceConfig();
+    const testResults = await runTestFromConfig(config);
+
+    const currentBranch = await gitHelper.getCurrentBranchName();
+    const currentCommit = await gitHelper.getCurrentCommit();
+
+    const url = "https://api.jsonbin.io/b/5e0cc11f32536c77d679a2e3";
+    const publicUrl = "https://api.jsonbin.io/b/5e0ccffff9369177b27624ce";
+
+    performanceRepository(url, secret).update(testResults, currentBranch, currentCommit);
+    performanceRepository(publicUrl).update(testResults, currentBranch, currentCommit);
+})();
 
 function getPerformanceConfig() {
-    const performanceConfig = fileSystem.readFileAsync(path.join(__dirname, 'performance.json'));
+    const performanceConfig = fileSystem.readFileAsync(path.join(__dirname, 'performance_small.json'));
     return JSON.parse(performanceConfig);
 }
 
@@ -24,46 +41,3 @@ function runTestFromConfig(config) {
       Promise.resolve([])
     );
 }
-
-async function addResultToData(testResults, dataFileJson, now) {
-    const currentBranch = await gitHelper.getCurrentBranchName();
-    const currentCommit = await gitHelper.getCurrentCommit();
-
-    if (dataFileJson[currentBranch]) {
-        if (dataFileJson[currentBranch][currentCommit]) {
-            dataFileJson[currentBranch][currentCommit][now] = testResults;
-        } else {
-            dataFileJson[currentBranch][currentCommit] = {
-                [now]: testResults
-            }
-        }
-    } else {
-        dataFileJson[currentBranch] = {
-            [currentCommit]: {
-                [now]: testResults
-            }
-        }
-    }
-}
-
-(async function () {
-    const config = getPerformanceConfig();
-    const testResults = await runTestFromConfig(config);
-
-    const dataAppFilePath = path.join(__dirname, 'app', 'src', 'result', 'data.json');
-    const dataFile = fileSystem.readFileAsync(dataAppFilePath);
-    const dataFileJson = JSON.parse(dataFile);
-
-    const now = new Date().toISOString();
-
-    await addResultToData(testResults, dataFileJson, now);
-
-    const backUpDataFile = path.join(__dirname, 'backup', `data${now}.json`);
-    const dataForFile = JSON.stringify(dataFileJson);
-
-    fileSystem.writeFileAsync(dataAppFilePath, dataForFile);
-    fileSystem.writeFileAsync(backUpDataFile, dataForFile);
-})();
-
-
-

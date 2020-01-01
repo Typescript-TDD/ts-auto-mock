@@ -1,0 +1,10 @@
+{
+  "volume": 100,
+  "features": [
+    {
+      "name": "no transformer",
+      "tsConfig": "tsconfig/tsconfig.performance.notransformer.json",
+      "types": ["withoutTsAutoMock"]
+    }
+  ]
+}

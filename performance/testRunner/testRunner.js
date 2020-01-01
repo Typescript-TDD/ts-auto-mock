@@ -7,6 +7,7 @@ function getDistPerformanceFolder() {
 }
 
 async function testRunner(feature, volume) {
+    console.log(`running ${feature.name}`);
     const performanceTestFolder = getDistPerformanceFolder();
     await fileSystem.createFolder(performanceTestFolder);
     await generateFeatureTests(feature, volume);
@@ -14,20 +15,9 @@ async function testRunner(feature, volume) {
     const testResults = await typescriptRunner.run(feature.tsConfig);
     await fileSystem.deleteFolder(performanceTestFolder);
 
+    console.log(`finished ${feature.name}`);
     return testResults;
 }
-
-function testForFeature(feature, volume) {
-    const performanceTestFolder = getDistPerformanceFolder();
-    const templateFolder = path.join(__dirname, "..", "templates");
-
-    for (let i = 0; i < volume; i++) {
-        const filePath = path.join(performanceTestFolder, `${feature}${i}.test.ts`);
-        const testFile = fileSystem.readFileAsync(path.join(templateFolder, `${feature}.ts`));
-        fileSystem.writeFileAsync(filePath, testFile);
-    }
-}
-
 
 async function generateFeatureTests(featureConfig, volume) {
     const performanceTestFolder = getDistPerformanceFolder();
@@ -43,4 +33,16 @@ async function generateFeatureTests(featureConfig, volume) {
     const performanceTestTypesFolder = path.join(performanceTestFolder, "types");
     await fileSystem.copyFolder(typesFolder, performanceTestTypesFolder);
 }
+
+function testForFeature(feature, volume) {
+    const performanceTestFolder = getDistPerformanceFolder();
+    const templateFolder = path.join(__dirname, "..", "templates");
+
+    for (let i = 0; i < volume; i++) {
+        const filePath = path.join(performanceTestFolder, `${feature}${i}.test.ts`);
+        const testFile = fileSystem.readFileAsync(path.join(templateFolder, `${feature}.ts`));
+        fileSystem.writeFileAsync(filePath, testFile);
+    }
+}
+
 module.exports = testRunner;

@@ -24,3 +24,13 @@ jobs:
         npm test
       env:
         CI: true
+    - name: performance
+      run: |
+        npm install
+        npm run build
+        cd performance
+        npm install
+        npm start $JSON_BIN_PERFORMANCE
+      env:
+        JSON_BIN_PERFORMANCE: ${{ secrets.JSON_BIN_PERFORMANCE }}
+

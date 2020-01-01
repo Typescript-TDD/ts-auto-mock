@@ -13,7 +13,7 @@ Soon link will be available
 ### Instruction to run performance data
 
 ```
-npm start
+npm run start
 ```
 
 This will create and run all the test based on performance.json configuration
