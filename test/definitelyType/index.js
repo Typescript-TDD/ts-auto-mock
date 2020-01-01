@@ -46,17 +46,16 @@ async function run(dir) {
 
 function execPromise(command) {
     return new Promise(function(resolve, reject) {
-        const existingLogs = fs.readFileSync("tsLogs.txt");
         exec(command, (error, stdout) => {
             if (error) {
-                fs.writeFileSync("tsLogs.txt", existingLogs + '\n' + error);
+                fs.writeFileSync("tsLogs.txt", '\n' + error, { flag:'a+' });
                 reject(error);
                 return;
             }
 
             const response = stdout.trim();
             console.log(response);
-            fs.writeFileSync("tsLogs.txt", existingLogs + '\n' + response);
+            fs.writeFileSync("tsLogs.txt", '\n' + response, { flag:'a+' });
             resolve(response);
         });
     });
