@@ -4,7 +4,8 @@ import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
-import { GetMockPropertiesFromDeclarations, PropertyLike } from '../mock/mockProperties';
+import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
+import { PropertyLike } from '../mock/propertyLike';
 
 export function GetModuleDescriptor(node: ts.NamedDeclaration, scope: Scope): ts.Expression {
     const typeChecker: ts.TypeChecker = TypeChecker();

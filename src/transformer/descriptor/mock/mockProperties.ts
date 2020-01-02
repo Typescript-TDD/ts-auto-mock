@@ -14,7 +14,7 @@ export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signa
 
     const signaturesDeclarations: SignatureLike[] = signatures.map((signature: ts.Signature) => {
         return signature.declaration;
-    });
+    }) as SignatureLike[];
 
     return GetMockPropertiesFromDeclarations(properties, signaturesDeclarations, scope);
 }
