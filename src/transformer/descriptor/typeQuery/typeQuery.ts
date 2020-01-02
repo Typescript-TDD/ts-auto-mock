@@ -7,10 +7,49 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMethodDeclarationDescriptor } from '../method/methodDeclaration';
+import { GetModuleDescriptor } from '../module/module';
 import { GetNullDescriptor } from '../null/null';
 import { GetTypeReferenceDescriptor } from '../typeReference/typeReference';
 
 export function GetTypeQueryDescriptor(node: ts.TypeQueryNode, scope: Scope): ts.Expression {
+  const typeChecker: ts.TypeChecker = TypeChecker();
+  const declaration: ts.Declaration = getTypeQueryDeclaration(node);
+
+  switch (declaration.kind) {
+    case ts.SyntaxKind.ClassDeclaration:
+      return TypescriptCreator.createFunctionExpressionReturn(
+        GetTypeReferenceDescriptor(
+          ts.createTypeReferenceNode(node.exprName as ts.Identifier, undefined),
+          scope,
+        ),
+      );
+    case ts.SyntaxKind.TypeAliasDeclaration:
+    case ts.SyntaxKind.InterfaceDeclaration:
+      return GetTypeReferenceDescriptor(
+          ts.createTypeReferenceNode(node.exprName as ts.Identifier, undefined),
+          scope,
+      );
+    case ts.SyntaxKind.NamespaceImport:
+    case ts.SyntaxKind.ImportEqualsDeclaration:
+      return GetModuleDescriptor(declaration, scope);
+    case ts.SyntaxKind.EnumDeclaration:
+      // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
+      // TheNewEmitResolver.ensureEmitOf(GetImportDeclarationOf(node.eprName as ts.Identifier);
+      // return node.exprName as ts.Identifier;
+      return GetMockFactoryCallTypeofEnum(declaration as ts.EnumDeclaration);
+    case ts.SyntaxKind.FunctionDeclaration:
+    case ts.SyntaxKind.MethodSignature:
+      return GetMethodDeclarationDescriptor(declaration as ts.FunctionDeclaration, scope);
+    case ts.SyntaxKind.VariableDeclaration:
+      const typeNode: ts.TypeNode = (declaration as ts.VariableDeclaration).type || typeChecker.typeToTypeNode(typeChecker.getTypeFromTypeNode(node));
+      return GetDescriptor(typeNode, scope);
+    default:
+      TransformerLogger().typeNotSupported(`TypeQuery of ${ts.SyntaxKind[declaration.kind]}`);
+      return GetNullDescriptor();
+  }
+}
+
+function getTypeQueryDeclaration(node: ts.TypeQueryNode): ts.Declaration {
   const typeChecker: ts.TypeChecker = TypeChecker();
   /*
    TODO: Find different workaround without casting to any
@@ -23,29 +62,12 @@ export function GetTypeQueryDescriptor(node: ts.TypeQueryNode, scope: Scope): ts
    here `typeof myVar` is inferred `typeof MyEnum` and the `MyEnum` identifier doesn't play well with getSymbolAtLocation and it returns undefined.
   */
   // tslint:disable-next-line no-any
-  const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.exprName) || (node.exprName as any).symbol;
-  const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromSymbol(symbol);
+  const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.exprName as ts.Identifier) || (node.exprName as any).symbol;
+  const declaration: ts.Declaration = symbol.declarations[0];
 
-  switch (declaration.kind) {
-    case ts.SyntaxKind.ClassDeclaration:
-      return TypescriptCreator.createFunctionExpressionReturn(
-        GetTypeReferenceDescriptor(
-          ts.createTypeReferenceNode(node.exprName as ts.Identifier, undefined),
-          scope,
-        ),
-      );
-    case ts.SyntaxKind.EnumDeclaration:
-      // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
-      // TheNewEmitResolver.ensureEmitOf(GetImportDeclarationOf(node.eprName as ts.Identifier);
-      // return node.exprName as ts.Identifier;
-      return GetMockFactoryCallTypeofEnum(declaration as ts.EnumDeclaration);
-    case ts.SyntaxKind.FunctionDeclaration:
-      return GetMethodDeclarationDescriptor(declaration as ts.FunctionDeclaration, scope);
-    case ts.SyntaxKind.VariableDeclaration:
-      const typeNode: ts.TypeNode = (declaration as ts.VariableDeclaration).type || typeChecker.typeToTypeNode(typeChecker.getTypeFromTypeNode(node));
-      return GetDescriptor(typeNode, scope);
-    default:
-      TransformerLogger().typeNotSupported(`TypeQuery of ${ts.SyntaxKind[declaration.kind]}`);
-      return GetNullDescriptor();
+  if (ts.isImportEqualsDeclaration(declaration)) {
+    return declaration;
   }
+
+  return TypescriptHelper.GetDeclarationFromSymbol(symbol);
 }

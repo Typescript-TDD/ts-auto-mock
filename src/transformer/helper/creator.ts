@@ -1,3 +1,4 @@
+import { PropertyName } from 'typescript';
 import * as ts from 'typescript';
 
 export namespace TypescriptCreator {
@@ -35,7 +36,7 @@ export namespace TypescriptCreator {
         return createProperty('', undefined);
     }
 
-    export function createProperty(propertyName: string, type: ts.TypeNode): ts.PropertyDeclaration {
+    export function createProperty(propertyName: string | PropertyName, type: ts.TypeNode): ts.PropertyDeclaration {
         return ts.createProperty([], [], propertyName, undefined, type, undefined);
     }
 

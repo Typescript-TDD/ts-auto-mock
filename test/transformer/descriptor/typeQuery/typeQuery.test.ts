@@ -1,11 +1,18 @@
 import { createMock } from 'ts-auto-mock';
-import { MyEnum } from '../../../playground/enums';
 import { ImportInterface } from '../utils/interfaces/importInterface';
+import REQUIRE = require('../utils/typeQuery/typeQueryUtils');
+import REQUIRE_DEFAULT = require('../utils/interfaces/exportDefaultDeclaration');
+import REQUIRE_EQUAL = require('../utils/interfaces/exportEqualObject');
+import * as STAR from '../utils/typeQuery/typeQueryUtils';
+import * as STAR_DEFAULT from '../utils/interfaces/exportDefaultDeclaration';
 import {
   ExportedClass,
   ExportedDeclaredClass,
-  exportedDeclaredFunction, ExportedEnum,
-  exportedFunction, WrapExportedClass, WrapExportedEnum,
+  exportedDeclaredFunction,
+  ExportedEnum,
+  exportedFunction,
+  WrapExportedClass,
+  WrapExportedEnum,
 } from '../utils/typeQuery/typeQueryUtils';
 
 declare function functionDeclaration(): number;
@@ -44,9 +51,9 @@ describe('typeQuery', () => {
       function func(): string {
         return 'ok';
       }
-      
+
       type Intersection = {} & typeof func;
-      
+
       const functionMock: Intersection = createMock<Intersection>();
 
       expect(functionMock).toBeUndefined();
@@ -63,7 +70,7 @@ describe('typeQuery', () => {
 
       expect(new classMock().prop).toEqual('');
     });
-    
+
     it('should create a newable class for an imported class declaration', () => {
       const classMock: typeof ExportedDeclaredClass = createMock<typeof ExportedDeclaredClass>();
 
@@ -100,8 +107,8 @@ describe('typeQuery', () => {
 
       const enumMock: typeof Enum = createMock<typeof Enum>();
 
-      expect(enumMock.A).toEqual(0);
-      expect(enumMock.B).toEqual('some');
+      expect(enumMock.A).toEqual(Enum.A);
+      expect(enumMock.B).toEqual(Enum.B);
     });
 
     it('should assign the imported enum to the mock', () => {
@@ -156,14 +163,68 @@ describe('typeQuery', () => {
       expect(mock.A).toEqual(0);
     });
 
+    it('should work for a method in an object', () => {
+      let aVariable: {
+        a(): string;
+      } = {
+        a: function(): string {
+          return "wow";
+        }
+      };
+
+      const mock: typeof aVariable.a = createMock<typeof aVariable.a>();
+
+      expect(mock()).toEqual('');
+    });
+
     it('should return undefined for an intersection', () => {
       let aVariable: WrapExportedEnum;
-      
+
       type Intersection = {} & typeof aVariable;
 
       const functionMock: Intersection = createMock<Intersection>();
 
       expect(functionMock).toBeUndefined();
+    });
+
+    describe('import star', () => {
+      it('should mock every materialisable export (no types or interfaces)', () => {
+        const mock: typeof STAR = createMock<typeof STAR>();
+
+        expect(mock.ExportedEnum.A).toBe(ExportedEnum.A);
+        expect(new mock.ExportedClass().prop).toEqual(0);
+        expect(new mock.ExportedDeclaredClass().prop).toEqual('');
+        expect(mock.exportedDeclaredFunction()).toEqual('');
+      });
+
+      it('should mock the default', () => {
+        const mock: typeof STAR_DEFAULT = createMock<typeof STAR_DEFAULT>();
+
+        expect(mock.default('input')).toBe(false);
+      });
+    });
+
+    describe('import require', () => {
+      it('should mock every materialisable export (no types or interfaces)', () => {
+        const mock: typeof REQUIRE = createMock<typeof REQUIRE>();
+
+        expect(mock.ExportedEnum.A).toBe(ExportedEnum.A);
+        expect(new mock.ExportedClass().prop).toEqual(0);
+        expect(new mock.ExportedDeclaredClass().prop).toEqual('');
+        expect(mock.exportedDeclaredFunction()).toEqual('');
+      });
+
+      it('should mock the default', () => {
+        const mock: typeof REQUIRE_DEFAULT = createMock<typeof REQUIRE_DEFAULT>();
+
+        expect(mock.default('input')).toBe(false);
+      });
+
+      it('should mock the `export =`', () => {
+        const mock: typeof REQUIRE_EQUAL = createMock<typeof REQUIRE_EQUAL>();
+
+        expect(new mock().prop).toBe(0);
+      });
     });
 
     describe('inferred type', () => {
@@ -174,21 +235,21 @@ describe('typeQuery', () => {
 
         expect(mock.prop).toEqual('');
       });
-      
+
       it('should work for enum', () => {
-        const aVariable = MyEnum;
+        const aVariable = ExportedEnum;
 
         const mock: typeof aVariable = createMock<typeof aVariable>();
 
         expect(mock.A).toEqual(0);
       });
-      
+
       it('should work for function call', () => {
         function test(value) {
           if(value) {
             return { prop: 'asd' };
           }
-          
+
           return { second: 7 };
         }
 

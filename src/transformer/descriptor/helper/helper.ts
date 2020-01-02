@@ -67,9 +67,18 @@ export namespace TypescriptHelper {
         return symbol.escapedName.toString();
     }
 
+    export function GetAliasedSymbolSafe(alias: ts.Symbol): ts.Symbol {
+        return isAlias(alias) ? TypeChecker().getAliasedSymbol(alias) : alias;
+    }
+
     function GetFirstValidDeclaration(declarations: ts.Declaration[]): ts.Declaration {
         return declarations.find((declaration: ts.Declaration) => {
             return !ts.isVariableDeclaration(declaration);
         }) || declarations[0];
+    }
+
+    function isAlias(symbol: ts.Symbol): boolean {
+        // tslint:disable-next-line no-bitwise
+        return !!((symbol.flags & ts.SymbolFlags.Alias) || (symbol.flags & ts.SymbolFlags.AliasExcludes));
     }
 }
