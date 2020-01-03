@@ -6,6 +6,7 @@ import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { PropertyLike } from '../mock/propertyLike';
+import { GetTypeQueryDescriptorFromDeclaration } from '../typeQuery/typeQuery';
 
 export function GetModuleDescriptor(node: ts.NamedDeclaration, scope: Scope): ts.Expression {
     const typeChecker: ts.TypeChecker = TypeChecker();
@@ -30,5 +31,5 @@ export function GetModuleDescriptor(node: ts.NamedDeclaration, scope: Scope): ts
         return GetMockPropertiesFromDeclarations(properties, [], scope);
     }
 
-    return GetDescriptor(ts.createTypeQueryNode(externalModuleDeclaration.name as ts.Identifier), scope);
+    return GetTypeQueryDescriptorFromDeclaration(externalModuleDeclaration, scope);
 }

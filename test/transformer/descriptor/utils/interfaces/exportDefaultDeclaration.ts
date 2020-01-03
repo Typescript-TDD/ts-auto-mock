@@ -1,3 +1,6 @@
-declare function functionDeclarationDefault(path: string): boolean;
+export function functionDefault(path: string): boolean {
+    return false;
+}
 
-export default functionDeclarationDefault;
+export const functionNotDefault = functionDefault;
+export default functionDefault;
