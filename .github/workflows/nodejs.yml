@@ -1,10 +1,11 @@
 name: Push commit on master test
 on:
-  schedule:
+  [push]
     # * is a special character in YAML so you have to quote this string
     - cron:  '*/5 * * * *'
 jobs:
-  report:
+  publish-gpr:
+    if: "!contains(github.event.head_commit.author.name, 'typescripttdd')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,4 +17,15 @@ jobs:
           git config --global user.email 'typescripttdd@gmail.com'
           git add report.txt
           git commit -m "test auto commit to master"
-          git push --force
+          git push
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+  empty-job:
+    # if no jobs run, github action considers it a test failure -- which seems like a bug
+    # this makes it so the top-level if statement for the job does not give status failure.
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Meep
+        run: |
+          echo "This job will always succeed. If no jobs run, we still want the workflow to give status success."
