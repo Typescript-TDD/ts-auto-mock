@@ -15,5 +15,5 @@ jobs:
           git config --global user.name 'typescripttdd'
           git config --global user.email 'typescripttdd@gmail.com'
           git add report.txt
-          git commit am "test auto commit to master"
+          git commit -m "test auto commit to master"
           git push
