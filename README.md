@@ -96,6 +96,57 @@ mockList[0].id // id0
 mockList[1].id // id1
 ```
 
+#### Register mock
+registerMock will register your custom mock that will be used in favour of creating a new one
+
+./person.ts
+```ts person.ts
+export interface Person {
+  id: string;
+}
+```
+
+./person-fake.ts
+```ts person-fake.ts
+import { Person } from './person';
+
+export class PersonFake extends Person {
+  public id: string;
+  public name: string;
+  
+  constructor() {
+    this.id = "Basic Id";
+    this.name = "Basic name";
+  }
+}
+```
+
+./context.ts
+```ts context.ts
+import { registerMock } from 'ts-auto-mock';
+import { Person } from './person';
+import { PersonFake } from './person-fake';
+
+registerMock<Person>(() => new PersonFake());
+```
+
+./my-test.ts
+```ts my-test.ts
+interface Wrapper {
+    person: Person;
+}
+
+const mock: Wrapper = createMock<Wrapper>();
+mock.person // PersonFake
+mock.person.id // "Basic Id"
+mock.person.name // "Basic name"
+```
+
+When using a fake we recommend using the [extension strategy](docs/EXTENSION.md) to retrieve the fake object.
+An example of usage for Promise->FakePromise can be found in [the test folder](test/registerMock/extensionStrategy/extensionStrategy.test.ts).
+
+**Note:** You can use it only in the common file (webpack context.ts, mocha tsnode.js, etc), using `registerMock` in other files will have unexpected results.
+
 ## Type Examples
 The library try to convert the type given to createMock so you dont need to create concrete mock manually.
 [Open this link to see more examples](docs/DETAILS.md)
@@ -151,6 +202,7 @@ We are working on an [issue](https://github.com/Typescript-TDD/ts-auto-mock/issu
  
 ## [Changelog](CHANGELOG.md)
 
+## [Roadmap](ROADMAP.md)
 ## Authors
 
 * [**Vittorio Guerriero**](https://github.com/uittorio)

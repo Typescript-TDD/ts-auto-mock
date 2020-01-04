@@ -1,7 +1,5 @@
 import * as ts from 'typescript';
 import { KeyCounter } from './keyCounter';
-// tslint:disable-next-line:no-any
-const urlSlug: any = require('url-slug');
 
 export type PossibleDeclaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
@@ -14,7 +12,7 @@ export class FactoryUniqueName {
 
     public createForDeclaration(declaration: PossibleDeclaration): string {
         const declarationNameIdentifier: ts.Identifier = declaration.name;
-        const declarationNameSanitized: string = urlSlug((declarationNameIdentifier && declarationNameIdentifier.text) || 'Anonymous', '_');
+        const declarationNameSanitized: string = (declarationNameIdentifier && declarationNameIdentifier.text) || 'Anonymous';
         const baseFactoryName: string = `create__${declarationNameSanitized}__mock`;
         const count: number = this._keyCounter.getFor(baseFactoryName);
 
@@ -34,7 +32,7 @@ export class FactoryUniqueName {
             return acc;
         }, '');
 
-        const declarationNameSanitized: string = urlSlug(nameOfDeclarations || 'Anonymous', '_');
+        const declarationNameSanitized: string = nameOfDeclarations || 'Anonymous';
         const baseFactoryName: string = `create__${declarationNameSanitized}__mock`;
         const count: number = this._keyCounter.getFor(baseFactoryName);
 

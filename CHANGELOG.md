@@ -1,3 +1,34 @@
+<a name="1.4.4"></a>
+## [1.4.4](https://github.com/uittorio/ts-auto-mock/compare/v1.4.3...v1.4.4) (2020-01-01)
+
+
+### Features
+
+* **genericDefault:** add support for default generics on declaration and extensions ([#126](https://github.com/uittorio/ts-auto-mock/issues/126)) ([a9df32a](https://github.com/uittorio/ts-auto-mock/commit/a9df32a))
+* **importequal:** add support for export equals and remove webpack env types that were conflicting with types node ([#124](https://github.com/uittorio/ts-auto-mock/issues/124)) ([990ecf1](https://github.com/uittorio/ts-auto-mock/commit/990ecf1))
+* **intersectionsfunction:** add support for function intersections and parenthesised type in intersections ([#127](https://github.com/uittorio/ts-auto-mock/issues/127)) ([5572631](https://github.com/uittorio/ts-auto-mock/commit/5572631))
+* **registerMock:** add registerMock functionality to register custom mocks per project ([#125](https://github.com/uittorio/ts-auto-mock/issues/125)) ([0feb05a](https://github.com/uittorio/ts-auto-mock/commit/0feb05a))
+
+
+
+<a name="1.4.3"></a>
+## [1.4.3](https://github.com/uittorio/ts-auto-mock/compare/v1.4.2...v1.4.3) (2019-12-27)
+
+
+
+<a name="1.4.2"></a>
+## [1.4.2](https://github.com/uittorio/ts-auto-mock/compare/v1.4.1...v1.4.2) (2019-12-22)
+
+
+### Features
+
+* **constructorType:** Add constructor type descriptor ([#115](https://github.com/uittorio/ts-auto-mock/issues/115)) ([8f26218](https://github.com/uittorio/ts-auto-mock/commit/8f26218))
+* **constructSignature:** add construct signature ([#116](https://github.com/uittorio/ts-auto-mock/issues/116)) ([b0aa18a](https://github.com/uittorio/ts-auto-mock/commit/b0aa18a))
+* **import:** add import equals support and make sure transformer test run in a context so the cache system will work ([f23039d](https://github.com/uittorio/ts-auto-mock/commit/f23039d))
+* **indexedAccess:** add indexed access support for mocks ([#119](https://github.com/uittorio/ts-auto-mock/issues/119)) ([a3e9841](https://github.com/uittorio/ts-auto-mock/commit/a3e9841))
+
+
+
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/uittorio/ts-auto-mock/compare/v1.4.0...v1.4.1) (2019-11-30)
 

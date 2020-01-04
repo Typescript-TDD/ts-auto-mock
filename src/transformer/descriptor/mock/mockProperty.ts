@@ -2,15 +2,18 @@ import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
-import { GetMockDeclarationName, GetMockSetParameterName } from './mockDeclarationName';
+import { TypescriptHelper } from '../helper/helper';
+import { GetMockInternalValuesName, GetMockSetParameterName } from './mockDeclarationName';
 
 export function GetMockProperty(member: ts.PropertySignature, scope: Scope): ts.PropertyAssignment {
     const descriptor: ts.Expression = GetDescriptor(member, scope);
 
-    const propertyName: ts.Identifier = member.name as ts.Identifier;
+    const propertyName: string = TypescriptHelper.GetStringPropertyName(member.name);
 
-    const variableDeclarationName: ts.Identifier = GetMockDeclarationName(propertyName);
-    const setVariableParameterName: ts.Identifier = GetMockSetParameterName(propertyName);
+    const declarations: ts.Identifier = GetMockInternalValuesName();
+
+    const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(declarations, ts.createStringLiteral(propertyName));
+    const setVariableParameterName: ts.Identifier = GetMockSetParameterName();
 
     const expressionGetAssignment: ts.BinaryExpression = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, descriptor);
 
@@ -30,5 +33,5 @@ export function GetMockProperty(member: ts.PropertySignature, scope: Scope): ts.
         ts.createTrue(),
     )]);
 
-    return ts.createPropertyAssignment(propertyName, literal);
+    return ts.createPropertyAssignment(ts.createStringLiteral(propertyName), literal);
 }

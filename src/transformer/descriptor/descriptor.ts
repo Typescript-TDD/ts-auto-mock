@@ -13,6 +13,7 @@ import { GetExpressionWithTypeArgumentsDescriptor } from './expression/expressio
 import { GetIdentifierDescriptor } from './identifier/identifier';
 import { GetImportDescriptor } from './import/import';
 import { GetImportEqualsDescriptor } from './import/importEquals';
+import { GetIndexedAccessTypeDescriptor } from './indexedAccess/indexedAccess';
 import { GetInterfaceDeclarationDescriptor } from './interface/interfaceDeclaration';
 import { GetIntersectionDescriptor } from './intersection/intersection';
 import { GetLiteralDescriptor } from './literal/literal';
@@ -25,11 +26,13 @@ import { GetMockPropertiesFromSymbol } from './mock/mockProperties';
 import { GetNullDescriptor } from './null/null';
 import { GetNumberDescriptor } from './number/number';
 import { GetObjectLiteralDescriptor } from './objectLiteral/objectLiteral';
+import { GetParenthesizedDescriptor } from './parenthesized/parenthesized';
 import { GetPropertyDescriptor } from './property/propertySignature';
 import { GetStringDescriptor } from './string/string';
 import { GetTypeAliasDescriptor } from './typeAlias/typeAlias';
 import { GetTypeLiteralDescriptor } from './typeLiteral/typeLiteral';
 import { GetTypeParameterDescriptor } from './typeParameter/typeParameter';
+import { GetTypeQueryDescriptor } from './typeQuery/typeQuery';
 import { GetTypeReferenceDescriptor } from './typeReference/typeReference';
 import { GetUndefinedDescriptor } from './undefined/undefined';
 import { GetUnionDescriptor } from './union/union';
@@ -67,6 +70,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetImportDescriptor(node as ts.ImportClause, scope);
         case ts.SyntaxKind.MethodSignature:
             return GetMethodSignatureDescriptor(node as ts.MethodSignature, scope);
+        case ts.SyntaxKind.FunctionDeclaration:
+            return GetMethodDeclarationDescriptor(node as ts.FunctionDeclaration, scope);
         case ts.SyntaxKind.MethodDeclaration:
             return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration, scope);
         case ts.SyntaxKind.FunctionType:
@@ -80,6 +85,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction, scope);
         case ts.SyntaxKind.ConstructorType:
             return GetConstructorTypeDescriptor(node as ts.ConstructorTypeNode, scope);
+        case ts.SyntaxKind.TypeQuery:
+            return GetTypeQueryDescriptor(node as ts.TypeQueryNode, scope);
         case ts.SyntaxKind.UnionType:
             return GetUnionDescriptor(node as ts.UnionTypeNode, scope);
         case ts.SyntaxKind.IntersectionType:
@@ -88,6 +95,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetEnumDeclarationDescriptor(node as ts.EnumDeclaration);
         case ts.SyntaxKind.MappedType:
             return GetMappedDescriptor(node as ts.MappedTypeNode, scope);
+        case ts.SyntaxKind.ParenthesizedType:
+            return GetParenthesizedDescriptor(node as ts.ParenthesizedTypeNode, scope);
         case ts.SyntaxKind.ArrayType:
         case ts.SyntaxKind.TupleType:
             return GetArrayDescriptor();
@@ -104,6 +113,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetLiteralDescriptor(node as ts.LiteralTypeNode, scope);
         case ts.SyntaxKind.ObjectLiteralExpression:
             return GetObjectLiteralDescriptor(node as ts.ObjectLiteralExpression, scope);
+        case ts.SyntaxKind.IndexedAccessType:
+            return GetIndexedAccessTypeDescriptor(node as ts.IndexedAccessTypeNode, scope);
         case ts.SyntaxKind.BooleanKeyword:
             return GetBooleanDescriptor();
         case ts.SyntaxKind.ObjectKeyword:

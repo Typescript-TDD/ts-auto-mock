@@ -60,5 +60,9 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
         return GetType(node.type, scope);
     }
 
+    if (ts.isParenthesizedTypeNode(node)) {
+        return GetType(node.type, scope);
+    }
+
     return node;
 }

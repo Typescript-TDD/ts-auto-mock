@@ -5,5 +5,7 @@ Provider.instance.provideMethod((name: string, value: any) => {
     return jasmine.createSpy(name).and.returnValue(value);
 });
 
-const frameworkContext: __WebpackModuleApi.RequireContext = require.context('./', true, /\.test(\.deprecated)?\.ts$/);
+// @ts-ignore
+// tslint:disable-next-line:typedef
+const frameworkContext = require.context('./', true, /\.test(\.deprecated)?\.ts$/);
 frameworkContext.keys().map(frameworkContext);

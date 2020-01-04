@@ -5,5 +5,7 @@ Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any
     return jasmine.createSpy(name).and.callFake(value);
 });
 
-const frameworkContext: __WebpackModuleApi.RequireContext = require.context('./', true, /\.test(\.valid)?\.ts$/);
+// @ts-ignore
+// tslint:disable-next-line:typedef
+const frameworkContext = require.context('./', true, /\.test(\.valid)?\.ts$/);
 frameworkContext.keys().map(frameworkContext);

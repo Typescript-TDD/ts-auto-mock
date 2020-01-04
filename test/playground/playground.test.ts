@@ -1,4 +1,5 @@
-import { createMock } from 'ts-auto-mock';
+import { createMock, registerMock } from 'ts-auto-mock';
+import { MyEnum } from './enums';
 
 /*
  USE THIS FILE ONLY FOR TESTING NEW IMPLEMENTATION
@@ -9,16 +10,13 @@ import { createMock } from 'ts-auto-mock';
  */
 
 it('should work', () => {
-    interface Newable {
-        b: string;
-    }
-    
-    interface Interface {
-        a: new () => Newable;
-        b: Newable;
-    }
+  interface A {
+    a: string;
+  }
+  const enumm2: typeof MyEnum = createMock<typeof MyEnum>();
+  expect(createMock<A>().a).toBe("ok");
 
-    const properties: Interface = createMock<Interface>();
-
-    expect(new (properties.a)().b).toEqual('');
+  expect(enumm2.A).toEqual(0);
+  
+  expect(createMock<A>().a).toBe("ok");
 });
