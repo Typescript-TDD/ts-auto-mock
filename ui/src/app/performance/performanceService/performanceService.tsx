@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export interface PerformanceResultData {
   value: string;
   title: string;
@@ -39,11 +37,13 @@ export interface IPerformanceService {
 
 export function PerformanceService(performanceDataUrl: string): IPerformanceService {
     return {
-        get: (): Promise<PerformanceListData> => {
-            return axios.get(`${performanceDataUrl}performance.json`).then((result: { data: PerformanceListData }) => {
-                return result.data;
-            });
-        },
+      get: (): Promise<PerformanceListData> => {
+        return fetch(`${performanceDataUrl}performance.json`)
+          .then((test: Response) => {
+            return test.json();
+          }).then((result: PerformanceListData) => {
+            return result;
+          });
+      },
     };
-
 }
