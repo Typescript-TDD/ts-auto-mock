@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,7 +11,7 @@ jobs:
         node-version: [10.x]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -26,11 +25,14 @@ jobs:
         CI: true
     - name: performance
       run: |
-        npm install
-        npm run build
         cd performance
         npm install
-        npm start $JSON_BIN_PERFORMANCE
-      env:
-        JSON_BIN_PERFORMANCE: ${{ secrets.JSON_BIN_PERFORMANCE }}
+        npm start
+    - name: performance push changes
+      run: |
+        git config --global user.name 'uittorio'
+        git config --global user.email 'uittorio@users.noreply.github.com'
+        git commit -am "Performance report"
+        git push
+
 

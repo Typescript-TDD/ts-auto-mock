@@ -6,7 +6,8 @@ It will help the maintainers to identify performance issue in ts-auto-mock and i
 
 ### Live data
 Performance data will be automatically updated every build on master before publishing a new version
-Soon link will be available
+
+You can see the data [here](https://typescript-tdd.github.io/ts-auto-mock/performance)
 
 ### Local data
 
@@ -47,12 +48,16 @@ This will create and run all the test based on performance.json configuration
 3) withoutTsAutoMock
 
 These types can be extended by adding another file in performance/templates folder with the specification that you need
-
  
 ### Instruction to view performance data locally
 
 ```
-  cd app
+  cd ui
+  npm install
   npm start
 ```
 
+// TODO
+
+1) replace performance small with performance
+2) Increase number of tests -> 5000?

@@ -14,6 +14,9 @@ function fileSystem() {
         readFileAsync(fileName) {
           return fs.readFileSync(fileName);
         },
+        exist(name) {
+          return fs.existsSync(name);
+        },
         copyFolder(source, destination) {
             return new Promise(function(resolve, reject) {
                 ncp(source, destination, function (err) {

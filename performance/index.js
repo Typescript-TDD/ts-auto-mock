@@ -2,22 +2,50 @@ const path = require('path');
 const fileSystem = require('./core/fs/fileSystem');
 const gitHelper = require('./core/git/gitHelper');
 const testRunner = require('./testRunner/testRunner');
-const performanceRepository = require("./repository/repository");
+const LocalRepository = require("./repository/localRepository");
+const localFileData = path.join(__dirname, 'data');
+
+const localRepository = LocalRepository(localFileData);
 
 (async function () {
-    const secret = process.argv[2];
     const config = getPerformanceConfig();
     const testResults = await runTestFromConfig(config);
 
     const currentCommit = await gitHelper.getCurrentCommit();
     const currentBranch = await gitHelper.getCurrentBranchName();
 
-    const url = "https://api.jsonbin.io/b/5e0cc11f32536c77d679a2e3";
-    const publicUrl = "https://api.jsonbin.io/b/5e0ccffff9369177b27624ce";
+    const existingData = await localRepository.get();
 
-    performanceRepository(url, secret).update(testResults, currentBranch, currentCommit);
-    performanceRepository(publicUrl).update(testResults, currentBranch, currentCommit);
+    const data = addTestResultsToData(existingData, testResults, currentBranch, currentCommit);
+
+    await localRepository.update(data);
 })();
+
+function addTestResultsToData(data, results, currentBranch, currentCommit) {
+    const now = new Date().toISOString();
+
+    if (!data) {
+        data = {};
+    }
+
+    if (data[currentBranch]) {
+        if (data[currentBranch][currentCommit]) {
+            data[currentBranch][currentCommit][now] = results;
+        } else {
+            data[currentBranch][currentCommit] = {
+                [now]: results
+            }
+        }
+    } else {
+        data[currentBranch] = {
+            [currentCommit]: {
+                [now]: results
+            }
+        }
+    }
+
+    return data;
+}
 
 function getPerformanceConfig() {
     const performanceConfig = fileSystem.readFileAsync(path.join(__dirname, 'performance_small.json'));

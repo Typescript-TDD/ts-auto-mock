@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "extendedDiagnostics": true,
+    "diagnostics": true,
     "sourceMap": false,
     "plugins": [
       {
