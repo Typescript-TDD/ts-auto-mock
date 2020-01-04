@@ -34,5 +34,3 @@ jobs:
         git add data
         git commit -m "Performance report"
         git push
-
-
