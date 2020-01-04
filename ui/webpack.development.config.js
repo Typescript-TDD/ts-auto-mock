@@ -15,8 +15,8 @@ module.exports = webpackMerge(commonConfig(), {
     plugins: [
         new WebpackCopyPlugin([
             {
-                from: '../performance/data',
-                to: 'resources/performance'
+                from: '../data',
+                to: 'resources'
             }
         ]),
         new Dotenv({

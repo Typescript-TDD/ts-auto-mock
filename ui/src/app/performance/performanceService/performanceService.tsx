@@ -38,10 +38,9 @@ export interface IPerformanceService {
 }
 
 export function PerformanceService(performanceDataUrl: string): IPerformanceService {
-    console.log(performanceDataUrl);
     return {
         get: (): Promise<PerformanceListData> => {
-            return axios.get(performanceDataUrl).then((result: { data: PerformanceListData }) => {
+            return axios.get(`${performanceDataUrl}performance.json`).then((result: { data: PerformanceListData }) => {
                 return result.data;
             });
         },

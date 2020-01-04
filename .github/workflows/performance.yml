@@ -1,4 +1,4 @@
-name: Develop
+name: Performance
 
 on: [push]
 
@@ -16,12 +16,21 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: install ts auto mock and run test
+    - name: install tsautomock
       run: |
         npm install
         npm run build
-        npm test
       env:
         CI: true
+    - name: performance
+      run: |
+        cd performance
+        npm install
+        npm start
+    - name: performance push changes
+      run: |
+        git config --global user.name 'tsautomock'
+        git commit -am "Performance report"
+        git push
 
 

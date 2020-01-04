@@ -1,8 +1,8 @@
 const fileSystem = require('../core/fs/fileSystem');
 const path = require('path');
 
-function localRepository(url) {
-    const fileUrl = path.join(url, 'data.json');
+function localRepository(url, fileName) {
+    const fileUrl = path.join(url, fileName);
 
     fileSystem.createFolder(url);
 

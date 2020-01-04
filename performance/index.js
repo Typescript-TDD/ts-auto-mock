@@ -3,9 +3,9 @@ const fileSystem = require('./core/fs/fileSystem');
 const gitHelper = require('./core/git/gitHelper');
 const testRunner = require('./testRunner/testRunner');
 const LocalRepository = require("./repository/localRepository");
-const localFileData = path.join(__dirname, 'data');
+const localFileData = path.join(__dirname, '../', 'data');
 
-const localRepository = LocalRepository(localFileData);
+const localRepository = LocalRepository(localFileData, 'performance.json');
 
 (async function () {
     const config = getPerformanceConfig();
