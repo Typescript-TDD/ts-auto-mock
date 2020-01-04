@@ -1,4 +1,4 @@
-name: Push commit on master test
+name: Push commit on master test change
 on: [push]
 jobs:
   publish-gpr:
