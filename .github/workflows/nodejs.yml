@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
       - name: Create report file
         run: date +%s > report.txt
       - name: Commit report
@@ -15,8 +17,6 @@ jobs:
           git add report.txt
           git commit -m "test auto commit to master"
           git push
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
   empty-job:
     # if no jobs run, github action considers it a test failure -- which seems like a bug
     # this makes it so the top-level if statement for the job does not give status failure.
