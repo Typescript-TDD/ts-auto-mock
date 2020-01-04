@@ -1,8 +1,5 @@
 name: Push commit on master test
-on:
-  [push]
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '*/5 * * * *'
+on: [push]
 jobs:
   publish-gpr:
     if: "!contains(github.event.head_commit.author.name, 'typescripttdd')"
