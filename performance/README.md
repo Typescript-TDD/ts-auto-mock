@@ -56,8 +56,3 @@ These types can be extended by adding another file in performance/templates fold
   npm install
   npm start
 ```
-
-// TODO
-
-1) replace performance small with performance
-2) Increase number of tests -> 5000?

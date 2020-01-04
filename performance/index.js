@@ -48,7 +48,7 @@ function addTestResultsToData(data, results, currentBranch, currentCommit) {
 }
 
 function getPerformanceConfig() {
-    const performanceConfig = fileSystem.readFileAsync(path.join(__dirname, 'performance_small.json'));
+    const performanceConfig = fileSystem.readFileAsync(path.join(__dirname, 'performance.json'));
     return JSON.parse(performanceConfig);
 }
 
