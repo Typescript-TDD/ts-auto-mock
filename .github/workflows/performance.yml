@@ -29,9 +29,10 @@ jobs:
         npm start
     - name: performance push changes
       run: |
-        git config --global user.name 'tsautomock'
+        git config --global user.name 'typescripttdd'
+        git config --global user.email 'typescripttdd@gmail.com'
         git add data
-        git commit -am "Performance report"
+        git commit -m "Performance report"
         git push
 
 
