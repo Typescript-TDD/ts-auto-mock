@@ -30,6 +30,7 @@ jobs:
     - name: performance push changes
       run: |
         git config --global user.name 'tsautomock'
+        git add data
         git commit -am "Performance report"
         git push
 
