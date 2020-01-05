@@ -1,12 +1,10 @@
 name: Performance
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
 
 jobs:
-  build:
+  performance:
+    if: "!contains(github.event.head_commit.author.name, 'typescripttdd')"
     runs-on: ubuntu-latest
 
     strategy:
@@ -15,11 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: install tsautomock
+    - name: install ts auto mock
       run: |
         npm install
         npm run build
@@ -37,3 +37,10 @@ jobs:
         git add data
         git commit -m "Performance report"
         git push
+  empty-job:
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Emopty job
+        run: |
+          echo "This job will always succeed"
