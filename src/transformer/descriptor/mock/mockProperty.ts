@@ -4,8 +4,9 @@ import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockInternalValuesName, GetMockSetParameterName } from './mockDeclarationName';
+import { PropertyLike } from './propertyLike';
 
-export function GetMockProperty(member: ts.PropertySignature, scope: Scope): ts.PropertyAssignment {
+export function GetMockProperty(member: PropertyLike, scope: Scope): ts.PropertyAssignment {
     const descriptor: ts.Expression = GetDescriptor(member, scope);
 
     const propertyName: string = TypescriptHelper.GetStringPropertyName(member.name);
