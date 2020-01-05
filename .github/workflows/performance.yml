@@ -33,14 +33,14 @@ jobs:
         cd performance
         npm install
         npm start
+    - name: create environment variable date
+        run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H:%M:%S%z)"
     - name: performance push changes
       run: |
         git pull
-        git checkout -b perf-${env:DATE}
+        git checkout -b performance-${DATE}
         git config --global user.name 'typescripttdd'
         git config --global user.email 'typescripttdd@gmail.com'
         git add data
         git commit -m "Performance report"
-        git push
-      env:
-        DATE: date +%Y-%m-%dT%H:%M:%S%z
+        git push --set-upstream origin performance-${DATE}
