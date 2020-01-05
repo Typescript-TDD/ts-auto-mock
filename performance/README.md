@@ -7,7 +7,7 @@ It will help the maintainers to identify performance issue in ts-auto-mock and i
 ### Live data
 Performance data will be automatically updated every build on master before publishing a new version
 
-You can see the data [here](https://typescript-tdd.github.io/ts-auto-mock/performance)
+You can see the data [here](https://typescript-tdd.github.io/ts-auto-mock/)
 
 ### Local data
 
