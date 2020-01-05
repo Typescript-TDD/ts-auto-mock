@@ -2,25 +2,17 @@ const exec = require('child_process').exec;
 const path = require('path');
 const fs = require('fs');
 const processService = require('../utils/process/process')(process);
+const maximiseParallelRun = require('./src/maximise-parallel');
+const definitelyTyped = require('./src/definitely-typed');
 
 try {
-    processService.ensureArgumentsValidity(['TYPES', 'PROCESS_COUNT']);
+    processService.ensureArgumentsValidity(['TYPES', 'PROCESS_COUNT', 'DEBUG']);
 } catch(e) {
     console.error(e.message);
     return;
 }
 
-const PARALLEL_NPM_INSTALL = 20;
-const RUN_NPM_INSTALL = true;
-
-const getDirectories = source =>
-  fs.readdirSync(source, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name);
-
-const folder = path.join("DefinitelyTyped", "types");
-
-const definitelyTypedDirectories = getDirectories(folder);
+const typesDirectories = definitelyTyped.getTypes();
 const processesConfig = getProcessesConfig();
 
 function getProcessesCount() {
@@ -29,7 +21,7 @@ function getProcessesCount() {
 
 function getProcessesConfig() {
     const totalTypesCount = getTotalTypesCount();
-    const processesMaximized = miximiseParallelRun(getProcessesCount(), totalTypesCount);
+    const processesMaximized = maximiseParallelRun(getProcessesCount(), totalTypesCount);
     const sum = processesMaximized.reduce((previous, current) => previous + current.items, 0);
     const avg = sum / processesMaximized.length;
 
@@ -38,22 +30,6 @@ function getProcessesConfig() {
         processes: processesMaximized,
         averageTypesCountPerProcess: avg
     };
-}
-
-function miximiseParallelRun(processesCount, totalItems) {
-    const processes = [];
-    const floored = Math.floor(totalItems / processesCount);
-    let remaining = totalItems;
-
-    for(let i = 0; i < processesCount; i++) {
-        processes.push({
-            items: Math.min(floored, remaining)
-        });
-
-        remaining -= floored;
-    }
-
-    return processes;
 }
 
 function uuidv4() {
@@ -70,9 +46,9 @@ function getTotalTypesCount() {
         const maybeCount = parseInt(typesToProcess);
 
         if (!Number.isNaN(maybeCount)) {
-            return Math.min(definitelyTypedDirectories.length, maybeCount);
+            return Math.min(typesDirectories.length, maybeCount);
         } else if (typesToProcess === "all") {
-            return definitelyTypedDirectories.length;
+            return typesDirectories.length;
         }
     }
 
@@ -102,58 +78,17 @@ const runUuid = uuidv4();
 runApp();
 
 async function runApp() {
-    if (RUN_NPM_INSTALL) {
-        await installDependencies();
-    }
-
     for(let i = 0; i < processesConfig.processes.length; i++) {
-        runAllDir(definitelyTypedDirectories.slice(startDirectoryIndex, startDirectoryIndex + processesConfig.processes[i].items), i);
+        runAllDir(typesDirectories.slice(startDirectoryIndex, startDirectoryIndex + processesConfig.processes[i].items), i);
         startDirectoryIndex += processesConfig.processes[i].items;
     }
-}
-
-async function installDependencies() {
-    const processedDirectories = definitelyTypedDirectories.slice(0, processesConfig.totalTypesCount);
-
-    const directoriesWithDependencies = processedDirectories
-        .map(dir => ({ name: dir, path: path.join(folder, dir) }))
-        .filter(dir => fs.existsSync(path.join(dir.path, "package.json")));
-
-    if (directoriesWithDependencies.length === 0) {
-        return Promise.resolve();
-    }
-
-    console.log(`npm install in ${directoriesWithDependencies.length} folders:`);
-
-    const processes = miximiseParallelRun(PARALLEL_NPM_INSTALL, directoriesWithDependencies.length);
-    let startIndex = 0;
-    const processesPromiseList = [];
-
-    for(let i = 0; i < processes.length; i++) {
-        processesPromiseList.push(
-            installDependenciesInDirectories(directoriesWithDependencies.slice(startIndex, startIndex + processes[i].items), i)
-        );
-        startIndex += processes[i].items;
-    }
-
-    return Promise.all(processesPromiseList).then(() => console.log("\n"));
-}
-
-let installedDependencyIndex = 0;
-function installDependenciesInDirectories(directories) {
-    return directories.reduce((promise, dir) => promise.then(() => {
-        process.stdout.write(`(${++installedDependencyIndex}):${dir.name} `);
-        return execPromise(`(cd ./${dir.path} && npm install)`).catch(err => {
-            fs.writeFileSync(`tsLogs.npmErrors.txt`, "Error in run " + runUuid + " :: " + err, { flag: "a+" });
-        });
-    }), Promise.resolve())
 }
 
 async function run(dir, id) {
     const config = {
         "extends": `./DefinitelyTyped/types/${dir}/tsconfig.json`,
         "compilerOptions": {
-            "noEmit": false,
+            "noEmit": !processService.getArgument('DEBUG'),
             "plugins": [
                 {
                     "transform": "../dist/transformer",

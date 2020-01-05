@@ -1,10 +1,13 @@
 {
-  "name": "definitelytype",
+  "name": "definitelytyped-tests",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run install-types && npm run process-all-types",
+    "install-types": "node src/install-types.js",
+    "process-all-types": "node index.js TYPES=all PROCESS_COUNT=20",
+    "process-types": "node index.js"
   },
   "author": "",
   "license": "ISC",
