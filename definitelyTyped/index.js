@@ -71,11 +71,13 @@ function getTotalTypesCount() {
 
 function runAllDir(dirs, id) {
     fs.writeFileSync(`tsLogs.${id}.txt`, "===== Start run " + new Date().toISOString() + " - " + runUuid + " =====\n", { flag: "a+" });
+    fs.writeFileSync(`${id}.index.ts`, "");
     fs.writeFileSync(`tsconfig.types.${id}.json`, "");
     
     return dirs.reduce((promise, dir) => promise.then(() => run(dir, id)), Promise.resolve())
         .then(() => {
             fs.unlinkSync(`tsconfig.types.${id}.json`);
+            fs.unlinkSync(`${id}.index.ts`);
         });
 }
 
@@ -150,10 +152,14 @@ async function run(dir, id) {
                     "debug": true
                 }
             ]
-        }
+        },
+        "files": [
+            `./${id}.index.ts`
+        ]
     };
 
     fs.writeFileSync(`tsconfig.types.${id}.json`, JSON.stringify(config));
+    fs.writeFileSync(`${id}.index.ts`, `import pak = require('${dir}'); import { createMock } from '../../dist'; createMock<typeof pak>();`);
 
     return execPromise(`npx ttsc --project tsconfig.types.${id}.json`)
         .then((response) => {

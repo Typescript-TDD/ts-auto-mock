@@ -1,1 +1,0 @@
-{"extends":"./DefinitelyTyped/types/a11y-dialog/tsconfig.json","compilerOptions":{"noEmit":false,"plugins":[{"transform":"../../dist/transformer","debug":true}]}}
