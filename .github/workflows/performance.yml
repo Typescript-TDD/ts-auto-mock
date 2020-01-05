@@ -46,6 +46,6 @@ jobs:
         commit-message: Add Performance data
         committer: typescripttdd <typescripttdd@gmail.com>
         author: typescripttdd <typescripttdd@gmail.com>
-        title: Performance Data on ${DATE}
-        branch: performance-${DATE}
+        title: Performance Data on $DATE
+        branch: performance-$DATE
         token: ${{ secrets.GITHUB_TOKEN }}
