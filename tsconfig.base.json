@@ -21,6 +21,8 @@
     "baseUrl": "./"
   },
   "exclude": [
-    "test/definitelyType/**/*"
+    "ui/**/*",
+    "performance/**/*",
+    "definitelyTyped/**/*"
   ]
 }
