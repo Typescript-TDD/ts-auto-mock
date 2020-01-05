@@ -34,7 +34,7 @@ jobs:
         npm install
         npm start
     - name: create environment variable date
-      run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H:%M:%S%z)"
+      run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
     - name: performance push changes
       run: |
         git pull
