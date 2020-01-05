@@ -1,1 +1,2671 @@
-{"performance-tests":{"500abf2bf8bcff4ce796ab791419645f99ac9f68":{"2020-01-04T14:57:52.430Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"187"},"lines":{"title":"Lines","value":"48011"},"nodes":{"title":"Nodes","value":"206582"},"identifiers":{"title":"Identifiers","value":"73444"},"symbols":{"title":"Symbols","value":"63251"},"types":{"title":"Types","value":"17674"},"memory_used":{"title":"Memory used","value":"135476K"},"i/o_read":{"title":"I/O read","value":"0.02"},"i/o_write":{"title":"I/O write","value":"0.01"},"parse_time":{"title":"Parse time","value":"0.93"},"bind_time":{"title":"Bind time","value":"0.55"},"check_time":{"title":"Check time","value":"2.07"},"emit_time":{"title":"Emit time","value":"0.15"},"total_time":{"title":"Total time","value":"3.70"}}}]},"163e48c5bd44513193e9dc8d0fc046ad94b7f7a8":{"2020-01-04T15:14:27.012Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"187"},"lines":{"title":"Lines","value":"48011"},"nodes":{"title":"Nodes","value":"206582"},"identifiers":{"title":"Identifiers","value":"73444"},"symbols":{"title":"Symbols","value":"63251"},"types":{"title":"Types","value":"17674"},"memory_used":{"title":"Memory used","value":"136361K"},"i/o_read":{"title":"I/O read","value":"0.02"},"i/o_write":{"title":"I/O write","value":"0.02"},"parse_time":{"title":"Parse time","value":"0.82"},"bind_time":{"title":"Bind time","value":"0.53"},"check_time":{"title":"Check time","value":"2.05"},"emit_time":{"title":"Emit time","value":"0.15"},"total_time":{"title":"Total time","value":"3.55"}}}]},"751e0e14bc635393a195ae5204665cb07a9fa4fe":{"2020-01-04T15:29:55.262Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"186"},"lines":{"title":"Lines","value":"47669"},"nodes":{"title":"Nodes","value":"205732"},"identifiers":{"title":"Identifiers","value":"73178"},"symbols":{"title":"Symbols","value":"63005"},"types":{"title":"Types","value":"17600"},"memory_used":{"title":"Memory used","value":"140009K"},"i/o_read":{"title":"I/O read","value":"0.03"},"i/o_write":{"title":"I/O write","value":"0.01"},"parse_time":{"title":"Parse time","value":"0.87"},"bind_time":{"title":"Bind time","value":"0.54"},"check_time":{"title":"Check time","value":"2.13"},"emit_time":{"title":"Emit time","value":"0.15"},"total_time":{"title":"Total time","value":"3.68"}}}]},"4a0b24e27d774e0097eaccb8894b5660ba7c15ec":{"2020-01-04T15:40:12.475Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"401105K"},"i/o_read":{"title":"I/O read","value":"0.29"},"i/o_write":{"title":"I/O write","value":"0.45"},"parse_time":{"title":"Parse time","value":"1.87"},"bind_time":{"title":"Bind time","value":"0.89"},"check_time":{"title":"Check time","value":"4.66"},"emit_time":{"title":"Emit time","value":"3.62"},"total_time":{"title":"Total time","value":"11.04"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"306666K"},"i/o_read":{"title":"I/O read","value":"0.30"},"i/o_write":{"title":"I/O write","value":"0.51"},"parse_time":{"title":"Parse time","value":"1.89"},"bind_time":{"title":"Bind time","value":"0.89"},"check_time":{"title":"Check time","value":"4.78"},"emit_time":{"title":"Emit time","value":"7.80"},"total_time":{"title":"Total time","value":"15.36"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"482068K"},"i/o_read":{"title":"I/O read","value":"0.36"},"i/o_write":{"title":"I/O write","value":"0.58"},"parse_time":{"title":"Parse time","value":"2.10"},"bind_time":{"title":"Bind time","value":"0.91"},"check_time":{"title":"Check time","value":"5.18"},"emit_time":{"title":"Emit time","value":"14.68"},"total_time":{"title":"Total time","value":"22.88"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"382114K"},"i/o_read":{"title":"I/O read","value":"0.29"},"i/o_write":{"title":"I/O write","value":"0.54"},"parse_time":{"title":"Parse time","value":"2.11"},"bind_time":{"title":"Bind time","value":"0.93"},"check_time":{"title":"Check time","value":"5.02"},"emit_time":{"title":"Emit time","value":"11.74"},"total_time":{"title":"Total time","value":"19.80"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"451797K"},"i/o_read":{"title":"I/O read","value":"0.31"},"i/o_write":{"title":"I/O write","value":"0.56"},"parse_time":{"title":"Parse time","value":"2.20"},"bind_time":{"title":"Bind time","value":"0.91"},"check_time":{"title":"Check time","value":"5.11"},"emit_time":{"title":"Emit time","value":"13.53"},"total_time":{"title":"Total time","value":"21.75"}}}]},"f1cb2e9f6fe49a5608389f0518957cfd9b55dd5d":{"2020-01-04T16:07:29.150Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"403268K"},"i/o_read":{"title":"I/O read","value":"0.26"},"i/o_write":{"title":"I/O write","value":"0.43"},"parse_time":{"title":"Parse time","value":"1.75"},"bind_time":{"title":"Bind time","value":"0.85"},"check_time":{"title":"Check time","value":"4.40"},"emit_time":{"title":"Emit time","value":"3.34"},"total_time":{"title":"Total time","value":"10.34"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"306455K"},"i/o_read":{"title":"I/O read","value":"0.30"},"i/o_write":{"title":"I/O write","value":"0.46"},"parse_time":{"title":"Parse time","value":"1.73"},"bind_time":{"title":"Bind time","value":"0.92"},"check_time":{"title":"Check time","value":"4.40"},"emit_time":{"title":"Emit time","value":"7.36"},"total_time":{"title":"Total time","value":"14.41"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"480518K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.57"},"parse_time":{"title":"Parse time","value":"1.97"},"bind_time":{"title":"Bind time","value":"0.96"},"check_time":{"title":"Check time","value":"4.89"},"emit_time":{"title":"Emit time","value":"14.13"},"total_time":{"title":"Total time","value":"21.96"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"379997K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.52"},"parse_time":{"title":"Parse time","value":"2.02"},"bind_time":{"title":"Bind time","value":"0.86"},"check_time":{"title":"Check time","value":"4.64"},"emit_time":{"title":"Emit time","value":"11.23"},"total_time":{"title":"Total time","value":"18.74"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"453238K"},"i/o_read":{"title":"I/O read","value":"0.27"},"i/o_write":{"title":"I/O write","value":"0.54"},"parse_time":{"title":"Parse time","value":"2.02"},"bind_time":{"title":"Bind time","value":"0.85"},"check_time":{"title":"Check time","value":"4.73"},"emit_time":{"title":"Emit time","value":"12.82"},"total_time":{"title":"Total time","value":"20.42"}}}]},"77a88d75e6dc8717eee822b1d6b2f90bab78b7a0":{"2020-01-04T16:16:11.204Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"220941K"},"i/o_read":{"title":"I/O read","value":"0.30"},"i/o_write":{"title":"I/O write","value":"0.45"},"parse_time":{"title":"Parse time","value":"1.78"},"bind_time":{"title":"Bind time","value":"0.90"},"check_time":{"title":"Check time","value":"4.59"},"emit_time":{"title":"Emit time","value":"3.62"},"total_time":{"title":"Total time","value":"10.90"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"298061K"},"i/o_read":{"title":"I/O read","value":"0.26"},"i/o_write":{"title":"I/O write","value":"0.51"},"parse_time":{"title":"Parse time","value":"1.76"},"bind_time":{"title":"Bind time","value":"0.92"},"check_time":{"title":"Check time","value":"4.65"},"emit_time":{"title":"Emit time","value":"7.61"},"total_time":{"title":"Total time","value":"14.94"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"476230K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.50"},"parse_time":{"title":"Parse time","value":"2.09"},"bind_time":{"title":"Bind time","value":"0.96"},"check_time":{"title":"Check time","value":"4.92"},"emit_time":{"title":"Emit time","value":"14.40"},"total_time":{"title":"Total time","value":"22.38"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"391233K"},"i/o_read":{"title":"I/O read","value":"0.29"},"i/o_write":{"title":"I/O write","value":"0.51"},"parse_time":{"title":"Parse time","value":"2.07"},"bind_time":{"title":"Bind time","value":"0.87"},"check_time":{"title":"Check time","value":"4.70"},"emit_time":{"title":"Emit time","value":"11.39"},"total_time":{"title":"Total time","value":"19.03"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"442785K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.47"},"parse_time":{"title":"Parse time","value":"2.05"},"bind_time":{"title":"Bind time","value":"0.88"},"check_time":{"title":"Check time","value":"4.89"},"emit_time":{"title":"Emit time","value":"13.34"},"total_time":{"title":"Total time","value":"21.16"}}}]},"a893a5ca6c9bdf69c6ab98ce9dc581c37a2b82c2":{"2020-01-04T16:45:43.786Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"403921K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.55"},"parse_time":{"title":"Parse time","value":"1.89"},"bind_time":{"title":"Bind time","value":"0.89"},"check_time":{"title":"Check time","value":"4.81"},"emit_time":{"title":"Emit time","value":"3.72"},"total_time":{"title":"Total time","value":"11.31"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"312719K"},"i/o_read":{"title":"I/O read","value":"0.33"},"i/o_write":{"title":"I/O write","value":"0.49"},"parse_time":{"title":"Parse time","value":"1.87"},"bind_time":{"title":"Bind time","value":"1.00"},"check_time":{"title":"Check time","value":"4.97"},"emit_time":{"title":"Emit time","value":"8.09"},"total_time":{"title":"Total time","value":"15.93"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"487003K"},"i/o_read":{"title":"I/O read","value":"0.30"},"i/o_write":{"title":"I/O write","value":"0.66"},"parse_time":{"title":"Parse time","value":"2.16"},"bind_time":{"title":"Bind time","value":"0.96"},"check_time":{"title":"Check time","value":"5.27"},"emit_time":{"title":"Emit time","value":"15.58"},"total_time":{"title":"Total time","value":"23.96"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"372416K"},"i/o_read":{"title":"I/O read","value":"0.34"},"i/o_write":{"title":"I/O write","value":"0.60"},"parse_time":{"title":"Parse time","value":"2.15"},"bind_time":{"title":"Bind time","value":"0.95"},"check_time":{"title":"Check time","value":"5.04"},"emit_time":{"title":"Emit time","value":"12.14"},"total_time":{"title":"Total time","value":"20.28"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"456438K"},"i/o_read":{"title":"I/O read","value":"0.30"},"i/o_write":{"title":"I/O write","value":"0.63"},"parse_time":{"title":"Parse time","value":"2.15"},"bind_time":{"title":"Bind time","value":"0.96"},"check_time":{"title":"Check time","value":"5.20"},"emit_time":{"title":"Emit time","value":"13.91"},"total_time":{"title":"Total time","value":"22.22"}}}]},"bd63ed3169861db7305483b561a901a015fd8468":{"2020-01-04T16:50:22.864Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"401063K"},"i/o_read":{"title":"I/O read","value":"0.30"},"i/o_write":{"title":"I/O write","value":"0.47"},"parse_time":{"title":"Parse time","value":"1.94"},"bind_time":{"title":"Bind time","value":"0.85"},"check_time":{"title":"Check time","value":"5.02"},"emit_time":{"title":"Emit time","value":"3.91"},"total_time":{"title":"Total time","value":"11.72"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"302665K"},"i/o_read":{"title":"I/O read","value":"0.32"},"i/o_write":{"title":"I/O write","value":"0.56"},"parse_time":{"title":"Parse time","value":"1.96"},"bind_time":{"title":"Bind time","value":"0.96"},"check_time":{"title":"Check time","value":"5.08"},"emit_time":{"title":"Emit time","value":"8.31"},"total_time":{"title":"Total time","value":"16.32"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"480021K"},"i/o_read":{"title":"I/O read","value":"0.34"},"i/o_write":{"title":"I/O write","value":"0.54"},"parse_time":{"title":"Parse time","value":"2.27"},"bind_time":{"title":"Bind time","value":"0.97"},"check_time":{"title":"Check time","value":"5.33"},"emit_time":{"title":"Emit time","value":"15.31"},"total_time":{"title":"Total time","value":"23.87"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"383169K"},"i/o_read":{"title":"I/O read","value":"0.32"},"i/o_write":{"title":"I/O write","value":"0.57"},"parse_time":{"title":"Parse time","value":"2.25"},"bind_time":{"title":"Bind time","value":"0.95"},"check_time":{"title":"Check time","value":"4.98"},"emit_time":{"title":"Emit time","value":"12.22"},"total_time":{"title":"Total time","value":"20.40"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"456798K"},"i/o_read":{"title":"I/O read","value":"0.31"},"i/o_write":{"title":"I/O write","value":"0.51"},"parse_time":{"title":"Parse time","value":"2.21"},"bind_time":{"title":"Bind time","value":"0.94"},"check_time":{"title":"Check time","value":"5.18"},"emit_time":{"title":"Emit time","value":"14.13"},"total_time":{"title":"Total time","value":"22.46"}}}]},"bd35da5d564d71ddba55916faa935d7abb1abcaa":{"2020-01-05T09:50:57.804Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"403606K"},"i/o_read":{"title":"I/O read","value":"0.34"},"i/o_write":{"title":"I/O write","value":"0.46"},"parse_time":{"title":"Parse time","value":"1.93"},"bind_time":{"title":"Bind time","value":"0.88"},"check_time":{"title":"Check time","value":"4.65"},"emit_time":{"title":"Emit time","value":"3.46"},"total_time":{"title":"Total time","value":"10.91"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"301123K"},"i/o_read":{"title":"I/O read","value":"0.29"},"i/o_write":{"title":"I/O write","value":"0.52"},"parse_time":{"title":"Parse time","value":"1.80"},"bind_time":{"title":"Bind time","value":"0.93"},"check_time":{"title":"Check time","value":"4.61"},"emit_time":{"title":"Emit time","value":"7.69"},"total_time":{"title":"Total time","value":"15.03"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"478159K"},"i/o_read":{"title":"I/O read","value":"0.33"},"i/o_write":{"title":"I/O write","value":"0.51"},"parse_time":{"title":"Parse time","value":"2.18"},"bind_time":{"title":"Bind time","value":"0.96"},"check_time":{"title":"Check time","value":"5.28"},"emit_time":{"title":"Emit time","value":"14.72"},"total_time":{"title":"Total time","value":"23.14"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"381616K"},"i/o_read":{"title":"I/O read","value":"0.31"},"i/o_write":{"title":"I/O write","value":"0.51"},"parse_time":{"title":"Parse time","value":"2.14"},"bind_time":{"title":"Bind time","value":"0.87"},"check_time":{"title":"Check time","value":"4.89"},"emit_time":{"title":"Emit time","value":"11.39"},"total_time":{"title":"Total time","value":"19.29"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"453185K"},"i/o_read":{"title":"I/O read","value":"0.34"},"i/o_write":{"title":"I/O write","value":"0.55"},"parse_time":{"title":"Parse time","value":"2.16"},"bind_time":{"title":"Bind time","value":"0.90"},"check_time":{"title":"Check time","value":"5.01"},"emit_time":{"title":"Emit time","value":"13.18"},"total_time":{"title":"Total time","value":"21.25"}}}]},"f50c55eef9e81ca799405cf8b21c3d1c80f40d91":{"2020-01-05T10:04:04.382Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"399417K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.44"},"parse_time":{"title":"Parse time","value":"1.75"},"bind_time":{"title":"Bind time","value":"0.79"},"check_time":{"title":"Check time","value":"4.65"},"emit_time":{"title":"Emit time","value":"3.40"},"total_time":{"title":"Total time","value":"10.60"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"304480K"},"i/o_read":{"title":"I/O read","value":"0.27"},"i/o_write":{"title":"I/O write","value":"0.41"},"parse_time":{"title":"Parse time","value":"1.78"},"bind_time":{"title":"Bind time","value":"0.91"},"check_time":{"title":"Check time","value":"4.55"},"emit_time":{"title":"Emit time","value":"7.32"},"total_time":{"title":"Total time","value":"14.55"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"471676K"},"i/o_read":{"title":"I/O read","value":"0.29"},"i/o_write":{"title":"I/O write","value":"0.55"},"parse_time":{"title":"Parse time","value":"2.00"},"bind_time":{"title":"Bind time","value":"0.89"},"check_time":{"title":"Check time","value":"4.88"},"emit_time":{"title":"Emit time","value":"13.75"},"total_time":{"title":"Total time","value":"21.52"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"383621K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.47"},"parse_time":{"title":"Parse time","value":"2.00"},"bind_time":{"title":"Bind time","value":"0.89"},"check_time":{"title":"Check time","value":"4.77"},"emit_time":{"title":"Emit time","value":"11.07"},"total_time":{"title":"Total time","value":"18.73"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"446063K"},"i/o_read":{"title":"I/O read","value":"0.29"},"i/o_write":{"title":"I/O write","value":"0.52"},"parse_time":{"title":"Parse time","value":"2.04"},"bind_time":{"title":"Bind time","value":"0.90"},"check_time":{"title":"Check time","value":"4.89"},"emit_time":{"title":"Emit time","value":"12.60"},"total_time":{"title":"Total time","value":"20.43"}}}]},"d4d44cdfcd8e26967c3dc4d35c96bd7088d15bb2":{"2020-01-05T10:51:22.958Z":[{"types":"no transformer","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"229256K"},"i/o_read":{"title":"I/O read","value":"0.29"},"i/o_write":{"title":"I/O write","value":"0.51"},"parse_time":{"title":"Parse time","value":"1.92"},"bind_time":{"title":"Bind time","value":"0.90"},"check_time":{"title":"Check time","value":"4.72"},"emit_time":{"title":"Emit time","value":"3.72"},"total_time":{"title":"Total time","value":"11.26"}}},{"types":"no createMock","result":{"files":{"title":"Files","value":"5086"},"lines":{"title":"Lines","value":"111369"},"nodes":{"title":"Nodes","value":"406632"},"identifiers":{"title":"Identifiers","value":"127078"},"symbols":{"title":"Symbols","value":"102205"},"types":{"title":"Types","value":"37200"},"memory_used":{"title":"Memory used","value":"303182K"},"i/o_read":{"title":"I/O read","value":"0.27"},"i/o_write":{"title":"I/O write","value":"0.46"},"parse_time":{"title":"Parse time","value":"1.85"},"bind_time":{"title":"Bind time","value":"0.92"},"check_time":{"title":"Check time","value":"4.66"},"emit_time":{"title":"Emit time","value":"7.66"},"total_time":{"title":"Total time","value":"15.10"}}},{"types":"One interface per file","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"111385"},"nodes":{"title":"Nodes","value":"436788"},"identifiers":{"title":"Identifiers","value":"137126"},"symbols":{"title":"Symbols","value":"102240"},"types":{"title":"Types","value":"32228"},"memory_used":{"title":"Memory used","value":"481630K"},"i/o_read":{"title":"I/O read","value":"0.28"},"i/o_write":{"title":"I/O write","value":"0.58"},"parse_time":{"title":"Parse time","value":"2.13"},"bind_time":{"title":"Bind time","value":"0.97"},"check_time":{"title":"Check time","value":"5.16"},"emit_time":{"title":"Emit time","value":"14.60"},"total_time":{"title":"Total time","value":"22.86"}}},{"types":"Interface reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"96385"},"nodes":{"title":"Nodes","value":"441788"},"identifiers":{"title":"Identifiers","value":"132126"},"symbols":{"title":"Symbols","value":"92241"},"types":{"title":"Types","value":"27228"},"memory_used":{"title":"Memory used","value":"393410K"},"i/o_read":{"title":"I/O read","value":"0.25"},"i/o_write":{"title":"I/O write","value":"0.56"},"parse_time":{"title":"Parse time","value":"2.07"},"bind_time":{"title":"Bind time","value":"0.88"},"check_time":{"title":"Check time","value":"4.86"},"emit_time":{"title":"Emit time","value":"11.52"},"total_time":{"title":"Total time","value":"19.34"}}},{"types":"One Interface / Reuse","result":{"files":{"title":"Files","value":"5091"},"lines":{"title":"Lines","value":"103885"},"nodes":{"title":"Nodes","value":"439288"},"identifiers":{"title":"Identifiers","value":"134626"},"symbols":{"title":"Symbols","value":"97241"},"types":{"title":"Types","value":"29728"},"memory_used":{"title":"Memory used","value":"451580K"},"i/o_read":{"title":"I/O read","value":"0.34"},"i/o_write":{"title":"I/O write","value":"0.53"},"parse_time":{"title":"Parse time","value":"2.10"},"bind_time":{"title":"Bind time","value":"0.87"},"check_time":{"title":"Check time","value":"5.00"},"emit_time":{"title":"Emit time","value":"13.15"},"total_time":{"title":"Total time","value":"21.13"}}}]}}}
+{
+  "performance-tests": {
+    "500abf2bf8bcff4ce796ab791419645f99ac9f68": {
+      "2020-01-04T14:57:52.430Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "187"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "48011"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "206582"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "73444"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "63251"
+            },
+            "types": {
+              "title": "Types",
+              "value": "17674"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "135476K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.02"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.01"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "0.93"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.55"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "2.07"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "0.15"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "3.70"
+            }
+          }
+        }
+      ]
+    },
+    "163e48c5bd44513193e9dc8d0fc046ad94b7f7a8": {
+      "2020-01-04T15:14:27.012Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "187"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "48011"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "206582"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "73444"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "63251"
+            },
+            "types": {
+              "title": "Types",
+              "value": "17674"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "136361K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.02"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.02"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "0.82"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.53"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "2.05"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "0.15"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "3.55"
+            }
+          }
+        }
+      ]
+    },
+    "751e0e14bc635393a195ae5204665cb07a9fa4fe": {
+      "2020-01-04T15:29:55.262Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "186"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "47669"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "205732"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "73178"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "63005"
+            },
+            "types": {
+              "title": "Types",
+              "value": "17600"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "140009K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.03"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.01"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "0.87"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.54"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "2.13"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "0.15"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "3.68"
+            }
+          }
+        }
+      ]
+    },
+    "4a0b24e27d774e0097eaccb8894b5660ba7c15ec": {
+      "2020-01-04T15:40:12.475Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "401105K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.29"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.45"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.87"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.89"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.66"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.62"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "11.04"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "306666K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.30"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.51"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.89"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.89"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.78"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "7.80"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "15.36"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "482068K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.36"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.58"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.10"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.91"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.18"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "14.68"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "22.88"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "382114K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.29"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.54"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.11"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.93"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.02"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "11.74"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "19.80"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "451797K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.31"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.56"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.20"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.91"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.11"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "13.53"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "21.75"
+            }
+          }
+        }
+      ]
+    },
+    "f1cb2e9f6fe49a5608389f0518957cfd9b55dd5d": {
+      "2020-01-04T16:07:29.150Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "403268K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.26"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.43"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.75"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.85"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.40"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.34"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "10.34"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "306455K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.30"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.46"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.73"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.92"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.40"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "7.36"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "14.41"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "480518K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.57"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.97"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.96"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.89"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "14.13"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "21.96"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "379997K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.52"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.02"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.86"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.64"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "11.23"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "18.74"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "453238K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.27"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.54"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.02"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.85"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.73"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "12.82"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "20.42"
+            }
+          }
+        }
+      ]
+    },
+    "77a88d75e6dc8717eee822b1d6b2f90bab78b7a0": {
+      "2020-01-04T16:16:11.204Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "220941K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.30"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.45"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.78"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.90"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.59"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.62"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "10.90"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "298061K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.26"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.51"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.76"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.92"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.65"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "7.61"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "14.94"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "476230K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.50"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.09"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.96"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.92"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "14.40"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "22.38"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "391233K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.29"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.51"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.07"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.87"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.70"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "11.39"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "19.03"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "442785K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.47"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.05"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.88"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.89"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "13.34"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "21.16"
+            }
+          }
+        }
+      ]
+    },
+    "a893a5ca6c9bdf69c6ab98ce9dc581c37a2b82c2": {
+      "2020-01-04T16:45:43.786Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "403921K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.55"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.89"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.89"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.81"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.72"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "11.31"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "312719K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.33"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.49"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.87"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "1.00"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.97"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "8.09"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "15.93"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "487003K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.30"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.66"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.16"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.96"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.27"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "15.58"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "23.96"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "372416K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.34"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.60"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.15"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.95"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.04"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "12.14"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "20.28"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "456438K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.30"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.63"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.15"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.96"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.20"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "13.91"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "22.22"
+            }
+          }
+        }
+      ]
+    },
+    "bd63ed3169861db7305483b561a901a015fd8468": {
+      "2020-01-04T16:50:22.864Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "401063K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.30"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.47"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.94"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.85"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.02"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.91"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "11.72"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "302665K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.32"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.56"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.96"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.96"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.08"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "8.31"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "16.32"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "480021K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.34"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.54"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.27"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.97"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.33"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "15.31"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "23.87"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "383169K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.32"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.57"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.25"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.95"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.98"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "12.22"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "20.40"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "456798K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.31"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.51"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.21"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.94"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.18"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "14.13"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "22.46"
+            }
+          }
+        }
+      ]
+    },
+    "bd35da5d564d71ddba55916faa935d7abb1abcaa": {
+      "2020-01-05T09:50:57.804Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "403606K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.34"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.46"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.93"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.88"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.65"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.46"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "10.91"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "301123K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.29"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.52"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.80"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.93"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.61"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "7.69"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "15.03"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "478159K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.33"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.51"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.18"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.96"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.28"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "14.72"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "23.14"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "381616K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.31"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.51"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.14"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.87"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.89"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "11.39"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "19.29"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "453185K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.34"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.55"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.16"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.90"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.01"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "13.18"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "21.25"
+            }
+          }
+        }
+      ]
+    },
+    "f50c55eef9e81ca799405cf8b21c3d1c80f40d91": {
+      "2020-01-05T10:04:04.382Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "399417K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.44"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.75"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.79"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.65"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.40"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "10.60"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "304480K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.27"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.41"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.78"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.91"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.55"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "7.32"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "14.55"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "471676K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.29"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.55"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.00"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.89"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.88"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "13.75"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "21.52"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "383621K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.47"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.00"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.89"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.77"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "11.07"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "18.73"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "446063K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.29"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.52"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.04"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.90"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.89"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "12.60"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "20.43"
+            }
+          }
+        }
+      ]
+    },
+    "d4d44cdfcd8e26967c3dc4d35c96bd7088d15bb2": {
+      "2020-01-05T10:51:22.958Z": [
+        {
+          "types": "no transformer",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "229256K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.29"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.51"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.92"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.90"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.72"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "3.72"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "11.26"
+            }
+          }
+        },
+        {
+          "types": "no createMock",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5086"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111369"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "406632"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "127078"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102205"
+            },
+            "types": {
+              "title": "Types",
+              "value": "37200"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "303182K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.27"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.46"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "1.85"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.92"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.66"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "7.66"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "15.10"
+            }
+          }
+        },
+        {
+          "types": "One interface per file",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "111385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "436788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "137126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "102240"
+            },
+            "types": {
+              "title": "Types",
+              "value": "32228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "481630K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.28"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.58"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.13"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.97"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.16"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "14.60"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "22.86"
+            }
+          }
+        },
+        {
+          "types": "Interface reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "96385"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "441788"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "132126"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "92241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "27228"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "393410K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.25"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.56"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.07"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.88"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "4.86"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "11.52"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "19.34"
+            }
+          }
+        },
+        {
+          "types": "One Interface / Reuse",
+          "result": {
+            "files": {
+              "title": "Files",
+              "value": "5091"
+            },
+            "lines": {
+              "title": "Lines",
+              "value": "103885"
+            },
+            "nodes": {
+              "title": "Nodes",
+              "value": "439288"
+            },
+            "identifiers": {
+              "title": "Identifiers",
+              "value": "134626"
+            },
+            "symbols": {
+              "title": "Symbols",
+              "value": "97241"
+            },
+            "types": {
+              "title": "Types",
+              "value": "29728"
+            },
+            "memory_used": {
+              "title": "Memory used",
+              "value": "451580K"
+            },
+            "i/o_read": {
+              "title": "I/O read",
+              "value": "0.34"
+            },
+            "i/o_write": {
+              "title": "I/O write",
+              "value": "0.53"
+            },
+            "parse_time": {
+              "title": "Parse time",
+              "value": "2.10"
+            },
+            "bind_time": {
+              "title": "Bind time",
+              "value": "0.87"
+            },
+            "check_time": {
+              "title": "Check time",
+              "value": "5.00"
+            },
+            "emit_time": {
+              "title": "Emit time",
+              "value": "13.15"
+            },
+            "total_time": {
+              "title": "Total time",
+              "value": "21.13"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
