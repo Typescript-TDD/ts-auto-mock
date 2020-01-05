@@ -1,10 +1,12 @@
 name: Test
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+    - 'data/**'
 
 jobs:
   test:
-    if: "!contains(github.event.head_commit.author.name, 'typescripttdd')"
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,12 +26,5 @@ jobs:
         npm test
       env:
         CI: true
-  empty-job:
-    runs-on: ubuntu-latest
-    if: success()
-    steps:
-      - name: Emopty job
-        run: |
-          echo "This job will always succeed"
 
 
