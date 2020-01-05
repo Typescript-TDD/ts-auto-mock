@@ -3,8 +3,7 @@ name: Performance
 on:
   push:
     branches:
-      # this one will change to master before approving this PR
-      - performance-tests
+      - master
     paths-ignore:
       - 'data/**'
 
@@ -39,7 +38,6 @@ jobs:
       run: |
         git config --global user.name 'typescripttdd'
         git config --global user.email 'typescripttdd@gmail.com'
-        git add data
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2.0.0
       with:
