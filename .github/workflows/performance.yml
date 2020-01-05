@@ -2,8 +2,11 @@ name: Performance
 
 on:
   push:
+    branches:
+      # this one will change to master before approving this PR
+      - performance-tests
     paths-ignore:
-    - 'data/**'
+      - 'data/**'
 
 jobs:
   performance:
@@ -15,8 +18,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -34,8 +35,12 @@ jobs:
         npm start
     - name: performance push changes
       run: |
+        git pull
+        git checkout -b perf-${env:DATE}
         git config --global user.name 'typescripttdd'
         git config --global user.email 'typescripttdd@gmail.com'
         git add data
         git commit -m "Performance report"
         git push
+      env:
+        DATE: date +%Y-%m-%dT%H:%M:%S%z
