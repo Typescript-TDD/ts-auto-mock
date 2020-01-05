@@ -46,3 +46,5 @@ jobs:
         git push --set-upstream origin performance-${DATE}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2.0.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
