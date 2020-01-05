@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - master
-    paths-ignore:
-      - 'data/**'
+    paths:
+      - 'src/**'
+      - 'performance/**'
 
 jobs:
   performance:
