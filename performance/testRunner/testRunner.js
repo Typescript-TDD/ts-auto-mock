@@ -40,8 +40,8 @@ function testForFeature(feature, volume) {
 
     for (let i = 0; i < volume; i++) {
         const filePath = path.join(performanceTestFolder, `${feature}${i}.test.ts`);
-        const testFile = fileSystem.readFileAsync(path.join(templateFolder, `${feature}.ts`));
-        fileSystem.writeFileAsync(filePath, testFile);
+        const testFile = fileSystem.readFileSync(path.join(templateFolder, `${feature}.ts`));
+        fileSystem.writeFileSync(filePath, testFile);
     }
 }
 

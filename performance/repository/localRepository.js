@@ -7,16 +7,16 @@ function localRepository(url, fileName) {
     fileSystem.createFolder(url);
 
     if (!fileSystem.exist(fileUrl)) {
-        fileSystem.writeFileAsync(fileUrl, JSON.stringify({}));
+        fileSystem.writeFileSync(fileUrl, JSON.stringify({}));
     }
 
     return {
         async get() {
-            const file = fileSystem.readFileAsync(fileUrl);
+            const file = fileSystem.readFileSync(fileUrl);
             return JSON.parse(file);
         },
         async update(results) {
-            fileSystem.writeFileAsync(fileUrl, JSON.stringify(results));
+            fileSystem.writeFileSync(fileUrl, JSON.stringify(results));
         },
     }
 }

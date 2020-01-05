@@ -8,10 +8,10 @@ function fileSystem() {
             if(!fs.existsSync(folder))
                 fs.mkdirSync(folder);
         },
-        writeFileAsync(fileName, data) {
+        writeFileSync(fileName, data) {
             return fs.writeFileSync(fileName, data);
         },
-        readFileAsync(fileName) {
+        readFileSync(fileName) {
           return fs.readFileSync(fileName);
         },
         exist(name) {
