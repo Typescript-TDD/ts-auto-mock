@@ -1,6 +1,5 @@
 const webpackMerge = require('webpack-merge'),
   commonConfig = require('./webpack.config.js');
-const WebpackCopyPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = webpackMerge(commonConfig(), {
@@ -13,12 +12,6 @@ module.exports = webpackMerge(commonConfig(), {
         historyApiFallback: true
     },
     plugins: [
-        new WebpackCopyPlugin([
-            {
-                from: '../data',
-                to: 'resources'
-            }
-        ]),
         new Dotenv({
             path: './.env.development'
         })

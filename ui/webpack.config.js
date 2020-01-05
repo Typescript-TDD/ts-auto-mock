@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackCopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = function () {
     return {
@@ -33,6 +35,13 @@ module.exports = function () {
             ]
         },
         plugins: [
+            new CleanWebpackPlugin(),
+            new WebpackCopyPlugin([
+                {
+                    from: '../data',
+                    to: 'resources'
+                }
+            ]),
             new HtmlWebpackPlugin({
                 template: 'src/index.html'
             })
