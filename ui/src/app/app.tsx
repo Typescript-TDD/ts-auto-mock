@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import './app.scss';
 import { DefinitelyTyped } from './definitelyTyped/definitelyTyped';
 import { Home } from './home/home';
@@ -8,7 +8,7 @@ import { Performance } from './performance/performance';
 
 export function App(): JSX.Element {
   return <div className='App-container'>
-    <Router>
+    <HashRouter>
       <div className='App-navigation'>
         <Navigation/>
       </div>
@@ -26,6 +26,6 @@ export function App(): JSX.Element {
           </Route>
         </Switch>
       </div>
-    </Router>
+    </HashRouter>
   </div>;
 }
