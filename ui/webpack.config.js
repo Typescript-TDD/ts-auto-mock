@@ -40,6 +40,10 @@ module.exports = function () {
                 {
                     from: '../data',
                     to: 'resources'
+                },
+                {
+                    from: '_config.yml',
+                    to: ''
                 }
             ]),
             new HtmlWebpackPlugin({
