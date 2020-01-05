@@ -1,6 +1,14 @@
 const exec = require('child_process').exec;
 const path = require('path');
 const fs = require('fs');
+const processService = require('../utils/process/process')(process);
+
+try {
+    processService.ensureArgumentsValidity(['TYPES', 'PROCESS_COUNT']);
+} catch(e) {
+    console.error(e.message);
+    return;
+}
 
 const PARALLEL_NPM_INSTALL = 20;
 const RUN_NPM_INSTALL = true;
@@ -16,7 +24,7 @@ const definitelyTypedDirectories = getDirectories(folder);
 const processesConfig = getProcessesConfig();
 
 function getProcessesCount() {
-    return process.argv[3] && parseInt(process.argv[3]) || 1;
+    return processService.getArgument('PROCESS_COUNT') || 1;
 }
 
 function getProcessesConfig() {
@@ -56,16 +64,18 @@ function uuidv4() {
 }
 
 function getTotalTypesCount() {
-    if (process.argv[2]) {
-        const maybeCount = parseInt(process.argv[2]);
+    const typesToProcess = processService.getArgument('TYPES');
+
+    if (typesToProcess) {
+        const maybeCount = parseInt(typesToProcess);
 
         if (!Number.isNaN(maybeCount)) {
             return Math.min(definitelyTypedDirectories.length, maybeCount);
-        } else if (process.argv[2] === "all") {
+        } else if (typesToProcess === "all") {
             return definitelyTypedDirectories.length;
         }
     }
-    
+
     return 50;
 }
 
@@ -73,15 +83,13 @@ function runAllDir(dirs, id) {
     fs.writeFileSync(`tsLogs.${id}.txt`, "===== Start run " + new Date().toISOString() + " - " + runUuid + " =====\n", { flag: "a+" });
     fs.writeFileSync(`${id}.index.ts`, "");
     fs.writeFileSync(`tsconfig.types.${id}.json`, "");
-    
+
     return dirs.reduce((promise, dir) => promise.then(() => run(dir, id)), Promise.resolve())
         .then(() => {
             fs.unlinkSync(`tsconfig.types.${id}.json`);
             fs.unlinkSync(`${id}.index.ts`);
         });
 }
-
-// console.log(definitelyTypedDirectories);
 
 let startDirectoryIndex = 0;
 
@@ -110,7 +118,7 @@ async function installDependencies() {
     const directoriesWithDependencies = processedDirectories
         .map(dir => ({ name: dir, path: path.join(folder, dir) }))
         .filter(dir => fs.existsSync(path.join(dir.path, "package.json")));
-    
+
     if (directoriesWithDependencies.length === 0) {
         return Promise.resolve();
     }
@@ -148,7 +156,7 @@ async function run(dir, id) {
             "noEmit": false,
             "plugins": [
                 {
-                    "transform": "../../dist/transformer",
+                    "transform": "../dist/transformer",
                     "debug": true
                 }
             ]
@@ -159,7 +167,7 @@ async function run(dir, id) {
     };
 
     fs.writeFileSync(`tsconfig.types.${id}.json`, JSON.stringify(config));
-    fs.writeFileSync(`${id}.index.ts`, `import pak = require('${dir}'); import { createMock } from '../../dist'; createMock<typeof pak>();`);
+    fs.writeFileSync(`${id}.index.ts`, `import pak = require('${dir}'); import { createMock } from '../dist'; createMock<typeof pak>();`);
 
     return execPromise(`npx ttsc --project tsconfig.types.${id}.json`)
         .then((response) => {
