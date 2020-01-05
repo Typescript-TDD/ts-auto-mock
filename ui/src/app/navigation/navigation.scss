@@ -1,0 +1,16 @@
+
+.Navigation {
+    &-container {
+        padding: 40px 0;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &-link {
+        color: #888888;
+    }
+
+    &-linkActive {
+        color: white;
+    }
+}

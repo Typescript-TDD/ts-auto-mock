@@ -1,12 +1,11 @@
 name: Release
 
-on: 
+on:
   release:
     types: [published]
-    
-jobs:
-  build:
 
+jobs:
+  release:
     runs-on: ubuntu-latest
 
     strategy:
