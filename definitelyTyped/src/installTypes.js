@@ -12,7 +12,13 @@ const PARALLEL_NPM_INSTALL = 20;
 })();
 
 async function cloneRepository() {
-    return execPromise(`git clone https://github.com/DefinitelyTyped/DefinitelyTyped.git ../${definitelyTyped.folder}`);
+    const command = `git clone https://github.com/DefinitelyTyped/DefinitelyTyped.git ../${definitelyTyped.folder}`;
+    console.log(`Cloning repository using ${command}`);
+
+    return execPromise(command)
+      .then(() => {
+          console.log('Done cloning.');
+      });
 }
 
 async function installDependencies() {
