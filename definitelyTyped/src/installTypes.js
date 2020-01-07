@@ -1,8 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const execPromise = require('../../utils/exec/execPromise');
-const maximiseParallelRun = require('./maximise-parallel');
-const definitelyTyped = require('./definitely-typed');
+const maximiseParallelRun = require('./maximiseParallel');
+const definitelyTyped = require('./definitelyTyped');
 
 const PARALLEL_NPM_INSTALL = 20;
 
@@ -31,10 +31,11 @@ async function installDependencies() {
     const processes = maximiseParallelRun(PARALLEL_NPM_INSTALL, directoriesWithDependencies.length);
     let startIndex = 0;
     const processesPromiseList = [];
+    const installer = dependencyInstaller();
 
     for(let i = 0; i < processes.length; i++) {
         processesPromiseList.push(
-            installDependenciesInDirectories(directoriesWithDependencies.slice(startIndex, startIndex + processes[i].items), i)
+            installer(directoriesWithDependencies.slice(startIndex, startIndex + processes[i].items))
         );
         startIndex += processes[i].items;
     }
@@ -42,12 +43,15 @@ async function installDependencies() {
     return Promise.all(processesPromiseList).then(() => console.log("\n"));
 }
 
-let installedDependencyIndex = 0;
-function installDependenciesInDirectories(directories) {
-    return directories.reduce((promise, dir) => promise.then(() => {
-        process.stdout.write(`(${++installedDependencyIndex}):${dir.name} `);
-        return execPromise(`(cd ../${dir.path} && npm install)`).catch(err => {
-            fs.writeFileSync(`../tsLogs.npmErrors.txt`, "Error " + new Date().toISOString() + " :: " + err, { flag: "a+" });
-        });
-    }), Promise.resolve())
+function dependencyInstaller() {
+    let installedDependencyIndex = 0;
+
+    return function installDependenciesInDirectories(directories) {
+        return directories.reduce((promise, dir) => promise.then(() => {
+            console.log(`(${++installedDependencyIndex}):${dir.name}`);
+            return execPromise(`(cd ../${dir.path} && npm install)`).catch(err => {
+                console.error(`Error :: ${err}`);
+            });
+        }), Promise.resolve())
+    }
 }
