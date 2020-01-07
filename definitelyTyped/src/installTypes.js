@@ -5,6 +5,7 @@ const maximiseParallelRun = require('./maximiseParallel');
 const definitelyTyped = require('./definitelyTyped');
 
 const PARALLEL_NPM_INSTALL = 20;
+const rootPath = '..';
 
 (async function() {
     await cloneRepository();
@@ -22,10 +23,11 @@ async function cloneRepository() {
 }
 
 async function installDependencies() {
+    console.log('Installing dependencies');
     const typesDirectories = definitelyTyped.getTypes();
 
     const directoriesWithDependencies = typesDirectories
-        .map(dir => ({ name: dir, path: path.join(definitelyTyped.typesFolder, dir) }))
+        .map(dir => ({ name: dir, path: path.join(rootPath, definitelyTyped.typesFolder, dir) }))
         .filter(dir => fs.existsSync(path.join(dir.path, "package.json")));
 
     if (directoriesWithDependencies.length === 0) {
