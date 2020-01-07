@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const execPromise = require('../../utils/exec/execPromise');
 const maximiseParallelRun = require('./maximiseParallel');
-const definitelyTyped = require('./definitelyTyped')('..');
+const definitelyTyped = require('./definitelyTyped')();
 
 const PARALLEL_NPM_INSTALL = 20;
 const rootPath = '..';
