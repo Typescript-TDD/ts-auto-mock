@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const execPromise = require('../../utils/exec/execPromise');
 const maximiseParallelRun = require('./maximiseParallel');
-const definitelyTyped = require('./definitelyTyped');
+const definitelyTyped = require('./definitelyTyped')('..');
 
 const PARALLEL_NPM_INSTALL = 20;
 const rootPath = '..';
@@ -27,7 +27,7 @@ async function installDependencies() {
     const typesDirectories = definitelyTyped.getTypes();
 
     const directoriesWithDependencies = typesDirectories
-        .map(dir => ({ name: dir, path: path.join(rootPath, definitelyTyped.typesFolder, dir) }))
+        .map(dir => ({ name: dir, path: path.join(definitelyTyped.typesFolder, dir) }))
         .filter(dir => fs.existsSync(path.join(dir.path, "package.json")));
 
     if (directoriesWithDependencies.length === 0) {

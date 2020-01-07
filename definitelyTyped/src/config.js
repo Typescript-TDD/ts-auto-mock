@@ -1,6 +1,6 @@
 const processService = require('../../utils/process/process')(process);
 const maximiseParallelRun = require('./maximiseParallel');
-const definitelyTyped = require('./definitelyTyped');
+const definitelyTyped = require('./definitelyTyped')('..');
 
 function getProcessesConfig() {
     const totalTypesCount = getTotalTypesCount();
