@@ -8,11 +8,16 @@ const PARALLEL_NPM_INSTALL = 20;
 const rootPath = '..';
 
 (async function() {
-    await cloneRepository();
-    await installDependencies();
+    try {
+        await cloneRepository();
+        await installDependencies();
+    } catch {
+        console.error(error);
+        process.exit(1);
+    }
 })();
 
-async function cloneRepository() {
+function cloneRepository() {
     const command = `git clone https://github.com/DefinitelyTyped/DefinitelyTyped.git ../${definitelyTyped.folder}`;
     console.log(`Cloning repository using ${command}`);
 
