@@ -3,10 +3,10 @@ const fs = require('fs');
 
 function definitelyTyped(rootPath) {
   return {
-    folder: 'DefinitelyTyped',
-    typesFolder: path.join('DefinitelyTyped', "types"),
+    folder: path.join(rootPath, 'DefinitelyTyped'),
+    typesFolder: path.join(rootPath, 'DefinitelyTyped', "types"),
     getTypes() {
-      return this._types || (this._types = fs.readdirSync(path.join(rootPath, this.typesFolder), {withFileTypes: true})
+      return this._types || (this._types = fs.readdirSync(this.typesFolder, {withFileTypes: true})
         .filter(dirent => dirent.isDirectory())
         .map(dirent => dirent.name));
     }
