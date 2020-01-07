@@ -1,13 +1,11 @@
 const fs = require('fs');
-const dataFileSystemReader = require('./dataFileSystemReader')(require('./nodeFileReader'));
 
-function dataFileSystemWriter() {
-    const dataPath = process.env.DEFINITELY_TYPED_DATA_URL;
-
+function dataFileSystemWriter(dataPath) {
     if (!dataPath) {
-        throw new Error('Environment variable DEFINITELY_TYPED_DATA_URL must be specified to use dataFileSystemWriter');
+        throw new Error('dataPath must be specified to use dataFileSystemReader');
     }
-
+    
+    const dataFileSystemReader = require('./dataFileSystemReader')(dataPath, require('./nodeFileReader'));
     const listPath = `${dataPath}/list.json`;
 
     return {

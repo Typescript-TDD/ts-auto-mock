@@ -1,8 +1,6 @@
-function dataFileSystemReader(fileReader) {
-    const dataPath = process.env.DEFINITELY_TYPED_DATA_URL;
-
+function dataFileSystemReader(dataPath, fileReader) {
     if (!dataPath) {
-        throw new Error('Environment variable DEFINITELY_TYPED_DATA_URL must be specified to use dataFileSystemReader');
+        throw new Error('dataPath must be specified to use dataFileSystemReader');
     }
 
     const listPath = `${dataPath}/list.json`;
