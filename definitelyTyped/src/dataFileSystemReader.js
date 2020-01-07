@@ -1,5 +1,5 @@
-function dataFileSystemReader(fileSystem) {
-    const dataPath = process.env.DEFINITELY_TYPED_DATA_URL; //`../data/${dataType}`;
+function dataFileSystemReader(fileReader) {
+    const dataPath = process.env.DEFINITELY_TYPED_DATA_URL;
 
     if (!dataPath) {
         throw new Error('Environment variable DEFINITELY_TYPED_DATA_URL must be specified to use dataFileSystemReader');
@@ -10,7 +10,7 @@ function dataFileSystemReader(fileSystem) {
     return {
         async getDataIds() {
             try {
-                const fileList = await fileSystem.readFile(listPath);
+                const fileList = await fileReader.readFile(listPath);
                 return JSON.parse(fileList);
             } catch {
                 return [];
@@ -27,7 +27,7 @@ function dataFileSystemReader(fileSystem) {
             return allData;
         },
         async getData(id) {
-            const toParse = await fileSystem.readFile(`${dataPath}/${id}`);
+            const toParse = await fileReader.readFile(`${dataPath}/${id}`);
             const data = JSON.parse(toParse);
 
             return { id: id, data: data };
