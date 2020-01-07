@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
 const processService = require('../utils/process/process')(process);
@@ -5,7 +6,7 @@ const execPromise = require('../utils/exec/execPromise');
 const definitelyTyped = require('./src/definitelyTyped');
 const config = require('./src/config');
 const output = require('./src/multiProcessOutput');
-const dataFileSystem = require('./src/dataFileSystem')('definitelyTyped');
+const dataFileSystem = require('./src/dataFileSystemWriter')();
 const uuid = require('./src/uuid');
 
 try {
