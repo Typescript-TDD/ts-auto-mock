@@ -2,6 +2,8 @@ name: DefinitelyTyped Tests
 
 on:
   push:
+    branches:
+      - master
     paths:
       - 'src/**'
       - 'definitelyTyped/**'
