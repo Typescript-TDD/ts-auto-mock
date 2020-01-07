@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run install-types && npm run process-all-types",
-    "install-types": "node src/install-types.js",
+    "install-types": "node src/installTypes.js",
     "process-all-types": "node index.js TYPES=all PROCESS_COUNT=20",
     "process-types": "node index.js"
   },
