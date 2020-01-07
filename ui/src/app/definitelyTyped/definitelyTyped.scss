@@ -1,0 +1,59 @@
+.DefinitelyTyped-container {
+  .DefinitelyTyped-typesContainer {
+    margin-top: 20px;
+
+    details {
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      padding: .5em .5em 0;
+
+      summary {
+        font-weight: bold;
+        margin: -.5em -.5em 0;
+        padding: .5em;
+      }
+    }
+
+    details.success {
+      $color: green;
+
+      background-color: $color;
+
+      summary {
+        padding: 0;
+
+        &::marker, &::-webkit-details-marker {
+          color: $color;
+        }
+      }
+    }
+
+    details.warning {
+      background-color: rgb(255, 152, 0);
+      cursor: pointer;
+
+      &[open] {
+        padding: .5em;
+
+        summary {
+          border-bottom: 1px solid #aaa;
+          margin-bottom: .5em;
+        }
+      }
+    }
+
+    details.error {
+      background-color: rgb(244, 67, 54);;
+      cursor: pointer;
+
+      &[open] {
+        padding: .5em;
+
+        summary {
+          border-bottom: 1px solid #aaa;
+          margin-bottom: .5em;
+        }
+      }
+    }
+  }
+}

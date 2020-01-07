@@ -1,3 +1,8 @@
+process.on('unhandledRejection', error => {
+    console.log('unhandledRejection', error);
+    process.exit(1);
+});
+
 const path = require('path');
 const fs = require('fs');
 const execPromise = require('../../utils/exec/execPromise');

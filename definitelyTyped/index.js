@@ -1,3 +1,8 @@
+process.on('unhandledRejection', error => {
+    console.log('unhandledRejection', error);
+    process.exit(1);
+});
+
 require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
@@ -82,7 +87,7 @@ async function run(dir, processId) {
                 console.warn('☐');
                 outputService.addData(processId, dir, {
                     response: 'warning',
-                    message: response
+                    message: response.toString()
                 });
             } else {
                 process.stdout.write(`TYPE: ${dir} P${processId} `);
@@ -95,9 +100,10 @@ async function run(dir, processId) {
         .catch(error => {
             process.stdout.write(`TYPE: ${dir} P${processId} `);
             console.error('✘');
+            console.error(error);
             outputService.addData(processId, dir, {
                 response: 'error',
-                message: error
+                message: error.toString()
             });
         });
 }
