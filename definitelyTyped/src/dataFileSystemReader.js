@@ -1,7 +1,7 @@
 function dataFileSystemReader(dataPath, fileReader) {
     if (!dataPath) {
         throw new Error('dataPath must be specified to use dataFileSystemReader');
-    }
+    } 
 
     const listPath = `${dataPath}/list.json`;
 
