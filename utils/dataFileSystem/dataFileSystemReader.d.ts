@@ -24,5 +24,4 @@ export interface DataReader {
   getData(id: string): Promise<RunData>
 }
 
-
-export function dataFileSystemReader(dataPath: string, fileReader: SystemFileReader): DataReader;
+export default function dataFileSystemReader(dataPath: string, fileReader: SystemFileReader): DataReader;

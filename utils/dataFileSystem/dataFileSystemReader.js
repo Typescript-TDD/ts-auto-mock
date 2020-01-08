@@ -1,4 +1,4 @@
-export function dataFileSystemReader(dataPath, fileReader) {
+function dataFileSystemReader(dataPath, fileReader) {
     if (!dataPath) {
         throw new Error('dataPath must be specified to use dataFileSystemReader');
     }
@@ -30,3 +30,5 @@ export function dataFileSystemReader(dataPath, fileReader) {
         }
     }
 }
+
+module.exports = dataFileSystemReader;

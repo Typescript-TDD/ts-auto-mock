@@ -7,8 +7,7 @@ import {
   DefinitelyTypedFiltersOptions,
   DefinitelyTypedRunInfo,
 } from './filters/definitelyTypedFilters';
-import {
-  dataFileSystemReader,
+import dataFileSystemReader, {
   DataReader,
   RunData,
   RunDataId,
