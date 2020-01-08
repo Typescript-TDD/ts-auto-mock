@@ -44,6 +44,7 @@ jobs:
         run: |
           git add data/*
           git checkout .
+          git config submodule.DefinitelyTyped.active false
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2.0.0
         with:
