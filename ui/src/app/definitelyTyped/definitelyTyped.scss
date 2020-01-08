@@ -15,15 +15,14 @@
     }
 
     details.success {
-      $color: green;
-
-      background-color: $color;
+      background-color: green;
 
       summary {
+        color: transparent;
         padding: 0;
 
-        &::marker, &::-webkit-details-marker {
-          color: $color;
+        > span {
+          color: white;
         }
       }
     }

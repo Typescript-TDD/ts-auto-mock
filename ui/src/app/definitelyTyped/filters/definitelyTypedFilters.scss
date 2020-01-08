@@ -1,0 +1,29 @@
+.DefinitelyTypedFilters-container {
+  .DefinitelyTypedFilters-controlsContainer {
+    display: flex;
+
+    > :not(:first-child) {
+      margin-left: 25px;
+    }
+
+    .DefinitelyTypedFilters-inputsContainer {
+      display: flex;
+
+      > .DefinitelyTypedFilters-input:not(:first-child) {
+        margin-left: 25px;
+      }
+    }
+
+    .DefinitelyTypedFilters-checkboxesContainer {
+      display: flex;
+
+      > .DefinitelyTypedFilters-checkbox:not(:first-child) {
+        margin-left: 25px;
+      }
+    }
+  }
+
+  .DefinitelyTypedFilters-button {
+    margin-top: 20px;
+  }
+}
