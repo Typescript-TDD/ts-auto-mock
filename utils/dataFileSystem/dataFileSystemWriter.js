@@ -5,7 +5,7 @@ function dataFileSystemWriter(dataPath) {
         throw new Error('dataPath must be specified to use dataFileSystemReader');
     }
 
-    const dataFileSystemReader = require('./dataFileSystemReader')(dataPath, require('./nodeFileReader')());
+    const dataFileSystemReader = require('./dataFileSystemReader').dataFileSystemReader(dataPath, require('./nodeFileReader')());
     const listPath = `${dataPath}/list.json`;
 
     return {

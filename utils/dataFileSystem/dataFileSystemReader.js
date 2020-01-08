@@ -1,4 +1,4 @@
-function dataFileSystemReader(dataPath, fileReader) {
+export function dataFileSystemReader(dataPath, fileReader) {
     if (!dataPath) {
         throw new Error('dataPath must be specified to use dataFileSystemReader');
     }
@@ -8,8 +8,7 @@ function dataFileSystemReader(dataPath, fileReader) {
     return {
         async getDataIds() {
             try {
-                const fileList = await fileReader.get(listPath);
-                return JSON.parse(fileList);
+                return await fileReader.get(listPath);
             } catch {
                 return [];
             }
@@ -25,12 +24,9 @@ function dataFileSystemReader(dataPath, fileReader) {
             return allData;
         },
         async getData(id) {
-            const toParse = await fileReader.get(`${dataPath}/${id}`);
-            const data = JSON.parse(toParse);
+            const data = await fileReader.get(`${dataPath}/${id}`);
 
             return { id: id, data: data };
         }
     }
 }
-
-module.exports = dataFileSystemReader;

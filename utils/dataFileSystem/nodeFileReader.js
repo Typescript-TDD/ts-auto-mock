@@ -9,7 +9,7 @@ function nodeFileReader() {
                         return rej(err);
                     }
 
-                    res(data);
+                    res(JSON.parse(data));
                 });
             });
         }

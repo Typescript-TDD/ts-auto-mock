@@ -11,7 +11,7 @@ const execPromise = require('../utils/exec/execPromise');
 const definitelyTyped = require('./src/definitelyTyped')();
 const config = require('./src/config');
 const output = require('./src/multiProcessOutput');
-const dataFileSystem = require('./src/dataFileSystemWriter')(process.env.DEFINITELY_TYPED_DATA_URL);
+const dataFileSystem = require('../utils/dataFileSystem/dataFileSystemWriter')(process.env.DEFINITELY_TYPED_DATA_URL);
 const uuid = require('./src/uuid');
 
 try {
