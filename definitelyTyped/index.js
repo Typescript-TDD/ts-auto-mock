@@ -4,7 +4,6 @@ process.on('unhandledRejection', error => {
 });
 
 require('dotenv').config();
-
 const path = require('path');
 const fs = require('fs');
 const processService = require('../utils/process/process')(process);
