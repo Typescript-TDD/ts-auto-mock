@@ -11,7 +11,7 @@ on:
       - 'definitelyTyped/**'
 
 jobs:
-  performance:
+  definitely-typed:
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,7 +34,9 @@ jobs:
         run: |
           cd definitelyTyped
           npm install
-          npm start
+          npm run process-types TYPES=20 PROCESS_COUNT=2
+#          npm start
+
       - name: create environment variable date
         run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
       - name: definitelyTyped push changes
@@ -54,4 +56,4 @@ jobs:
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
           branch: definitely-typed-tests-${{ env.DATE }}
-          token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+          token: ${{ secrets.GITHUB_TOKEN }}

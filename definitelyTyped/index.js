@@ -62,7 +62,6 @@ function runAllDir(dirs, processId) {
 
 async function run(dir, processId) {
     const config = {
-        'extends': `./${definitelyTyped.typesFolder}/${dir}/tsconfig.json`,
         'compilerOptions': {
             'noEmit': !processService.getArgument('DEBUG'),
             'plugins': [
@@ -78,7 +77,7 @@ async function run(dir, processId) {
     };
 
     fs.writeFileSync(`tsconfig.types.${processId}.json`, JSON.stringify(config));
-    fs.writeFileSync(`${processId}.index.ts`, `import pak = require('${dir}'); import { createMock } from '../dist'; createMock<typeof pak>();`);
+    fs.writeFileSync(`${processId}.index.ts`, `import pak = require('./${definitelyTyped.folder}/types/${dir}/'); import { createMock } from '../dist'; createMock<typeof pak>();`);
 
     return execPromise(`npx ttsc --project tsconfig.types.${processId}.json`)
         .then((response) => {
@@ -97,13 +96,21 @@ async function run(dir, processId) {
                 });
             }
         })
-        .catch(error => {
+        .catch((error) => {
             process.stdout.write(`TYPE: ${dir} P${processId} `);
             console.error('✘');
-            console.error(error);
+
+            let errorData = error.error.toString();
+            console.error(error.error);
+
+            if (error.stdout.trim()) {
+                errorData += "\n" + error.stdout;
+                console.error(error.stdout);
+            }
+
             outputService.addData(processId, dir, {
                 response: 'error',
-                message: error.toString()
+                message: errorData
             });
         });
 }
