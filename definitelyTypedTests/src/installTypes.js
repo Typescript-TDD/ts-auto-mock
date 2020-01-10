@@ -16,7 +16,7 @@ const rootPath = '..';
     try {
         await cloneRepository();
         await installDependencies();
-    } catch {
+    } catch(error) {
         console.error(error);
         process.exit(1);
     }
