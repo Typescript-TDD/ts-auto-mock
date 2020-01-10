@@ -16,8 +16,19 @@ import { applyFilter } from './filters/filterService';
 import { DefinitelyTypedRun } from './interfaces/definitelyTypedRun.interface';
 import { DefinitelyTypedRunResponse } from './interfaces/definitelyTypedRunResponse';
 import { DefinitelyTypedTypeRun } from './interfaces/definitelyTypedTypeRun.interface';
+
+export interface TypeRunData {
+  item: string;
+  response: string;
+  message?: string;
+}
+
+export interface HeaderData {
+  date: string;
+}
+
 // @ts-ignore
-const dataReader: DataReader = dataFileSystemReader(process.env.DEFINITELY_TYPED_DATA_URL, browserFileReader());
+const dataReader: DataReader<HeaderData, TypeRunData[]> = dataFileSystemReader<HeaderData, TypeRunData[]>(process.env.DEFINITELY_TYPED_DATA_URL, browserFileReader());
 
 export function DefinitelyTyped(): JSX.Element {
   const [data, setData] = useState([] as DefinitelyTypedTypeRun[]);
@@ -28,8 +39,8 @@ export function DefinitelyTyped(): JSX.Element {
   const [filterOptions, setFilterOptions] = useState({} as DefinitelyTypedFiltersOptions);
 
   useEffect(() => {
-    dataReader.getDataIds().then((result: RunDataId[]) => {
-      result = result.sort((a: RunDataId, b: RunDataId) => a.date > b.date ? -1 : 1);
+    dataReader.getDataIds().then((result: RunDataId<HeaderData>[]) => {
+      result = result.sort((a: RunDataId<HeaderData>, b: RunDataId<HeaderData>) => a.date > b.date ? -1 : 1);
 
       setRuns(result.map(r => ({date: new Date(r.date), id: r.id})));
 
@@ -44,7 +55,7 @@ export function DefinitelyTyped(): JSX.Element {
       return;
     }
 
-    dataReader.getData(run).then((result: RunData) => {
+    dataReader.getData(run).then((result: RunData<HeaderData, TypeRunData[]>) => {
       const dataToSet: DefinitelyTypedTypeRun[] = result.data.map(r => {
         return {
           item: r.item,
@@ -85,7 +96,7 @@ export function DefinitelyTyped(): JSX.Element {
   const types: JSX.Element[] = !viewData ? [] : viewData.map(d => {
     return <details key={d.item} className={mapResponseToClassName(d.response)}>
       <summary><span>{d.item}</span></summary>
-      {d.message}
+      <pre>{d.message}</pre>
     </details>;
   });
 

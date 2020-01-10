@@ -38,7 +38,7 @@ const outputService = output.createNew();
     }
 
     Promise.all(allRuns).then(() => {
-        dataFileSystem.addData(uuid(), outputService.generateOutput());
+        dataFileSystem.addData(uuid(), { data: new Date().toISOString() }, outputService.generateOutput());
     });
 })();
 

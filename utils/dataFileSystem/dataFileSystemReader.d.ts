@@ -2,26 +2,22 @@ export interface SystemFileReader {
   get<T>(path: string): Promise<T>;
 }
 
-export interface RunDataId {
+export interface RunDataIdBase {
   id: string;
-  date: string;
 }
 
-export interface TypeRunData {
-  item: string;
-  response: string;
-  message?: string;
-}
+export type RunDataId<THeader> = RunDataIdBase & THeader;
 
-export interface RunData {
+export interface RunData<THeader, TData> {
   id: string;
-  data: TypeRunData[];
+  header: THeader;
+  data: TData;
 }
 
-export interface DataReader {
-  getDataIds(): Promise<RunDataId[]>;
-  getAllData(): Promise<TypeRunData[]>;
-  getData(id: string): Promise<RunData>
+export interface DataReader<THeader, TData> {
+  getDataIds(): Promise<RunDataId<THeader>[]>;
+  getAllData(): Promise<RunData<THeader, TData>[]>;
+  getData(id: string): Promise<RunData<THeader, TData>>
 }
 
-export default function dataFileSystemReader(dataPath: string, fileReader: SystemFileReader): DataReader;
+export default function dataFileSystemReader<THeader, TData>(dataPath: string, fileReader: SystemFileReader): DataReader<THeader, TData>;

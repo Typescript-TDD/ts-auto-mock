@@ -34,11 +34,7 @@ jobs:
         run: |
           cd definitelyTypedTests
           npm install
-          npm run install-types
-          npm run process-types TYPES=20 PROCESS_COUNT=2
-          npm run post-process-types
-#          npm start
-
+          npm start
       - name: create environment variable date
         run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
       - name: definitelyTyped push changes
@@ -49,7 +45,6 @@ jobs:
         run: |
           git add data/*
           git checkout .
-          git config submodule.DefinitelyTyped.active false
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2.0.0
         with:
