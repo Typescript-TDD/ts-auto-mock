@@ -58,7 +58,9 @@ function runAllDir(dirs, processId) {
         .then(() => {
             fs.unlinkSync(`tsconfig.types.${processId}.json`);
             fs.unlinkSync(`${processId}.index.ts`);
-            fs.unlinkSync(`${processId}.index.js`);
+            if (fs.existsSync(`${processId}.index.js`)) {
+                fs.unlinkSync(`${processId}.index.js`);
+            }
         });
 }
 
