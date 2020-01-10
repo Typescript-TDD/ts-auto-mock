@@ -36,6 +36,7 @@ jobs:
           npm install
           npm run install-types
           npm run process-types TYPES=20 PROCESS_COUNT=2
+          npm run post-process-types
 #          npm start
 
       - name: create environment variable date
