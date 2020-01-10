@@ -8,7 +8,8 @@ const submodulePath = path.join('..', 'DefinitelyTyped');
 
 if (fs.existsSync(submodulePath)) {
   console.log('.DefinitelyTyped submodule found');
-  execPromise(`git rm --cached ${submodulePath}`)
+  execPromise(`ls`).then(r => console.log(r));
+  execPromise(`git rm --cached DefinitelyTyped`)
     .then(() => console.log('.DefinitelyTyped submodule removed'))
     .catch((error) => {
       console.error('.DefinitelyTyped submodule could not be removed');
