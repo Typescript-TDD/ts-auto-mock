@@ -15,7 +15,7 @@ const dataFileSystem = require('../utils/dataFileSystem/dataFileSystemWriter')(p
 const uuid = require('./src/uuid');
 
 try {
-    processService.ensureArgumentsValidity(['TYPES', 'PROCESS_COUNT', 'DEBUG']);
+    processService.ensureArgumentsValidity(['TYPES', 'PROCESS_COUNT']);
 } catch(e) {
     console.error(e.message);
     return;
@@ -38,7 +38,7 @@ const outputService = output.createNew();
     }
 
     Promise.all(allRuns).then(() => {
-        dataFileSystem.addData(uuid(), { data: new Date().toISOString() }, outputService.generateOutput());
+        dataFileSystem.addData(uuid(), { date: new Date().toISOString() }, outputService.generateOutput());
     });
 })();
 
@@ -57,19 +57,29 @@ function runAllDir(dirs, processId) {
         .then(() => {
             fs.unlinkSync(`tsconfig.types.${processId}.json`);
             fs.unlinkSync(`${processId}.index.ts`);
+            fs.unlinkSync(`${processId}.index.js`);
         });
 }
 
 async function run(dir, processId) {
     const config = {
         'compilerOptions': {
-            'noEmit': !processService.getArgument('DEBUG'),
+            'lib': [
+                'es6',
+                'dom'
+            ],
+            'noEmit': false,
             'plugins': [
                 {
                     'transform': '../dist/transformer',
                     'debug': true
                 }
-            ]
+            ],
+            'typeRoots': [
+                './DefinitelyTyped/types/'
+            ],
+            "types": [],
+            "baseUrl": "./DefinitelyTyped/types/"
         },
         'files': [
             `./${processId}.index.ts`
