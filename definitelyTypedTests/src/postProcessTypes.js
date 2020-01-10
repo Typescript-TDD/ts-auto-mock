@@ -1,11 +1,14 @@
+const path = require('path');
 const fs = require('fs');
 const execPromise = require('../../utils/exec/execPromise');
 
 console.log('.Removing DefinitelyTyped submodule');
 
-if (fs.existsSync('../DefinitelyTyped')) {
+const submodulePath = path.join('..', 'DefinitelyTyped');
+
+if (fs.existsSync(submodulePath)) {
   console.log('.DefinitelyTyped submodule found');
-  execPromise('git rm --cached ../DefinitelyTyped')
+  execPromise(`git rm --cached ${submodulePath}`)
     .then(() => console.log('.DefinitelyTyped submodule removed'))
     .catch((error) => {
       console.error('.DefinitelyTyped submodule could not be removed');
