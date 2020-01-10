@@ -34,6 +34,7 @@ jobs:
         run: |
           cd definitelyTyped
           npm install
+          npm run install-types
           npm run process-types TYPES=20 PROCESS_COUNT=2
 #          npm start
 
