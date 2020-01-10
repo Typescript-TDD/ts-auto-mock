@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 function definitelyTyped() {
-  const definitelyTypedFolder = path.join('..', 'DefinitelyTyped');
+  const definitelyTypedFolder = path.join('.', 'DefinitelyTyped');
 
   return {
     folder: definitelyTypedFolder,
