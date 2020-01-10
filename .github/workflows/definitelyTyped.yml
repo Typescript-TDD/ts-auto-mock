@@ -32,7 +32,7 @@ jobs:
           CI: true
       - name: definitelyTyped
         run: |
-          cd definitelyTyped
+          cd definitelyTypedTests
           npm install
           npm run install-types
           npm run process-types TYPES=20 PROCESS_COUNT=2
