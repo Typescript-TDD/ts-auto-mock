@@ -8,7 +8,7 @@ const submodulePath = path.join('..', 'DefinitelyTyped');
 
 if (fs.existsSync(submodulePath)) {
   console.log('.DefinitelyTyped submodule found');
-  execPromise(`rm rf ${submodulePath}`)
+  execPromise(`rm -rf ${submodulePath}`)
     .then(() => console.log('.DefinitelyTyped submodule removed'))
     .catch((error) => {
       console.error('.DefinitelyTyped submodule could not be removed');
