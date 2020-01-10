@@ -15,7 +15,7 @@ const rootPath = '..';
 (async function() {
     try {
         await cloneRepository();
-        // await installDependencies();
+        await installDependencies();
     } catch {
         console.error(error);
         process.exit(1);
