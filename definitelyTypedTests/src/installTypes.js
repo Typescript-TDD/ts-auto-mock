@@ -68,7 +68,7 @@ function dependencyInstaller() {
         return directories.reduce((promise, dir) => promise.then(() => {
             console.log(`(${++installedDependencyIndex}):${dir.name}`);
             return execPromise(`(cd ${dir.path} && npm install)`).catch(err => {
-                console.error(`Error :: ${err}`);
+                console.error(`Error :: ${err.error} :: ${err.stdout}`);
             });
         }), Promise.resolve())
     }

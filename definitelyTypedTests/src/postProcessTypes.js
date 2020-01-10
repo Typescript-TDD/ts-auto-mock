@@ -7,8 +7,10 @@ if (fs.existsSync('../DefinitelyTyped')) {
   console.log('.DefinitelyTyped submodule found');
   execPromise('git rm --cached ../DefinitelyTyped')
     .then(() => console.log('.DefinitelyTyped submodule removed'))
-    .catch(() => {
+    .catch((error) => {
       console.error('.DefinitelyTyped submodule could not be removed');
+      console.error(error.error);
+      console.error(error.stdout);
       process.exit(1);
     });
 } else {
