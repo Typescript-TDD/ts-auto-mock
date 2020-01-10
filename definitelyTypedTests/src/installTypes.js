@@ -10,7 +10,6 @@ const maximiseParallelRun = require('./maximiseParallel');
 const definitelyTyped = require('./definitelyTyped')();
 
 const PARALLEL_NPM_INSTALL = 20;
-const rootPath = '..';
 
 (async function() {
     try {

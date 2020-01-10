@@ -35,8 +35,8 @@ export function DefinitelyTypedFilters(props: DefinitelyTypedFiltersProps): JSX.
 
     function buildOptions(): DefinitelyTypedFiltersOptions {
         return {
-            filterIn: filterIn ? new RegExp(filterIn) : null,
-            filterOut: filterOut ? new RegExp(filterOut) : null,
+            filterIn: filterIn ? new RegExp(filterIn, 'i') : null,
+            filterOut: filterOut ? new RegExp(filterOut, 'i') : null,
             isShowingErrors: isShowing === 'error',
             isShowingWarnings: isShowing === 'warning',
             isShowingSuccesses: isShowing === 'success'

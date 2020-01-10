@@ -28,22 +28,31 @@
     }
 
     details.warning {
-      background-color: rgb(255, 152, 0);
-      cursor: pointer;
-
-      &[open] {
-        padding: .5em;
-
-        summary {
-          border-bottom: 1px solid #aaa;
-          margin-bottom: .5em;
-        }
+      summary {
+        background-color: rgb(220, 132, 0);
+        color: white;
       }
     }
 
     details.error {
-      background-color: rgb(244, 67, 54);
-      cursor: pointer;
+      summary {
+        background-color: rgb(200, 40, 32);
+        color: white;
+      }
+    }
+
+    details.warning,
+    details.error {
+      summary {
+        cursor: pointer;
+      }
+
+      pre {
+        font-size: 18px;
+      }
+
+      background-color: black;
+      color: #66DD66;
 
       &[open] {
         padding: .5em;
