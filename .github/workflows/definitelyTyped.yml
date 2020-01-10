@@ -8,7 +8,7 @@ on:
       - 'feature/definitelytype'
     paths:
       - 'src/**'
-      - 'definitelyTyped/**'
+      - 'definitelyTypedTests/**'
 
 jobs:
   definitely-typed:
