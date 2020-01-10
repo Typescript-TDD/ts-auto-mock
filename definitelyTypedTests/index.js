@@ -28,6 +28,7 @@ const outputService = output.createNew();
     const processesConfig = config();
     logConfig(processesConfig);
     let startDirectoryIndex = 0;
+    
     const allRuns = [];
 
     for(let i = 0; i < processesConfig.processes.length; i++) {
