@@ -23,6 +23,6 @@
   "exclude": [
     "ui/**/*",
     "performance/**/*",
-    "definitelyTyped/**/*"
+    "definitelyTypedTests/**/*"
   ]
 }
