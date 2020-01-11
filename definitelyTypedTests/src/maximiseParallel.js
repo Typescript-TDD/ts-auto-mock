@@ -1,9 +1,10 @@
 function maximiseParallelRun(processesCount, totalItems) {
     const processes = [];
-    const floored = Math.floor(totalItems / processesCount);
+    const newProcessesCount = Math.min(totalItems, processesCount);
+    const floored = Math.floor(totalItems / newProcessesCount);
     let remaining = totalItems;
 
-    for(let i = 0; i < processesCount; i++) {
+    for(let i = 0; i < newProcessesCount; i++) {
         processes.push({
             items: Math.min(floored, remaining)
         });
