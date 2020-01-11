@@ -1,15 +1,11 @@
 name: DefinitelyTyped Tests
 
 on:
-  push:
-    branches:
-      - 'feature/definitelytype'
-    paths:
-      - 'src/**'
-      - 'definitelyTyped/**'
+  schedule:
+    - cron: '* * */1 * *'
 
 jobs:
-  performance:
+  definitely-typed:
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,14 +22,11 @@ jobs:
         run: |
           npm install
           npm run build
-        env:
-          CI: true
       - name: definitelyTyped
         run: |
-          cd definitelyTyped
+          cd definitelyTypedTests
           npm install
-          npm run install-types
-          npm run process-types TYPES=2
+          npm run start-chunk
       - name: create environment variable date
         run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
       - name: definitelyTyped push changes
@@ -44,13 +37,13 @@ jobs:
         run: |
           git add data/*
           git checkout .
-          git config submodule.DefinitelyTyped.active false
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
         with:
           commit-message: Add DefinitelyTyped Tests data
           committer: typescripttdd <typescripttdd@gmail.com>
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
-          branch: definitely-typed-tests-${{ env.DATE }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: definitely-typed-tests
