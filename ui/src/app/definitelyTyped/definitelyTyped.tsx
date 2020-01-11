@@ -24,7 +24,8 @@ export interface TypeRunData {
 }
 
 export interface HeaderData {
-  date: string;
+  initialDate: string;
+  lastUpdatedDate: string;
 }
 
 // @ts-ignore
@@ -40,9 +41,9 @@ export function DefinitelyTyped(): JSX.Element {
 
   useEffect(() => {
     dataReader.getDataIds().then((result: RunDataId<HeaderData>[]) => {
-      result = result.sort((a: RunDataId<HeaderData>, b: RunDataId<HeaderData>) => a.date > b.date ? -1 : 1);
+      result = result.sort((a: RunDataId<HeaderData>, b: RunDataId<HeaderData>) => a.lastUpdatedDate > b.lastUpdatedDate ? -1 : 1);
 
-      setRuns(result.map((r: RunDataIdBase & HeaderData) => ({date: new Date(r.date), id: r.id})));
+      setRuns(result.map((r: RunDataIdBase & HeaderData) => ({date: new Date(r.lastUpdatedDate), id: r.id})));
 
       if (result && result.length) {
         setRun(result[0].id);

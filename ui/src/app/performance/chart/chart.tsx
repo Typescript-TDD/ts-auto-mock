@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Bar, BarChart, Legend, Tooltip, XAxis, YAxis,
 } from 'recharts';
-import { PerformanceData } from '../performanceService/IPerformanceService';
+import { PerformanceData } from '../performanceService/performanceService';
 
 export interface PerformanceChartProps {
   data: PerformanceData[];
