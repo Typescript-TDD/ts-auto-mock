@@ -34,7 +34,7 @@ jobs:
         author: typescripttdd <typescripttdd@gmail.com>
   testPullRequest-1:
     runs-on: ubuntu-latest
-
+    needs: testPullRequest
     strategy:
       matrix:
         node-version: [10.x]
