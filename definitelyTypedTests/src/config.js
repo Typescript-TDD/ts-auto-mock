@@ -18,7 +18,6 @@ async function getRunConfig() {
     const entryToUpdate = latestEntry && latestEntry.typesProcessed >= totalTypes ? null : latestEntry;
     const offsetType = entryToUpdate ? entryToUpdate.typesProcessed : 0;
 
-
     const totalTypesCount = getTotalTypesCount(offsetType, totalTypes);
     const processesMaximized = maximiseParallelRun(getProcessesCount(), totalTypesCount);
     const sum = processesMaximized.reduce((previous, current) => previous + current.items, 0);
