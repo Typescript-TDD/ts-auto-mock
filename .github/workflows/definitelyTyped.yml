@@ -1,14 +1,8 @@
 name: DefinitelyTyped Tests
 
 on:
-  #  schedule:
-  #    - cron: '* * */2 * *'
-  push:
-    branches:
-      - 'feature/definitelytype'
-    paths:
-      - 'src/**'
-      - 'definitelyTypedTests/**'
+  schedule:
+    - cron: '* * */2 * *'
 
 jobs:
   definitely-typed:
