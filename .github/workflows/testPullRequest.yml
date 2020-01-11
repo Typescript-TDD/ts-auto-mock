@@ -32,6 +32,5 @@ jobs:
         commit-message: Add Performance data
         committer: typescripttdd <typescripttdd@gmail.com>
         author: typescripttdd <typescripttdd@gmail.com>
-        title: test pull request
 
 
