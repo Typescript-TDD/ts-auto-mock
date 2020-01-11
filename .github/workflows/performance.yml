@@ -47,4 +47,4 @@ jobs:
         author: typescripttdd <typescripttdd@gmail.com>
         title: Performance Data on ${{ env.DATE }}
         branch: performance-${{ env.DATE }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
