@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import dataFileSystemReader, {
+  DataReader,
+  RunData,
+  RunDataId, RunDataIdBase,
+} from '../../../../utils/dataFileSystem/dataFileSystemReader';
+import { browserFileReader } from '../data/browserFileReader';
 import '../input/input.scss';
 import './definitelyTyped.scss';
-import { browserFileReader } from '../data/browserFileReader';
 import {
   DefinitelyTypedFilters,
   DefinitelyTypedFiltersOptions,
   DefinitelyTypedRunInfo,
 } from './filters/definitelyTypedFilters';
-import dataFileSystemReader, {
-  DataReader,
-  RunData,
-  RunDataId,
-} from '../../../../utils/dataFileSystem/dataFileSystemReader';
 import { applyFilter } from './filters/filterService';
 import { DefinitelyTypedRun } from './interfaces/definitelyTypedRun.interface';
 import { DefinitelyTypedRunResponse } from './interfaces/definitelyTypedRunResponse';
@@ -28,7 +28,7 @@ export interface HeaderData {
 }
 
 // @ts-ignore
-const dataReader: DataReader<HeaderData, TypeRunData[]> = dataFileSystemReader<HeaderData, TypeRunData[]>(process.env.DEFINITELY_TYPED_DATA_URL, browserFileReader());
+const dataReader: DataReader<HeaderData, TypeRunData> = dataFileSystemReader<HeaderData, TypeRunData>(process.env.DEFINITELY_TYPED_DATA_URL, browserFileReader());
 
 export function DefinitelyTyped(): JSX.Element {
   const [data, setData] = useState([] as DefinitelyTypedTypeRun[]);
@@ -42,7 +42,7 @@ export function DefinitelyTyped(): JSX.Element {
     dataReader.getDataIds().then((result: RunDataId<HeaderData>[]) => {
       result = result.sort((a: RunDataId<HeaderData>, b: RunDataId<HeaderData>) => a.date > b.date ? -1 : 1);
 
-      setRuns(result.map(r => ({date: new Date(r.date), id: r.id})));
+      setRuns(result.map((r: RunDataIdBase & HeaderData) => ({date: new Date(r.date), id: r.id})));
 
       if (result && result.length) {
         setRun(result[0].id);
@@ -55,12 +55,12 @@ export function DefinitelyTyped(): JSX.Element {
       return;
     }
 
-    dataReader.getData(run).then((result: RunData<HeaderData, TypeRunData[]>) => {
-      const dataToSet: DefinitelyTypedTypeRun[] = result.data.map(r => {
+    dataReader.getData(run).then((result: RunData<HeaderData, TypeRunData>) => {
+      const dataToSet: DefinitelyTypedTypeRun[] = result.data.map((r) => {
         return {
           item: r.item,
           message: r.message,
-          response: mapToResponse(r.response)
+          response: mapToResponse(r.response),
         };
       });
 
@@ -78,10 +78,10 @@ export function DefinitelyTyped(): JSX.Element {
 
   useEffect(() => {
     setRunInfo({
-      success: data.filter(run => run.response === DefinitelyTypedRunResponse.Success).length,
-      warning: data.filter(run => run.response === DefinitelyTypedRunResponse.Warning).length,
-      error: data.filter(run => run.response === DefinitelyTypedRunResponse.Error).length,
-      total: data.length
+      success: data.filter((run) => run.response === DefinitelyTypedRunResponse.Success).length,
+      warning: data.filter((run) => run.response === DefinitelyTypedRunResponse.Warning).length,
+      error: data.filter((run) => run.response === DefinitelyTypedRunResponse.Error).length,
+      total: data.length,
     });
   }, [data]);
 
@@ -93,7 +93,7 @@ export function DefinitelyTyped(): JSX.Element {
     return <option key={index} value={run.id}>Run on date {run.date.toISOString()}</option>;
   });
 
-  const types: JSX.Element[] = !viewData ? [] : viewData.map(d => {
+  const types: JSX.Element[] = !viewData ? [] : viewData.map((d) => {
     return <details key={d.item} className={mapResponseToClassName(d.response)}>
       <summary><span>{d.item}</span></summary>
       <pre>{d.message}</pre>
@@ -108,7 +108,7 @@ export function DefinitelyTyped(): JSX.Element {
       </select>
     </div>
 
-    <DefinitelyTypedFilters filter={options => setFilterOptions(options)} runInfo={runInfo}/>
+    <DefinitelyTypedFilters filter={(options) => setFilterOptions(options)} runInfo={runInfo}/>
 
     <div className='DefinitelyTyped-typesContainer'>
       { types }

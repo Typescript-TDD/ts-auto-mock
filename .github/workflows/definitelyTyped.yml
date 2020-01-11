@@ -24,7 +24,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-          token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
       - name: install ts auto mock
         run: |
           npm install
@@ -33,7 +32,7 @@ jobs:
         run: |
           cd definitelyTypedTests
           npm install
-          npm start
+          npm run start-chunk
       - name: create environment variable date
         run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
       - name: definitelyTyped push changes
@@ -53,4 +52,4 @@ jobs:
           committer: typescripttdd <typescripttdd@gmail.com>
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
-          branch: definitely-typed-tests-${{ env.DATE }}
+          branch: definitely-typed-tests

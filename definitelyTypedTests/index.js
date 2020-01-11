@@ -4,8 +4,6 @@ process.on('unhandledRejection', error => {
 });
 
 require('dotenv').config();
-
-const path = require('path');
 const fs = require('fs');
 const processService = require('../utils/process/process')(process);
 const execPromise = require('../utils/exec/execPromise');
@@ -13,7 +11,6 @@ const definitelyTyped = require('./src/definitelyTyped')();
 const config = require('./src/config');
 const output = require('./src/multiProcessOutput');
 const dataFileSystem = require('../utils/dataFileSystem/dataFileSystemWriter')(process.env.DEFINITELY_TYPED_DATA_URL);
-const uuid = require('./src/uuid');
 
 try {
     processService.ensureArgumentsValidity(['TYPES', 'PROCESS_COUNT']);
@@ -22,26 +19,39 @@ try {
     return;
 }
 
-
-
 const outputService = output.createNew();
 
 (async function runApp() {
     const typesDirectories = definitelyTyped.getTypes();
-    const processesConfig = config();
-    logConfig(processesConfig);
-    let startDirectoryIndex = 0;
+    const runConfig = await config();
+
+    logConfig(runConfig);
+    let startDirectoryIndex = runConfig.offsetType;
     const allRuns = [];
 
-    for(let i = 0; i < processesConfig.processes.length; i++) {
+    for(let i = 0; i < runConfig.processes.length; i++) {
         allRuns.push(
-            runAllDir(typesDirectories.slice(startDirectoryIndex, startDirectoryIndex + processesConfig.processes[i].items), i)
+            runAllDir(typesDirectories.slice(startDirectoryIndex, startDirectoryIndex + runConfig.processes[i].items), i)
         );
-        startDirectoryIndex += processesConfig.processes[i].items;
+        startDirectoryIndex += runConfig.processes[i].items;
     }
 
     Promise.all(allRuns).then(() => {
-        dataFileSystem.addData(uuid(), { date: new Date().toISOString() }, outputService.generateOutput());
+        const generatedOutput = outputService.generateOutput();
+        const date = new Date().toISOString();
+
+        if (runConfig.entryToUpdate) {
+            dataFileSystem.updateData(runConfig.entryToUpdate.id, {
+                lastUpdatedDate: date,
+                typesProcessed: generatedOutput.length + runConfig.offsetType
+            }, generatedOutput);
+        } else {
+            dataFileSystem.addData({
+                initialDate: date,
+                lastUpdatedDate: date,
+                typesProcessed: generatedOutput.length
+            }, generatedOutput);
+        }
     });
 })();
 
