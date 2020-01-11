@@ -27,11 +27,10 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2.0.0
       env:
-        GITHUB_TOKEN2: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
       with:
         commit-message: Add Performance data
         committer: typescripttdd <typescripttdd@gmail.com>
         author: typescripttdd <typescripttdd@gmail.com>
-        token: ${{ env.GITHUB_TOKEN2 }}
 
 
