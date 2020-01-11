@@ -25,7 +25,6 @@ const outputService = output.createNew();
     const typesDirectories = definitelyTyped.getTypes();
     const runConfig = await config();
 
-
     logConfig(runConfig);
     let startDirectoryIndex = runConfig.offsetType;
     const allRuns = [];
