@@ -2,7 +2,7 @@ name: DefinitelyTyped Tests
 
 on:
   schedule:
-    - cron: '* * */1 * *'
+    - cron: '0 0 * * *'
 
 jobs:
   definitely-typed:
