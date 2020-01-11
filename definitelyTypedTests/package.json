@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run install-types && npm run process-all-types && npm run post-process-types",
     "install-types": "node src/installTypes.js",
-    "process-all-types": "node index.js TYPES=all PROCESS_COUNT=20",
+    "process-all-types": "node index.js TYPES=500 PROCESS_COUNT=20",
     "process-types": "node index.js",
     "post-process-types": "node src/postProcessTypes.js"
   },
