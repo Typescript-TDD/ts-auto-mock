@@ -36,6 +36,7 @@
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-angular": "^8.2.0",
     "@types/jasmine": "^3.5.0",
+    "@types/node": "^13.1.6",
     "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^3.0.0",
     "conventional-changelog-cli": "^2.0.31",
@@ -60,7 +61,6 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "@types/node": "^13.1.1",
     "lodash-es": "^4.17.15",
     "winston": "^3.2.1"
   },
