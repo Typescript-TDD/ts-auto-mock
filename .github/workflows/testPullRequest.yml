@@ -6,7 +6,7 @@ on:
       - test-pull-request
 
 jobs:
-  performance:
+  testPullRequest:
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,11 +26,12 @@ jobs:
         date +%s > report.txt
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
       with:
         commit-message: Add Performance data
         committer: typescripttdd <typescripttdd@gmail.com>
         author: typescripttdd <typescripttdd@gmail.com>
         title: test pull request
-        token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
 
 
