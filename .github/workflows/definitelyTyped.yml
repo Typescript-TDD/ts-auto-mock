@@ -1,8 +1,14 @@
 name: DefinitelyTyped Tests
 
 on:
-  schedule:
-    - cron: '* * */2 * *'
+  #  schedule:
+  #    - cron: '* * */2 * *'
+  push:
+    branches:
+      - 'feature/definitelytype'
+    paths:
+      - 'src/**'
+      - 'definitelyTypedTests/**'
 
 jobs:
   definitely-typed:
@@ -13,6 +19,9 @@ jobs:
         node-version: [10.x]
 
     steps:
+      - name: save token in env
+        env:
+          SAVED_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -47,4 +56,4 @@ jobs:
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
           branch: definitely-typed-tests-${{ env.DATE }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ env.SAVED_TOKEN }}
