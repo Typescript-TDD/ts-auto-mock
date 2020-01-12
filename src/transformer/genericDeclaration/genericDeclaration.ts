@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
-import { MockGenericParameterIds, MockGenericParameterValue } from '../mockGeneric/mockGenericParameter';
+import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
@@ -110,7 +110,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
                 return ts.createObjectLiteral(
                     [
                         ts.createPropertyAssignment(
-                            MockGenericParameterIds,
+                            MockIdentifierGenericParameterIds,
                             ts.createArrayLiteral(
                                 s.ids.map((arr: string) => {
                                     return ts.createStringLiteral(arr);
@@ -119,7 +119,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
                             ),
                         ),
                         ts.createPropertyAssignment(
-                            MockGenericParameterValue,
+                            MockIdentifierGenericParameterValue,
                             s.value,
                         ),
                     ],

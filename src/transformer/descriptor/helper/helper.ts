@@ -29,12 +29,30 @@ export namespace TypescriptHelper {
         return declaration;
     }
 
+    export function GetConcreteDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
+        const declaration: ts.Declaration = symbol.declarations[0];
+
+        if (ts.isImportSpecifier(declaration) || ts.isImportEqualsDeclaration(declaration)) {
+            return GetConcreteDeclarationForImport(declaration);
+        }
+
+        return declaration;
+    }
+
     export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier | ts.ImportEqualsDeclaration): ts.Declaration {
         const typeChecker: ts.TypeChecker = TypeChecker();
         const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
         const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
 
         return GetFirstValidDeclaration(originalSymbol.declarations);
+    }
+
+    export function GetConcreteDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier | ts.ImportEqualsDeclaration): ts.Declaration {
+        const typeChecker: ts.TypeChecker = TypeChecker();
+        const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
+        const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
+
+        return originalSymbol.declarations[0];
     }
 
     export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
@@ -73,7 +91,7 @@ export namespace TypescriptHelper {
 
     function GetFirstValidDeclaration(declarations: ts.Declaration[]): ts.Declaration {
         return declarations.find((declaration: ts.Declaration) => {
-            return !ts.isVariableDeclaration(declaration);
+            return !ts.isVariableDeclaration(declaration) && !ts.isFunctionDeclaration(declaration);
         }) || declarations[0];
     }
 

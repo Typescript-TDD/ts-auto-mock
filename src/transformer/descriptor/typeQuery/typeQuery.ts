@@ -93,5 +93,5 @@ function getTypeQueryDeclarationFromSymbol(symbol: ts.Symbol): ts.NamedDeclarati
         return declaration;
     }
 
-    return TypescriptHelper.GetDeclarationFromSymbol(symbol);
+    return TypescriptHelper.GetConcreteDeclarationFromSymbol(symbol);
 }

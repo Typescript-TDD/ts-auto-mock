@@ -116,6 +116,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.IndexedAccessType:
             return GetIndexedAccessTypeDescriptor(node as ts.IndexedAccessTypeNode, scope);
         case ts.SyntaxKind.BooleanKeyword:
+        case ts.SyntaxKind.TypePredicate:
+        case ts.SyntaxKind.FirstTypeNode:
             return GetBooleanDescriptor();
         case ts.SyntaxKind.ObjectKeyword:
             return GetMockPropertiesFromSymbol([], [], scope);

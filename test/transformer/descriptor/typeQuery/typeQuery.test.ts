@@ -58,6 +58,24 @@ describe('typeQuery', () => {
 
             expect(functionMock).toBeUndefined();
         });
+
+        it('should return correct properties with multiple declarations', () => {
+            function MultipleDeclaration(): MultipleDeclaration {
+                // @ts-ignore
+                return { a: 's'};
+            }
+
+            interface MultipleDeclaration {
+                b: string;
+            }
+
+            const functionMock: typeof MultipleDeclaration = createMock<typeof MultipleDeclaration>();
+
+            // @ts-ignore
+            expect(functionMock()).toEqual({
+                b: '',
+            });
+        });
     });
 
     describe('for class', () => {
@@ -102,7 +120,7 @@ describe('typeQuery', () => {
         it('should assign the enum to the mock', () => {
             enum Enum {
                 A,
-                B = 'some'
+                B = 'some',
             }
 
             const enumMock: typeof Enum = createMock<typeof Enum>();
