@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
+import { GetBooleanTrueDescriptor } from '../boolean/booleanTrue';
 
 export interface Property {
     name: ts.Expression;
@@ -21,6 +22,6 @@ export function GetMockMarkerProperty(): Property {
 
     return {
         name: mockMarkerCall,
-        value: ts.createLiteral(true),
+        value: GetBooleanTrueDescriptor(),
     };
 }

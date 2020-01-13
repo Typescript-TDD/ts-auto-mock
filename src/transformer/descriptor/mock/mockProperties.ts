@@ -3,7 +3,7 @@ import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetMockCall } from './mockCall';
-import { GetMockProperty } from './mockProperty';
+import { GetMockProperties, PropertyAssignments } from './mockProperty';
 import { PropertyLike } from './propertyLike';
 import { SignatureLike } from './signatureLike';
 
@@ -36,11 +36,7 @@ export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<PropertyLi
         }).length === 0;
     });
 
-    const accessorDeclaration: ts.PropertyAssignment[] = propertiesFilter.map(
-        (member: PropertyLike): ts.PropertyAssignment => {
-            return GetMockProperty(member, scope);
-        },
-    );
+    const accessorDeclaration: PropertyAssignments = GetMockProperties(propertiesFilter, scope);
 
     const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0], scope) : null;
     return GetMockCall(accessorDeclaration, signaturesDescriptor);
