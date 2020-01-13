@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "diagnostics": true,
+    "sourceMap": false,
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "paths": {
+      "ts-auto-mock": ["../dist"],
+      "ts-auto-mock/extension": ["../dist/extension"],
+      "ts-auto-mock/repository": ["../dist/repository"]
+    },
+    "baseUrl": "./"
+  },
+  "include": [
+    "dist-performance/**/*.ts"
+  ]
+}

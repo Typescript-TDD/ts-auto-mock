@@ -22,7 +22,7 @@ This will create and run all the test based on performance.json configuration
 ```json
 
 {
-  "volume": 1000 ,
+  "volume": 1000,
   "features": [
     {
     
