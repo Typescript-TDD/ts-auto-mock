@@ -3,7 +3,6 @@ import { Logger } from '../../logger/logger';
 import { ArrayHelper } from '../array/array';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
-import { TypescriptCreator } from '../helper/creator';
 import { getMockMergeExpression, getMockMergeIteratorExpression } from '../mergeExpression/mergeExpression';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { Scope } from '../scope/scope';

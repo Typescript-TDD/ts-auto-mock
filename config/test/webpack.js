@@ -25,7 +25,7 @@ module.exports = function (debug, disableCache) {
                     options: {
                         getCustomTransformers: (program) => ({
                             before: [transformer.default(program, {
-                                debug: debug ? 'file' : false,
+                                debug: debug ? debug : false,
                                 cacheBetweenTests: disableCache !== 'true'
                             })]
                         })

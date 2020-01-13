@@ -4,7 +4,7 @@ import { GenericDeclaration } from '../genericDeclaration/genericDeclaration';
 import { IGenericDeclaration } from '../genericDeclaration/genericDeclaration.interface';
 import { GenericDeclarationSupported } from '../genericDeclaration/genericDeclarationSupported';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
-import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
+import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 
 export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
@@ -63,7 +63,7 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
     return ts.createCall(
       mockFactoryCall,
       [],
-      [MockGenericParameter],
+      [MockIdentifierGenericParameter],
     );
 }
 

@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
+import { MockIdentifierInternalValues, MockIdentifierSetParameterName } from '../../mockIdentifier/mockIdentifier';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
-import { GetMockInternalValuesName, GetMockSetParameterName } from './mockDeclarationName';
 import { PropertyLike } from './propertyLike';
 
 export function GetMockProperty(member: PropertyLike, scope: Scope): ts.PropertyAssignment {
@@ -11,10 +11,8 @@ export function GetMockProperty(member: PropertyLike, scope: Scope): ts.Property
 
     const propertyName: string = TypescriptHelper.GetStringPropertyName(member.name);
 
-    const declarations: ts.Identifier = GetMockInternalValuesName();
-
-    const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(declarations, ts.createStringLiteral(propertyName));
-    const setVariableParameterName: ts.Identifier = GetMockSetParameterName();
+    const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(MockIdentifierInternalValues, ts.createStringLiteral(propertyName));
+    const setVariableParameterName: ts.Identifier = MockIdentifierSetParameterName;
 
     const expressionGetAssignment: ts.BinaryExpression = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, descriptor);
 

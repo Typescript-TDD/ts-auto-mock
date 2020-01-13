@@ -1,15 +1,13 @@
 import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
-import { GetMockInternalValuesName, GetMockObjectReturnValueName } from './mockDeclarationName';
+import { MockIdentifierInternalValues, MockIdentifierObjectReturnValue } from '../../mockIdentifier/mockIdentifier';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 
 export function GetMockCall(properties: ts.PropertyAssignment[], signature: ts.Expression): ts.CallExpression {
-    const mockObjectReturnValueName: ts.Identifier = GetMockObjectReturnValueName();
-    const mockInternalValuesName: ts.Identifier = GetMockInternalValuesName();
-
+    const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
     const statements: ts.Statement[] = [
         ts.createVariableStatement([], [
-            TypescriptCreator.createVariableDeclaration(mockInternalValuesName, ts.createObjectLiteral()),
+            TypescriptCreator.createVariableDeclaration(MockIdentifierInternalValues, ts.createObjectLiteral()),
             TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, ts.createObjectLiteral()),
         ]),
     ];
