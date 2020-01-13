@@ -1,17 +1,12 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "diagnostics": true,
-    "sourceMap": false,
     "plugins": [
       {
         "transform": "../../dist/transformer",
         "debug": true
       }
     ]
-  },
-  "include": [
-    "../dist-performance/**/*.ts"
-  ]
+  }
 }
 
