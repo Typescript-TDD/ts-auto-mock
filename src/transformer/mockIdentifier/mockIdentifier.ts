@@ -6,3 +6,5 @@ export const MockIdentifierGenericParameterValue: ts.Identifier = ts.createIdent
 export const MockIdentifierInternalValues: ts.Identifier = ts.createIdentifier('d');
 export const MockIdentifierObjectReturnValue: ts.Identifier = ts.createIdentifier('m');
 export const MockIdentifierSetParameterName: ts.Identifier = ts.createIdentifier('v');
+export const MockCallAnonymousText: string = '*';
+export const MockCallLiteralText: string = 'L';

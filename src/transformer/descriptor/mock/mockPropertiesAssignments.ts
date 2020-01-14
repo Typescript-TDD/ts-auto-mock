@@ -12,7 +12,7 @@ export interface PropertyAssignments {
     literals: ts.PropertyAssignment[];
 }
 
-export function GetMockProperties(properties: PropertyLike[], scope: Scope): PropertyAssignments {
+export function GetMockPropertiesAssignments(properties: PropertyLike[], scope: Scope): PropertyAssignments {
     return properties.reduce(
         (acc: PropertyAssignments, member: PropertyLike): PropertyAssignments => {
             const descriptor: ts.Expression = GetDescriptor(member, scope);
