@@ -2,22 +2,31 @@ import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
 import { MockIdentifierInternalValues, MockIdentifierObjectReturnValue } from '../../mockIdentifier/mockIdentifier';
 import { GetMockMarkerProperty, Property } from './mockMarker';
+import { PropertyAssignments } from './mockPropertiesAssignments';
 
-export function GetMockCall(properties: ts.PropertyAssignment[], signature: ts.Expression): ts.CallExpression {
+export function GetMockCall(properties: PropertyAssignments, signature: ts.Expression): ts.CallExpression {
     const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
     const statements: ts.Statement[] = [
         ts.createVariableStatement([], [
             TypescriptCreator.createVariableDeclaration(MockIdentifierInternalValues, ts.createObjectLiteral()),
-            TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, ts.createObjectLiteral()),
+            TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, signature || ts.createObjectLiteral(properties.literals)),
         ]),
     ];
 
     if (signature) {
-        statements.push(AssignVariableTo(mockObjectReturnValueName, signature));
+        let literalProperty: ts.PropertyAssignment;
+        let index: number = 0;
+
+        // tslint:disable-next-line:no-conditional-assignment
+        while ((literalProperty = properties.literals[index++])) {
+            statements.push(AssignLiteralPropertyTo(mockObjectReturnValueName, literalProperty));
+        }
     }
 
-    const addPropertiesToUniqueVariable: ts.ExpressionStatement = AssignPropertiesTo(properties, mockObjectReturnValueName);
-    statements.push(addPropertiesToUniqueVariable);
+    if (properties.lazy.length) {
+        const addPropertiesToUniqueVariable: ts.ExpressionStatement = AssignPropertiesTo(properties.lazy, mockObjectReturnValueName);
+        statements.push(addPropertiesToUniqueVariable);
+    }
 
     const addMockMarkerToUniqueVariable: ts.ExpressionStatement = AssignMockMarkerPropertyTo(mockObjectReturnValueName);
     statements.push(addMockMarkerToUniqueVariable);
@@ -30,9 +39,14 @@ export function GetMockCall(properties: ts.PropertyAssignment[], signature: ts.E
     return ts.createCall(IFFEFunction, [], []);
 }
 
-function AssignVariableTo(variable: ts.Identifier, expression: ts.Expression): ts.ExpressionStatement {
+function AssignVariableTo(variable: ts.Expression, expression: ts.Expression): ts.ExpressionStatement {
     const binaryExpression: ts.BinaryExpression = ts.createBinary(variable, ts.SyntaxKind.EqualsToken, expression);
     return ts.createExpressionStatement(binaryExpression);
+}
+
+function AssignLiteralPropertyTo(mockObjectReturnValueName: ts.Identifier, literalProperty: ts.PropertyAssignment): ts.ExpressionStatement {
+    const propertyAccess: ts.ElementAccessExpression = ts.createElementAccess(mockObjectReturnValueName, literalProperty.name as ts.StringLiteral);
+    return AssignVariableTo(propertyAccess, literalProperty.initializer);
 }
 
 function AssignMockMarkerPropertyTo(identifier: ts.Identifier): ts.ExpressionStatement {

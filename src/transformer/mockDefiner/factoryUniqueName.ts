@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { MockCallAnonymousText, MockCallLiteralText } from '../mockIdentifier/mockIdentifier';
 import { KeyCounter } from './keyCounter';
 
 export type PossibleDeclaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
@@ -12,17 +13,14 @@ export class FactoryUniqueName {
 
     public createForDeclaration(declaration: PossibleDeclaration): string {
         const declarationNameIdentifier: ts.Identifier = declaration.name;
-        const declarationNameSanitized: string = (declarationNameIdentifier && declarationNameIdentifier.text) || 'Anonymous';
-        const baseFactoryName: string = `create__${declarationNameSanitized}__mock`;
-        const count: number = this._keyCounter.getFor(baseFactoryName);
 
-        return `${baseFactoryName}_${count}`;
+        return this.createUniqueName(declarationNameIdentifier && declarationNameIdentifier.text);
     }
 
     public createForIntersection(nodes: ts.Node[]): string {
         const nameOfDeclarations: string = nodes.reduce((acc: string, declaration: ts.Node) => {
             if (ts.isTypeLiteralNode(declaration)) {
-                acc += 'literal';
+                acc += MockCallLiteralText;
             }
 
             if (ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration) || ts.isClassDeclaration(declaration)) {
@@ -32,8 +30,12 @@ export class FactoryUniqueName {
             return acc;
         }, '');
 
-        const declarationNameSanitized: string = nameOfDeclarations || 'Anonymous';
-        const baseFactoryName: string = `create__${declarationNameSanitized}__mock`;
+        return this.createUniqueName(nameOfDeclarations);
+    }
+
+    private createUniqueName(name?: string): string {
+        const declarationNameSanitized: string = name || MockCallAnonymousText;
+        const baseFactoryName: string = `@${declarationNameSanitized}`;
         const count: number = this._keyCounter.getFor(baseFactoryName);
 
         return `${baseFactoryName}_${count}`;

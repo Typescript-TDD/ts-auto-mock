@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
 
 export function GetUndefinedDescriptor(): ts.Expression {
-    return ts.createIdentifier('undefined');
+    return ts.createVoidZero();
 }
