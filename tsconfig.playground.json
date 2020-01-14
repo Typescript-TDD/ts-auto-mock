@@ -5,7 +5,7 @@
     "plugins": [
       {
         "transform": "./dist/transformer",
-        "debug": true
+        "debug": "console"
       }
     ]
   },
