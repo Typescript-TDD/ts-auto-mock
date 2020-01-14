@@ -3,6 +3,7 @@ import { TransformerLogger } from '../logger/transformerLogger';
 import { GetMockFactoryCallForThis } from '../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../scope/scope';
 import { GetArrayDescriptor } from './array/array';
+import { GetBigIntDescriptor } from './bigint/bigint';
 import { GetBooleanDescriptor } from './boolean/boolean';
 import { GetBooleanFalseDescriptor } from './boolean/booleanFalse';
 import { GetBooleanTrueDescriptor } from './boolean/booleanTrue';
@@ -116,6 +117,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         case ts.SyntaxKind.IndexedAccessType:
             return GetIndexedAccessTypeDescriptor(node as ts.IndexedAccessTypeNode, scope);
         case ts.SyntaxKind.BooleanKeyword:
+        case ts.SyntaxKind.TypePredicate:
+        case ts.SyntaxKind.FirstTypeNode:
             return GetBooleanDescriptor();
         case ts.SyntaxKind.ObjectKeyword:
             return GetMockPropertiesFromSymbol([], [], scope);
@@ -123,6 +126,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
             return GetNullDescriptor();
         case ts.SyntaxKind.ImportEqualsDeclaration:
             return GetImportEqualsDescriptor(node as ts.ImportEqualsDeclaration, scope);
+        case ts.SyntaxKind.BigIntKeyword:
+            return GetBigIntDescriptor();
         case ts.SyntaxKind.AnyKeyword:
         case ts.SyntaxKind.NeverKeyword:
         case ts.SyntaxKind.UnknownKeyword:

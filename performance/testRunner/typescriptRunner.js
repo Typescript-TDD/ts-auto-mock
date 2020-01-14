@@ -40,9 +40,13 @@ function convertTime(time) {
 
 function typescriptRunner() {
     return {
-        async run(tsConfig) {
-            const result = await execPromise(`ttsc --project ${tsConfig}`);
-            return parseTypescriptDiagnostic(result);
+        run(tsConfig) {
+            return execPromise(`ttsc --project ${tsConfig}`).then((result) => {
+                return parseTypescriptDiagnostic(result);
+            }).catch((error) => {
+                console.error(error);
+                process.exit(1);
+            });
         }
     }
 }

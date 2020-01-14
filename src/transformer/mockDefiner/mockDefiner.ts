@@ -5,7 +5,7 @@ import { GetProperties } from '../descriptor/properties/properties';
 import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
 import { TypescriptCreator } from '../helper/creator';
 import { createImportOnIdentifier } from '../helper/import';
-import { MockGenericParameter } from '../mockGeneric/mockGenericParameter';
+import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { DeclarationCache } from './cache/declarationCache';
 import { DeclarationListCache } from './cache/declarationListCache';
@@ -312,6 +312,6 @@ export class MockDefiner {
     }
 
     private _getMockGenericParameter(): ts.ParameterDeclaration {
-        return ts.createParameter([], [], undefined, MockGenericParameter);
+        return ts.createParameter([], [], undefined, MockIdentifierGenericParameter);
     }
 }

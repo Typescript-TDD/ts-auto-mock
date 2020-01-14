@@ -19,5 +19,10 @@
       "ts-auto-mock/repository": ["dist/repository"]
     },
     "baseUrl": "./"
-  }
+  },
+  "exclude": [
+    "ui/**/*",
+    "performance/**/*",
+    "definitelyTypedTests/**/*"
+  ]
 }

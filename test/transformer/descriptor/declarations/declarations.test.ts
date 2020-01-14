@@ -135,6 +135,23 @@ describe('declarations', () => {
             });
         });
 
+        describe('function and interface', () => {
+            // @ts-ignore
+            interface AAA {
+                b: number
+            }
+
+            function AAA(): AAA {
+                // @ts-ignore
+                return { a: 'ss' };
+            }
+
+            it('should return the properties from the interface', () => {
+                const properties: AAA = createMock<AAA>();
+                expect(properties.b).toBe(0);
+            });
+        });
+
         describe('interface imported', () => {
             it('should ignore variables declaration', () => {
                 const properties: MultipleInterfaceDeclaration = createMock<MultipleInterfaceDeclaration>();
