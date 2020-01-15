@@ -94,8 +94,8 @@ export function DefinitelyTyped(): JSX.Element {
     return <option key={index} value={run.id}>Run on date {run.date.toISOString()}</option>;
   });
 
-  const types: JSX.Element[] = !viewData ? [] : viewData.map((d) => {
-    return <details key={d.item} className={mapResponseToClassName(d.response)}>
+  const types: JSX.Element[] = !viewData ? [] : viewData.map((d: DefinitelyTypedTypeRun, index: number) => {
+    return <details key={index} className={mapResponseToClassName(d.response)}>
       <summary><span>{d.item}</span></summary>
       <pre>{d.message}</pre>
     </details>;
