@@ -91,19 +91,34 @@ async function run(dir, processId) {
                 }
             ],
             'typeRoots': [
-                '../DefinitelyTyped/types/'
+                definitelyTyped.typesFolder
             ],
-            "types": [],
-            "baseUrl": "../DefinitelyTyped/types/"
+            'types': [],
+            'baseUrl': definitelyTyped.typesFolder
         },
         'files': [
             `./${processId}.index.ts`
         ]
     };
 
+    const typePath = `${definitelyTyped.typesFolder}/${dir}`;
+    const typeTsConfigPath = `${typePath}/tsconfig.json`;
+    if (fs.existsSync(typeTsConfigPath)) {
+        const typeTsConfigFileContent = await fs.promises.readFile(typeTsConfigPath);
+
+        try {
+            const typeTsConfig = JSON.parse(typeTsConfigFileContent);
+            if (typeTsConfig && typeTsConfig.compilerOptions && typeTsConfig.compilerOptions.paths) {
+                config.compilerOptions.paths = typeTsConfig.compilerOptions.paths;
+            }
+        } catch {
+            console.warn('tsconfig.json of type found but failed to parse.');
+        }
+    }
+
     fs.writeFileSync(`tsconfig.types.${processId}.json`, JSON.stringify(config));
     fs.writeFileSync(`${processId}.index.ts`, `
-import pak = require('./${definitelyTyped.folder}/types/${dir}/');
+import pak = require('${typePath}/');
 import { createMock } from '../dist';
 // @ts-ignore
 createMock<typeof pak>();
@@ -134,7 +149,7 @@ createMock<typeof pak>();
             console.error(error.error);
 
             if (error.stdout.trim()) {
-                errorData += "\n" + error.stdout;
+                errorData += '\n' + error.stdout;
                 console.error(error.stdout);
             }
 
