@@ -93,7 +93,7 @@ async function run(dir, processId) {
             'typeRoots': [
                 definitelyTyped.typesFolder
             ],
-            'types': [],
+            'types': ['node'],
             'baseUrl': definitelyTyped.typesFolder
         },
         'files': [
