@@ -91,10 +91,10 @@ async function run(dir, processId) {
                 }
             ],
             'typeRoots': [
-                './DefinitelyTyped/types/'
+                '../DefinitelyTyped/types/'
             ],
             "types": [],
-            "baseUrl": "./DefinitelyTyped/types/"
+            "baseUrl": "../DefinitelyTyped/types/"
         },
         'files': [
             `./${processId}.index.ts`

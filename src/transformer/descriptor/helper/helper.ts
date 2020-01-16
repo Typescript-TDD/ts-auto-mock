@@ -3,6 +3,8 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 
 type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
+type ImportDeclaration = ts.ImportEqualsDeclaration | ts.ImportOrExportSpecifier | ts.ImportClause;
+
 export namespace TypescriptHelper {
     export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
         return ts.isLiteralTypeNode(typeNode) ||
@@ -22,7 +24,7 @@ export namespace TypescriptHelper {
     export function GetDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
         const declaration: ts.Declaration = GetFirstValidDeclaration(symbol.declarations);
 
-        if (ts.isImportSpecifier(declaration) || ts.isImportEqualsDeclaration(declaration)) {
+        if (isImportExportDeclaration(declaration)) {
             return GetDeclarationForImport(declaration);
         }
 
@@ -32,27 +34,23 @@ export namespace TypescriptHelper {
     export function GetConcreteDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
         const declaration: ts.Declaration = symbol.declarations[0];
 
-        if (ts.isImportSpecifier(declaration) || ts.isImportEqualsDeclaration(declaration)) {
+        if (isImportExportDeclaration(declaration)) {
             return GetConcreteDeclarationForImport(declaration);
         }
 
         return declaration;
     }
 
-    export function GetDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier | ts.ImportEqualsDeclaration): ts.Declaration {
-        const typeChecker: ts.TypeChecker = TypeChecker();
-        const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
-        const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
+    export function GetDeclarationForImport(node: ImportDeclaration): ts.Declaration {
+        const declarations: ts.Declaration[] = GetDeclarationsForImport(node);
 
-        return GetFirstValidDeclaration(originalSymbol.declarations);
+        return GetFirstValidDeclaration(declarations);
     }
 
-    export function GetConcreteDeclarationForImport(node: ts.ImportClause | ts.ImportSpecifier | ts.ImportEqualsDeclaration): ts.Declaration {
-        const typeChecker: ts.TypeChecker = TypeChecker();
-        const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
-        const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
+    export function GetConcreteDeclarationForImport(node: ImportDeclaration): ts.Declaration {
+        const declarations: ts.Declaration[] = GetDeclarationsForImport(node);
 
-        return originalSymbol.declarations[0];
+        return declarations[0];
     }
 
     export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
@@ -98,5 +96,17 @@ export namespace TypescriptHelper {
     function isAlias(symbol: ts.Symbol): boolean {
         // tslint:disable-next-line no-bitwise
         return !!((symbol.flags & ts.SymbolFlags.Alias) || (symbol.flags & ts.SymbolFlags.AliasExcludes));
+    }
+
+    function isImportExportDeclaration(declaration: ts.Declaration): declaration is ImportDeclaration  {
+        return ts.isImportEqualsDeclaration(declaration) || ts.isImportOrExportSpecifier(declaration) || ts.isImportClause(declaration);
+    }
+
+    function GetDeclarationsForImport(node: ImportDeclaration): ts.Declaration[] {
+        const typeChecker: ts.TypeChecker = TypeChecker();
+        const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
+        const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
+
+        return originalSymbol.declarations;
     }
 }
