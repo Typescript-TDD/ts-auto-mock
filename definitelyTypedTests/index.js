@@ -102,7 +102,12 @@ async function run(dir, processId) {
     };
 
     fs.writeFileSync(`tsconfig.types.${processId}.json`, JSON.stringify(config));
-    fs.writeFileSync(`${processId}.index.ts`, `import pak = require('./${definitelyTyped.folder}/types/${dir}/'); import { createMock } from '../dist'; createMock<typeof pak>();`);
+    fs.writeFileSync(`${processId}.index.ts`, `
+import pak = require('./${definitelyTyped.folder}/types/${dir}/');
+import { createMock } from '../dist';
+// @ts-ignore
+createMock<typeof pak>();
+`);
 
     return execPromise(`npx ttsc --project tsconfig.types.${processId}.json`)
         .then((response) => {
