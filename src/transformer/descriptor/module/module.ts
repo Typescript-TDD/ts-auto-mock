@@ -2,7 +2,6 @@ import * as ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
 import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
-import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { PropertyLike } from '../mock/propertyLike';
