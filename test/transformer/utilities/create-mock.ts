@@ -1,3 +1,3 @@
 export function createMock(): string {
-    return 'property';
+  return 'property';
 }

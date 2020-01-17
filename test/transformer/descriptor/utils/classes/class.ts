@@ -1,6 +1,6 @@
-// tslint:disable
 export class Class {
-    public a: string;
-	b: string;
-	private _a: string;
+  public a: string;
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  b: string;
+  private _a: string;
 }

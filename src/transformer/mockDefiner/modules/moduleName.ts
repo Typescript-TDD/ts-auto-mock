@@ -1,5 +1,5 @@
 export enum ModuleName {
-    Repository = 'Repository',
-    Extension = 'Extension',
-    Merge = 'Merge',
+  Repository = 'Repository',
+  Extension = 'Extension',
+  Merge = 'Merge',
 }

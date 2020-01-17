@@ -3,9 +3,9 @@ import '../config';
 import { Interface } from '../interface';
 
 describe('reuse', () => {
-    it('should use the correct mock', () => {
-        const mock: Interface = createMock<Interface>();
-        mock.a();
-        expect(mock.a).toHaveBeenCalled();
-    });
+  it('should use the correct mock', () => {
+    const mock: Interface = createMock<Interface>();
+    mock.a();
+    expect(mock.a).toHaveBeenCalled();
+  });
 });

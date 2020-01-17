@@ -1,4 +1,4 @@
 export interface Interface {
-    a(): string;
-    b: () => string;
+  a(): string;
+  b: () => string;
 }

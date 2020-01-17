@@ -1,12 +1,11 @@
 export interface InterfaceDeclaration {
-    a: string;
+  a: string;
 }
 
 export interface ClassDeclaration {
-    a: string;
+  a: string;
 }
 
-// tslint:disable
-export type TypeDeclaration =  {
-    a: string;
-}
+export type TypeDeclaration = {
+  a: string;
+};

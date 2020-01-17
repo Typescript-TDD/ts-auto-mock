@@ -1,4 +1,4 @@
 export interface InterfaceRecursive {
-    a: boolean;
-    b: InterfaceRecursive;
+  a: boolean;
+  b: InterfaceRecursive;
 }

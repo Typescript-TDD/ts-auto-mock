@@ -15,9 +15,7 @@ module.exports = (options) => {
                 {
                     test: /\.ts$/,
                     enforce: 'pre',
-                    loaders: [
-                        'tslint-loader'
-                    ]
+                    loader: 'eslint-loader'
                 },
                 {
                     test: /\.ts$/,

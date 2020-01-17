@@ -1,13 +1,13 @@
 export declare function exportedDeclaredFunction(): string;
 
 export declare class ExportedDeclaredClass {
-  prop: string;
+  public prop: string;
 }
 
 export function exportedFunction(): number { return 3; }
 
 export class ExportedClass {
-  prop: number;
+  public prop: number;
 }
 
 export enum ExportedEnum {

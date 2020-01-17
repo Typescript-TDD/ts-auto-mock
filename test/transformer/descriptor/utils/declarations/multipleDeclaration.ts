@@ -1,29 +1,29 @@
 export let MultipleInterfaceDeclaration: MultipleInterfaceDeclaration;
 
 export interface MultipleInterfaceDeclaration {
-    a: string;
+  a: string;
 }
 
 // @ts-ignore
 export class MultipleClassDeclaration {
-    public a: string;
+  public a: string;
 }
 
 // @ts-ignore
 export class MultipleClassDeclaration {
-    public a: boolean;
-}
-
-// tslint:disable
-// @ts-ignore
-export type MultipleTypeDeclaration = {
-    a: string;
+  public a: boolean;
 }
 
 // @ts-ignore
 export type MultipleTypeDeclaration = {
-    a: boolean;
-}
+  a: string;
+};
 
+// @ts-ignore
+export type MultipleTypeDeclaration = {
+  a: boolean;
+};
+
+// eslint-disable-next-line no-var
 export var MultipleLiteralTypeDeclaration: MultipleLiteralTypeDeclaration;
-export type MultipleLiteralTypeDeclaration = "string";
+export type MultipleLiteralTypeDeclaration = 'string';

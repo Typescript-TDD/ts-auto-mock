@@ -1,0 +1,8 @@
+/node_modules
+/config
+/utils
+/ui
+/definitelyTypedTests
+/performance
+/dist
+/commitlint.config.js

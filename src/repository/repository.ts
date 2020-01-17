@@ -1,24 +1,24 @@
 type Factory = Function;
 
 export class Repository {
-    private readonly _repository: { [key: string]: Factory };
+  private readonly _repository: { [key: string]: Factory };
 
-    private constructor() {
-        this._repository = {};
-    }
+  private constructor() {
+    this._repository = {};
+  }
 
-    private static _instance: Repository;
+  private static _instance: Repository;
 
-    public static get instance(): Repository {
-        this._instance = this._instance || new Repository();
-        return this._instance;
-    }
+  public static get instance(): Repository {
+    this._instance = this._instance || new Repository();
+    return this._instance;
+  }
 
-    public registerFactory(key: string, factory: Factory): void {
-        this._repository[key] = factory;
-    }
+  public registerFactory(key: string, factory: Factory): void {
+    this._repository[key] = factory;
+  }
 
-    public getFactory(key: string): Factory {
-        return this._repository[key];
-    }
+  public getFactory(key: string): Factory {
+    return this._repository[key];
+  }
 }

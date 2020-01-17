@@ -20,9 +20,8 @@
     },
     "baseUrl": "./"
   },
-  "exclude": [
-    "ui/**/*",
-    "performance/**/*",
-    "definitelyTypedTests/**/*"
+  "include": [
+    "src/**/*",
+    "test/**/*"
   ]
 }

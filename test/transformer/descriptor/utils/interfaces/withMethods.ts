@@ -1,4 +1,5 @@
 export interface WithMethods {
-    a: string;
-    methodA(): void;
+  a: string;
+
+  methodA(): void;
 }

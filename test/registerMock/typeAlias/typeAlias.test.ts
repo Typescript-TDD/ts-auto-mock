@@ -4,7 +4,7 @@ describe('registerMock for type alias', () => {
   it('should override standard behaviour of mock creation', () => {
     type APropType = {
       internalProp: string;
-    }
+    };
 
     interface AParentInterface {
       prop: APropType;
@@ -15,9 +15,9 @@ describe('registerMock for type alias', () => {
 
     expect(mock.prop.internalProp).toBe('whaaat');
   });
-  
+
   it('should override standard behaviour of mock creation for intersection', () => {
-    type APropType = { internalProp: string; } & { else: number; }
+    type APropType = { internalProp: string } & { else: number };
 
     interface AParentInterface {
       prop: APropType;

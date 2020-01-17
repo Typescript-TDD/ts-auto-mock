@@ -17,7 +17,7 @@ module.exports = function (debug, disableCache) {
                 {
                     test: /\.ts$/,
                     enforce: 'pre',
-                    loader: 'tslint-loader'
+                    loader: 'eslint-loader'
                 },
                 {
                     test: /\.ts$/,

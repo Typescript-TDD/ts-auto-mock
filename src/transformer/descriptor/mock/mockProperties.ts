@@ -8,36 +8,30 @@ import { PropertyLike } from './propertyLike';
 import { SignatureLike } from './signatureLike';
 
 export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.Expression {
-    const properties: PropertyLike[] = propertiesSymbol.map((prop: ts.Symbol) => {
-        return prop.declarations[0];
-    }) as PropertyLike[];
+  const properties: PropertyLike[] = propertiesSymbol.map((prop: ts.Symbol) => prop.declarations[0]) as PropertyLike[];
 
-    const signaturesDeclarations: SignatureLike[] = signatures.map((signature: ts.Signature) => {
-        return signature.declaration;
-    }) as SignatureLike[];
+  const signaturesDeclarations: SignatureLike[] = signatures.map((signature: ts.Signature) => signature.declaration) as SignatureLike[];
 
-    return GetMockPropertiesFromDeclarations(properties, signaturesDeclarations, scope);
+  return GetMockPropertiesFromDeclarations(properties, signaturesDeclarations, scope);
 }
 
 export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<PropertyLike>, signatures: ReadonlyArray<SignatureLike>, scope: Scope): ts.CallExpression {
-    const propertiesFilter: PropertyLike[] = list.filter((member: PropertyLike) => {
-        const hasModifiers: boolean = !!member.modifiers;
+  const propertiesFilter: PropertyLike[] = list.filter((member: PropertyLike) => {
+    const hasModifiers: boolean = !!member.modifiers;
 
-        if (IsTypescriptType(member)) { // This is a current workaround to safe fail extends of TypescriptLibs
-            return false;
-        }
+    if (IsTypescriptType(member)) { // This is a current workaround to safe fail extends of TypescriptLibs
+      return false;
+    }
 
-        if (!hasModifiers) {
-            return true;
-        }
+    if (!hasModifiers) {
+      return true;
+    }
 
-        return member.modifiers.filter((modifier: ts.Modifier) => {
-            return modifier.kind === ts.SyntaxKind.PrivateKeyword;
-        }).length === 0;
-    });
+    return member.modifiers.filter((modifier: ts.Modifier) => modifier.kind === ts.SyntaxKind.PrivateKeyword).length === 0;
+  });
 
-    const accessorDeclaration: PropertyAssignments = GetMockPropertiesAssignments(propertiesFilter, scope);
+  const accessorDeclaration: PropertyAssignments = GetMockPropertiesAssignments(propertiesFilter, scope);
 
-    const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0], scope) : null;
-    return GetMockCall(accessorDeclaration, signaturesDescriptor);
+  const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0], scope) : null;
+  return GetMockCall(accessorDeclaration, signaturesDescriptor);
 }
