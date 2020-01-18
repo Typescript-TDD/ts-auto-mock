@@ -1,11 +1,11 @@
 import { ImportNestedInterface } from './importNestedInterface';
 
 export interface ImportInterface {
-    a: {
-        b: string;
-    };
+  a: {
+    b: string;
+  };
 }
 
 export interface ImportInterfaceWithNestedInterface {
-    a: ImportNestedInterface;
+  a: ImportNestedInterface;
 }

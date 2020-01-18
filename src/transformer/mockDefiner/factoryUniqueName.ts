@@ -5,39 +5,39 @@ import { KeyCounter } from './keyCounter';
 export type PossibleDeclaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasDeclaration;
 
 export class FactoryUniqueName {
-    private _keyCounter: KeyCounter;
+  private _keyCounter: KeyCounter;
 
-    constructor() {
-        this._keyCounter = new KeyCounter();
-    }
+  constructor() {
+    this._keyCounter = new KeyCounter();
+  }
 
-    public createForDeclaration(declaration: PossibleDeclaration): string {
-        const declarationNameIdentifier: ts.Identifier = declaration.name;
+  public createForDeclaration(declaration: PossibleDeclaration): string {
+    const declarationNameIdentifier: ts.Identifier = declaration.name;
 
-        return this.createUniqueName(declarationNameIdentifier && declarationNameIdentifier.text);
-    }
+    return this.createUniqueName(declarationNameIdentifier && declarationNameIdentifier.text);
+  }
 
-    public createForIntersection(nodes: ts.Node[]): string {
-        const nameOfDeclarations: string = nodes.reduce((acc: string, declaration: ts.Node) => {
-            if (ts.isTypeLiteralNode(declaration)) {
-                acc += MockCallLiteralText;
-            }
+  public createForIntersection(nodes: ts.Node[]): string {
+    const nameOfDeclarations: string = nodes.reduce((acc: string, declaration: ts.Node) => {
+      if (ts.isTypeLiteralNode(declaration)) {
+        acc += MockCallLiteralText;
+      }
 
-            if (ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration) || ts.isClassDeclaration(declaration)) {
-                acc += declaration.name.text;
-            }
+      if (ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration) || ts.isClassDeclaration(declaration)) {
+        acc += declaration.name.text;
+      }
 
-            return acc;
-        }, '');
+      return acc;
+    }, '');
 
-        return this.createUniqueName(nameOfDeclarations);
-    }
+    return this.createUniqueName(nameOfDeclarations);
+  }
 
-    private createUniqueName(name?: string): string {
-        const declarationNameSanitized: string = name || MockCallAnonymousText;
-        const baseFactoryName: string = `@${declarationNameSanitized}`;
-        const count: number = this._keyCounter.getFor(baseFactoryName);
+  private createUniqueName(name?: string): string {
+    const declarationNameSanitized: string = name || MockCallAnonymousText;
+    const baseFactoryName: string = `@${declarationNameSanitized}`;
+    const count: number = this._keyCounter.getFor(baseFactoryName);
 
-        return `${baseFactoryName}_${count}`;
-    }
+    return `${baseFactoryName}_${count}`;
+  }
 }

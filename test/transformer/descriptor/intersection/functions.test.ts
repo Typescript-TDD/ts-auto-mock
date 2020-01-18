@@ -1,17 +1,17 @@
 import { createMock } from 'ts-auto-mock';
 
 describe('functions', () => {
-    it('should assign the first function', () => {
-        type A = () => number;
+  it('should assign the first function', () => {
+    type A = () => number;
 
-        type B = () => string;
+    type B = () => string;
 
-        interface C {
-            prop: A & B;
-        }
+    interface C {
+      prop: A & B;
+    }
 
-        const mock: C = createMock<C>();
+    const mock: C = createMock<C>();
 
-        expect(mock.prop()).toBe(0);
-    });
+    expect(mock.prop()).toBe(0);
+  });
 });

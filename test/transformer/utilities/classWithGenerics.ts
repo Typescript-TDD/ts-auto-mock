@@ -1,3 +1,3 @@
 export class ClassWithGenerics<T> {
-    public a: T;
+  public a: T;
 }

@@ -1,7 +1,7 @@
-// tslint:disable
 export abstract class AbstractClass {
-	abstract abstractProperty: string;
-	property: string;
-	public publicProperty: string;
-	private privateProperty: string;
+  abstract abstractProperty: string;
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  property: string;
+  public publicProperty: string;
+  private privateProperty: string;
 }

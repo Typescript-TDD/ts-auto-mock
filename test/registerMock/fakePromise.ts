@@ -2,13 +2,14 @@ export class FakePromise<T> {
   public readonly [Symbol.toStringTag]: string;
   private _promise: Promise<T>;
   private _res: (t: T) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _rej: (e: any) => void;
 
   constructor() {
-    const that: FakePromise<T> = this;
-    this._promise = new Promise(function (res, rej) {
-      that._res = res;
-      that._rej = rej;
+    // eslint-disable-next-line @typescript-eslint/typedef
+    this._promise = new Promise((res, rej) => {
+      this._res = res;
+      this._rej = rej;
     });
   }
 
@@ -16,6 +17,7 @@ export class FakePromise<T> {
     this._res(t);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public reject(t: any): void {
     this._rej(t);
   }
@@ -24,6 +26,7 @@ export class FakePromise<T> {
     return this._promise.then(t);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public catch<T2>(t: any): Promise<T | T2> {
     return this._promise.catch(t);
   }

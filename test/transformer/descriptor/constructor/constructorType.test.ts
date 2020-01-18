@@ -14,7 +14,7 @@ describe('constructorType', () => {
       expect(mockInstance.a).toEqual('');
       expect(mockInstance.b).toEqual(0);
     });
-    
+
     it('should not create a singleton newable type of the interface', () => {
       interface Test {
         a: string;
@@ -25,7 +25,7 @@ describe('constructorType', () => {
       const mockInstance1: Test = new mockConstructorType();
       const mockInstance2: Test = new mockConstructorType();
       const mockInstance3: Test = new mockConstructorType();
-      
+
       mockInstance1.a = 'test1';
       mockInstance2.a = 'test2';
       mockInstance3.a = 'test3';
@@ -35,12 +35,12 @@ describe('constructorType', () => {
       expect(mockInstance3.a).toEqual('test3');
     });
   });
-  
+
   describe('of a class', () => {
     it('should create a concrete newable type of the class', () => {
       class Test {
-        a: string;
-        b: number;
+        public a: string;
+        public b: number;
       }
 
       const mockConstructorType: new () => Test = createMock<new () => Test>();

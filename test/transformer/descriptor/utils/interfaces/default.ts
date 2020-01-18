@@ -1,3 +1,3 @@
 export default interface DefaultInterface {
-    a(): string;
+  a(): string;
 }

@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
-import { Scope } from '../../scope/scope';
 
-export function GetTypeofEnumDescriptor(enumDeclaration: ts.EnumDeclaration, scope: Scope): ts.Expression {
+export function GetTypeofEnumDescriptor(enumDeclaration: ts.EnumDeclaration): ts.Expression {
   enumDeclaration.modifiers = undefined;
 
   return ts.createArrowFunction(

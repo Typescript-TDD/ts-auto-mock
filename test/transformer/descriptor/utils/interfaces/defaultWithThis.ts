@@ -1,10 +1,11 @@
 export declare interface DefaultInterfaceWithThis {
-    a(): this;
-    b: RecursiveInterface;
+  b: RecursiveInterface;
+
+  a(): this;
 }
 
 export interface RecursiveInterface {
-    b: DefaultInterfaceWithThis;
+  b: DefaultInterfaceWithThis;
 }
 
 export default DefaultInterfaceWithThis;

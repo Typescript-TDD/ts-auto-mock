@@ -1,5 +1,4 @@
-
 export class ImportWithGenerics<T> {
-    public a: T;
-    private _a: number;
+  public a: T;
+  private _a: number;
 }

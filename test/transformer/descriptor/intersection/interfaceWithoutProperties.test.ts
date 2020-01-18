@@ -1,23 +1,23 @@
 import { createMock } from 'ts-auto-mock';
 
 describe('interface without properties and with methods', () => {
-    it('should assign the first method', () => {
-        interface A {
-            // tslint:disable-next-line
-            (): string;
-        }
+  it('should assign the first method', () => {
+    interface A {
+      // eslint-disable-next-line @typescript-eslint/prefer-function-type
+      (): string;
+    }
 
-        interface B {
-            // tslint:disable-next-line
-            (): number;
-        }
+    interface B {
+      // eslint-disable-next-line @typescript-eslint/prefer-function-type
+      (): number;
+    }
 
-        interface C {
-            prop: A & B;
-        }
+    interface C {
+      prop: A & B;
+    }
 
-        const mock: C = createMock<C>();
+    const mock: C = createMock<C>();
 
-        expect(mock.prop()).toBe('');
-    });
+    expect(mock.prop()).toBe('');
+  });
 });

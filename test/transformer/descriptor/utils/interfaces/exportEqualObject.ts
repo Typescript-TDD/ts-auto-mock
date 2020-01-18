@@ -1,5 +1,5 @@
 class IAmAClassExportedWithEqual {
-    prop: number;
+  public prop: number;
 }
 
 export = IAmAClassExportedWithEqual;

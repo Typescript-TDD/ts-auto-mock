@@ -1,3 +1,3 @@
 export interface ImportWithGenerics<T> {
-    a: T;
+  a: T;
 }

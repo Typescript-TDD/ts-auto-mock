@@ -9,10 +9,10 @@ import { createMock } from 'ts-auto-mock';
  */
 
 it('should work', () => {
-    interface A {
-        a: string;
-    }
+  interface A {
+    a: string;
+  }
 
-    const type: A = createMock<A>();
-    expect(type).toBeDefined();
+  const type: A = createMock<A>();
+  expect(type).toBeDefined();
 });

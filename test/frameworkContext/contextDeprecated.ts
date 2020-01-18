@@ -1,11 +1,9 @@
 import { Provider } from 'ts-auto-mock/extension';
 
-// tslint:disable:no-any
-Provider.instance.provideMethod((name: string, value: any) => {
-    return jasmine.createSpy(name).and.returnValue(value);
-});
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+Provider.instance.provideMethod((name: string, value: any) => jasmine.createSpy(name).and.returnValue(value));
 
 // @ts-ignore
-// tslint:disable-next-line:typedef
+// eslint-disable-next-line @typescript-eslint/typedef
 const frameworkContext = require.context('./', true, /\.test(\.deprecated)?\.ts$/);
 frameworkContext.keys().map(frameworkContext);

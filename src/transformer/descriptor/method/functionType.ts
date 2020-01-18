@@ -5,9 +5,9 @@ import { PropertySignatureCache } from '../property/cache';
 import { GetMethodDescriptor } from './method';
 
 export function GetFunctionTypeDescriptor(node: ts.FunctionTypeNode | ts.CallSignatureDeclaration | ts.ConstructSignatureDeclaration, scope: Scope): ts.Expression {
-    const property: ts.PropertyName = PropertySignatureCache.instance.get();
+  const property: ts.PropertyName = PropertySignatureCache.instance.get();
 
-    const returnValue: ts.Expression = GetDescriptor(node.type, scope);
+  const returnValue: ts.Expression = GetDescriptor(node.type, scope);
 
-    return GetMethodDescriptor(property, returnValue);
+  return GetMethodDescriptor(property, returnValue);
 }

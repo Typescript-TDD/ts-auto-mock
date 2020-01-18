@@ -7,13 +7,13 @@ describe('mocking the registered promise', () => {
       type A = {} & Promise<string>;
       const intersectionMock: A = createMock<A>();
       const actualPromiseMock: Promise<string> = createMock<Promise<string>>();
-      
+
       expect(intersectionMock.then).toBeUndefined();
       expect(actualPromiseMock.then).not.toBeUndefined();
       expect(actualPromiseMock.constructor).toBe(FakePromise);
     });
   });
-  
+
   describe('when doing it in intersection with generic', () => {
     it('should not interfere', () => {
       type A<T> = {} & Promise<T>;
@@ -26,7 +26,7 @@ describe('mocking the registered promise', () => {
       expect(actualPromiseMock.constructor).toBe(FakePromise);
     });
   });
-  
+
   describe('when doing it in type alias', () => {
     it('should use the registered mock for simple assignment', () => {
       type A<T> = Promise<T>;
@@ -39,7 +39,7 @@ describe('mocking the registered promise', () => {
       expect(actualPromiseMock.then).not.toBeUndefined();
       expect(actualPromiseMock.constructor).toBe(FakePromise);
     });
-    
+
     it('should use the registered mock for deep assignment', () => {
       type A<T> = Promise<T>;
       type B<T> = A<T>;
