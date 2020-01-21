@@ -14,5 +14,6 @@ export default {
         { name: 'Types supported'},
         { name: 'Types not supported'},
         { name: 'Config'},
-    ]
+    ],
+    repository: "https://github.com/Typescript-TDD/ts-auto-mock"
 }
