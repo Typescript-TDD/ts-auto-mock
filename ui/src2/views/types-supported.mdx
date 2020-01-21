@@ -1,4 +1,11 @@
-# Details 
+---
+name: Types supported
+route: /types-supported
+---
+
+# Types supported
+
+The library try to convert the type given to createMock so you dont need to create concrete mock manually.
 
 ## Primitive
 ```ts
@@ -16,13 +23,13 @@ never // undefined
 ```ts
 interface Person {
     id: string
-    name: string 
+    name: string
 }
-/* 
+/*
 {
     id: "",
     name: ""
-} 
+}
 */
 ```
 ## Interfaces with call signatures
@@ -31,16 +38,17 @@ For overload methods it will use the first one
 interface Person {
     (): number
     (): string
-    name: string 
+    name: string
 }
 
 const mock = createMock<Person>();
 mock() // 0
 mock.name // ""
-
 ```
+
 ## Interfaces with construct signatures
 For overload constructors it will use the first one
+
 ```ts
 interface PersonWithHat {
     hatSize: number;
@@ -59,31 +67,31 @@ interface Person {
 const mock = createMock<Person>();
 new mock() // { hatSize: 0 }
 mock.name // ""
-
 ```
+
 ## Classes
 ```ts
 class Person {
     private _id: string;
-    name: string 
+    name: string
 }
-/* 
+/*
 {
     name: ""
-} 
+}
 */
 ```
 ## Methods
-``` ts
+```ts
 interface InterfaceWithMethod {
     method(): string
-} 
-/* 
+}
+/*
 {
   method: () => {
       return ""
   }
-} 
+}
 */
 ```
 
@@ -100,6 +108,7 @@ type Data = {
 }
 /*
 ```
+
 ## Enum (it will select the first value)
 ```ts
 enum Direction {
@@ -140,7 +149,7 @@ mock // { a: "", b: "" }
 ```ts
 type Keys = {
 	a: number;
-}		
+}
 type keyInKeyof = {[key in keyof Keys]: string}
 const mock = createMock<keyInKeyof>();
 mock // { a: "" }
@@ -150,7 +159,7 @@ mock // { a: "" }
 ```ts
 class MyClass {
 	test?: string;
-}	
+}
 const mock = createMock<MyClass>();
 mock // { test: undefined }
 ```
@@ -162,14 +171,14 @@ class MyClass {
   array: Array<number>; // []
   number: Number; // 0;
   promise: Promise<string>// a promise that will resolve an empty string Promise.resolve("")
-}	
+}
 ```
 
 ## Tuple
 ```ts
 class MyClass {
   tuple: [string, number];
-}	
+}
 
 const mock = createMock<MyClass>();
 mock // { tuple: [] }
@@ -179,7 +188,7 @@ mock // { tuple: [] }
 ```ts
 class MyClass {
   union: string | number;
-}	
+}
 
 const mock = createMock<MyClass>();
 mock // { union: "" }

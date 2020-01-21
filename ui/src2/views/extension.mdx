@@ -1,11 +1,17 @@
+---
+name: Extension
+route: /extension
+---
+
 # Extension
-To make sure typings are correct we use an extension strategy.
-For this reason if you need your custom spies you need to use our framework to specify and identify them
+To make sure typings are correct we provide some functionality to identify mocks and the original type.
+If you need your custom spies you can use our framework to specify and identify them.
+In this way you will avoid casting and it will make your code much cleaner.
 
-### Custom Method
-(this example is taken from jasmine-ts-auto-mock)
+## Custom Method
+(this example is taken from jasmine-ts-auto-mock)[https://github.com/Typescript-TDD/jasmine-ts-auto-mock]
 
-To extend a method you need to: 
+To extend a method you need to:
 1) set your spy function (jasmine.createSpy(name))
 
 Please note that the value returned from provideMethodWithDeferredValue will be a function.
@@ -21,7 +27,7 @@ Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any
     return jasmine.createSpy(name).and.callFake(value);
 });
 ```
-2) override the type of the return value 
+2) override the type of the return value
 ```ts
 type ReturnType = jasmine.Spy;
 
@@ -54,7 +60,7 @@ directly as string
 import { On, method } from "ts-auto-mock/extension";
 const spy: jasmine.Spy = On(mock).get(method('methodToSpy'));
 ```
- 
+
 4) trigger the method
 ```ts
 someMethodThatWillTriggerInterfaceA();

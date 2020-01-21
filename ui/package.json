@@ -1,9 +1,12 @@
 {
-  "name": "ts-auto-mock-ui",
+  "name": "ts-auto-mock",
   "version": "1.0.0",
   "description": "ts auto mock website",
   "main": "index.js",
   "scripts": {
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
+    "docz:serve": "docz build && docz serve",
     "start": "webpack-dev-server --config webpack.development.config.js --inline --hot",
     "build": "webpack --config webpack.production.config.js"
   },
@@ -32,6 +35,8 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.1",
+    "docz": "^2.2.0",
+    "docz-plugin-css": "^0.11.0",
     "dotenv-webpack": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.13.0",
@@ -41,10 +46,16 @@
     "recharts": "^2.0.0-beta.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^1.1.2",
+    "styled-components": "^5.0.0",
     "typescript": "^3.7.4",
     "webpack": "4.41.5",
     "webpack-cli": "3.3.10",
     "webpack-dev-server": "^3.10.1",
     "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@types/styled-components": "^4.4.2",
+    "@types/theme-ui": "^0.2.6",
+    "react-helmet-async": "^1.0.4"
   }
 }
