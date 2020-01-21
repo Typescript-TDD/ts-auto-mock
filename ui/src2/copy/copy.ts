@@ -2,6 +2,7 @@ export const TsAutoMockCopy = {
   title: "Typescript transformer to create mocks for any types",
   homeButton: "Get Started",
   apiButton: "API Documentation",
+  slack: "Need help? Join us on Slack",
   features: {
     real: {
       title: "Real mocks",
