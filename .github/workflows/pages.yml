@@ -25,6 +25,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: build ui
         run: |
+          npm i
           cd ui
           npm install
           npm run docz:build
