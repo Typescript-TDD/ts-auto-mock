@@ -1,9 +1,13 @@
+import pkg from './package.json';
+const libName = pkg.name;
+
 export default {
     typescript: true,
     themeConfig: {
         initialColorMode: 'dark',
         showDarkModeSwitch: false
     },
+    base: "./",
     menu: [
         { name: 'Home'},
         { name: 'Installation'},
