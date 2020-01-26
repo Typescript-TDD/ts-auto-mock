@@ -6,9 +6,7 @@
   "scripts": {
     "docz:dev": "docz dev",
     "docz:build": "docz build",
-    "docz:serve": "docz build && docz serve",
-    "start": "webpack-dev-server --config webpack.development.config.js --inline --hot",
-    "build": "webpack --config webpack.production.config.js"
+    "docz:serve": "docz build && docz serve"
   },
   "keywords": [
     "ts",
@@ -19,43 +17,22 @@
   "author": "Vittorio Guerriero & Giulio Caprino",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-numeric-separator": "^7.7.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/preset-typescript": "^7.7.7",
+    "@nivo/bar": "^0.61.1",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
-    "@types/react-router-dom": "^5.1.3",
-    "@types/recharts": "^1.8.4",
-    "babel-loader": "8.0.6",
-    "clean-webpack-plugin": "^3.0.0",
+    "@types/styled-components": "^4.4.2",
+    "@types/theme-ui": "^0.2.6",
     "copy-webpack-plugin": "^5.1.1",
-    "css-loader": "^3.4.1",
     "docz": "^2.2.0",
     "docz-plugin-css": "^0.11.0",
     "dotenv-webpack": "^1.7.0",
-    "html-webpack-plugin": "^3.2.0",
-    "node-sass": "^4.13.0",
+    "gatsby-plugin-sass": "^2.1.27",
+    "node-sass": "^4.13.1",
     "react": "16.12.0",
     "react-dom": "^16.12.0",
+    "react-helmet-async": "^1.0.4",
     "react-router-dom": "^5.1.2",
-    "recharts": "^2.0.0-beta.1",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^1.1.2",
     "styled-components": "^5.0.0",
-    "typescript": "^3.7.4",
-    "webpack": "4.41.5",
-    "webpack-cli": "3.3.10",
-    "webpack-dev-server": "^3.10.1",
-    "webpack-merge": "^4.2.2"
-  },
-  "dependencies": {
-    "@types/styled-components": "^4.4.2",
-    "@types/theme-ui": "^0.2.6",
-    "react-helmet-async": "^1.0.4"
+    "typescript": "^3.7.4"
   }
 }

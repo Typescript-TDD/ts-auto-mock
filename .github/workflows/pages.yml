@@ -26,7 +26,7 @@ jobs:
         run: |
           cd ui
           npm install
-          npm run build
+          npm run docz:build
         env:
           CI: true
       - name: Deploy to pages

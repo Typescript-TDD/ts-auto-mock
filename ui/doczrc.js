@@ -2,7 +2,7 @@ export default {
     typescript: true,
     themeConfig: {
         initialColorMode: 'dark',
-        showDarkModeSwitch: true
+        showDarkModeSwitch: false
     },
     menu: [
         { name: 'Home'},
@@ -14,6 +14,8 @@ export default {
         { name: 'Types supported'},
         { name: 'Types not supported'},
         { name: 'Config'},
+        { name: 'Performance'},
+        { name: 'Definitely Typed'}
     ],
     repository: "https://github.com/Typescript-TDD/ts-auto-mock"
 }

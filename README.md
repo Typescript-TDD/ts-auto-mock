@@ -8,7 +8,7 @@
 
 A Typescript transformer that will allow you to create mock for any types (Interfaces, Classes, ...) without need to create manual fakes/mocks.
 
-Let's have a look.
+[Api Documentation](https://typescript-tdd.github.io/ts-auto-mock) 
 
 * If you are interested to use it with jasmine please go to [jasmine-ts-auto-mock](https://github.com/uittorio/jasmine-ts-auto-mock)
 * If you are interested to use it with jest please go to [jest-ts-auto-mock](https://github.com/uittorio/jest-ts-auto-mock)
