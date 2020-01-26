@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feature/ui-with-documentation
     paths:
       - 'data/**'
       - 'ui/**'
@@ -34,4 +35,4 @@ jobs:
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./ui/dist
+          PUBLISH_DIR: ./ui/.docz/dist
