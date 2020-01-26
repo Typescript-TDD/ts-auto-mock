@@ -7,7 +7,7 @@ export default {
         initialColorMode: 'dark',
         showDarkModeSwitch: false
     },
-    base: "./",
+    base: `/${libName}/`,
     menu: [
         { name: 'Home'},
         { name: 'Installation'},
