@@ -26,6 +26,7 @@
     "docz": "^2.2.0",
     "docz-plugin-css": "^0.11.0",
     "dotenv-webpack": "^1.7.0",
+    "gatsby-plugin-offline": "^3.0.32",
     "gatsby-plugin-sass": "^2.1.27",
     "node-sass": "^4.13.1",
     "react": "16.12.0",
