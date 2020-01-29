@@ -42,6 +42,14 @@ describe('typescript lib', () => {
     expect(properties.a).toEqual({});
   });
 
+  it('should set the default value for an Object', () => {
+    interface Interface {
+      a: Object;
+    }
+    const properties: Interface = createMock<Interface>();
+    expect(properties.a).toEqual({});
+  });
+
   it('should set an empty function for a function', () => {
     interface Interface {
       a: Function;
