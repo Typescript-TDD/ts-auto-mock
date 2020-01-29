@@ -11,6 +11,7 @@
   },
   "files": [
     "test/playground/playground.test.ts"
-  ]
+  ],
+  "include": []
 }
 

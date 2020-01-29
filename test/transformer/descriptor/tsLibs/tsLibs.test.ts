@@ -194,11 +194,20 @@ describe('typescript lib', () => {
         expect(result).toBe('');
   });
 
-
   it('should set a promise resolved for a type mocked directly', async () => {
         type S<T> = Promise<T>;
         const properties: S<string> = createMock<S<string>>();
         const result: string = await properties;
         expect(result).toBe('');
+  });
+
+  it('should set undefined for a not recognized type alias declaration', () => {
+    interface WithLiteralTypescriptType {
+      prop: InsertPosition;
+    }
+
+    const mock: WithLiteralTypescriptType = createMock<WithLiteralTypescriptType>();
+
+    expect(mock.prop).toBeUndefined();
   });
 });
