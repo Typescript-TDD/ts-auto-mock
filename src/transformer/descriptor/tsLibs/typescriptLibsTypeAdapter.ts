@@ -10,7 +10,9 @@ export function TypescriptLibsTypeAdapter(node: ts.TypeReferenceNode, scope: Sco
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
   const typeChecker: ts.TypeChecker = TypeChecker();
   const type: ts.Type = typeChecker.getTypeAtLocation(declaration);
-  const typeScriptType: TypescriptLibsTypes = TypescriptLibsTypes[type.symbol.name];
+  const name: string = type.symbol?.name || type.aliasSymbol.name;
+
+  const typeScriptType: TypescriptLibsTypes = TypescriptLibsTypes[name];
 
   switch (typeScriptType) {
   case(TypescriptLibsTypes.Array):
