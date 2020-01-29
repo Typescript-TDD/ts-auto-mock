@@ -2,17 +2,13 @@ import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
-import { TypescriptHelper } from '../helper/helper';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 import { TypescriptLibsTypes } from './typescriptLibsTypes';
 
 export function TypescriptLibsTypeAdapter(node: ts.TypeReferenceNode, scope: Scope): ts.Node {
-  const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
   const typeChecker: ts.TypeChecker = TypeChecker();
-  const type: ts.Type = typeChecker.getTypeAtLocation(declaration);
-  const name: string = type.symbol?.name || type.aliasSymbol.name;
-
-  const typeScriptType: TypescriptLibsTypes = TypescriptLibsTypes[name];
+  const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.typeName);
+  const typeScriptType: TypescriptLibsTypes = TypescriptLibsTypes[symbol.name];
 
   switch (typeScriptType) {
   case(TypescriptLibsTypes.Array):
