@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+import { SyntaxKind } from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
 import { MockIdentifierInternalValues, MockIdentifierSetParameterName } from '../../mockIdentifier/mockIdentifier';
 import { Scope } from '../../scope/scope';
@@ -42,12 +43,25 @@ function GetLiteralMockProperty(descriptor: ts.Expression, member: PropertyLike)
 function GetLazyMockProperty(descriptor: ts.Expression, member: PropertyLike): ts.PropertyAssignment {
   const propertyName: string = TypescriptHelper.GetStringPropertyName(member.name);
 
-  const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(MockIdentifierInternalValues, ts.createStringLiteral(propertyName));
+  const stringPropertyName: ts.StringLiteral = ts.createStringLiteral(propertyName);
+  const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(MockIdentifierInternalValues, stringPropertyName);
   const setVariableParameterName: ts.Identifier = MockIdentifierSetParameterName;
 
   const expressionGetAssignment: ts.BinaryExpression = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, descriptor);
 
-  const getExpressionBody: ts.BinaryExpression = ts.createBinary(variableDeclarationName, ts.SyntaxKind.BarBarToken, expressionGetAssignment);
+  const hasOwnProperty: ts.Expression = ts.createCall(
+    ts.createPropertyAccess(MockIdentifierInternalValues, 'hasOwnProperty'),
+    null,
+    [stringPropertyName]
+  );
+
+  const getExpressionBody: ts.Expression = ts.createConditional(
+    hasOwnProperty,
+    ts.createToken(SyntaxKind.QuestionToken),
+    variableDeclarationName,
+    ts.createToken(SyntaxKind.ColonToken),
+    expressionGetAssignment
+  );
   const setExpressionBody: ts.BinaryExpression = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, setVariableParameterName);
 
   const returnGetStatement: ts.ReturnStatement = ts.createReturn(getExpressionBody);
@@ -63,5 +77,5 @@ function GetLazyMockProperty(descriptor: ts.Expression, member: PropertyLike): t
     GetBooleanTrueDescriptor(),
   )]);
 
-  return ts.createPropertyAssignment(ts.createStringLiteral(propertyName), literal);
+  return ts.createPropertyAssignment(stringPropertyName, literal);
 }
