@@ -1,0 +1,46 @@
+---
+name: Config
+route: /config
+---
+
+# Config
+```ts
+tsAutoMockTransformer(program: ts.Program, options: TsAutoMockOptions)
+
+interface TsAutoMockOptions {
+    debug: boolean | 'file' | 'console';
+    cacheBetweenTests: boolean;
+}
+```
+options:
+
+| Name                 |  Value    |  Description                                 | Default
+| -------------------- |  -------- | -------------------------------------------- | --------
+| `debug`              |  `false`  | it will NOT log to the console               | false
+|                      |  `true`   | it will log to the console                   |
+|                      |  `true`   | it will log to a file (tsAutoMock.log)       |
+| `cacheBetweenTests`  |  `true`   | it will reuse mocks between different tests  | true
+|                      |  `false`  | it create new mocks for each different tests |
+
+## debug
+We currently support
+- Logs for [not supported types](./types-not-supported)
+It will log any  not supported type automatically converted to null.
+This is useful to report an issue or to investigate a potential bug
+
+## cacheBetweenTests
+One of the main functionality of ts auto mock is to generate mocks and cache them.
+
+Mocks are currently created in the test file making tests to depend to each other
+
+Example:
+- test1.test.ts has a createMock of Interface.
+- test2.test.ts has a createMock of Interface.
+- test1.test.ts will have the registration of Interface mock
+- test2.test.ts will have a registration import.
+
+If test2 run in a different context than test1 it will not be able to access to the same mock.
+
+Set this property to false when your test run in different context.
+
+We are working on an [issue](https://github.com/Typescript-TDD/ts-auto-mock/issues/101) to make sure tests do not depend to each other but they will still take advance of a cache system
