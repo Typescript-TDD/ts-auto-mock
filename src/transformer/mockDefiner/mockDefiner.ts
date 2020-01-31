@@ -6,6 +6,7 @@ import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
 import { TypescriptCreator } from '../helper/creator';
 import { createImportOnIdentifier } from '../helper/import';
 import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
+import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 import { Scope } from '../scope/scope';
 import { DeclarationCache } from './cache/declarationCache';
 import { DeclarationListCache } from './cache/declarationListCache';
@@ -13,7 +14,6 @@ import { FactoryUniqueName, PossibleDeclaration } from './factoryUniqueName';
 import { ModuleName } from './modules/moduleName';
 import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
 import { ModulesImportUrl } from './modules/modulesImportUrl';
-import { PrivateIdentifier } from './uniqueIdentifier';
 
 interface FactoryRegistrationPerFile {
   [key: string]: Array<{
