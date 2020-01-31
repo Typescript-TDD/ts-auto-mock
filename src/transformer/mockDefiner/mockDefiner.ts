@@ -178,7 +178,7 @@ export class MockDefiner {
     return ts.createPropertyAccess(
       ts.createPropertyAccess(
         repository,
-        ts.createIdentifier('ɵRepository'),
+        PrivateIdentifier('Repository')
       ),
       ts.createIdentifier('instance'),
     );

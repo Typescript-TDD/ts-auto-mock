@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
+import { PrivateIdentifier } from '../../privateIdentifier/privateIdentifier';
 import { GetBooleanTrueDescriptor } from '../boolean/booleanTrue';
 
 export interface Property {
@@ -13,7 +14,7 @@ export function GetMockMarkerProperty(): Property {
     ts.createPropertyAccess(
       ts.createPropertyAccess(
         MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
-        ts.createIdentifier('ɵMarker'),
+        PrivateIdentifier('Marker')
       ),
       ts.createIdentifier('instance')),
     ts.createIdentifier('get'));
