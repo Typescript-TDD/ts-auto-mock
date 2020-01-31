@@ -1,12 +1,13 @@
 import * as ts from 'typescript';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { ModuleName } from '../mockDefiner/modules/moduleName';
+import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 
 function mergePropertyAccessor(methodName: string): ts.PropertyAccessExpression {
   return ts.createPropertyAccess(
     ts.createPropertyAccess(
       MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Merge),
-      ts.createIdentifier('ɵMerge'),
+      PrivateIdentifier('Merge')
     ),
     ts.createIdentifier(methodName),
   );

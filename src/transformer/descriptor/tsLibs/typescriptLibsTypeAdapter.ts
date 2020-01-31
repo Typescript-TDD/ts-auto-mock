@@ -21,7 +21,7 @@ export function TypescriptLibsTypeAdapter(node: ts.TypeReferenceNode, scope: Sco
   case(TypescriptLibsTypes.Boolean):
     return ts.createNode(ts.SyntaxKind.BooleanKeyword);
   case(TypescriptLibsTypes.Object):
-    return ts.createNode(ts.SyntaxKind.TypeLiteral);
+    return ts.createNode(ts.SyntaxKind.ObjectKeyword);
   case(TypescriptLibsTypes.Function):
     const functionNode: ts.Node = ts.createNode(ts.SyntaxKind.VoidKeyword);
     return ts.createFunctionTypeNode([], [], functionNode as ts.TypeNode);

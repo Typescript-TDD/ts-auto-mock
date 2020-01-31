@@ -6,6 +6,7 @@ import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
 import { TypescriptCreator } from '../helper/creator';
 import { createImportOnIdentifier } from '../helper/import';
 import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
+import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 import { Scope } from '../scope/scope';
 import { DeclarationCache } from './cache/declarationCache';
 import { DeclarationListCache } from './cache/declarationListCache';
@@ -69,9 +70,9 @@ export class MockDefiner {
     }
 
     this._internalModuleImportIdentifierPerFile[this._fileName] = {
-      [ModuleName.Extension]: ts.createFileLevelUniqueName(ModuleName.Extension),
-      [ModuleName.Merge]: ts.createFileLevelUniqueName(ModuleName.Merge),
-      [ModuleName.Repository]: ts.createFileLevelUniqueName(ModuleName.Repository),
+      [ModuleName.Extension]: PrivateIdentifier(ModuleName.Extension),
+      [ModuleName.Merge]: PrivateIdentifier(ModuleName.Merge),
+      [ModuleName.Repository]: PrivateIdentifier(ModuleName.Repository),
     };
 
     this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
@@ -177,7 +178,7 @@ export class MockDefiner {
     return ts.createPropertyAccess(
       ts.createPropertyAccess(
         repository,
-        ts.createIdentifier('ɵRepository'),
+        PrivateIdentifier('Repository')
       ),
       ts.createIdentifier('instance'),
     );

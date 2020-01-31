@@ -1,3 +1,43 @@
+<a name="1.5.1"></a>
+## [1.5.1](https://github.com/uittorio/ts-auto-mock/compare/1.5.0...1.5.1) (2020-01-31)
+
+
+
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/uittorio/ts-auto-mock/compare/v1.4.1...v1.5.0) (2020-01-30)
+
+
+### Bug Fixes
+
+* **definitelyTyped:** add node types in generated tsconfig ([#186](https://github.com/uittorio/ts-auto-mock/issues/186)) ([19caa94](https://github.com/uittorio/ts-auto-mock/commit/19caa94))
+* **definitelyTyped:** copy compiler option "paths" from processed type ([#185](https://github.com/uittorio/ts-auto-mock/issues/185)) ([6265fde](https://github.com/uittorio/ts-auto-mock/commit/6265fde))
+* **definitelyTyped:** use ts-ignore before createMock so that value type modules don't fail ([acd2c6f](https://github.com/uittorio/ts-auto-mock/commit/acd2c6f))
+* **genericNotProvided:** make sure required generic will default to null when are not provided ([#180](https://github.com/uittorio/ts-auto-mock/issues/180)) ([ad76471](https://github.com/uittorio/ts-auto-mock/commit/ad76471))
+* **mockProperty:** make sure a falsy value can be assigned to a mock property ([#208](https://github.com/uittorio/ts-auto-mock/issues/208)) ([0b37699](https://github.com/uittorio/ts-auto-mock/commit/0b37699))
+* **ui:** use index as key of list of components to make sure the ui doesn't fail when a type gets processed multiple times ([#178](https://github.com/uittorio/ts-auto-mock/issues/178)) ([84a52a1](https://github.com/uittorio/ts-auto-mock/commit/84a52a1))
+
+
+### Features
+
+* **constructorType:** Add constructor type descriptor ([#115](https://github.com/uittorio/ts-auto-mock/issues/115)) ([8f26218](https://github.com/uittorio/ts-auto-mock/commit/8f26218))
+* **constructSignature:** add construct signature ([#116](https://github.com/uittorio/ts-auto-mock/issues/116)) ([b0aa18a](https://github.com/uittorio/ts-auto-mock/commit/b0aa18a))
+* **DefinitelyTyped:** add process with ui to run createMock on every type of DefinitelyTyped repository ([#136](https://github.com/uittorio/ts-auto-mock/issues/136)) ([445f31e](https://github.com/uittorio/ts-auto-mock/commit/445f31e))
+* **genericDefault:** add support for default generics on declaration and extensions ([#126](https://github.com/uittorio/ts-auto-mock/issues/126)) ([a9df32a](https://github.com/uittorio/ts-auto-mock/commit/a9df32a))
+* **import:** add import equals support and make sure transformer test run in a context so the cache system will work ([f23039d](https://github.com/uittorio/ts-auto-mock/commit/f23039d))
+* **importequal:** add support for export equals and remove webpack env types that were conflicting with types node ([#124](https://github.com/uittorio/ts-auto-mock/issues/124)) ([990ecf1](https://github.com/uittorio/ts-auto-mock/commit/990ecf1))
+* **indexedAccess:** add indexed access support for mocks ([#119](https://github.com/uittorio/ts-auto-mock/issues/119)) ([a3e9841](https://github.com/uittorio/ts-auto-mock/commit/a3e9841))
+* **intersectionsfunction:** add support for function intersections and parenthesised type in intersections ([#127](https://github.com/uittorio/ts-auto-mock/issues/127)) ([5572631](https://github.com/uittorio/ts-auto-mock/commit/5572631))
+* **multipledeclaration-bigint:** add support for multiple declarations functions for types and values and biging ([#163](https://github.com/uittorio/ts-auto-mock/issues/163)) ([00d9904](https://github.com/uittorio/ts-auto-mock/commit/00d9904))
+* **registerMock:** add registerMock functionality to register custom mocks per project ([#125](https://github.com/uittorio/ts-auto-mock/issues/125)) ([0feb05a](https://github.com/uittorio/ts-auto-mock/commit/0feb05a))
+* **typeQuery:** add support for typeof of an imported module ([#128](https://github.com/uittorio/ts-auto-mock/issues/128)) ([a9e25a3](https://github.com/uittorio/ts-auto-mock/commit/a9e25a3))
+
+
+### Performance Improvements
+
+* **emit:** decrease emitted code ([#169](https://github.com/uittorio/ts-auto-mock/issues/169)) ([0253e95](https://github.com/uittorio/ts-auto-mock/commit/0253e95))
+
+
+
 <a name="1.4.4"></a>
 ## [1.4.4](https://github.com/uittorio/ts-auto-mock/compare/v1.4.3...v1.4.4) (2020-01-01)
 

@@ -8,3 +8,4 @@ export const MockIdentifierObjectReturnValue: ts.Identifier = ts.createIdentifie
 export const MockIdentifierSetParameterName: ts.Identifier = ts.createIdentifier('v');
 export const MockCallAnonymousText: string = '*';
 export const MockCallLiteralText: string = 'L';
+export const MockPrivatePrefix: string = 'ɵ';
