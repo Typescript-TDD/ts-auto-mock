@@ -1,0 +1,37 @@
+---
+name: Create mock list
+route: /create-mock-list
+---
+
+# Create mock list
+createMock list it will create a list of mocks automatically
+
+```ts
+import { createMockList } from 'ts-auto-mock';
+
+interface Person {
+  id: string;
+}
+const mockList = createMockList<Person>(2);
+mockList.length // 2
+```
+
+## Default values
+You can define a function to overrides specific fields.
+
+The function will have access to the current index
+
+```ts
+import { createMockList } from 'ts-auto-mock';
+
+interface Person {
+  id: string;
+}
+const mockList = createMockList<Person>(2, (index: number) => {
+    return {
+        id: "id" + index
+    }
+});
+mockList[0].id // id0
+mockList[1].id // id1
+```

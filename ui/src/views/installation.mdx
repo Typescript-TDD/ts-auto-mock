@@ -1,0 +1,104 @@
+---
+name: Installation
+route: /installation
+---
+
+
+# Installation
+
+To make this library to work you need to provide ts-auto-mock transformer at compile time.
+Unfortunately, TypeScript itself does not currently provide any easy way to use custom transformers.
+
+[See typescript issue](https://github.com/Microsoft/TypeScript/issues/14419).
+
+There are different ways to do it based on how you are currently compiling your typescript files
+
+## webpack
+
+You can use awesome-typescript-loader or ts-loader
+
+```js
+// webpack.config.js
+const tsAutoMockTransformer = require('ts-auto-mock/transformer').default;
+
+module.exports = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader', // or 'awesome-typescript-loader'
+        options: {
+          getCustomTransformers: program => ({
+              before: [
+                  tsAutoMockTransformer(program)
+              ]
+          })
+        }
+      }
+    ]
+  }
+};
+```
+
+## ttypescript
+See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/README.md) for more information
+
+tsconfig.json
+```json
+{
+  "compilerOptions": {
+    //...,
+    "plugins": [
+      { "transform": "ts-auto-mock/transformer" }
+    ]
+  },
+  //...
+}
+```
+
+
+## ts-patch
+See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md)
+
+Command to run to install it:
+
+```
+npm i ts-patch
+ts-patch install
+```
+
+tsconfig.json
+
+```json
+{
+  "compilerOptions": {
+    //...,
+    "plugins": [
+      { "transform": "ts-auto-mock/transformer" }
+    ]
+  },
+  //...
+}
+```
+
+## ts-node
+### mocha
+```js
+// tsnode.js
+const tsAutoMockTransformer = require('ts-auto-mock/transformer').default;
+
+require("ts-node").register({
+  transformers: program => ({
+    before: [
+      tsAutoMockTransformer(program)
+    ]
+  })
+});
+```
+
+Command to run:
+
+```
+mocha --require './tsnode.js' --watch-extensions ts,tsx "test/**/*.{ts,tsx}
+```
