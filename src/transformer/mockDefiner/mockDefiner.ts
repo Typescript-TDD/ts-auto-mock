@@ -13,6 +13,7 @@ import { FactoryUniqueName, PossibleDeclaration } from './factoryUniqueName';
 import { ModuleName } from './modules/moduleName';
 import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
 import { ModulesImportUrl } from './modules/modulesImportUrl';
+import { PrivateIdentifier } from './uniqueIdentifier';
 
 interface FactoryRegistrationPerFile {
   [key: string]: Array<{
@@ -69,9 +70,9 @@ export class MockDefiner {
     }
 
     this._internalModuleImportIdentifierPerFile[this._fileName] = {
-      [ModuleName.Extension]: ts.createFileLevelUniqueName(ModuleName.Extension),
-      [ModuleName.Merge]: ts.createFileLevelUniqueName(ModuleName.Merge),
-      [ModuleName.Repository]: ts.createFileLevelUniqueName(ModuleName.Repository),
+      [ModuleName.Extension]: PrivateIdentifier(ModuleName.Extension),
+      [ModuleName.Merge]: PrivateIdentifier(ModuleName.Merge),
+      [ModuleName.Repository]: PrivateIdentifier(ModuleName.Repository),
     };
 
     this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
