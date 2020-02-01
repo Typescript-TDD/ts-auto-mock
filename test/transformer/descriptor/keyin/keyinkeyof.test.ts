@@ -14,17 +14,16 @@ describe('for keyin keyof', () => {
     });
   });
 
-  // https://github.com/uittorio/ts-auto-mock/issues/3
-  // describe('of class with return type', () => {
-  // 	class Test {
-  // 		a: number;
-  // 	}
-  //
-  // 	type keyInKeyof = {[key in keyof Test]: Test[key]}
-  //
-  // 	it('should set all the keys as properties', () => {
-  // 		const properties: keyInKeyof = createMock<keyInKeyof>();
-  // 		expect(properties.a).toBe(0);
-  // 	});
-  // });
+  describe('of a class', () => {
+  	class Test {
+  		public a: number;
+  	}
+
+  	type keyInKeyof = {[key in keyof Test]: Test[key]};
+
+  	it('should set all the keys as properties', () => {
+  		const properties: keyInKeyof = createMock<keyInKeyof>();
+  		expect(properties.a).toBe(0);
+  	});
+  });
 });

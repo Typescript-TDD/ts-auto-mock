@@ -22,11 +22,11 @@ export class Provider {
   /**
    * @deprecated ts-auto-mock will disable this functionality from version 2 because is not fully compatible with
    * call signatures. It will cause an maximum call stack exceeded error.
-   * @see (https://github.com/uittorio/ts-auto-mock/blob/master/test/framework/recursive/recursive.deprecated.ts)
+   * @see (https://github.com/Typescript-TDD/ts-auto-mock/blob/master/test/frameworkContext/recursive/recursive.test.deprecated.ts)
    *
    * Please use provideMethodWithDeferredValue instead
    *
-   * @see [Extension](https://github.com/uittorio/ts-auto-mock/blob/master/docs/EXTENSION.md)
+   * @see [Extension](https://typescript-tdd.github.io/ts-auto-mock/extension)
    */
   public provideMethod(method: Method): void {
     this._isUsingDeprecatedProvideMethod = true;

@@ -10,8 +10,8 @@ A Typescript transformer that will allow you to create mock for any types (Inter
 
 ## [Api Documentation](https://typescript-tdd.github.io/ts-auto-mock) 
 
-* If you are interested to use it with jasmine please go to [jasmine-ts-auto-mock](https://github.com/uittorio/jasmine-ts-auto-mock)
-* If you are interested to use it with jest please go to [jest-ts-auto-mock](https://github.com/uittorio/jest-ts-auto-mock)
+* If you are interested to use it with jasmine please go to [jasmine-ts-auto-mock](https://github.com/Typescript-TDD/jasmine-ts-auto-mock)
+* If you are interested to use it with jest please go to [jest-ts-auto-mock](https://github.com/Typescript-TDD/jest-ts-auto-mock)
  
 ## [Changelog](CHANGELOG.md)
 
