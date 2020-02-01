@@ -1,3 +1,8 @@
+<a name="1.5.2"></a>
+## [1.5.2](https://github.com/uittorio/ts-auto-mock/compare/1.5.1...1.5.2) (2020-02-01)
+
+
+
 <a name="1.5.1"></a>
 ## [1.5.1](https://github.com/uittorio/ts-auto-mock/compare/1.5.0...1.5.1) (2020-01-31)
 
