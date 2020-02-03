@@ -23,8 +23,8 @@ In the example below it's using callFake that will prevent to execute the functi
 ```ts
 import { Provider } from "ts-auto-mock/extension";
 
-Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any)) => {
-    return jasmine.createSpy(name).and.callFake(value);
+Provider.instance.provideMethodWithDeferredValue((name: string, value: () => any) => {
+	return jasmine.createSpy(name).and.callFake(value);
 });
 ```
 2) override the type of the return value
