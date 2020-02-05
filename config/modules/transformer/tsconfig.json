@@ -1,6 +1,7 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../../../dist/transformer"
+    "declaration": true,
+    "outDir": "../../../dist"
   }
 }
