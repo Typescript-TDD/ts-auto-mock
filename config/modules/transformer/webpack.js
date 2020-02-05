@@ -15,10 +15,9 @@ module.exports = merge(base({
         webpackNodeExternals()
     ],
     entry: {
-        index: './src/transformer/transformer.ts',
+        index: './src/transformer/index.ts',
     },
     output: {
         path: path.resolve(__dirname, "../../../dist/transformer"),
-        filename: "index.js"
     }
 });
