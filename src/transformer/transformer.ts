@@ -5,7 +5,7 @@ import { getMock, getMockForList, storeRegisterMock } from './mock/mock';
 import { MockDefiner } from './mockDefiner/mockDefiner';
 import { SetTypeChecker, TypeChecker } from './typeChecker/typeChecker';
 
-export default function transformer(program: ts.Program, options?: TsAutoMockOptions): ts.TransformerFactory<ts.SourceFile> {
+export function transformer(program: ts.Program, options?: TsAutoMockOptions): ts.TransformerFactory<ts.SourceFile> {
   SetTsAutoMockOptions(options);
   SetTypeChecker(program.getTypeChecker());
 
