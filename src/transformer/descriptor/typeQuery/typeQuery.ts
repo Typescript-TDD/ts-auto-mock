@@ -11,9 +11,17 @@ import { GetModuleDescriptor } from '../module/module';
 import { GetNullDescriptor } from '../null/null';
 import { GetType } from '../type/type';
 import { GetTypeReferenceDescriptor } from '../typeReference/typeReference';
+import { GetUndefinedDescriptor } from '../undefined/undefined';
 
 export function GetTypeQueryDescriptor(node: ts.TypeQueryNode, scope: Scope): ts.Expression {
-  const declaration: ts.NamedDeclaration = getTypeQueryDeclaration(node);
+  const symbol: ts.Symbol = getTypeQuerySymbol(node);
+
+  if (!symbol.declarations.length) {
+    return GetUndefinedDescriptor();
+  }
+
+  const declaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(symbol);
+
   return GetTypeQueryDescriptorFromDeclaration(declaration, scope);
 }
 
@@ -68,22 +76,8 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
   }
 }
 
-function getTypeQueryDeclaration(node: ts.TypeQueryNode): ts.NamedDeclaration {
-  const typeChecker: ts.TypeChecker = TypeChecker();
-  /*
-     TODO: Find different workaround without casting to any
-     Cast to any is been done because getSymbolAtLocation doesn't work when the node is an inferred identifier of a type query of a type query
-     Use case is:
-     ```
-     const myVar = MyEnum;
-     createMock<typeof myVar>();
-     ```
-     here `typeof myVar` is inferred `typeof MyEnum` and the `MyEnum` identifier doesn't play well with getSymbolAtLocation and it returns undefined.
-    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.exprName) || (node.exprName as any).symbol;
-
-  return getTypeQueryDeclarationFromSymbol(symbol);
+function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol {
+  return TypeChecker().getSymbolAtLocation(node.exprName);
 }
 
 function getTypeQueryDeclarationFromSymbol(symbol: ts.Symbol): ts.NamedDeclaration {
