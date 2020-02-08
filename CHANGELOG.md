@@ -1,3 +1,14 @@
+<a name="1.5.3"></a>
+## [1.5.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.5.1...1.5.3) (2020-02-05)
+
+
+### Bug Fixes
+
+* **transformer:** export definitely typed for transformer so it will be easier to read the documentation while developing ([#222](https://github.com/Typescript-TDD/ts-auto-mock/issues/222)) ([37b4b7e](https://github.com/Typescript-TDD/ts-auto-mock/commit/37b4b7e))
+* **typeof-alias-export:** make sure alias exports will be transformed correctly ([#214](https://github.com/Typescript-TDD/ts-auto-mock/issues/214)) ([27ae136](https://github.com/Typescript-TDD/ts-auto-mock/commit/27ae136))
+
+
+
 <a name="1.5.2"></a>
 ## [1.5.2](https://github.com/uittorio/ts-auto-mock/compare/1.5.1...1.5.2) (2020-02-01)
 
