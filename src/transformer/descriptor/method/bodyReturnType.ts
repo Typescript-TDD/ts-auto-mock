@@ -10,9 +10,9 @@ export function GetReturnTypeFromBodyDescriptor(node: ts.ArrowFunction | ts.Func
 export function GetReturnNodeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration): ts.Node {
   let returnValue: ts.Node;
 
-  const functionBody: ts.FunctionBody = node.body as ts.FunctionBody;
+  const functionBody: ts.ConciseBody = node.body;
 
-  if (functionBody.statements) {
+  if (ts.isBlock(functionBody)) {
     const returnStatement: ts.ReturnStatement = GetReturnStatement(functionBody);
 
     if (returnStatement) {
