@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { GetCallExpressionType } from '../callExpression/callExpression';
 import { TypescriptHelper } from '../helper/helper';
-import { GetReturnNodeFromBody } from '../method/bodyReturnType';
 import { GetTypeImport } from './typeImport';
 
 export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: Scope): ts.Node[] {
@@ -59,8 +59,7 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
   }
 
   if (ts.isCallExpression(node)) {
-    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.expression);
-    return GetType(GetReturnNodeFromBody(declaration as ts.FunctionDeclaration), scope);
+    return GetType(GetCallExpressionType(node), scope);
   }
 
   return node;

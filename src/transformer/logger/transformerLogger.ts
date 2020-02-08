@@ -6,6 +6,7 @@ let logger: ILogger;
 export interface TransformerLogger {
   unexpectedCreateMock(mockFileName: string, expectedFileName: string): void;
   typeNotSupported(type: string): void;
+  typeOfFunctionCallNotFound(node: string): void;
 }
 
 export function TransformerLogger(): TransformerLogger {
@@ -19,6 +20,9 @@ export function TransformerLogger(): TransformerLogger {
     },
     typeNotSupported(type: string): void {
       logger.warning(`Not supported type: ${type} - it will convert to null`);
+    },
+    typeOfFunctionCallNotFound(node: string): void {
+      logger.warning(`Cannot find type of function call: ${node} - it will convert to null`);
     },
   };
 }

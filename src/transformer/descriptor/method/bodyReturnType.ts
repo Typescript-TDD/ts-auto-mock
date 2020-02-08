@@ -7,7 +7,7 @@ export function GetReturnTypeFromBodyDescriptor(node: ts.ArrowFunction | ts.Func
   return GetDescriptor(GetReturnNodeFromBody(node), scope);
 }
 
-export function GetReturnNodeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration): ts.Node {
+export function GetReturnNodeFromBody(node: ts.FunctionLikeDeclaration): ts.Node {
   let returnValue: ts.Node;
 
   const functionBody: ts.ConciseBody = node.body;
