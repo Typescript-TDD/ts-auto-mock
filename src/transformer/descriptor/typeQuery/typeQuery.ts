@@ -77,19 +77,7 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
 }
 
 function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol {
-  /*
-    TODO: Find different workaround without casting to any
-    Cast to any is been done because getSymbolAtLocation doesn't work when the node is an inferred identifier of a type query of a type query
-    Use case is:
-    ```
-    const myVar = MyEnum;
-    createMock<typeof myVar>();
-    ```
-    here `typeof myVar` is inferred `typeof MyEnum` and the `MyEnum` identifier doesn't play well with getSymbolAtLocation and it returns undefined.
-   */
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return TypeChecker().getSymbolAtLocation(node.exprName) || (node.exprName as any).symbol;
+  return TypeChecker().getSymbolAtLocation(node.exprName);
 }
 
 function getTypeQueryDeclarationFromSymbol(symbol: ts.Symbol): ts.NamedDeclaration {
