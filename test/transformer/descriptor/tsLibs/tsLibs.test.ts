@@ -203,10 +203,28 @@ describe('typescript lib', () => {
   });
 
   it('should set a promise resolved for a type mocked directly', async () => {
-        type S<T> = Promise<T>;
-        const properties: S<string> = createMock<S<string>>();
-        const result: string = await properties;
-        expect(result).toBe('');
+    type S<T> = Promise<T>;
+    const properties: S<string> = createMock<S<string>>();
+    const result: string = await properties;
+    expect(result).toBe('');
+  });
+
+  it('should create a new Map for a Map', () => {
+    type S<T> = Map<T, string>;
+    type AType = {
+      map: Map<number, Number>;
+    };
+    interface AnInterface {
+      map: Map<String, string>;
+    }
+    const mapMock: S<string> = createMock<S<string>>();
+    const aType: AType = createMock<AType>();
+    const anInterface: AnInterface = createMock<AnInterface>();
+    const realMap: Map<string, string> = new Map();
+
+    expect(mapMock.constructor).toBe(realMap.constructor);
+    expect(aType.map.constructor).toBe(realMap.constructor);
+    expect(anInterface.map.constructor).toBe(realMap.constructor);
   });
 
   it('should set undefined for a not recognized type alias declaration', () => {

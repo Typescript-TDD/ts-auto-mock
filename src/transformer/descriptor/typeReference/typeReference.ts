@@ -5,7 +5,7 @@ import { Scope } from '../../scope/scope';
 import { isTypeReferenceReusable } from '../../typeReferenceReusable/typeReferenceReusable';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
-import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
+import { GetTypescriptTypeDescriptor, IsTypescriptType } from '../tsLibs/typecriptLibs';
 
 export function GetTypeReferenceDescriptor(node: ts.TypeReferenceNode, scope: Scope): ts.Expression {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
@@ -15,7 +15,7 @@ export function GetTypeReferenceDescriptor(node: ts.TypeReferenceNode, scope: Sc
   }
 
   if (IsTypescriptType(declaration)) {
-    return GetDescriptor(GetTypescriptType(node, scope), scope);
+    return GetTypescriptTypeDescriptor(node, scope);
   }
 
   if (isTypeReferenceReusable(declaration)) {

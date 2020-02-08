@@ -40,8 +40,8 @@ export namespace TypescriptCreator {
     return ts.createProperty([], [], propertyName, undefined, type, undefined);
   }
 
-  export function createPropertyWitInitializer(propertyName: string | PropertyName, initializer: ts.Expression): ts.PropertyDeclaration {
-    return ts.createProperty([], [], propertyName, undefined, undefined, initializer);
+  export function createPropertySignature(propertyName: string | PropertyName, type: ts.TypeNode): ts.PropertySignature {
+    return ts.createPropertySignature([], propertyName, undefined, type, undefined);
   }
 
   export function createParameter(parameterName: string): ts.ParameterDeclaration {

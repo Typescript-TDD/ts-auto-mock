@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { TypescriptHelper } from '../helper/helper';
-import { GetTypescriptType, IsTypescriptType } from '../tsLibs/typecriptLibs';
+import { GetReturnNodeFromBody } from '../method/bodyReturnType';
 import { GetTypeImport } from './typeImport';
 
 export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: Scope): ts.Node[] {
@@ -33,10 +33,6 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
   if (ts.isTypeReferenceNode(node)) {
     const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
 
-    if (IsTypescriptType(declaration)) {
-      return GetTypescriptType(node, scope);
-    }
-
     return GetType(declaration, scope);
   }
 
@@ -60,6 +56,11 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
 
   if (ts.isParenthesizedTypeNode(node)) {
     return GetType(node.type, scope);
+  }
+
+  if (ts.isCallExpression(node)) {
+    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.expression);
+    return GetType(GetReturnNodeFromBody(declaration as ts.FunctionDeclaration), scope);
   }
 
   return node;

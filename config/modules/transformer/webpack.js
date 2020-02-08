@@ -7,6 +7,7 @@ const base = require("../base/webpack.base");
 module.exports = merge(base({
     tsConfigFile: 'config/modules/transformer/tsconfig.json'
 }), {
+    devtool: 'cheap-module-eval-source-map',
     target: "node",
     node: {
         __dirname: false

@@ -21,50 +21,50 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
   const typeChecker: ts.TypeChecker = TypeChecker();
 
   switch (declaration.kind) {
-  case ts.SyntaxKind.ClassDeclaration:
-    return TypescriptCreator.createFunctionExpressionReturn(
-      GetTypeReferenceDescriptor(
+    case ts.SyntaxKind.ClassDeclaration:
+      return TypescriptCreator.createFunctionExpressionReturn(
+        GetTypeReferenceDescriptor(
+          ts.createTypeReferenceNode(declaration.name as ts.Identifier, undefined),
+          scope,
+        ),
+      );
+    case ts.SyntaxKind.TypeAliasDeclaration:
+    case ts.SyntaxKind.InterfaceDeclaration:
+      return GetTypeReferenceDescriptor(
         ts.createTypeReferenceNode(declaration.name as ts.Identifier, undefined),
         scope,
-      ),
-    );
-  case ts.SyntaxKind.TypeAliasDeclaration:
-  case ts.SyntaxKind.InterfaceDeclaration:
-    return GetTypeReferenceDescriptor(
-      ts.createTypeReferenceNode(declaration.name as ts.Identifier, undefined),
-      scope,
-    );
-  case ts.SyntaxKind.NamespaceImport:
-  case ts.SyntaxKind.ImportEqualsDeclaration:
-    return GetModuleDescriptor(declaration, scope);
-  case ts.SyntaxKind.EnumDeclaration:
-    // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
-    // TheNewEmitResolver.ensureEmitOf(GetImportDeclarationOf(node.eprName as ts.Identifier);
-    // return node.exprName as ts.Identifier;
-    return GetMockFactoryCallTypeofEnum(declaration as ts.EnumDeclaration);
-  case ts.SyntaxKind.FunctionDeclaration:
-  case ts.SyntaxKind.MethodSignature:
-    return GetMethodDeclarationDescriptor(declaration as ts.FunctionDeclaration, scope);
-  case ts.SyntaxKind.VariableDeclaration:
-    const variable: ts.VariableDeclaration = declaration as ts.VariableDeclaration;
+      );
+    case ts.SyntaxKind.NamespaceImport:
+    case ts.SyntaxKind.ImportEqualsDeclaration:
+      return GetModuleDescriptor(declaration, scope);
+    case ts.SyntaxKind.EnumDeclaration:
+      // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
+      // TheNewEmitResolver.ensureEmitOf(GetImportDeclarationOf(node.eprName as ts.Identifier);
+      // return node.exprName as ts.Identifier;
+      return GetMockFactoryCallTypeofEnum(declaration as ts.EnumDeclaration);
+    case ts.SyntaxKind.FunctionDeclaration:
+    case ts.SyntaxKind.MethodSignature:
+      return GetMethodDeclarationDescriptor(declaration as ts.FunctionDeclaration, scope);
+    case ts.SyntaxKind.VariableDeclaration:
+      const variable: ts.VariableDeclaration = declaration as ts.VariableDeclaration;
 
-    if (variable.type) {
-      return GetDescriptor(variable.type, scope);
-    }
+      if (variable.type) {
+        return GetDescriptor(variable.type, scope);
+      }
 
-    const inferredType: ts.Node = GetType(variable.initializer, scope);
-    const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(inferredType);
+      const inferredType: ts.Node = GetType(variable.initializer, scope);
+      const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(inferredType);
 
-    if (symbol) {
-      const inferredTypeDeclaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(symbol);
+      if (symbol) {
+        const inferredTypeDeclaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(symbol);
 
-      return GetTypeQueryDescriptorFromDeclaration(inferredTypeDeclaration, scope);
-    } else {
-      return GetDescriptor(inferredType, scope);
-    }
-  default:
-    TransformerLogger().typeNotSupported(`TypeQuery of ${ts.SyntaxKind[declaration.kind]}`);
-    return GetNullDescriptor();
+        return GetTypeQueryDescriptorFromDeclaration(inferredTypeDeclaration, scope);
+      } else {
+        return GetDescriptor(inferredType, scope);
+      }
+    default:
+      TransformerLogger().typeNotSupported(`TypeQuery of ${ts.SyntaxKind[declaration.kind]}`);
+      return GetNullDescriptor();
   }
 }
 

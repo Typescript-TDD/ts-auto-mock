@@ -1,10 +1,13 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
-import { GetNullDescriptor } from '../null/null';
 
-export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
-  let returnValue: ts.Expression;
+export function GetReturnTypeFromBodyDescriptor(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
+  return GetDescriptor(GetReturnNodeFromBody(node), scope);
+}
+
+export function GetReturnNodeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration): ts.Node {
+  let returnValue: ts.Node;
 
   const functionBody: ts.FunctionBody = node.body as ts.FunctionBody;
 
@@ -12,12 +15,12 @@ export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpres
     const returnStatement: ts.ReturnStatement = GetReturnStatement(functionBody);
 
     if (returnStatement) {
-      returnValue = GetDescriptor(returnStatement.expression, scope);
+      returnValue = returnStatement.expression;
     } else {
-      returnValue = GetNullDescriptor();
+      returnValue = ts.createNull();
     }
   } else {
-    returnValue = GetDescriptor(node.body, scope);
+    returnValue = node.body;
   }
 
   return returnValue;
