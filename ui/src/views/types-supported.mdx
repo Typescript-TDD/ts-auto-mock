@@ -169,8 +169,9 @@ This is a special case. The library try to convert to the most useful type.
 ```ts
 class MyClass {
   array: Array<number>; // []
-  number: Number; // 0;
-  promise: Promise<string>// a promise that will resolve an empty string Promise.resolve("")
+  number: Number; // 0
+  promise: Promise<string>; // a promise that will resolve an empty string Promise.resolve("")
+  map: Map<string, string>; // new Map()
 }
 ```
 

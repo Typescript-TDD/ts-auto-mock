@@ -268,7 +268,78 @@ describe('typeQuery', () => {
         expect(mock.A).toEqual(0);
       });
 
+      it('should work for function call of a variable with no explicit return type of function', () => {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/typedef
+        const testExplicitType: (value: boolean) => {prop: string} = (value: boolean) => {
+          if (value) {
+            return {prop: 'asd'};
+          }
+
+          return {prop: 'wooo'};
+        };
+
+        // eslint-disable-next-line @typescript-eslint/typedef
+        const aVariable = testExplicitType(true);
+
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(mock.prop).toEqual('');
+      });
+
+      it('should work for function call of a variable with no explicit type', () => {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/typedef
+        const test = (value: boolean): {prop: string} => {
+          if (value) {
+            return {prop: 'asd'};
+          }
+
+          return {prop: 'wooo'};
+        };
+
+        // eslint-disable-next-line @typescript-eslint/typedef
+        const aVariable = test(true);
+
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(mock.prop).toEqual('');
+      });
+
+      it('should work for function call of a variable with no explicit type and no explicit return type of function', () => {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/typedef
+        const test = (value: boolean) => {
+          if (value) {
+            return {prop: 'asd'};
+          }
+
+          return {prop: 'wooo'};
+        };
+
+        // eslint-disable-next-line @typescript-eslint/typedef
+        const aVariable = test(true);
+
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(mock.prop).toEqual('wooo');
+      });
+
       it('should work for function call', () => {
+        function test(value: boolean): { prop: string } {
+          if (value) {
+            return {prop: 'asd'};
+          }
+
+          return {prop: 'wooo'};
+        }
+
+        // eslint-disable-next-line @typescript-eslint/typedef
+        const aVariable = test(true);
+
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(mock.prop).toEqual('');
+      });
+
+      it('should work for function call of a function with no explicit return type', () => {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         function test(value: boolean) {
           if (value) {
@@ -283,7 +354,30 @@ describe('typeQuery', () => {
 
         const mock: typeof aVariable = createMock<typeof aVariable>();
 
-        expect(mock.prop).toEqual('asd');
+        expect(mock.second).toEqual(7);
+      });
+
+      it('should not call the real function to get the type for function call', () => {
+        let count: number = 0;
+
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        function test(value: boolean) {
+          count++;
+
+          if (value) {
+            return {prop: 'asd'};
+          }
+
+          return {second: 7};
+        }
+
+        // eslint-disable-next-line @typescript-eslint/typedef
+        const aVariable = test(true);
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const mock: typeof aVariable = createMock<typeof aVariable>();
+
+        expect(count).toEqual(1);
       });
 
       it('should work for module', () => {

@@ -3,21 +3,25 @@ import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { GetNullDescriptor } from '../null/null';
 
-export function GetReturnTypeFromBody(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
-  let returnValue: ts.Expression;
+export function GetReturnTypeFromBodyDescriptor(node: ts.ArrowFunction | ts.FunctionExpression | ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
+  return GetDescriptor(GetReturnNodeFromBody(node), scope);
+}
 
-  const functionBody: ts.FunctionBody = node.body as ts.FunctionBody;
+export function GetReturnNodeFromBody(node: ts.FunctionLikeDeclaration): ts.Node {
+  let returnValue: ts.Node;
 
-  if (functionBody.statements) {
+  const functionBody: ts.ConciseBody = node.body;
+
+  if (ts.isBlock(functionBody)) {
     const returnStatement: ts.ReturnStatement = GetReturnStatement(functionBody);
 
     if (returnStatement) {
-      returnValue = GetDescriptor(returnStatement.expression, scope);
+      returnValue = returnStatement.expression;
     } else {
       returnValue = GetNullDescriptor();
     }
   } else {
-    returnValue = GetDescriptor(node.body, scope);
+    returnValue = node.body;
   }
 
   return returnValue;

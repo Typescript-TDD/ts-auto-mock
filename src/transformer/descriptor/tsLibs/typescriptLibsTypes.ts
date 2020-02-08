@@ -7,6 +7,7 @@ export enum TypescriptLibsTypes {
   Object = 'Object',
   Function = 'Function',
   Promise = 'Promise',
+  Map = 'Map',
 }
 
 export const TypescriptLibsTypesFolder: string = 'node_modules/typescript/lib';
