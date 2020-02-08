@@ -1,3 +1,18 @@
+<a name="1.5.4"></a>
+## [1.5.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.3...v1.5.4) (2020-02-08)
+
+
+### Bug Fixes
+
+* **typequery:** add support for typequery undefined ([#227](https://github.com/Typescript-TDD/ts-auto-mock/issues/227)) ([0b835b1](https://github.com/Typescript-TDD/ts-auto-mock/commit/0b835b1))
+
+
+### Features
+
+* **map:** add Map support as a type ([#228](https://github.com/Typescript-TDD/ts-auto-mock/issues/228)) ([3006c84](https://github.com/Typescript-TDD/ts-auto-mock/commit/3006c84)), closes [#225](https://github.com/Typescript-TDD/ts-auto-mock/issues/225)
+
+
+
 <a name="1.5.3"></a>
 ## [1.5.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.5.1...1.5.3) (2020-02-05)
 
