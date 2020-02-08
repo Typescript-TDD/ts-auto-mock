@@ -12,28 +12,28 @@ export function GetIndexedAccessTypeDescriptor(node: ts.IndexedAccessTypeNode, s
   let propertyName: string | null = null;
 
   switch (node.indexType.kind) {
-  case ts.SyntaxKind.TypeReference:
-    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode((node.indexType as ts.TypeReferenceNode).typeName);
+    case ts.SyntaxKind.TypeReference:
+      const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode((node.indexType as ts.TypeReferenceNode).typeName);
 
-    switch (declaration.kind) {
-    case ts.SyntaxKind.TypeParameter:
-      const propertyNameIdentifier: ts.PropertyName = PropertySignatureCache.instance.get();
-      propertyName = (propertyNameIdentifier as ts.Identifier).escapedText as string;
+      switch (declaration.kind) {
+        case ts.SyntaxKind.TypeParameter:
+          const propertyNameIdentifier: ts.PropertyName = PropertySignatureCache.instance.get();
+          propertyName = (propertyNameIdentifier as ts.Identifier).escapedText as string;
+          break;
+        case ts.SyntaxKind.TypeAliasDeclaration:
+          propertyName = (((declaration as ts.TypeAliasDeclaration).type as ts.LiteralTypeNode).literal as ts.StringLiteral).text;
+          break;
+        default:
+          TransformerLogger().typeNotSupported('IndexedAccess of TypeReference of ' + ts.SyntaxKind[declaration.kind]);
+          break;
+      }
       break;
-    case ts.SyntaxKind.TypeAliasDeclaration:
-      propertyName = (((declaration as ts.TypeAliasDeclaration).type as ts.LiteralTypeNode).literal as ts.StringLiteral).text;
+    case ts.SyntaxKind.LiteralType:
+      propertyName = ((node.indexType as ts.LiteralTypeNode).literal as ts.StringLiteral).text;
       break;
     default:
-      TransformerLogger().typeNotSupported('IndexedAccess of TypeReference of ' + ts.SyntaxKind[declaration.kind]);
+      TransformerLogger().typeNotSupported('IndexedAccess of ' + ts.SyntaxKind[node.indexType.kind]);
       break;
-    }
-    break;
-  case ts.SyntaxKind.LiteralType:
-    propertyName = ((node.indexType as ts.LiteralTypeNode).literal as ts.StringLiteral).text;
-    break;
-  default:
-    TransformerLogger().typeNotSupported('IndexedAccess of ' + ts.SyntaxKind[node.indexType.kind]);
-    break;
   }
 
   if (propertyName !== null) {
