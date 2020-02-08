@@ -1,5 +1,3 @@
-/*globals module, require */
-const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (options) => {
@@ -32,7 +30,7 @@ module.exports = (options) => {
             filename: "[name].js"
         },
         plugins: [
-            new CleanWebpackPlugin(),
+            new CleanWebpackPlugin()
         ]
     }
 };
