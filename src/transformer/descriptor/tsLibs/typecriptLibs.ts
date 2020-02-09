@@ -48,6 +48,8 @@ export function GetTypescriptTypeDescriptor(node: ts.TypeReferenceNode, scope: S
       );
     case(TypescriptLibsTypes.Map):
       return ts.createNew(ts.createIdentifier('Map'), undefined, undefined);
+    case(TypescriptLibsTypes.Set):
+      return ts.createNew(ts.createIdentifier('Set'), undefined, undefined);
     default:
       return GetDescriptor(ts.createNode(ts.SyntaxKind.UndefinedKeyword), scope);
   }
