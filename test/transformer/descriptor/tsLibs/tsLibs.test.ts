@@ -227,6 +227,26 @@ describe('typescript lib', () => {
     expect(anInterface.map.constructor).toBe(realMap.constructor);
   });
 
+  it('should create a new Set for a Set', () => {
+    type S<T> = Set<T>;
+    type AType = {
+      mySet: Set<number>;
+    };
+    interface AnInterface {
+      mySet: Set<string>;
+      doSth(): Set<string>;
+    }
+    const setMock: S<string> = createMock<S<string>>();
+    const aType: AType = createMock<AType>();
+    const anInterface: AnInterface = createMock<AnInterface>();
+    const realSet: Set<string> = new Set();
+
+    expect(setMock.constructor).toBe(realSet.constructor);
+    expect(aType.mySet.constructor).toBe(realSet.constructor);
+    expect(anInterface.mySet.constructor).toBe(realSet.constructor);
+    expect(anInterface.doSth().constructor).toBe(realSet.constructor);
+  });
+
   it('should set undefined for a not recognized type alias declaration', () => {
     interface WithLiteralTypescriptType {
       prop: InsertPosition;
