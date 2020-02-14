@@ -1,3 +1,13 @@
+<a name="1.5.5"></a>
+## [1.5.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.5.4...1.5.5) (2020-02-09)
+
+
+### Features
+
+* **set:** add Set support as a type ([#233](https://github.com/Typescript-TDD/ts-auto-mock/issues/233)) ([446c090](https://github.com/Typescript-TDD/ts-auto-mock/commit/446c090))
+
+
+
 <a name="1.5.4"></a>
 ## [1.5.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.3...v1.5.4) (2020-02-08)
 
