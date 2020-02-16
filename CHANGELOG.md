@@ -1,3 +1,13 @@
+<a name="1.5.6"></a>
+## [1.5.6](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.5...v1.5.6) (2020-02-16)
+
+
+### Features
+
+* **extendsMappedType:** make sure extending mapped types do not prevent to compile ([#241](https://github.com/Typescript-TDD/ts-auto-mock/issues/241)) ([627b9bc](https://github.com/Typescript-TDD/ts-auto-mock/commit/627b9bc))
+
+
+
 <a name="1.5.5"></a>
 ## [1.5.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.5.4...1.5.5) (2020-02-09)
 
