@@ -10,7 +10,7 @@ import { SignatureLike } from './signatureLike';
 export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.Expression {
   const properties: PropertyLike[] = propertiesSymbol
     .filter((prop: ts.Symbol) => !!prop.declarations) // Dynamically generated properties (mapped types) do not have declarations
-    .map((prop: ts.Symbol) => prop?.declarations[0]) as PropertyLike[];
+    .map((prop: ts.Symbol) => prop.declarations[0]) as PropertyLike[];
 
   const signaturesDeclarations: SignatureLike[] = signatures.map((signature: ts.Signature) => signature.declaration) as SignatureLike[];
 
