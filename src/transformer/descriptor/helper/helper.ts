@@ -18,6 +18,13 @@ export namespace TypescriptHelper {
     const typeChecker: ts.TypeChecker = TypeChecker();
     const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node);
 
+    if (!symbol) {
+      // When the node lose the type checker feature there is no way to use typeChecker to get information.
+      // However there is a symbol property that can be used instead,
+      const type: ts.Type = node as unknown as ts.Type;
+      return GetDeclarationFromSymbol(type.symbol);
+    }
+
     return GetDeclarationFromSymbol(symbol);
   }
 

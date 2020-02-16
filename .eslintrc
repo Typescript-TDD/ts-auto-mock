@@ -106,7 +106,7 @@
     "@typescript-eslint/type-annotation-spacing": "error",
     "@typescript-eslint/unified-signatures": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "arrow-body-style": "error",
+    "arrow-body-style": "off",
     "arrow-parens": [
       "error",
       "as-needed"

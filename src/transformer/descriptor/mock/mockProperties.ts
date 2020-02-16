@@ -2,13 +2,28 @@ import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
+import { TypeChecker} from '../../typeChecker/typeChecker';
+import { TypescriptCreator } from '../../helper/creator';
 import { GetMockCall } from './mockCall';
 import { GetMockPropertiesAssignments, PropertyAssignments } from './mockPropertiesAssignments';
 import { PropertyLike } from './propertyLike';
 import { SignatureLike } from './signatureLike';
 
 export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signatures: ReadonlyArray<ts.Signature>, scope: Scope): ts.Expression {
-  const properties: PropertyLike[] = propertiesSymbol.map((prop: ts.Symbol) => prop.declarations[0]) as PropertyLike[];
+  const properties: PropertyLike[] = propertiesSymbol.map((prop: ts.Symbol) => {
+    const typeChecker: ts.TypeChecker = TypeChecker();
+
+    // A property may not have a declaration if has been created dynamically (es. {[key in T]: S};)
+    if (!prop.declarations) {
+      // Unfortunately this mechanism force us to create a typeNode that cannot be checked (with the typeChecker) from this point.
+      // See GetDeclarationFromNode in helper.ts for more information
+      const parameterDeclaration: ts.ParameterDeclaration = typeChecker.symbolToParameterDeclaration(prop);
+      const type: ts.TypeNode = parameterDeclaration.type;
+
+      return TypescriptCreator.createPropertySignature(prop.getName(), type);
+    }
+    return prop.declarations[0];
+  }) as PropertyLike[];
 
   const signaturesDeclarations: SignatureLike[] = signatures.map((signature: ts.Signature) => signature.declaration) as SignatureLike[];
 
