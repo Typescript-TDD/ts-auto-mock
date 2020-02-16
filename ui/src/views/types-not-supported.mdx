@@ -62,12 +62,10 @@ const mock = createMock<InterfaceWithExtendsMappedType>();
 
 mock.FIRST // undefined, it should be IBase[]
 mock.SECOND // undefined, it should be IBase[]
-
+```
 [issue](https://github.com/Typescript-TDD/ts-auto-mock/issues/238)
 Unfortunately this functionality doesnt work yet because when getting properties from an interface that extend
 a mapped type typescript returns a different type of property that is difficult to mock.
 
 There is a branch created with a working version but it needs more investigation because the implementation is not readable and it may cause more issues
 [link](https://github.com/Typescript-TDD/ts-auto-mock/tree/feature/extends-mapped-type)
-
-```
