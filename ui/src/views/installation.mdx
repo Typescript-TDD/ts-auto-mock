@@ -13,6 +13,119 @@ Unfortunately, TypeScript itself does not currently provide any easy way to use 
 
 There are different ways to do it based on how you are currently compiling your typescript files
 
+## jest + ts jest + ttypescript
+
+1. install the dependencies
+
+```
+npm install jest ts-jest typescript ttypescript jest-ts-auto-mock ts-auto-mock
+```
+you need ttypescript to allow typescript transformer
+
+2. add the transformer to the tsconfig.json
+```json
+...
+"compilerOptions": {
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
+...
+```
+- Remember to set cacheBetweenTests to false because jest runs test in parallel and ts-auto-mock doesn't support yet the cache
+between parallel tests
+- you can find a json example [here](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ttypescript/tsconfig.json)
+
+3. add ts-jest to the transformation pattern in the jest config
+```json
+...
+ "jest": {
+    "transform": {
+        ".(ts|tsx)": "ts-jest"
+    }
+  }
+...
+```
+
+- you can find a json example [here](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ttypescript/package.json)
+
+4. add ttypescript to be used as ts jest compiler
+
+```json
+...
+"jest": {
+    "globals": {
+      "ts-jest": {
+        "compiler": "ttypescript"
+      }
+    }
+}
+...
+```
+- you can find a json example [here](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ttypescript/package.json)
+
+5. add jest-ts-auto-mock config file to your setup file
+
+```json
+...
+"jest": {
+    "setupFiles": [
+      "<rootDir>config.ts"
+    ]
+ }
+...
+```
+
+// config.ts
+```ts
+import "jest-ts-auto-mock";
+```
+[Example](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ttypescript/config.ts)
+
+6. Create your first test
+
+// test.test.ts
+```ts
+import { createMock } from "ts-auto-mock";
+
+interface Interface {
+    	a: string;
+    	b: number;
+}
+
+describe('reuse', () => {
+	let mock: Interface;
+
+	beforeEach(() => {
+
+		mock = createMock<Interface>();
+	});
+
+	it('should work', () => {
+		expect(mock.a).toBe("");
+	});
+});
+
+```
+
+7. run your test
+
+// package.json
+```json
+...
+  "scripts": {
+    "test": "jest"
+  }
+...
+```
+```
+npm run test
+```
+
+All Done!!!
+
 ## webpack
 
 You can use awesome-typescript-loader or ts-loader
