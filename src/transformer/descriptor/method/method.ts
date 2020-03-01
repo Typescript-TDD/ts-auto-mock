@@ -15,7 +15,7 @@ export function GetMethodDescriptor(propertyName: ts.PropertyName, returnValue: 
     true,
   ));
 
-  return ts.createCall(providerGetMethod, [], [propertyNameStringLiteral, propertyValueFunction]);
+  return TypescriptCreator.createCall(providerGetMethod, [propertyNameStringLiteral, propertyValueFunction]);
 }
 
 function CreateProviderGetMethod(): ts.PropertyAccessExpression {

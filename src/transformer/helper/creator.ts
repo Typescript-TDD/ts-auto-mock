@@ -1,19 +1,31 @@
-import { PropertyName } from 'typescript';
+import { PropertyName, VariableDeclaration, VariableStatement} from 'typescript';
 import * as ts from 'typescript';
 
 export namespace TypescriptCreator {
   export function createArrowFunction(block: ts.ConciseBody, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.ArrowFunction {
-    return ts.createArrowFunction([], [], parameter, undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
+    return ts.createArrowFunction(undefined, undefined, parameter, undefined, ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), block);
   }
 
   export function createFunctionExpression(block: ts.Block, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.FunctionExpression {
-    return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
+    return ts.createFunctionExpression(undefined, undefined, undefined, undefined, parameter, undefined, block);
   }
 
   export function createFunctionExpressionReturn(descriptorToReturn: ts.Expression, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.FunctionExpression {
     const block: ts.Block = ts.createBlock([ts.createReturn(descriptorToReturn)]);
 
-    return ts.createFunctionExpression([], null, undefined, [], parameter, undefined, block);
+    return ts.createFunctionExpression(undefined, undefined, undefined, undefined, parameter, undefined, block);
+  }
+
+  export function createCall(expression: ts.Expression, argumentExpressions: ts.Expression[]): ts.CallExpression {
+    return ts.createCall(
+      expression,
+      undefined,
+      argumentExpressions,
+    );
+  }
+
+  export function createVariableStatement(declarations: VariableDeclaration[]): VariableStatement {
+    return ts.createVariableStatement(undefined, declarations);
   }
 
   export function createIIFE(block: ts.Block): ts.CallExpression {
@@ -37,7 +49,7 @@ export namespace TypescriptCreator {
   }
 
   export function createProperty(propertyName: string | PropertyName, type: ts.TypeNode): ts.PropertyDeclaration {
-    return ts.createProperty([], [], propertyName, undefined, type, undefined);
+    return ts.createProperty(undefined, undefined, propertyName, undefined, type, undefined);
   }
 
   export function createPropertySignature(propertyName: string | PropertyName, type: ts.TypeNode): ts.PropertySignature {

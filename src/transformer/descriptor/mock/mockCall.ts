@@ -7,7 +7,7 @@ import { PropertyAssignments } from './mockPropertiesAssignments';
 export function GetMockCall(properties: PropertyAssignments, signature: ts.Expression): ts.CallExpression {
   const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
   const statements: ts.Statement[] = [
-    ts.createVariableStatement([], [
+    TypescriptCreator.createVariableStatement([
       TypescriptCreator.createVariableDeclaration(MockIdentifierInternalValues, ts.createObjectLiteral()),
       TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, signature || ts.createObjectLiteral(properties.literals)),
     ]),

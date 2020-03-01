@@ -6,6 +6,7 @@ import { GenericDeclarationSupported } from '../genericDeclaration/genericDeclar
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
+import { TypescriptCreator } from '../helper/creator';
 
 export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeReferenceNode.typeName);
@@ -40,9 +41,8 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
   const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(declarations, intersection);
 
-  return ts.createCall(
+  return TypescriptCreator.createCall(
     mockFactoryCall,
-    [],
     [ts.createArrayLiteral(genericsParametersExpression)],
   );
 }
@@ -50,9 +50,8 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
 export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration): ts.Expression {
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(declaration);
 
-  return ts.createCall(
+  return TypescriptCreator.createCall(
     mockFactoryCall,
-    [],
     [],
   );
 }
@@ -60,9 +59,8 @@ export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration): t
 export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(mockKey);
 
-  return ts.createCall(
+  return TypescriptCreator.createCall(
     mockFactoryCall,
-    [],
     [MockIdentifierGenericParameter],
   );
 }
@@ -78,9 +76,8 @@ function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenc
 
   const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
 
-  return ts.createCall(
+  return TypescriptCreator.createCall(
     mockFactoryCall,
-    [],
     [ts.createArrayLiteral(genericsParametersExpression)],
   );
 }
