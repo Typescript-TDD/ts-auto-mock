@@ -38,11 +38,11 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-angular": "^8.3.4",
-    "@types/jasmine": "^3.5.3",
-    "@types/node": "^13.7.1",
-    "@typescript-eslint/eslint-plugin": "^2.19.2",
-    "@typescript-eslint/eslint-plugin-tslint": "^2.19.2",
-    "@typescript-eslint/parser": "^2.19.2",
+    "@types/jasmine": "^3.5.7",
+    "@types/node": "^13.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
     "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^3.0.0",
     "conventional-changelog-cli": "^2.0.31",
@@ -73,7 +73,7 @@
     "winston": "^3.2.1"
   },
   "peerDependencies": {
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "husky": {
     "hooks": {
