@@ -35,7 +35,7 @@ mock.details // "{phone: 0} "
  
 ## [Changelog](CHANGELOG.md)
 
-## [Roadmap](ROADMAP.md)
+## [Roadmap](https://github.com/Typescript-TDD/ts-auto-mock/wiki/Roadmap)
 ## Authors
 
 * [**Vittorio Guerriero**](https://github.com/uittorio)
