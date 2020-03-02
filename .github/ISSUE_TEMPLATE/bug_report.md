@@ -11,11 +11,11 @@ assignees: ''
 Describe your issue here.
 
 ### Your environment
-* version of ts-auto-mock
-* version of typescript
-* version of node
-* version of npm
-* any other dependencies version that you think is relevant
+* ts-auto-mock version:
+* typescript version:
+* node version:
+* npm version:
+* list any other dependencies version that you think is relevant
 
 ### Steps to reproduce
 Tell us how to reproduce this issue. Please provide a test code example
