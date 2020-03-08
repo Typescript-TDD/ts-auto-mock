@@ -52,3 +52,4 @@ jobs:
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
           branch: definitely-typed-tests
+          token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}

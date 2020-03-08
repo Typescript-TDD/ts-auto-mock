@@ -3,6 +3,7 @@ process.on('unhandledRejection', error => {
     process.exit(1);
 });
 
+
 require('dotenv').config();
 const fs = require('fs');
 const processService = require('../utils/process/process')(process);
