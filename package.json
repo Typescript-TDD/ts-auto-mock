@@ -40,6 +40,7 @@
     "@commitlint/config-angular": "^8.3.4",
     "@types/jasmine": "^3.5.7",
     "@types/node": "^13.7.7",
+    "@types/uuid": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/eslint-plugin-tslint": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
@@ -70,7 +71,8 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.15",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "uuid": "^7.0.2"
   },
   "peerDependencies": {
     "typescript": "^3.8.3"

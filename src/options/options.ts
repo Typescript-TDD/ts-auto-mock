@@ -5,6 +5,7 @@ import { defaultOptions } from './default';
 export interface TsAutoMockOptions {
   debug: TsAutoMockDebugOptions;
   cacheBetweenTests: TsAutoMockCacheOptions;
+  useRandomValues: boolean;
 }
 
 let options: TsAutoMockOptions = null;
