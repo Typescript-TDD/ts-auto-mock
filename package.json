@@ -9,6 +9,7 @@
     "build:transformer:debug": "webpack --config config/modules/transformer/webpack.debug.js",
     "build:modules:debug": "webpack --config config/modules/webpack.debug.js",
     "build:debug": "npm run build:modules:debug && npm run build:transformer:debug",
+    "build:transformer:definitelyTyped": "webpack --config config/modules/definitelyTypedTransformer/webpack.functions.js && webpack --config config/modules/definitelyTypedTransformer/webpack.js",
     "test": "npm run test:transformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:registerMock && npm run test:unit",
     "test:unit": "karma start config/karma/karma.config.unit.js",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",

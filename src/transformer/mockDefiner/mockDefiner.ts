@@ -59,7 +59,7 @@ export class MockDefiner {
     return this._instance;
   }
 
-  public setFileNameFromNode(node: ts.TypeNode): void {
+  public setFileNameFromNode(node: ts.Node): void {
     const thisFile: ts.SourceFile = node.getSourceFile();
     this._fileName = thisFile.fileName;
   }

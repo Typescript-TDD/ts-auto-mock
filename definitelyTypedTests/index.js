@@ -88,7 +88,7 @@ async function run(dir, processId) {
             'noEmit': false,
             'plugins': [
                 {
-                    'transform': '../dist/transformer',
+                    'transform': './dist/transformer',
                     'debug': true
                 }
             ],
