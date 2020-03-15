@@ -24,14 +24,14 @@ function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration)
     const typeQueryNode: ts.TypeNode = node.typeArguments[0];
 
     if (isCreateDefinitelyTypedMock(declaration) && ts.isTypeQueryNode(typeQueryNode)) {
-        try {
-            return GetTypeQueryDescriptor(typeQueryNode, new Scope());
-        } catch {
-            const symbol: ts.Symbol = TypeChecker().getSymbolAtLocation(typeQueryNode.exprName);
+        const typeQuerySymbol: ts.Symbol = TypeChecker().getSymbolAtLocation(typeQueryNode.exprName);
+        const typeQuerySymbolDeclaration: ts.ImportEqualsDeclaration = typeQuerySymbol.declarations[0] as ts.ImportEqualsDeclaration;
+        const typeChecker: ts.TypeChecker = TypeChecker();
+        const symbolAlias: ts.Symbol = typeChecker.getSymbolAtLocation(typeQuerySymbolDeclaration.name);
+        const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
 
-            const symbolDeclaration: ts.ImportEqualsDeclaration = symbol.declarations[0] as ts.ImportEqualsDeclaration;
-
-            const moduleName: string = ((symbolDeclaration.moduleReference as ts.ExternalModuleReference).expression as ts.StringLiteral).text;
+        if (!symbol.declarations) {
+            const moduleName: string = ((typeQuerySymbolDeclaration.moduleReference as ts.ExternalModuleReference).expression as ts.StringLiteral).text;
             const moduleWithoutExportsFile: ts.SourceFile = GetProgram().getSourceFiles().find((file: ts.SourceFile) => file.fileName.includes(`@types/${moduleName}/index.d.ts`));
 
             const compatibleStatements: ts.Statement[] = moduleWithoutExportsFile.statements.filter(
@@ -46,11 +46,12 @@ function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration)
                     return getMock(nodeToMock, node);
                 }));
             }
-
             DefinitelyTypedTransformerLogger().moduleWithoutValidTypeStatements(moduleName);
 
             return node;
         }
+
+        return GetTypeQueryDescriptor(typeQueryNode, new Scope());
     }
 
     return node;
