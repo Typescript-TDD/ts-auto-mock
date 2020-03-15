@@ -3,7 +3,7 @@ import { getMock } from '../../../src/transformer/mock/mock';
 import {
     CustomFunction
 } from "../../../src/transformer/matcher/matcher";
-import ts from 'typescript';
+import * as ts from 'typescript';
 import { GetProgram } from "../../../src/transformer/program/program";
 import { baseTransformer } from '../../../src/transformer/base/base';
 import { GetTypeQueryDescriptor } from '../../../src/transformer/descriptor/typeQuery/typeQuery';
@@ -24,9 +24,9 @@ function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration)
     const typeQueryNode: ts.TypeNode = node.typeArguments[0];
 
     if (isCreateDefinitelyTypedMock(declaration) && ts.isTypeQueryNode(typeQueryNode)) {
-        const typeQuerySymbol: ts.Symbol = TypeChecker().getSymbolAtLocation(typeQueryNode.exprName);
-        const typeQuerySymbolDeclaration: ts.ImportEqualsDeclaration = typeQuerySymbol.declarations[0] as ts.ImportEqualsDeclaration;
         const typeChecker: ts.TypeChecker = TypeChecker();
+        const typeQuerySymbol: ts.Symbol = typeChecker.getSymbolAtLocation(typeQueryNode.exprName);
+        const typeQuerySymbolDeclaration: ts.ImportEqualsDeclaration = typeQuerySymbol.declarations[0] as ts.ImportEqualsDeclaration;
         const symbolAlias: ts.Symbol = typeChecker.getSymbolAtLocation(typeQuerySymbolDeclaration.name);
         const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
 

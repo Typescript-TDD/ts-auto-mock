@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run install-types && npm run process-all-types && npm run post-process-types",
     "start-chunk": "npm run install-types && npm run process-chunk && npm run post-process-types",
-    "process-chunk": "npm run process-types TYPES=100 PROCESS_COUNT=20",
+    "process-chunk": "npm run process-types TYPES=10 PROCESS_COUNT=20",
     "install-types": "node src/installTypes.js",
     "process-all-types": "node index.js TYPES=all PROCESS_COUNT=20",
     "process-types": "node index.js",
@@ -17,6 +17,6 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "ttypescript": "^1.5.8",
-    "typescript": "^3.7.4"
+    "typescript": "^3.8.3"
   }
 }

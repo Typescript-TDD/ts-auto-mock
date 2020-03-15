@@ -9,6 +9,6 @@ module.exports = merge(base({
         index: './definitelyTypedTests/src/index.ts'
     },
     output: {
-        path: path.resolve(__dirname, "../../definitelyTypedTests/dist")
+        path: path.resolve(__dirname, "../../../definitelyTypedTests/dist")
     }
 });
