@@ -120,7 +120,7 @@ async function run(dir, processId) {
 
     fs.writeFileSync(`tsconfig.types.${processId}.json`, JSON.stringify(config));
     fs.writeFileSync(`${processId}.index.ts`, `
-import pak = require('${typePath}/');
+import pak = require('${typePath}');
 import { createDefinitelyTypedMock } from './dist';
 // @ts-ignore
 createDefinitelyTypedMock<typeof pak>();
