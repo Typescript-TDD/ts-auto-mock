@@ -9,6 +9,7 @@ import { baseTransformer } from '../../../src/transformer/base/base';
 import { GetTypeQueryDescriptor } from '../../../src/transformer/descriptor/typeQuery/typeQuery';
 import { Scope } from '../../../src/transformer/scope/scope';
 import { DefinitelyTypedTransformerLogger } from './logger';
+import * as path from 'path';
 
 const customFunctions: CustomFunction[] = [
     {
@@ -31,8 +32,11 @@ function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration)
         const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
 
         if (!symbol.declarations) {
-            const moduleName: string = ((typeQuerySymbolDeclaration.moduleReference as ts.ExternalModuleReference).expression as ts.StringLiteral).text;
-            const moduleWithoutExportsFile: ts.SourceFile = GetProgram().getSourceFiles().find((file: ts.SourceFile) => file.fileName.includes(`@types/${moduleName}/index.d.ts`));
+            const moduleName: string =
+                ((typeQuerySymbolDeclaration.moduleReference as ts.ExternalModuleReference).expression as ts.StringLiteral).text;
+            const pathModule =  path.resolve(moduleName);
+            const moduleWithoutExportsFile: ts.SourceFile = GetProgram().getSourceFiles().find((file: ts.SourceFile) =>
+                file.fileName.includes(`${pathModule}/index.d.ts`));
 
             const compatibleStatements: ts.Statement[] = moduleWithoutExportsFile.statements.filter(
                 (statement: ts.Statement) => statement.kind === ts.SyntaxKind.InterfaceDeclaration
