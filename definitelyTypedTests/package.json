@@ -17,6 +17,6 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "ttypescript": "^1.5.8",
-    "typescript": "^3.7.4"
+    "typescript": "^3.8.3"
   }
 }

@@ -1,4 +1,5 @@
 node_modules
 dist
+definitelyTypedTests/build
 .idea
 DefinitelyTyped

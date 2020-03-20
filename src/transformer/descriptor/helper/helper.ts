@@ -87,6 +87,13 @@ export namespace TypescriptHelper {
     return isAlias(alias) ? TypeChecker().getAliasedSymbol(alias) : alias;
   }
 
+
+  export function getSignatureOfCallExpression(node: ts.CallExpression): ts.Signature {
+    const typeChecker: ts.TypeChecker = TypeChecker();
+
+    return typeChecker.getResolvedSignature(node);
+  }
+
   function GetFirstValidDeclaration(declarations: ts.Declaration[]): ts.Declaration {
     return declarations.find((declaration: ts.Declaration) => !ts.isVariableDeclaration(declaration) && !ts.isFunctionDeclaration(declaration)) || declarations[0];
   }

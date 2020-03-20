@@ -1,0 +1,1 @@
+export { createDefinitelyTypedMock } from './create-definitely-typed-mock';
