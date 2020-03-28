@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - definitely-typed/improvements
     paths:
       - 'definitelyTypedTests/**'
   schedule:
