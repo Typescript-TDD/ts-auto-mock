@@ -27,10 +27,10 @@ function isExternalSource(declaration: ts.Node): declaration is ExternalSource {
 }
 
 function GetPropertiesFromSourceFileOrModuleDeclarationDescriptor(sourceFile: ExternalSource, symbol: ts.Symbol, scope: Scope): ts.Expression {
-  return GetMockPropertiesFromDeclarations(GetPropertiesFromSourceFileOrModuleDeclaration(sourceFile, symbol, scope), [], scope);
+  return GetMockPropertiesFromDeclarations(GetPropertiesFromSourceFileOrModuleDeclaration(symbol, scope), [], scope);
 }
 
-function GetPropertiesFromSourceFileOrModuleDeclaration(sourceFile: ExternalSource, symbol: ts.Symbol, scope: Scope): ts.PropertySignature[] {
+export function GetPropertiesFromSourceFileOrModuleDeclaration(symbol: ts.Symbol, scope: Scope): ts.PropertySignature[] {
   const typeChecker: ts.TypeChecker = TypeChecker();
   const moduleExports: ts.Symbol[] = typeChecker.getExportsOfModule(symbol);
 
@@ -46,7 +46,7 @@ function GetPropertiesFromSourceFileOrModuleDeclaration(sourceFile: ExternalSour
     if (ts.isExportSpecifier(declaration) && ts.isSourceFile(originalDeclaration)) {
       const exportSpecifierSymbol: ts.Symbol = typeChecker.getSymbolAtLocation(declaration.name);
       const exportSpecifierAliasSymbol: ts.Symbol = typeChecker.getAliasedSymbol(exportSpecifierSymbol);
-      const exportSpecifierProperties: ts.PropertySignature[] = GetPropertiesFromSourceFileOrModuleDeclaration(originalDeclaration, exportSpecifierAliasSymbol, scope);
+      const exportSpecifierProperties: ts.PropertySignature[] = GetPropertiesFromSourceFileOrModuleDeclaration(exportSpecifierAliasSymbol, scope);
       const propertyType: ts.TypeNode = ts.createTypeLiteralNode(exportSpecifierProperties);
 
       return TypescriptCreator.createPropertySignature(declaration.name, propertyType);

@@ -6,10 +6,11 @@ import {
 import * as ts from 'typescript';
 import { GetProgram } from "../../../src/transformer/program/program";
 import { baseTransformer } from '../../../src/transformer/base/base';
-import { GetTypeQueryDescriptor } from '../../../src/transformer/descriptor/typeQuery/typeQuery';
-import { Scope } from '../../../src/transformer/scope/scope';
 import { DefinitelyTypedTransformerLogger } from './logger';
 import * as path from 'path';
+import { GetPropertiesFromSourceFileOrModuleDeclaration } from '../../../src/transformer/descriptor/module/module';
+import { Scope } from '../../../src/transformer/scope/scope';
+import { GetMockPropertiesFromDeclarations } from '../../../src/transformer/descriptor/mock/mockProperties';
 
 const customFunctions: CustomFunction[] = [
     {
@@ -20,6 +21,8 @@ const customFunctions: CustomFunction[] = [
 
 const transformer = baseTransformer(visitNode, customFunctions);
 export { transformer };
+
+type CompatibleStatement = ts.InterfaceDeclaration | ts.FunctionDeclaration | ts.ClassDeclaration | ts.ModuleDeclaration;
 
 function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration): ts.Node {
     const typeQueryNode: ts.TypeNode = node.typeArguments[0];
@@ -42,20 +45,34 @@ function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration)
                 (statement: ts.Statement) => statement.kind === ts.SyntaxKind.InterfaceDeclaration
                     || statement.kind === ts.SyntaxKind.FunctionDeclaration
                     || statement.kind === ts.SyntaxKind.ClassDeclaration
+                    || statement.kind === ts.SyntaxKind.ModuleDeclaration
             );
 
             if (compatibleStatements.length > 0) {
-                return ts.createArrayLiteral(compatibleStatements.map((workingStatement: ts.InterfaceDeclaration | ts.FunctionDeclaration | ts.ClassDeclaration) => {
-                    const nodeToMock: ts.TypeReferenceNode = ts.createTypeReferenceNode(workingStatement.name, []);
+                return ts.createArrayLiteral(compatibleStatements.map(
+                    (workingStatement: CompatibleStatement) => {
+                    const name: ts.Identifier = workingStatement.name as ts.Identifier;
+                    const scope = new Scope();
+
+                    if (ts.isModuleDeclaration(workingStatement)) {
+                        return GetMockPropertiesFromDeclarations(
+                                GetPropertiesFromSourceFileOrModuleDeclaration((workingStatement as any).symbol, scope),
+                                [],
+                                scope
+                            )
+                    }
+
+                    const nodeToMock: ts.TypeReferenceNode = ts.createTypeReferenceNode(name, undefined);
                     return getMock(nodeToMock, node);
-                }));
+
+                }, []));
             }
             DefinitelyTypedTransformerLogger().moduleWithoutValidTypeStatements(moduleName);
 
             return node;
         }
 
-        return GetTypeQueryDescriptor(typeQueryNode, new Scope());
+        return getMock(typeQueryNode, node);
     }
 
     return node;
