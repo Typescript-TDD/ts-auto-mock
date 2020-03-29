@@ -1,3 +1,13 @@
+<a name="1.5.8"></a>
+## [1.5.8](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.6...v1.5.8) (2020-03-29)
+
+
+### Features
+
+* **typescript:** add support for typescript 3.8 ([#246](https://github.com/Typescript-TDD/ts-auto-mock/issues/246)) ([2a18bed](https://github.com/Typescript-TDD/ts-auto-mock/commit/2a18bed))
+
+
+
 <a name="1.5.7"></a>
 ## [1.5.7](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.6...v1.5.7) (2020-03-01)
 
