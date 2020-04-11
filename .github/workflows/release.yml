@@ -13,13 +13,28 @@ jobs:
         node-version: [10.x]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: lets publish
-      run: |
-        echo ${GITHUB_REF##*/}
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+      - name: commit configuration
+          run: |
+            git config --global user.name 'typescripttdd'
+            git config --global user.email 'typescripttdd@gmail.com'
+      - name: npm install and version
+        run: |
+          npm install
+          npm version ${GITHUB_REF##*/}
+      - name: Push changes
+          uses: ad-m/github-push-action@master
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+      - name: Publish
+        run: |
+          npm run preparePublish
+          cd dist
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
