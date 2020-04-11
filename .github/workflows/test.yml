@@ -3,10 +3,10 @@ name: Test
 on:
   push:
     tags-ignore:
-      - *
+      - '*.*'
   pull_request:
     tags-ignore:
-      - *
+      - '*.*'
 
 jobs:
   test:
