@@ -3,7 +3,6 @@
 [![npm version](https://badge.fury.io/js/ts-auto-mock.svg)](https://badge.fury.io/js/ts-auto-mock)
 [![Downloads](https://img.shields.io/npm/dw/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock) 
 
-
 ![slack](docs/slack_small.png) Need help? Join us on [Slack](https://join.slack.com/t/typescripttdd/shared_invite/enQtODk3MjQwNzUwNTk2LTMzNjdlZTNmMmY3Nzg2NDNiZDA1YzJmZjk2NjcwZjQwODQ3YzE5NGZjM2Q4MzZjYWNiMWE4MGU0NjEzM2E5YzE)
 
 A Typescript transformer that will allow you to create mock for any types (Interfaces, Classes, ...) without need to create manual fakes/mocks.
@@ -36,6 +35,10 @@ mock.details // "{phone: 0} "
 ## [Changelog](CHANGELOG.md)
 
 ## [Roadmap](https://github.com/Typescript-TDD/ts-auto-mock/wiki/Roadmap)
+
+#### Do you want to contribute?
+* [Check how to make changes to the code base](https://typescript-tdd.github.io/ts-auto-mock/local-development)
+
 ## Authors
 
 * [**Vittorio Guerriero**](https://github.com/uittorio)
