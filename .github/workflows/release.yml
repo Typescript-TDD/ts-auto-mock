@@ -2,7 +2,7 @@ name: Release
 
 on:
   release:
-    types: [published]
+    types: [edited, published]
 
 jobs:
   release:
@@ -19,7 +19,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
-      run: |
-        npm install
+      run: echo Hello world $GITHUB_REF!
       env:
         CI: true
