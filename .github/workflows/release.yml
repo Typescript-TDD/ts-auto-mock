@@ -37,11 +37,12 @@ jobs:
           echo "_auth=$NODE_AUTH_TOKEN" >>  /home/runner/work/_temp/.npmrc
           echo "email=<typescripttdd@gmail.com>" >>  /home/runner/work/_temp/.npmrc
           echo "always-auth=true" >>  /home/runner/work/_temp/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish
         run: |
           npm run preparePublish
           cd dist
           npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 
