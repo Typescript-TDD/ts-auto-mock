@@ -20,7 +20,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: lets publish
       run: |
-        echo "::set-env name=TAG::$(echo $GITHUB_REF | sed 's|.*\/||')"
-        echo $TAG
+        echo ${GITHUB_REF##*/}
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
