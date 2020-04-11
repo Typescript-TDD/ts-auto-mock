@@ -1,12 +1,6 @@
 name: Test
 
-on:
-  push:
-    tags-ignore:
-      - '*.*'
-  pull_request:
-    tags-ignore:
-      - '*.*'
+on: [push, pull_request]
 
 jobs:
   test:
