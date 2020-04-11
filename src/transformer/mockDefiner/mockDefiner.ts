@@ -110,7 +110,11 @@ export class MockDefiner {
   public createMockFactory(declaration: ts.Declaration): void {
     const thisFileName: string = this._fileName;
 
-    const key: string = this.getDeclarationKeyMap(declaration);
+    const key: string | undefined = this.getDeclarationKeyMap(declaration);
+
+    if (!key) {
+      throw new Error('Unhandled');
+    }
 
     this._factoryCache.set(declaration, key);
 
@@ -146,7 +150,7 @@ export class MockDefiner {
     return this._getCallGetFactory(key);
   }
 
-  public getDeclarationKeyMap(declaration: ts.Declaration): string {
+  public getDeclarationKeyMap(declaration: ts.Declaration): string | undefined {
     if (!this._declarationCache.has(declaration)) {
       const key: string = this._factoryUniqueName.createForDeclaration(declaration as PossibleDeclaration);
 
@@ -157,7 +161,11 @@ export class MockDefiner {
   }
 
   public storeRegisterMockFor(declaration: ts.Declaration, factory: ts.FunctionExpression): void {
-    const key: string = this.getDeclarationKeyMap(declaration);
+    const key: string | undefined = this.getDeclarationKeyMap(declaration);
+
+    if (!key) {
+      throw new Error('Unhandled');
+    }
 
     this._registerMockFactoryCache.set(declaration, key);
 
@@ -190,11 +198,16 @@ export class MockDefiner {
   private _getMockFactoryIdForTypeofEnum(declaration: ts.EnumDeclaration): string {
     const thisFileName: string = this._fileName;
 
-    if (this._factoryCache.has(declaration)) {
-      return this._factoryCache.get(declaration);
+    const cachedFactory: string | undefined = this._factoryCache.get(declaration);
+    if (cachedFactory) {
+      return cachedFactory;
     }
 
-    const key: string = this.getDeclarationKeyMap(declaration);
+    const key: string | undefined = this.getDeclarationKeyMap(declaration);
+
+    if (!key) {
+      throw new Error('Unhandled');
+    }
 
     this._factoryCache.set(declaration, key);
 
@@ -213,8 +226,9 @@ export class MockDefiner {
   private _getMockFactoryIdForIntersections(declarations: ts.Declaration[], intersectionTypeNode: ts.IntersectionTypeNode): string {
     const thisFileName: string = this._fileName;
 
-    if (this._factoryIntersectionCache.has(declarations)) {
-      return this._factoryIntersectionCache.get(declarations);
+    const factoryIntersection: string | undefined = this._factoryIntersectionCache.get(declarations);
+    if (factoryIntersection) {
+      return factoryIntersection;
     }
 
     const key: string = this._factoryUniqueName.createForIntersection(declarations);
@@ -250,10 +264,12 @@ export class MockDefiner {
     if (this._factoryRegistrationsPerFile[sourceFile.fileName]) {
       return this._factoryRegistrationsPerFile[sourceFile.fileName]
         .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
-          const key: string = this._factoryCache.get(reg.key);
+          const key: string | undefined = this._factoryCache.get(reg.key);
 
-          return this._createRegistration(sourceFile.fileName, key, reg.factory);
-        });
+          if (key) {
+            return this._createRegistration(sourceFile.fileName, key, reg.factory);
+          }
+        }).filter((registration: ts.Statement | undefined): registration is ts.Statement => !!registration);
     }
 
     return [];
@@ -263,10 +279,12 @@ export class MockDefiner {
     if (this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]) {
       return this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]
         .map((reg: { keys: ts.Declaration[]; factory: ts.Expression }) => {
-          const key: string = this._factoryIntersectionCache.get(reg.keys);
+          const key: string | undefined = this._factoryIntersectionCache.get(reg.keys);
 
-          return this._createRegistration(sourceFile.fileName, key, reg.factory);
-        });
+          if (key) {
+            return this._createRegistration(sourceFile.fileName, key, reg.factory);
+          }
+        }).filter((registration: ts.Statement | undefined): registration is ts.Statement => !!registration);
     }
 
     return [];
@@ -276,10 +294,12 @@ export class MockDefiner {
     if (this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]) {
       return this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]
         .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
-          const key: string = this._registerMockFactoryCache.get(reg.key);
+          const key: string | undefined = this._registerMockFactoryCache.get(reg.key);
 
-          return this._createRegistration(sourceFile.fileName, key, reg.factory);
-        });
+          if (key) {
+            return this._createRegistration(sourceFile.fileName, key, reg.factory);
+          }
+        }).filter((registration: ts.Statement | undefined): registration is ts.Statement => !!registration);
     }
 
     return [];

@@ -42,13 +42,17 @@ function visitNode(node: ts.Node, visitor: Visitor, customFunctions: CustomFunct
     return node;
   }
 
-  const signature: ts.Signature = TypescriptHelper.getSignatureOfCallExpression(node);
+  const signature: ts.Signature | undefined = TypescriptHelper.getSignatureOfCallExpression(node);
 
-  if (!isFunctionFromThisLibrary(signature, customFunctions)) {
+  if (!signature || !isFunctionFromThisLibrary(signature, customFunctions)) {
     return node;
   }
 
-  const nodeToMock: ts.TypeNode = node.typeArguments[0];
+  const nodeToMock: ts.TypeNode | undefined = node.typeArguments?.[0];
+
+  if (!nodeToMock) {
+    throw new Error('Unhandled');
+  }
 
   MockDefiner.instance.setFileNameFromNode(nodeToMock);
   MockDefiner.instance.setTsAutoMockImportIdentifier();

@@ -14,9 +14,9 @@ import { GetTypeReferenceDescriptor } from '../typeReference/typeReference';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 
 export function GetTypeQueryDescriptor(node: ts.TypeQueryNode, scope: Scope): ts.Expression {
-  const symbol: ts.Symbol = getTypeQuerySymbol(node);
+  const symbol: ts.Symbol | undefined = getTypeQuerySymbol(node);
 
-  if (!symbol.declarations.length) {
+  if (!symbol?.declarations.length) {
     return GetUndefinedDescriptor();
   }
 
@@ -60,8 +60,12 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
         return GetDescriptor(variable.type, scope);
       }
 
+      if (!variable.initializer) {
+        throw new Error('Unhandled');
+      }
+
       const inferredType: ts.Node = GetType(variable.initializer, scope);
-      const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(inferredType);
+      const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(inferredType);
 
       if (symbol) {
         const inferredTypeDeclaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(symbol);
@@ -76,7 +80,7 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
   }
 }
 
-function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol {
+function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol | undefined {
   return TypeChecker().getSymbolAtLocation(node.exprName);
 }
 

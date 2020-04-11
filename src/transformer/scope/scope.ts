@@ -6,9 +6,9 @@ export class Scope {
     this._currentMockKey = currentMockKey;
   }
 
-  private readonly _currentMockKey: string;
+  private readonly _currentMockKey: string | undefined;
 
-  public get currentMockKey(): string {
+  public get currentMockKey(): string | undefined {
     return this._currentMockKey;
   }
 }

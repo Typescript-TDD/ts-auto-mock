@@ -26,31 +26,33 @@ const transformer:
 export { transformer };
 
 function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration): ts.Node {
-  const nodeToMock: ts.TypeNode = node.typeArguments[0];
+  const nodeToMock: ts.TypeNode | undefined = node.typeArguments?.[0];
 
-  if (isCreateMock(declaration)) {
-    return getMock(nodeToMock, node);
-  }
+  if (nodeToMock) {
+    if (isCreateMock(declaration)) {
+      return getMock(nodeToMock, node);
+    }
 
-  if (isCreateMockList(declaration)) {
-    return getMockForList(nodeToMock, node);
-  }
+    if (isCreateMockList(declaration)) {
+      return getMockForList(nodeToMock, node);
+    }
 
-  if (isRegisterMock(declaration)) {
-    return storeRegisterMock(nodeToMock, node);
+    if (isRegisterMock(declaration)) {
+      return storeRegisterMock(nodeToMock, node);
+    }
   }
 
   return node;
 }
 
 function isCreateMock(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name && declaration.name.getText() === 'createMock';
+  return declaration.name?.getText() === 'createMock';
 }
 
 function isCreateMockList(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name && declaration.name.getText() === 'createMockList';
+  return declaration.name?.getText() === 'createMockList';
 }
 
 function isRegisterMock(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name && declaration.name.getText() === 'registerMock';
+  return declaration.name?.getText() === 'registerMock';
 }

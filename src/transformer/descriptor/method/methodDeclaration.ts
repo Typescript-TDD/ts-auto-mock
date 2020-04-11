@@ -8,5 +8,9 @@ export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.F
   const returnTypeNode: ts.Node = GetFunctionReturnType(node);
   const returnType: ts.Expression = GetDescriptor(returnTypeNode, scope);
 
+  if (!node.name) {
+    throw new Error('Unhandled');
+  }
+
   return GetMethodDescriptor(node.name, returnType);
 }

@@ -13,7 +13,12 @@ export function GetPropertyDescriptor(node: PropertyNode, scope: Scope): ts.Expr
     if (node.questionToken) {
       return GetUndefinedDescriptor();
     }
+
     return GetDescriptor(node.type, scope);
+  }
+
+  if (!node.initializer) {
+    throw new Error('Unhandled');
   }
 
   return GetDescriptor(node.initializer, scope);

@@ -4,7 +4,7 @@ import { MockIdentifierInternalValues, MockIdentifierObjectReturnValue } from '.
 import { GetMockMarkerProperty, Property } from './mockMarker';
 import { PropertyAssignments } from './mockPropertiesAssignments';
 
-export function GetMockCall(properties: PropertyAssignments, signature: ts.Expression): ts.CallExpression {
+export function GetMockCall(properties: PropertyAssignments, signature: ts.Expression | null): ts.CallExpression {
   const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
   const statements: ts.Statement[] = [
     TypescriptCreator.createVariableStatement([

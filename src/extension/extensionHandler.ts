@@ -25,6 +25,10 @@ export class ExtensionHandler<TMock> {
       return extensionOrPropertyName(this._mock);
     }
 
+    if (!maybePropertyHandler) {
+      throw new Error('Unhandled');
+    }
+
     return maybePropertyHandler(this._mock[extensionOrPropertyName], this._mock, extensionOrPropertyName);
   }
 }

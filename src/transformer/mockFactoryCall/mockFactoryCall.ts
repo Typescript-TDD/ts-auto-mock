@@ -30,7 +30,11 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
   const declarations: ts.Declaration[] | ts.TypeLiteralNode[] = intersection.types.map((type: ts.TypeNode) => {
     if (ts.isTypeReferenceNode(type)) {
       const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(type.typeName);
-      const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(declaration);
+      const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
+
+      if (!declarationKey) {
+        throw new Error('Unhandled');
+      }
 
       genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
 
@@ -59,7 +63,11 @@ export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration): t
   );
 }
 
-export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
+export function GetMockFactoryCallForThis(mockKey: string | undefined): ts.Expression {
+  if (!mockKey) {
+    throw new Error('Unhandled');
+  }
+
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(mockKey);
 
   return TypescriptCreator.createCall(
@@ -69,7 +77,12 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
 }
 
 function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
-  const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(declaration);
+  const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
+
+  if (!declarationKey) {
+    throw new Error('Unhandled');
+  }
+
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(declarationKey);
   const genericDeclaration: IGenericDeclaration = GenericDeclaration(scope);
 
@@ -95,7 +108,11 @@ function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, 
 
         const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(extension.expression);
 
-        const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
+        const extensionDeclarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
+
+        if (!extensionDeclarationKey) {
+          throw new Error('Unhandled');
+        }
 
         genericDeclaration.addFromDeclarationExtension(
           declarationKey,

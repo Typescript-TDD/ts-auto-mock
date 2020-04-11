@@ -7,9 +7,9 @@ export interface TsAutoMockOptions {
   cacheBetweenTests: TsAutoMockCacheOptions;
 }
 
-let options: TsAutoMockOptions = null;
+let options: TsAutoMockOptions | undefined;
 
-export function SetTsAutoMockOptions(_options: TsAutoMockOptions): void {
+export function SetTsAutoMockOptions(_options?: TsAutoMockOptions): void {
   options = _options;
 }
 
