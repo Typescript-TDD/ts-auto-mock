@@ -13,5 +13,5 @@ export function GetFunctionTypeDescriptor(node: ts.FunctionTypeNode | ts.CallSig
 
   const returnValue: ts.Expression = GetDescriptor(node.type, scope);
 
-  return GetMethodDescriptor(property, returnValue);
+  return GetMethodDescriptor(property, [{ returnValue }]);
 }

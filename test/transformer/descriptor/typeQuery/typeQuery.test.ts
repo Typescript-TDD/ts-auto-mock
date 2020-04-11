@@ -6,6 +6,7 @@ import {
   ExportedClass,
   ExportedDeclaredClass,
   exportedDeclaredFunction,
+  exportedDeclaredOverloadedFunction,
   ExportedEnum,
   exportedFunction,
   WrapExportedClass,
@@ -39,6 +40,27 @@ describe('typeQuery', () => {
       const functionMock: typeof exportedDeclaredFunction = createMock<typeof exportedDeclaredFunction>();
 
       expect(functionMock()).toEqual('');
+    });
+
+    it('should assign the correct function mock for an imported and overloaded function declaration', () => {
+      const functionMock: typeof exportedDeclaredOverloadedFunction = createMock<typeof exportedDeclaredOverloadedFunction>();
+
+      // eslint-disable-next-line
+      const expectations = [
+        { args: ['', 0, false], returnValue: '' },
+        { args: [false, '', 0], returnValue: false },
+        { args: [0, false, ''], returnValue: 0 },
+        { args: [false, false, false], returnValue: false },
+        { args: [''], returnValue: '' },
+        { args: [false], returnValue: false },
+        { args: [0], returnValue: 0 },
+      ];
+
+      for (const { args, returnValue } of expectations) {
+        // eslint-disable-next-line
+        const [first, second, third] = args;
+        expect(functionMock(first, second, third)).toEqual(returnValue);
+      }
     });
 
     it('should assign the function mock for an imported function declaration with body', () => {

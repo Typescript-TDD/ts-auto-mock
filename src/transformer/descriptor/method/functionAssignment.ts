@@ -10,5 +10,5 @@ export function GetFunctionAssignmentDescriptor(node: functionAssignment, scope:
   const property: ts.PropertyName = PropertySignatureCache.instance.get();
   const returnValue: ts.Expression = GetReturnTypeFromBodyDescriptor(node, scope);
 
-  return GetMethodDescriptor(property, returnValue);
+  return GetMethodDescriptor(property, [{ returnValue }]);
 }

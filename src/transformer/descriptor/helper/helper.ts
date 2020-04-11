@@ -119,6 +119,22 @@ export namespace TypescriptHelper {
     return !!((symbol.flags & ts.SymbolFlags.Alias) || (symbol.flags & ts.SymbolFlags.AliasExcludes));
   }
 
+  export interface RuntimeTypeNode extends ts.TypeNode {
+    kind: ts.SyntaxKind.NumberKeyword | ts.SyntaxKind.ObjectKeyword | ts.SyntaxKind.BooleanKeyword | ts.SyntaxKind.StringKeyword | ts.SyntaxKind.UndefinedKeyword;
+  }
+
+  export function isLiteralRuntimeTypeNode(typeNode: ts.TypeNode): typeNode is RuntimeTypeNode {
+    switch (typeNode.kind) {
+      case ts.SyntaxKind.NumberKeyword:
+      case ts.SyntaxKind.ObjectKeyword:
+      case ts.SyntaxKind.BooleanKeyword:
+      case ts.SyntaxKind.StringKeyword:
+        return true;
+    }
+
+    return false;
+  }
+
   function isImportExportDeclaration(declaration: ts.Declaration): declaration is ImportDeclaration  {
     return ts.isImportEqualsDeclaration(declaration) || ts.isImportOrExportSpecifier(declaration) || ts.isImportClause(declaration);
   }

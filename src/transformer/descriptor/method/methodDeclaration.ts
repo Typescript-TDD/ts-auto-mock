@@ -1,12 +1,32 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
 import { GetFunctionReturnType } from './functionReturnType';
-import { GetMethodDescriptor } from './method';
+import { GetMethodDescriptor, MethodSignature } from './method';
 
 export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
-  const returnTypeNode: ts.Node = GetFunctionReturnType(node);
-  const returnType: ts.Expression = GetDescriptor(returnTypeNode, scope);
+  const declarationType: ts.Type | undefined = TypeChecker().getTypeAtLocation(node);
+  const methodDeclarations: Array<ts.MethodDeclaration | ts.FunctionDeclaration> = declarationType.symbol.declarations
+    .filter(
+      (declaration: ts.Declaration): declaration is ts.MethodDeclaration | ts.FunctionDeclaration =>
+        ts.isMethodDeclaration(declaration) || ts.isFunctionDeclaration(declaration)
+    );
+
+  if (!methodDeclarations.length) {
+    methodDeclarations.push(node);
+  }
+
+  const methodSignatures: MethodSignature[] = methodDeclarations.map(
+    (declaration: ts.MethodDeclaration | ts.FunctionDeclaration) => {
+      const returnTypeNode: ts.Node = GetFunctionReturnType(declaration);
+
+      return {
+        parameters: declaration.parameters.map((parameter: ts.ParameterDeclaration) => parameter),
+        returnValue: GetDescriptor(returnTypeNode, scope),
+      };
+    }
+  );
 
   if (!node.name) {
     throw new Error(
@@ -14,5 +34,5 @@ export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.F
     );
   }
 
-  return GetMethodDescriptor(node.name, returnType);
+  return GetMethodDescriptor(node.name, methodSignatures);
 }

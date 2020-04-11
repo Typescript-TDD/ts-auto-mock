@@ -5,13 +5,13 @@ import { GetNullDescriptor } from '../null/null';
 import { GetMethodDescriptor } from './method';
 
 export function GetMethodSignatureDescriptor(node: ts.MethodSignature, scope: Scope): ts.Expression {
-  let returnType: ts.Expression;
+  let returnValue: ts.Expression;
 
   if (node.type) {
-    returnType = GetDescriptor(node.type, scope);
+    returnValue = GetDescriptor(node.type, scope);
   } else {
-    returnType = GetNullDescriptor();
+    returnValue = GetNullDescriptor();
   }
 
-  return GetMethodDescriptor(node.name, returnType);
+  return GetMethodDescriptor(node.name, [{ returnValue }]);
 }
