@@ -35,7 +35,7 @@ jobs:
         run: |
           npm run preparePublish
           cd dist
-          npm publish
+          npm publish --access public
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
