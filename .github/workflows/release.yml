@@ -28,9 +28,9 @@ jobs:
           npm install
           npm version ${GITHUB_REF##*/}
       - name: Push changes
-          uses: ad-m/github-push-action@master
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
       - name: Publish
         run: |
           npm run preparePublish
