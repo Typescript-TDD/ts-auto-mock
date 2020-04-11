@@ -20,9 +20,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
       - name: commit configuration
-          run: |
-            git config --global user.name 'typescripttdd'
-            git config --global user.email 'typescripttdd@gmail.com'
+        run: |
+          git config --global user.name 'typescripttdd'
+          git config --global user.email 'typescripttdd@gmail.com'
       - name: npm install and version
         run: |
           npm install
