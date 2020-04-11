@@ -36,7 +36,7 @@ mock.details // "{phone: 0} "
 
 ## [Roadmap](https://github.com/Typescript-TDD/ts-auto-mock/wiki/Roadmap)
 
-#### Do you want to contribute?
+## Do you want to contribute?
 * [Check how to make changes to the code base](https://typescript-tdd.github.io/ts-auto-mock/local-development)
 
 ## Authors
