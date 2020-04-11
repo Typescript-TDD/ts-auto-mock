@@ -1,3 +1,8 @@
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.891...v1.6.0) (2020-04-11)
+
+
+
 <a name="1.5.89"></a>
 ## [1.5.89](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.88...v1.5.89) (2020-04-11)
 
