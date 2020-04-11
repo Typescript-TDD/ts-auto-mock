@@ -1,6 +1,6 @@
 {
   "name": "ts-auto-mock",
-  "version": "1.5.8",
+  "version": "1.5.82",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "scripts": {
     "build:transformer": "webpack --config config/modules/transformer/webpack.js",
