@@ -2,7 +2,7 @@ name: Release
 
 on:
   release:
-    types: [published, created, edited]
+    types: [published, edited]
 
 jobs:
   release:
@@ -18,7 +18,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: echo Hello world $GITHUB_REF!
+    - name: lets publish
+      run:
+        echo "::set-env name=TAG::$($GITHUB_REF | sed 's|.*\/||')"
+        echo $TAG
       env:
         CI: true
