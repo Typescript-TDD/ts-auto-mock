@@ -19,7 +19,8 @@ export default {
         { name: 'Types not supported'},
         { name: 'Config'},
         { name: 'Performance'},
-        { name: 'Definitely Typed'}
+        { name: 'Definitely Typed'},
+        { name: 'Local development'}
     ],
     repository: "https://github.com/Typescript-TDD/ts-auto-mock"
 }

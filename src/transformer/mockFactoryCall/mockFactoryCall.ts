@@ -2,7 +2,10 @@ import * as ts from 'typescript';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { GenericDeclaration } from '../genericDeclaration/genericDeclaration';
 import { IGenericDeclaration } from '../genericDeclaration/genericDeclaration.interface';
-import { GenericDeclarationSupported } from '../genericDeclaration/genericDeclarationSupported';
+import {
+  extensionExpressionSupported,
+  GenericDeclarationSupported,
+} from '../genericDeclaration/genericDeclarationSupported';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
@@ -86,6 +89,10 @@ function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, 
   if (declaration.heritageClauses) {
     declaration.heritageClauses.forEach((clause: ts.HeritageClause) => {
       clause.types.forEach((extension: ts.ExpressionWithTypeArguments) => {
+        if (!extensionExpressionSupported(extension.expression)) {
+          return;
+        }
+
         const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(extension.expression);
 
         const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
