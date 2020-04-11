@@ -1,0 +1,67 @@
+---
+name: Local development
+route: /local-development
+---
+
+# Local development
+
+If you want to add a new functionality of fix a bug in ts-auto-mock you are in the right place
+
+## Pre requisite
+- node >= 10
+- npm
+- the repo cloned locally
+
+## Install local dependencies
+- Make sure you are in the root folder
+- run npm install
+```
+npm install
+```
+
+## Build the transformer
+- run npm run build
+```
+npm run build
+```
+
+## Make a change
+Ts auto mock has multiple modules, each of them has a different meaning and depending of what you are editing you can just re build the specific one
+- transformer
+- repository
+- extension
+- merge
+
+If you are editing the transformer
+
+```
+npm run build:transformer
+```
+
+If you are editing anything else
+```
+npm run build:modules
+```
+
+## Test your changes
+There are 2 ways to test the effectiveness of your changes
+- Use the existing test system
+    - add a test
+    - run all the tests
+    ```
+        npm run test
+        // use npm run test:transformer if you are just editing the transformer
+    ```
+- use the Playground
+    - open the file [playground.test.ts](https://github.com/Typescript-TDD/ts-auto-mock/blob/master/test/playground/playground.test.ts)
+    - make your changes
+    - run test playground to see the test passing
+    ```
+    npm run test:playground
+    ```
+    - run build playground to see the output of the generate code
+    ```
+    npm run build:playground
+    ```
+
+That's it.
