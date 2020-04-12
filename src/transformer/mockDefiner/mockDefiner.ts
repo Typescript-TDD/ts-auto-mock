@@ -113,7 +113,9 @@ export class MockDefiner {
     const key: string | undefined = this.getDeclarationKeyMap(declaration);
 
     if (!key) {
-      throw new Error('Unhandled');
+      throw new Error(
+        `Failed to obtain key while creating mock factory for \`${declaration.getText()}'.`,
+      );
     }
 
     this._factoryCache.set(declaration, key);
@@ -164,7 +166,9 @@ export class MockDefiner {
     const key: string | undefined = this.getDeclarationKeyMap(declaration);
 
     if (!key) {
-      throw new Error('Unhandled');
+      throw new Error(
+        `Failed to obtain key while storing mock for \`${declaration.getText()}'.`,
+      );
     }
 
     this._registerMockFactoryCache.set(declaration, key);
@@ -206,7 +210,9 @@ export class MockDefiner {
     const key: string | undefined = this.getDeclarationKeyMap(declaration);
 
     if (!key) {
-      throw new Error('Unhandled');
+      throw new Error(
+        `Failed to obtain key while resolving factory identifier (internal) for \`${declaration.getText()}'.`,
+      );
     }
 
     this._factoryCache.set(declaration, key);
