@@ -25,7 +25,7 @@ export function GetReturnNodeFromBody(node: ts.FunctionLikeDeclaration): ts.Node
   }
 
   if (!returnValue) {
-    throw new Error('Unhandled');
+    throw new Error(`Failed to determine the return value of ${node.getText()}.`);
   }
 
   return returnValue;
