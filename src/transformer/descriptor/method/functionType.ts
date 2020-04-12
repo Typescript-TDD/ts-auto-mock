@@ -8,7 +8,7 @@ export function GetFunctionTypeDescriptor(node: ts.FunctionTypeNode | ts.CallSig
   const property: ts.PropertyName = PropertySignatureCache.instance.get();
 
   if (!node.type) {
-    throw new Error('Unhandled');
+    throw new Error(`No type was declared for ${node.getText()}.`);
   }
 
   const returnValue: ts.Expression = GetDescriptor(node.type, scope);
