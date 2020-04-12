@@ -61,7 +61,9 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
       }
 
       if (!variable.initializer) {
-        throw new Error('Unhandled');
+        throw new Error(
+          `The transformer cannot determine a value for \`${variable.getText()}' without a specified type or no initializer value.`,
+        );
       }
 
       const inferredType: ts.Node = GetType(variable.initializer, scope);
