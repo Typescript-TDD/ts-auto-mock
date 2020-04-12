@@ -51,7 +51,13 @@ function visitNode(node: ts.Node, visitor: Visitor, customFunctions: CustomFunct
   const nodeToMock: ts.TypeNode | undefined = node.typeArguments?.[0];
 
   if (!nodeToMock) {
-    throw new Error('Unhandled');
+    const mockFunction: string = node.getText();
+
+    throw new Error(
+      `It seems you've called \`${mockFunction}' without specifying a type argument to mock. ` +
+        `Please refer to the documentation on how to use \`${mockFunction}': ` +
+        'https://github.com/Typescript-TDD/ts-auto-mock#quick-overview'
+    );
   }
 
   MockDefiner.instance.setFileNameFromNode(nodeToMock);
