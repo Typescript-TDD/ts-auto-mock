@@ -9,7 +9,9 @@ export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.F
   const returnType: ts.Expression = GetDescriptor(returnTypeNode, scope);
 
   if (!node.name) {
-    throw new Error('Unhandled');
+    throw new Error(
+      `The transformer couldn't determine the name of ${node.getText()}. Please report this incident.`,
+    );
   }
 
   return GetMethodDescriptor(node.name, returnType);
