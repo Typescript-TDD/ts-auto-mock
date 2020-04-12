@@ -19,7 +19,10 @@ export namespace TypescriptHelper {
     const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(node);
 
     if (!symbol) {
-      throw new Error('Unhandled');
+      throw new Error(
+        `The type checker failed to look up a symbol for \`${node.getText()}'. ` +
+          'Perhaps, the checker was searching an outdated source.',
+      );
     }
 
     return GetDeclarationFromSymbol(symbol);
