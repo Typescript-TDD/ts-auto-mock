@@ -9,16 +9,19 @@ import { GetTypeQueryDescriptorFromDeclaration } from '../typeQuery/typeQuery';
 type ExternalSource = ts.SourceFile | ts.ModuleDeclaration;
 
 export function GetModuleDescriptor(node: ts.NamedDeclaration, scope: Scope): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
-
   if (!node.name) {
-    throw new Error('Unhandled');
+    throw new Error(
+      `Cannot look up symbol for a node without a name: ${node.getText()}.`,
+    );
   }
 
+  const typeChecker: ts.TypeChecker = TypeChecker();
   const symbolAlias: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(node.name);
 
   if (!symbolAlias) {
-    throw new Error('Unhandled');
+    throw new Error(
+      `The type checker failed to look up symbol for \`${node.name.getText()}'.`,
+    );
   }
 
   const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
@@ -56,7 +59,9 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(symbol: ts.Symbol
       const exportSpecifierSymbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(declaration.name);
 
       if (!exportSpecifierSymbol) {
-        throw new Error('Unhandled');
+        throw new Error(
+          `The type checker failed to look up symbol for \`${declaration.name.getText()}'.`,
+        );
       }
 
       const exportSpecifierAliasSymbol: ts.Symbol = typeChecker.getAliasedSymbol(exportSpecifierSymbol);
