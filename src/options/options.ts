@@ -7,16 +7,15 @@ export interface TsAutoMockOptions {
   cacheBetweenTests: TsAutoMockCacheOptions;
 }
 
-let options: TsAutoMockOptions | undefined;
+let tsAutoMockOptions: TsAutoMockOptions = defaultOptions;
 
-export function SetTsAutoMockOptions(_options?: TsAutoMockOptions): void {
-  options = _options;
+export function SetTsAutoMockOptions(options?: TsAutoMockOptions): void {
+  tsAutoMockOptions = {
+    ...defaultOptions,
+    ...options,
+  };
 }
 
 export function GetOptionByKey<T extends keyof TsAutoMockOptions>(optionKey: T): TsAutoMockOptions[T] {
-  if (options) {
-    return options.hasOwnProperty(optionKey) ? options[optionKey] : defaultOptions[optionKey];
-  }
-
-  return defaultOptions[optionKey];
+  return tsAutoMockOptions[optionKey];
 }
