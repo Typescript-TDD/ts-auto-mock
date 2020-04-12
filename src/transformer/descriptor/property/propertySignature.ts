@@ -18,7 +18,9 @@ export function GetPropertyDescriptor(node: PropertyNode, scope: Scope): ts.Expr
   }
 
   if (!node.initializer) {
-    throw new Error('Unhandled');
+    throw new Error(
+      `The transformer couldn't determine a property value for \`${node.getText()}' without a specified type nor an initializer value.`,
+    );
   }
 
   return GetDescriptor(node.initializer, scope);
