@@ -17,13 +17,15 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
   const typeDeclaration: ts.Declaration | undefined = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
   if (!typeDeclaration) {
-    throw new Error('Unhandled');
+    throw new Error(`Failed to determine the owner (parent) of the type parameter: \`${declaration.getText()}'.`);
   }
 
   const genericKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
 
   if (!genericKey) {
-    throw new Error('Unhandled');
+    throw new Error(
+      `Failed to look up generic key in MockDefiner for \`${typeDeclaration.getText()}'.`,
+    );
   }
 
   return createFunctionToAccessToGenericValue(genericKey + node.name.escapedText, descriptor);
