@@ -40,7 +40,9 @@ export function GetIndexedAccessTypeDescriptor(node: ts.IndexedAccessTypeNode, s
     const propertySymbol: ts.Symbol | undefined = typeChecker.getPropertyOfType(typeChecker.getTypeFromTypeNode(node.objectType), propertyName);
 
     if (!propertySymbol) {
-      throw new Error('Unhandled');
+      throw new Error(
+        `The type checker failed to look up symbol for property: \`${propertyName}' of \`${node.getText()}'.`,
+      );
     }
 
     return GetDescriptor(TypescriptHelper.GetDeclarationFromSymbol(propertySymbol), scope);
