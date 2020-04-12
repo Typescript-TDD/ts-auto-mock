@@ -63,6 +63,12 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.Identifier:
       return GetIdentifierDescriptor(node as ts.Identifier, scope);
     case ts.SyntaxKind.ThisType:
+      if (!scope.currentMockKey) {
+        throw new Error(
+          `The transformer attempted to look up a mock factory call for \`${node.getText()}' without a mock key.`,
+        );
+      }
+
       return GetMockFactoryCallForThis(scope.currentMockKey);
     case ts.SyntaxKind.ImportSpecifier:
       return GetImportDescriptor(node as ts.ImportSpecifier, scope);

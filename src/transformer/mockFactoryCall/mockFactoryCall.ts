@@ -33,7 +33,9 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
       const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
       if (!declarationKey) {
-        throw new Error('Unhandled');
+        throw new Error(
+          `Failed to look up declaration key in MockDefiner for \`${declaration.getText()}'.`,
+        );
       }
 
       genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
@@ -63,11 +65,7 @@ export function GetMockFactoryCallTypeofEnum(declaration: ts.EnumDeclaration): t
   );
 }
 
-export function GetMockFactoryCallForThis(mockKey: string | undefined): ts.Expression {
-  if (!mockKey) {
-    throw new Error('Unhandled');
-  }
-
+export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(mockKey);
 
   return TypescriptCreator.createCall(
@@ -80,7 +78,7 @@ function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenc
   const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
   if (!declarationKey) {
-    throw new Error('Unhandled');
+    throw new Error(`Failed to look up declaration key in MockDefiner for \`${declaration.getText()}'.`);
   }
 
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(declarationKey);
@@ -111,7 +109,7 @@ function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, 
         const extensionDeclarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
 
         if (!extensionDeclarationKey) {
-          throw new Error('Unhandled');
+          throw new Error(`Failed to look up declaration key in MockDefiner for \`${extensionDeclaration.getText()}'.`);
         }
 
         genericDeclaration.addFromDeclarationExtension(
