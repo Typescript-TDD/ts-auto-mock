@@ -91,7 +91,9 @@ export namespace TypescriptHelper {
     const symbol: ts.Symbol | undefined = TypeChecker().getSymbolAtLocation(propertyName);
 
     if (!symbol) {
-      throw new Error('Unhandled');
+      throw new Error(
+        `The type checker failed to look up symbol for property: ${propertyName.getText()}.`,
+      );
     }
 
     return symbol.escapedName.toString();
