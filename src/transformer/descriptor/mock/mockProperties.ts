@@ -19,13 +19,13 @@ export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signa
 
 export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<PropertyLike>, signatures: ReadonlyArray<SignatureLike>, scope: Scope): ts.CallExpression {
   const propertiesFilter: PropertyLike[] = list.filter((member: PropertyLike) => {
-    const { modifiers = ts.createNodeArray([]) }: PropertyLike = member;
+    const modifiers: ts.ModifiersArray | undefined = member.modifiers;
 
     if (IsTypescriptType(member)) { // This is a current workaround to safe fail extends of TypescriptLibs
       return false;
     }
 
-    if (!modifiers.length) {
+    if (!modifiers) {
       return true;
     }
 
