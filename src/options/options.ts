@@ -9,7 +9,7 @@ export interface TsAutoMockOptions {
 
 let tsAutoMockOptions: TsAutoMockOptions = defaultOptions;
 
-export function SetTsAutoMockOptions(options?: TsAutoMockOptions): void {
+export function SetTsAutoMockOptions(options: TsAutoMockOptions): void {
   tsAutoMockOptions = {
     ...defaultOptions,
     ...options,

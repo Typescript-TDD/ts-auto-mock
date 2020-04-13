@@ -13,7 +13,10 @@ export type Visitor = (node: ts.CallExpression, declaration: ts.FunctionDeclarat
 
 export function baseTransformer(visitor: Visitor, customFunctions: CustomFunction[]): (program: ts.Program, options?: TsAutoMockOptions) => ts.TransformerFactory<ts.SourceFile> {
   return (program: ts.Program, options?: TsAutoMockOptions): ts.TransformerFactory<ts.SourceFile> => {
-    SetTsAutoMockOptions(options);
+    if (options) {
+      SetTsAutoMockOptions(options);
+    }
+
     SetTypeChecker(program.getTypeChecker());
     SetProgram(program);
 
