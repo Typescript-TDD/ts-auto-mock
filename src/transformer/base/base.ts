@@ -9,7 +9,7 @@ import {
   isFunctionFromThisLibrary,
 } from '../matcher/matcher';
 
-export type Visitor = (node: ts.CallExpression, declaration: ts.FunctionDeclaration) => ts.Node;
+export type Visitor = (node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> }, declaration: ts.FunctionDeclaration) => ts.Node;
 
 export function baseTransformer(visitor: Visitor, customFunctions: CustomFunction[]): (program: ts.Program, options?: TsAutoMockOptions) => ts.TransformerFactory<ts.SourceFile> {
   return (program: ts.Program, options?: TsAutoMockOptions): ts.TransformerFactory<ts.SourceFile> => {
@@ -40,6 +40,13 @@ function visitNodeAndChildren(node: ts.Node, context: ts.TransformationContext, 
   return ts.visitEachChild(visitNode(node, visitor, customFunctions), (childNode: ts.Node) => visitNodeAndChildren(childNode, context, visitor, customFunctions), context);
 }
 
+function isObjectWithProperty<T extends {}, K extends keyof T>(
+  obj: T,
+  key: K,
+): obj is T & Required<{ [key in K]: T[K] }> {
+  return typeof obj[key] !== 'undefined';
+}
+
 function visitNode(node: ts.Node, visitor: Visitor, customFunctions: CustomFunction[]): ts.Node {
   if (!ts.isCallExpression(node)) {
     return node;
@@ -51,9 +58,7 @@ function visitNode(node: ts.Node, visitor: Visitor, customFunctions: CustomFunct
     return node;
   }
 
-  const nodeToMock: ts.TypeNode | undefined = node.typeArguments?.[0];
-
-  if (!nodeToMock) {
+  if (!isObjectWithProperty(node, 'typeArguments') || !node.typeArguments?.length) {
     const mockFunction: string = node.getText();
 
     throw new Error(
@@ -62,6 +67,8 @@ function visitNode(node: ts.Node, visitor: Visitor, customFunctions: CustomFunct
         'https://github.com/Typescript-TDD/ts-auto-mock#quick-overview'
     );
   }
+
+  const [nodeToMock]: ts.NodeArray<ts.TypeNode> = node.typeArguments;
 
   MockDefiner.instance.setFileNameFromNode(nodeToMock);
   MockDefiner.instance.setTsAutoMockImportIdentifier();
