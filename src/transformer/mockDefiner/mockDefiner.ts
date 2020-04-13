@@ -232,9 +232,9 @@ export class MockDefiner {
   private _getMockFactoryIdForIntersections(declarations: ts.Declaration[], intersectionTypeNode: ts.IntersectionTypeNode): string {
     const thisFileName: string = this._fileName;
 
-    const factoryIntersection: string | undefined = this._factoryIntersectionCache.get(declarations);
-    if (factoryIntersection) {
-      return factoryIntersection;
+    if (this._factoryIntersectionCache.has(declarations)) {
+      // eslint-disable-next-line
+      return this._factoryIntersectionCache.get(declarations)!;
     }
 
     const key: string = this._factoryUniqueName.createForIntersection(declarations);
