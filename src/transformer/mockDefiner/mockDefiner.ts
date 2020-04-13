@@ -270,12 +270,14 @@ export class MockDefiner {
     if (this._factoryRegistrationsPerFile[sourceFile.fileName]) {
       return this._factoryRegistrationsPerFile[sourceFile.fileName]
         .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
-          const key: string | undefined = this._factoryCache.get(reg.key);
+          // NOTE: this._factoryRegistrationsPerFile and this._factoryCache are
+          // populated in the same routine and if the former is defined the
+          // latter will be too!
+          // eslint-disable-next-line
+          const key: string = this._factoryCache.get(reg.key)!;
 
-          if (key) {
-            return this._createRegistration(sourceFile.fileName, key, reg.factory);
-          }
-        }).filter((registration: ts.Statement | undefined): registration is ts.Statement => !!registration);
+          return this._createRegistration(sourceFile.fileName, key, reg.factory);
+        });
     }
 
     return [];
@@ -285,12 +287,14 @@ export class MockDefiner {
     if (this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]) {
       return this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]
         .map((reg: { keys: ts.Declaration[]; factory: ts.Expression }) => {
-          const key: string | undefined = this._factoryIntersectionCache.get(reg.keys);
+          // NOTE: this._factoryIntersectionsRegistrationsPerFile and
+          // this._factoryIntersectionCache are populated in the same routine
+          // and if the former is defined the latter will be too!
+          // eslint-disable-next-line
+          const key: string = this._factoryIntersectionCache.get(reg.keys)!;
 
-          if (key) {
-            return this._createRegistration(sourceFile.fileName, key, reg.factory);
-          }
-        }).filter((registration: ts.Statement | undefined): registration is ts.Statement => !!registration);
+          return this._createRegistration(sourceFile.fileName, key, reg.factory);
+        });
     }
 
     return [];
@@ -300,12 +304,14 @@ export class MockDefiner {
     if (this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]) {
       return this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]
         .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
-          const key: string | undefined = this._registerMockFactoryCache.get(reg.key);
+          // NOTE: this._registerMockFactoryCache and
+          // this._registerMockFactoryCache are populated in the same routine
+          // and if the former is defined the latter will be too!
+          // eslint-disable-next-line
+          const key: string = this._registerMockFactoryCache.get(reg.key)!;
 
-          if (key) {
-            return this._createRegistration(sourceFile.fileName, key, reg.factory);
-          }
-        }).filter((registration: ts.Statement | undefined): registration is ts.Statement => !!registration);
+          return this._createRegistration(sourceFile.fileName, key, reg.factory);
+        });
     }
 
     return [];
