@@ -6,9 +6,9 @@ describe('create-mock-values', () => {
   }
 
   interface Interface {
-    property: string;
-    method(): void;
-    subInterface: SubInterface;
+    property: string | null;
+    method: (() => void) | null;
+    subInterface: SubInterface | null;
   }
 
   it('should create the mock merging the values provided', () => {
@@ -17,7 +17,9 @@ describe('create-mock-values', () => {
     });
 
     expect(properties.property).toBe('sss');
-    properties.method();
+    if (typeof properties.method === 'function') {
+      properties.method();
+    }
   });
 
   it('should create the mock merging the null values provided', () => {

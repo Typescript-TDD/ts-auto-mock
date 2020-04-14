@@ -14,11 +14,21 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
   const descriptor: ts.Expression = node.default ? GetDescriptor(node.default, scope) : GetNullDescriptor();
 
   const declaration: ts.Declaration = type.symbol.declarations[0];
-  const typeDeclaration: ts.Declaration = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
+  const typeDeclaration: ts.Declaration | undefined = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
-  const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration) + node.name.escapedText;
+  if (!typeDeclaration) {
+    throw new Error(`Failed to determine the owner (parent) of the type parameter: \`${declaration.getText()}'.`);
+  }
 
-  return createFunctionToAccessToGenericValue(genericKey, descriptor);
+  const genericKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
+
+  if (!genericKey) {
+    throw new Error(
+      `Failed to look up generic key in MockDefiner for \`${typeDeclaration.getText()}'.`,
+    );
+  }
+
+  return createFunctionToAccessToGenericValue(genericKey + node.name.escapedText, descriptor);
 }
 
 function createFunctionToAccessToGenericValue(key: string, descriptor: ts.Expression): ts.CallExpression {

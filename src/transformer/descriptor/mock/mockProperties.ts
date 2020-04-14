@@ -19,21 +19,21 @@ export function GetMockPropertiesFromSymbol(propertiesSymbol: ts.Symbol[], signa
 
 export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<PropertyLike>, signatures: ReadonlyArray<SignatureLike>, scope: Scope): ts.CallExpression {
   const propertiesFilter: PropertyLike[] = list.filter((member: PropertyLike) => {
-    const hasModifiers: boolean = !!member.modifiers;
+    const modifiers: ts.ModifiersArray | undefined = member.modifiers;
 
     if (IsTypescriptType(member)) { // This is a current workaround to safe fail extends of TypescriptLibs
       return false;
     }
 
-    if (!hasModifiers) {
+    if (!modifiers) {
       return true;
     }
 
-    return member.modifiers.filter((modifier: ts.Modifier) => modifier.kind === ts.SyntaxKind.PrivateKeyword).length === 0;
+    return modifiers.filter((modifier: ts.Modifier) => modifier.kind === ts.SyntaxKind.PrivateKeyword).length === 0;
   });
 
   const accessorDeclaration: PropertyAssignments = GetMockPropertiesAssignments(propertiesFilter, scope);
 
-  const signaturesDescriptor: ts.Expression = signatures.length > 0 ? GetDescriptor(signatures[0], scope) : null;
+  const signaturesDescriptor: ts.Expression | null = signatures.length ? GetDescriptor(signatures[0], scope) : null;
   return GetMockCall(accessorDeclaration, signaturesDescriptor);
 }

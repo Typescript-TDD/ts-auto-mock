@@ -48,7 +48,7 @@ export namespace TypescriptCreator {
     return createProperty('', undefined);
   }
 
-  export function createProperty(propertyName: string | PropertyName, type: ts.TypeNode): ts.PropertyDeclaration {
+  export function createProperty(propertyName: string | PropertyName, type: ts.TypeNode | undefined): ts.PropertyDeclaration {
     return ts.createProperty(undefined, undefined, propertyName, undefined, type, undefined);
   }
 

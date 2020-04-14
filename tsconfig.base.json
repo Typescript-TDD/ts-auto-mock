@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "esModuleInterop": true,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "lib": [
       "es2017",
