@@ -13,7 +13,14 @@ export function GetPropertyDescriptor(node: PropertyNode, scope: Scope): ts.Expr
     if (node.questionToken) {
       return GetUndefinedDescriptor();
     }
+
     return GetDescriptor(node.type, scope);
+  }
+
+  if (!node.initializer) {
+    throw new Error(
+      `The transformer couldn't determine a property value for \`${node.getText()}' without a specified type nor an initializer value.`,
+    );
   }
 
   return GetDescriptor(node.initializer, scope);

@@ -12,7 +12,7 @@ export function isFunctionFromThisLibrary(signature: ts.Signature, customFunctio
     return false;
   }
 
-  if (!ts.isFunctionDeclaration(signature.declaration)) {
+  if (!signature.declaration || !ts.isFunctionDeclaration(signature.declaration)) {
     return false;
   }
 

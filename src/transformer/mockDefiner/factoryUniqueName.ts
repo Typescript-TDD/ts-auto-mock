@@ -12,7 +12,7 @@ export class FactoryUniqueName {
   }
 
   public createForDeclaration(declaration: PossibleDeclaration): string {
-    const declarationNameIdentifier: ts.Identifier = declaration.name;
+    const declarationNameIdentifier: ts.Identifier | undefined = declaration.name;
 
     return this.createUniqueName(declarationNameIdentifier && declarationNameIdentifier.text);
   }
@@ -24,7 +24,7 @@ export class FactoryUniqueName {
       }
 
       if (ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration) || ts.isClassDeclaration(declaration)) {
-        acc += declaration.name.text;
+        acc += declaration.name?.text || '';
       }
 
       return acc;

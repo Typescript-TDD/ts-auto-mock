@@ -7,7 +7,7 @@ describe('mocking properties', () => {
     }
 
     interface AnInterface {
-      bProp: SubInterface;
+      bProp: SubInterface | null;
     }
 
     it('should correctly assign null', () => {
@@ -21,7 +21,7 @@ describe('mocking properties', () => {
 
   describe('when property is a value type', () => {
     interface AnInterface {
-      aProp: string;
+      aProp: string | null;
     }
 
     it('should correctly assign null', () => {
@@ -35,7 +35,7 @@ describe('mocking properties', () => {
 
   describe('when property is a function', () => {
     interface AnInterface {
-      aProp(): string;
+      aProp: (() => string) | null;
     }
 
     it('should correctly assign null', () => {

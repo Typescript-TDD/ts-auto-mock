@@ -18,11 +18,17 @@ export class ExtensionHandler<TMock> {
     extension: Extension<TMock, TMockedPropertyHandler>,
   ): TMockedPropertyHandler;
   public get<TPropName extends keyof TMock, TMockedPropertyHandler>(
-    extensionOrPropertyName: Function | TPropName,
+    extensionOrPropertyName: Extension<TMock, TMockedPropertyHandler> | TPropName,
     maybePropertyHandler?: AsMockedPropertyHandler<TMockedPropertyHandler, TMock, TPropName>,
   ): TMockedPropertyHandler {
     if (isFunction(extensionOrPropertyName)) {
       return extensionOrPropertyName(this._mock);
+    }
+
+    if (!maybePropertyHandler) {
+      throw new Error(
+        `It looks like you are trying to get an extension for ${extensionOrPropertyName} without specifying the handler.`,
+      );
     }
 
     return maybePropertyHandler(this._mock[extensionOrPropertyName], this._mock, extensionOrPropertyName);

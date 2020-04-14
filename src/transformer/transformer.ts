@@ -25,8 +25,8 @@ const transformer:
 
 export { transformer };
 
-function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration): ts.Node {
-  const nodeToMock: ts.TypeNode = node.typeArguments[0];
+function visitNode(node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> }, declaration: ts.FunctionDeclaration): ts.Node {
+  const [nodeToMock]: ts.NodeArray<ts.TypeNode> = node.typeArguments;
 
   if (isCreateMock(declaration)) {
     return getMock(nodeToMock, node);
@@ -44,13 +44,13 @@ function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration)
 }
 
 function isCreateMock(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name && declaration.name.getText() === 'createMock';
+  return declaration.name?.getText() === 'createMock';
 }
 
 function isCreateMockList(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name && declaration.name.getText() === 'createMockList';
+  return declaration.name?.getText() === 'createMockList';
 }
 
 function isRegisterMock(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name && declaration.name.getText() === 'registerMock';
+  return declaration.name?.getText() === 'registerMock';
 }

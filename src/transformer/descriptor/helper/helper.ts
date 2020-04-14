@@ -16,7 +16,14 @@ export namespace TypescriptHelper {
 
   export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
     const typeChecker: ts.TypeChecker = TypeChecker();
-    const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node);
+    const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(node);
+
+    if (!symbol) {
+      throw new Error(
+        `The type checker failed to look up a symbol for \`${node.getText()}'. ` +
+          'Perhaps, the checker was searching an outdated source.',
+      );
+    }
 
     return GetDeclarationFromSymbol(symbol);
   }
@@ -56,11 +63,13 @@ export namespace TypescriptHelper {
   export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
     const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
-    return (declaration as Declaration).typeParameters;
+    const { typeParameters = ts.createNodeArray([]) }: Declaration = (declaration as Declaration);
+
+    return typeParameters;
   }
 
-  export function GetTypeParameterOwnerMock(declaration: ts.Declaration): ts.Declaration {
-    const typeDeclaration: ts.Declaration = ts.getTypeParameterOwner(declaration);
+  export function GetTypeParameterOwnerMock(declaration: ts.Declaration): ts.Declaration | undefined {
+    const typeDeclaration: ts.Declaration | undefined = ts.getTypeParameterOwner(declaration);
 
     // THIS IS TO FIX A MISSING IMPLEMENTATION IN TYPESCRIPT https://github.com/microsoft/TypeScript/blob/ba5e86f1406f39e89d56d4b32fd6ff8de09a0bf3/src/compiler/utilities.ts#L5138
     if (typeDeclaration && (typeDeclaration as Declaration).typeParameters) {
@@ -79,7 +88,14 @@ export namespace TypescriptHelper {
       return propertyName.text;
     }
 
-    const symbol: ts.Symbol = TypeChecker().getSymbolAtLocation(propertyName);
+    const symbol: ts.Symbol | undefined = TypeChecker().getSymbolAtLocation(propertyName);
+
+    if (!symbol) {
+      throw new Error(
+        `The type checker failed to look up symbol for property: ${propertyName.getText()}.`,
+      );
+    }
+
     return symbol.escapedName.toString();
   }
 
@@ -88,7 +104,7 @@ export namespace TypescriptHelper {
   }
 
 
-  export function getSignatureOfCallExpression(node: ts.CallExpression): ts.Signature {
+  export function getSignatureOfCallExpression(node: ts.CallExpression): ts.Signature | undefined {
     const typeChecker: ts.TypeChecker = TypeChecker();
 
     return typeChecker.getResolvedSignature(node);
@@ -109,9 +125,9 @@ export namespace TypescriptHelper {
 
   function GetDeclarationsForImport(node: ImportDeclaration): ts.Declaration[] {
     const typeChecker: ts.TypeChecker = TypeChecker();
-    const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
-    const originalSymbol: ts.Symbol = typeChecker.getAliasedSymbol(symbol);
+    const symbol: ts.Symbol | undefined = node.name && typeChecker.getSymbolAtLocation(node.name);
+    const originalSymbol: ts.Symbol | undefined = symbol && typeChecker.getAliasedSymbol(symbol);
 
-    return originalSymbol.declarations;
+    return originalSymbol?.declarations ?? [];
   }
 }

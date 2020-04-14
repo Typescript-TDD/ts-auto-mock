@@ -9,9 +9,21 @@ import { GetTypeQueryDescriptorFromDeclaration } from '../typeQuery/typeQuery';
 type ExternalSource = ts.SourceFile | ts.ModuleDeclaration;
 
 export function GetModuleDescriptor(node: ts.NamedDeclaration, scope: Scope): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  if (!node.name) {
+    throw new Error(
+      `Cannot look up symbol for a node without a name: ${node.getText()}.`,
+    );
+  }
 
-  const symbolAlias: ts.Symbol = typeChecker.getSymbolAtLocation(node.name);
+  const typeChecker: ts.TypeChecker = TypeChecker();
+  const symbolAlias: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(node.name);
+
+  if (!symbolAlias) {
+    throw new Error(
+      `The type checker failed to look up symbol for \`${node.name.getText()}'.`,
+    );
+  }
+
   const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
   const externalModuleDeclaration: ts.NamedDeclaration = symbol.declarations[0];
 
@@ -44,7 +56,14 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(symbol: ts.Symbol
     }
 
     if (ts.isExportSpecifier(declaration) && ts.isSourceFile(originalDeclaration)) {
-      const exportSpecifierSymbol: ts.Symbol = typeChecker.getSymbolAtLocation(declaration.name);
+      const exportSpecifierSymbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(declaration.name);
+
+      if (!exportSpecifierSymbol) {
+        throw new Error(
+          `The type checker failed to look up symbol for \`${declaration.name.getText()}'.`,
+        );
+      }
+
       const exportSpecifierAliasSymbol: ts.Symbol = typeChecker.getAliasedSymbol(exportSpecifierSymbol);
       const exportSpecifierProperties: ts.PropertySignature[] = GetPropertiesFromSourceFileOrModuleDeclaration(exportSpecifierAliasSymbol, scope);
       const propertyType: ts.TypeNode = ts.createTypeLiteralNode(exportSpecifierProperties);

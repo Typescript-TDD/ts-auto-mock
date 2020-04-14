@@ -11,7 +11,7 @@ import { GenericParameter } from './genericParameter';
 export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   const generics: GenericParameter[] = [];
 
-  function isGenericProvided(node: ts.TypeReferenceNode | ts.ExpressionWithTypeArguments, index: number): boolean {
+  function isGenericProvided<T extends ts.TypeReferenceNode | ts.ExpressionWithTypeArguments>(node: T, index: number): node is T & Required<ts.NodeWithTypeArguments> {
     return !!node.typeArguments && !!node.typeArguments[index];
   }
 
@@ -31,9 +31,11 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     const existingUniqueName: string = declarationKey + typeParameterDeclaration.name.escapedText;
     const uniqueName: string = extensionDeclarationKey + ownerParameterDeclaration.name.escapedText;
 
-    const parameterToAdd: GenericParameter = generics.find((genericParameter: GenericParameter) => genericParameter.ids.includes(existingUniqueName));
+    const parameterToAdd: GenericParameter | undefined = generics.find((genericParameter: GenericParameter) => genericParameter.ids.includes(existingUniqueName));
 
-    parameterToAdd.ids.push(uniqueName);
+    if (parameterToAdd?.ids) {
+      parameterToAdd.ids.push(uniqueName);
+    }
   }
 
   function createGenericParameter(ownerKey: string, nodeOwnerParameter: ts.TypeParameterDeclaration, genericDescriptor: ts.Expression): GenericParameter {
@@ -73,7 +75,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       extensionDeclaration: GenericDeclarationSupported,
       extensionDeclarationKey: string,
       extension: ts.ExpressionWithTypeArguments): void {
-      const extensionDeclarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> = extensionDeclaration.typeParameters;
+      const extensionDeclarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> | undefined = extensionDeclaration.typeParameters;
 
       if (!extensionDeclarationTypeParameters) {
         return;
