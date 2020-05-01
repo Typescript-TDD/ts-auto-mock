@@ -22,7 +22,9 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
     "preparePublish": "npm run build && npm run copyForPublish",
-    "build:playground": "ttsc --project tsconfig.playground.json"
+    "build:playground": "ttsc --project tsconfig.playground.json",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "typescript",
@@ -71,7 +73,8 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.15",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "snyk": "^1.316.1"
   },
   "peerDependencies": {
     "typescript": "^3.8.3"
@@ -80,5 +83,6 @@
     "hooks": {
       "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi"
     }
-  }
+  },
+  "snyk": true
 }
