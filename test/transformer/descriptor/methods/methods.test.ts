@@ -118,10 +118,12 @@ describe('for methods', () => {
       expect(properties.b).toBe('');
     });
 
-    it('should use the first overload if any', () => {
+    it('should use the overload as requested by input', () => {
       const properties: InterfaceWithConstructSignatureOverload = createMock<InterfaceWithConstructSignatureOverload>();
       // eslint-disable-next-line
-      expect((new properties() as any).a).toBe(0);
+      expect((new properties(0)).a).toBe(0);
+      expect((new properties('')).b).toBe('');
+      expect((new properties()).c).toBeInstanceOf(Date);
     });
   });
 
