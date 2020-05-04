@@ -1,4 +1,6 @@
 import ts from 'typescript';
+import { GetTsAutoMockOverloadOptions, TsAutoMockOverloadOptions } from '../../../options/overload';
+import { GetClassDeclarationDescriptor } from '../class/classDeclaration';
 import { TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
@@ -9,7 +11,7 @@ export interface MethodSignature {
   returnValue: ts.Expression;
 }
 
-export function GetMethodDescriptor(propertyName: ts.PropertyName, methodSignatures: MethodSignature[]): ts.Expression {
+export function GetMethodDescriptor(propertyName: ts.PropertyName, methodSignatures: MethodSignature[]): ts.CallExpression {
   const providerGetMethod: ts.PropertyAccessExpression = CreateProviderGetMethod();
 
   const propertyNameString: string = TypescriptHelper.GetStringPropertyName(propertyName);
@@ -97,12 +99,13 @@ function ResolveParameterBranch(declarations: ts.ParameterDeclaration[], allDecl
     CreateUnionTypeOfEquality(firstDeclaration.type, allDeclarations[0]),
   );
 
-
   return ts.createIf(condition, ts.createReturn(returnValue), elseBranch);
 }
 
-function ResolveSignatureElseBranch(signatures: MethodSignature[], longestParameterList: ts.ParameterDeclaration[]): ts.Statement {
-  const [signature, ...remainingSignatures]: MethodSignature[] = signatures;
+export function ResolveSignatureElseBranch(signatures: MethodSignature[], longestParameterList: ts.ParameterDeclaration[]): ts.Statement {
+  const transformOverloadsOption: TsAutoMockOverloadOptions = GetTsAutoMockOverloadOptions();
+
+  const [signature, ...remainingSignatures]: MethodSignature[] = signatures.filter((_: unknown, i: number) => transformOverloadsOption || i === 0);
 
   if (remainingSignatures.length) {
     const elseBranch: ts.Statement = ResolveSignatureElseBranch(remainingSignatures, longestParameterList);

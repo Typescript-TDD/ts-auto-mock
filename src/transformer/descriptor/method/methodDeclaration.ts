@@ -17,16 +17,7 @@ export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.F
     methodDeclarations.push(node);
   }
 
-  const methodSignatures: MethodSignature[] = methodDeclarations.map(
-    (declaration: ts.MethodDeclaration | ts.FunctionDeclaration) => {
-      const returnTypeNode: ts.Node = GetFunctionReturnType(declaration);
-
-      return {
-        parameters: declaration.parameters.map((parameter: ts.ParameterDeclaration) => parameter),
-        returnValue: GetDescriptor(returnTypeNode, scope),
-      };
-    }
-  );
+  const methodSignatures: MethodSignature[] = methodDeclarations.map((declaration: ts.MethodDeclaration | ts.FunctionDeclaration) => ReshapeCallableDeclaration(declaration, scope));
 
   if (!node.name) {
     throw new Error(
@@ -35,4 +26,13 @@ export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.F
   }
 
   return GetMethodDescriptor(node.name, methodSignatures);
+}
+
+export function ReshapeCallableDeclaration(declaration: ts.SignatureDeclaration, scope: Scope): MethodSignature {
+  const returnTypeNode: ts.Node = GetFunctionReturnType(declaration);
+
+  return {
+    parameters: declaration.parameters.map((parameter: ts.ParameterDeclaration) => parameter),
+    returnValue: GetDescriptor(returnTypeNode, scope),
+  };
 }

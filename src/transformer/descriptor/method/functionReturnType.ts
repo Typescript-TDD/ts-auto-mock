@@ -1,14 +1,16 @@
 import * as ts from 'typescript';
 import { GetReturnNodeFromBody } from './bodyReturnType';
 
-export function GetFunctionReturnType(node: ts.FunctionLikeDeclaration): ts.Node {
-  let returnType: ts.Node;
-
-  if (node.type) {
-    returnType = node.type;
-  } else {
-    returnType = GetReturnNodeFromBody(node);
+export function GetFunctionReturnType(node: ts.SignatureDeclaration): ts.Node {
+  if (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) {
+    return GetReturnNodeFromBody(node);
   }
 
-  return returnType;
+  if (!node.type) {
+    throw new Error(
+      `The transformer couldn't determine the type of ${node.getText()}. Did you declare its type?`,
+    );
+  }
+
+  return node.type;
 }
