@@ -46,6 +46,8 @@ export function GetTypescriptTypeDescriptor(node: ts.TypeReferenceNode, scope: S
         [],
         [dataResolved],
       );
+    case(TypescriptLibsTypes.Date):
+      return ts.createNew(ts.createIdentifier('Date'), undefined, undefined);
     case(TypescriptLibsTypes.Map):
       return ts.createNew(ts.createIdentifier('Map'), undefined, undefined);
     case(TypescriptLibsTypes.Set):
