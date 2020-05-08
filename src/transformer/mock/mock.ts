@@ -12,7 +12,7 @@ function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
 }
 
 function hasDefaultValues(node: ts.CallExpression): boolean {
-  return node.arguments.length && !!node.arguments[0];
+  return !!node.arguments.length && !!node.arguments[0];
 }
 
 function hasDefaultListValues(node: ts.CallExpression): boolean {

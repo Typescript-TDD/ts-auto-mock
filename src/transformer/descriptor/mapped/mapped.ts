@@ -6,9 +6,15 @@ import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { GetTypes } from '../type/type';
 
 export function GetMappedDescriptor(node: ts.MappedTypeNode, scope: Scope): ts.Expression {
-  const typeParameter: ts.TypeNode = node.typeParameter.constraint;
+  const typeParameter: ts.TypeNode | undefined = node.typeParameter.constraint;
   const typeChecker: ts.TypeChecker = TypeChecker();
-  const types: ts.Node[] = GetTypes(ts.createNodeArray([typeParameter]), scope);
+
+  const parameters: ts.TypeNode[] = [];
+  if (typeParameter) {
+    parameters.push(typeParameter);
+  }
+
+  const types: ts.Node[] = GetTypes(ts.createNodeArray(parameters), scope);
 
   const properties: ts.PropertyDeclaration[] = types.reduce((acc: ts.PropertyDeclaration[], possibleType: ts.Node) => {
     if (ts.isLiteralTypeNode(possibleType)) {

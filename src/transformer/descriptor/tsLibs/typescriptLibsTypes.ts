@@ -1,14 +1,15 @@
 export enum TypescriptLibsTypes {
   Array = 'Array',
-  ReadonlyArray = 'ReadonlyArray',
-  Number = 'Number',
-  String = 'String',
   Boolean = 'Boolean',
-  Object = 'Object',
+  Date = 'Date',
   Function = 'Function',
-  Promise = 'Promise',
   Map = 'Map',
-  Set = 'Set'
+  Number = 'Number',
+  Object = 'Object',
+  Promise = 'Promise',
+  ReadonlyArray = 'ReadonlyArray',
+  Set = 'Set',
+  String = 'String',
 }
 
 export const TypescriptLibsTypesFolder: string = 'node_modules/typescript/lib';

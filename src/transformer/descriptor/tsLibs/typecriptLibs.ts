@@ -18,8 +18,8 @@ export function IsTypescriptType(node: ts.Node): boolean {
 
 export function GetTypescriptTypeDescriptor(node: ts.TypeReferenceNode, scope: Scope): ts.Expression {
   const typeChecker: ts.TypeChecker = TypeChecker();
-  const symbol: ts.Symbol = typeChecker.getSymbolAtLocation(node.typeName);
-  const typeScriptType: TypescriptLibsTypes = TypescriptLibsTypes[symbol.name];
+  const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(node.typeName);
+  const typeScriptType: TypescriptLibsTypes = symbol?.name && TypescriptLibsTypes[symbol.name];
 
   switch (typeScriptType) {
     case(TypescriptLibsTypes.Array):
@@ -46,6 +46,8 @@ export function GetTypescriptTypeDescriptor(node: ts.TypeReferenceNode, scope: S
         [],
         [dataResolved],
       );
+    case(TypescriptLibsTypes.Date):
+      return ts.createNew(ts.createIdentifier('Date'), undefined, undefined);
     case(TypescriptLibsTypes.Map):
       return ts.createNew(ts.createIdentifier('Map'), undefined, undefined);
     case(TypescriptLibsTypes.Set):

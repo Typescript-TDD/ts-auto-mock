@@ -66,13 +66,13 @@ describe('typescript lib', () => {
     expect(properties.a).toEqual([]);
   });
 
-  it('should set undefined for a Date', () => {
+  it('should create a new Date for a Date', () => {
     interface Interface {
       a: Date;
     }
 
     const properties: Interface = createMock<Interface>();
-    expect(properties.a).toBeUndefined();
+    expect(properties.a).toBeInstanceOf(Date);
   });
 
   it('should set a promise resolved for a promise', async () => {

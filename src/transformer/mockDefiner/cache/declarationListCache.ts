@@ -20,15 +20,15 @@ export class DeclarationListCache {
     });
   }
 
-  public get(declarations: ts.Declaration[]): string {
-    return this._find(declarations).key;
+  public get(declarations: ts.Declaration[]): string | undefined {
+    return this._find(declarations)?.key;
   }
 
   public has(declarations: ts.Declaration[]): boolean {
     return !!this._find(declarations);
   }
 
-  private _find(declarations: ts.Declaration[]): DeclarationListCacheElement {
+  private _find(declarations: ts.Declaration[]): DeclarationListCacheElement | undefined {
     return this._cache.find((intersection: DeclarationListCacheElement) => ArrayHelper.AreEqual(declarations, intersection.declarations));
   }
 }

@@ -11,7 +11,7 @@ export class DeclarationCache {
     this._declarationKeyMap.set(declaration, key);
   }
 
-  public get(declaration: ts.Declaration): string {
+  public get(declaration: ts.Declaration): string | undefined {
     return this._declarationKeyMap.get(declaration);
   }
 

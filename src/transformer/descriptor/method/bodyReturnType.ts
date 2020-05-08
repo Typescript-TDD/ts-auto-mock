@@ -8,11 +8,11 @@ export function GetReturnTypeFromBodyDescriptor(node: ts.ArrowFunction | ts.Func
 }
 
 export function GetReturnNodeFromBody(node: ts.FunctionLikeDeclaration): ts.Node {
-  let returnValue: ts.Node;
+  let returnValue: ts.Node | undefined;
 
-  const functionBody: ts.ConciseBody = node.body;
+  const functionBody: ts.ConciseBody | undefined = node.body;
 
-  if (ts.isBlock(functionBody)) {
+  if (functionBody && ts.isBlock(functionBody)) {
     const returnStatement: ts.ReturnStatement = GetReturnStatement(functionBody);
 
     if (returnStatement) {
@@ -22,6 +22,10 @@ export function GetReturnNodeFromBody(node: ts.FunctionLikeDeclaration): ts.Node
     }
   } else {
     returnValue = node.body;
+  }
+
+  if (!returnValue) {
+    throw new Error(`Failed to determine the return value of ${node.getText()}.`);
   }
 
   return returnValue;

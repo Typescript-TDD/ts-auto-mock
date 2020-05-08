@@ -51,7 +51,7 @@ function GetLazyMockProperty(descriptor: ts.Expression, member: PropertyLike): t
 
   const hasOwnProperty: ts.Expression = ts.createCall(
     ts.createPropertyAccess(MockIdentifierInternalValues, 'hasOwnProperty'),
-    null,
+    undefined,
     [stringPropertyName]
   );
 
