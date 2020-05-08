@@ -88,7 +88,7 @@ function CreateUnionTypeOfEquality(signatureType: ts.TypeNode | undefined, prima
 }
 
 function ResolveParameterBranch(declarations: ts.ParameterDeclaration[], allDeclarations: ts.ParameterDeclaration[], returnValue: ts.Expression, elseBranch: ts.Statement): ts.Statement {
-  const [firstDeclaration, ...remainingDeclarations]: ts.ParameterDeclaration[] = declarations;
+  const [firstDeclaration, ...remainingDeclarations]: Array<ts.ParameterDeclaration | undefined> = declarations;
 
   const condition: ts.Expression = remainingDeclarations.reduce(
     (prevStatement: ts.Expression, declaration: ts.ParameterDeclaration, index: number) =>
@@ -96,7 +96,7 @@ function ResolveParameterBranch(declarations: ts.ParameterDeclaration[], allDecl
         prevStatement,
         CreateUnionTypeOfEquality(declaration.type, allDeclarations[index + 1]),
       ),
-    CreateUnionTypeOfEquality(firstDeclaration.type, allDeclarations[0]),
+    CreateUnionTypeOfEquality(firstDeclaration?.type, allDeclarations[0]),
   );
 
   return ts.createIf(condition, ts.createReturn(returnValue), elseBranch);
@@ -105,16 +105,17 @@ function ResolveParameterBranch(declarations: ts.ParameterDeclaration[], allDecl
 export function ResolveSignatureElseBranch(signatures: MethodSignature[], longestParameterList: ts.ParameterDeclaration[]): ts.Statement {
   const transformOverloadsOption: TsAutoMockOverloadOptions = GetTsAutoMockOverloadOptions();
 
-  const [signature, ...remainingSignatures]: MethodSignature[] = signatures.filter((_: unknown, i: number) => transformOverloadsOption || i === 0);
+  const [signature, ...remainingSignatures]: MethodSignature[] = signatures.filter((_: unknown, notFirst: number) => transformOverloadsOption || !notFirst);
 
-  if (remainingSignatures.length) {
-    const elseBranch: ts.Statement = ResolveSignatureElseBranch(remainingSignatures, longestParameterList);
-
-    const currentParameters: ts.ParameterDeclaration[] = signature.parameters || [];
-    return ResolveParameterBranch(currentParameters, longestParameterList, signature.returnValue, elseBranch);
-  } else {
+  const indistinctSignatures: boolean = signatures.every((sig: MethodSignature) => !sig.parameters?.length);
+  if (!remainingSignatures.length || indistinctSignatures) {
     return ts.createReturn(signature.returnValue);
   }
+
+  const elseBranch: ts.Statement = ResolveSignatureElseBranch(remainingSignatures, longestParameterList);
+
+  const currentParameters: ts.ParameterDeclaration[] = signature.parameters || [];
+  return ResolveParameterBranch(currentParameters, longestParameterList, signature.returnValue, elseBranch);
 }
 
 function CreateProviderGetMethod(): ts.PropertyAccessExpression {
