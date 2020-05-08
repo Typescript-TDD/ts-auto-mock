@@ -1,6 +1,5 @@
 import ts from 'typescript';
 import { GetTsAutoMockOverloadOptions, TsAutoMockOverloadOptions } from '../../../options/overload';
-import { GetClassDeclarationDescriptor } from '../class/classDeclaration';
 import { TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
@@ -60,7 +59,8 @@ function CreateTypeEquality(signatureType: ts.TypeNode | undefined, primaryDecla
       signatureType ? ts.createStringLiteral(signatureType.getText()) : ts.createVoidZero(),
     );
   } else {
-    return ts.createBinary(identifier, ts.SyntaxKind.InstanceOfKeyword, ts.createIdentifier(signatureType.getText()));
+    // FIXME: Support `instanceof Class`, falls back to Object for now. The fallback causes undefined behavior!
+    return ts.createBinary(identifier, ts.SyntaxKind.InstanceOfKeyword, ts.createIdentifier('Object'));
   }
 }
 
