@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
+import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { IGenericDeclaration } from './genericDeclaration.interface';
@@ -84,6 +85,12 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
 
         if (ts.isTypeReferenceNode(genericNode)) {
           const typeParameterDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(genericNode.typeName);
+
+          const isExtendingItself: boolean = MockDefiner.instance.getDeclarationKeyMap(typeParameterDeclaration) === declarationKey;
+          if (isExtendingItself) {
+            return acc;
+          }
+
           if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
             addGenericParameterToExisting(
               extensionDeclarationTypeParameters[index],

@@ -94,7 +94,8 @@ function addFromDeclarationExtensions(declaration: GenericDeclarationSupported, 
           declarationKey,
           extensionDeclaration as GenericDeclarationSupported,
           extensionDeclarationKey,
-          extension);
+          extension,
+        );
 
         addFromDeclarationExtensions(extensionDeclaration as GenericDeclarationSupported, extensionDeclarationKey, genericDeclaration);
       });

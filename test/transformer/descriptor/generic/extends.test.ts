@@ -244,4 +244,16 @@ describe('for generic', () => {
     });
   });
 
+  describe('with circular', () => {
+    interface A extends ClassWithGenerics<A> {
+      b: number;
+    }
+
+    it('should avoid infinite extension', () => {
+      const properties: A = createMock<A>();
+      expect(properties.a).toBeDefined();
+      expect(properties.b).toBe(0);
+    });
+  });
+
 });
