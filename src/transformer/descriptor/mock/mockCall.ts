@@ -8,28 +8,37 @@ import { PropertyAssignments } from './mockPropertiesAssignments';
 export function GetMockCall(properties: PropertyAssignments, signatures: MethodSignature[]): ts.CallExpression {
   const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
 
-  if (signatures.length) {
+  const variableStatements: ts.VariableDeclaration[] = [
+    TypescriptCreator.createVariableDeclaration(MockIdentifierInternalValues, ts.createObjectLiteral()),
+  ];
+  const propertyAssignmentStatements: ts.ExpressionStatement[] = [];
+
+  const isCallable: boolean = !!signatures.length;
+  if (isCallable) {
     // FIXME: It'd probably be wise to extract the name of the callable
-    // signature and fallback to `new` or smth if there is none.
-    return GetMethodDescriptor(ts.createStringLiteral('new'), signatures);
+    // signature and only fallback to `new` if there is none (or something
+    // shorter).
+    const callableEntry: ts.CallExpression = GetMethodDescriptor(ts.createStringLiteral('new'), signatures);
+
+    variableStatements.push(
+      TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, callableEntry),
+    );
+
+    propertyAssignmentStatements.push(
+      ...properties.literals.map(
+        (literalProperty: ts.PropertyAssignment) => AssignLiteralPropertyTo(mockObjectReturnValueName, literalProperty)
+      ),
+    );
+  } else {
+    variableStatements.push(
+      TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, ts.createObjectLiteral(properties.literals)),
+    );
   }
 
   const statements: ts.Statement[] = [
-    TypescriptCreator.createVariableStatement([
-      TypescriptCreator.createVariableDeclaration(MockIdentifierInternalValues, ts.createObjectLiteral()),
-      TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, ts.createObjectLiteral(properties.literals)),
-    ]),
+    TypescriptCreator.createVariableStatement(variableStatements),
+    ...propertyAssignmentStatements,
   ];
-
-  // if (signatures[0]) {
-  //   let literalProperty: ts.PropertyAssignment;
-  //   let index: number = 0;
-
-  //   // tslint:disable-next-line:no-conditional-assignment
-  //   while ((literalProperty = properties.literals[index++])) {
-  //     statements.push(AssignLiteralPropertyTo(mockObjectReturnValueName, literalProperty));
-  //   }
-  // }
 
   if (properties.lazy.length) {
     const addPropertiesToUniqueVariable: ts.ExpressionStatement = AssignPropertiesTo(properties.lazy, mockObjectReturnValueName);
@@ -47,15 +56,15 @@ export function GetMockCall(properties: PropertyAssignments, signatures: MethodS
   return ts.createCall(IFFEFunction, [], []);
 }
 
-// function AssignVariableTo(variable: ts.Expression, expression: ts.Expression): ts.ExpressionStatement {
-//   const binaryExpression: ts.BinaryExpression = ts.createBinary(variable, ts.SyntaxKind.EqualsToken, expression);
-//   return ts.createExpressionStatement(binaryExpression);
-// }
+function AssignVariableTo(variable: ts.Expression, expression: ts.Expression): ts.ExpressionStatement {
+  const binaryExpression: ts.BinaryExpression = ts.createBinary(variable, ts.SyntaxKind.EqualsToken, expression);
+  return ts.createExpressionStatement(binaryExpression);
+}
 
-// function AssignLiteralPropertyTo(mockObjectReturnValueName: ts.Identifier, literalProperty: ts.PropertyAssignment): ts.ExpressionStatement {
-//   const propertyAccess: ts.ElementAccessExpression = ts.createElementAccess(mockObjectReturnValueName, literalProperty.name as ts.StringLiteral);
-//   return AssignVariableTo(propertyAccess, literalProperty.initializer);
-// }
+function AssignLiteralPropertyTo(mockObjectReturnValueName: ts.Identifier, literalProperty: ts.PropertyAssignment): ts.ExpressionStatement {
+  const propertyAccess: ts.ElementAccessExpression = ts.createElementAccess(mockObjectReturnValueName, literalProperty.name as ts.StringLiteral);
+  return AssignVariableTo(propertyAccess, literalProperty.initializer);
+}
 
 function AssignMockMarkerPropertyTo(identifier: ts.Identifier): ts.ExpressionStatement {
   const mockMarkerProperty: Property = GetMockMarkerProperty();
