@@ -69,3 +69,29 @@ a mapped type typescript returns a different type of property that is difficult 
 
 There is a branch created with a working version but it needs more investigation because the implementation is not readable and it may cause more issues
 [link](https://github.com/Typescript-TDD/ts-auto-mock/tree/feature/extends-mapped-type)
+
+
+## Circular Generics
+
+```ts
+class C<T> {
+  public propC: T
+  public test: string
+}
+
+class A extends C<A> {
+  public propA: number
+}
+const a: A = createMock<A>();
+
+// This will fail because we will not support generics of the same type.
+expect(a.propC.propC.test).toBe("");
+```
+
+These are discussed here:
+[link](https://github.com/Typescript-TDD/ts-auto-mock/pull/312). As of this
+writing, the problem with circular generics is that the generated AST will
+circle `A` over and over, and result in an infinite nested tree of declaration
+references. The intended behavior is to have the first back-reference stored
+elsewhere in the generated output and let it reference itself, making the
+runtime a lazy-evaluated sequence of getters.

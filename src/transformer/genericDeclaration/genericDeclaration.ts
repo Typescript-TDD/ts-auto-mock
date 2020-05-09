@@ -2,6 +2,7 @@ import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
+import { TransformerLogger } from '../logger/transformerLogger';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
@@ -90,6 +91,10 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
 
           const isExtendingItself: boolean = MockDefiner.instance.getDeclarationKeyMap(typeParameterDeclaration) === declarationKey;
           if (isExtendingItself) {
+            // FIXME: Currently, circular generics aren't supported. See
+            // https://github.com/Typescript-TDD/ts-auto-mock/pull/312 for more
+            // details.
+            TransformerLogger().circularGenericNotSupported(genericNode.getText());
             return acc;
           }
 
