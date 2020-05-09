@@ -1,4 +1,4 @@
-name: Test
+name: Definuitely Type build
 
 on: [push, pull_request]
 
@@ -16,13 +16,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: install ts auto mock and run test
+    - name: run definitely typed build
       run: |
-        sudo apt-get update
-        sudo apt-get install -y libgbm-dev
         npm install
         npm run build
-        npm test
+        npm run build:transformer:definitelyTyped
       env:
         CI: true
 
