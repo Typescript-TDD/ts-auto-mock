@@ -6,12 +6,22 @@ type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasD
 type ImportDeclaration = ts.ImportEqualsDeclaration | ts.ImportOrExportSpecifier | ts.ImportClause;
 
 export namespace TypescriptHelper {
-  export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
-    return ts.isLiteralTypeNode(typeNode) ||
-            typeNode.kind === ts.SyntaxKind.StringKeyword ||
-            typeNode.kind === ts.SyntaxKind.BooleanKeyword ||
-            typeNode.kind === ts.SyntaxKind.NumberKeyword ||
-            typeNode.kind === ts.SyntaxKind.ArrayType;
+  export interface PrimitiveTypeNode extends ts.TypeNode {
+    kind: ts.SyntaxKind.LiteralType | ts.SyntaxKind.NumberKeyword | ts.SyntaxKind.ObjectKeyword | ts.SyntaxKind.BooleanKeyword | ts.SyntaxKind.StringKeyword | ts.SyntaxKind.ArrayType;
+  }
+
+  export function IsLiteralOrPrimitive(typeNode: ts.Node): typeNode is PrimitiveTypeNode {
+    switch (typeNode.kind) {
+      case ts.SyntaxKind.LiteralType:
+      case ts.SyntaxKind.NumberKeyword:
+      case ts.SyntaxKind.ObjectKeyword:
+      case ts.SyntaxKind.BooleanKeyword:
+      case ts.SyntaxKind.StringKeyword:
+      case ts.SyntaxKind.ArrayType:
+        return true;
+    }
+
+    return false;
   }
 
   export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
@@ -117,22 +127,6 @@ export namespace TypescriptHelper {
   function isAlias(symbol: ts.Symbol): boolean {
     // eslint-disable-next-line no-bitwise
     return !!((symbol.flags & ts.SymbolFlags.Alias) || (symbol.flags & ts.SymbolFlags.AliasExcludes));
-  }
-
-  export interface RuntimeTypeNode extends ts.TypeNode {
-    kind: ts.SyntaxKind.NumberKeyword | ts.SyntaxKind.ObjectKeyword | ts.SyntaxKind.BooleanKeyword | ts.SyntaxKind.StringKeyword | ts.SyntaxKind.UndefinedKeyword;
-  }
-
-  export function isLiteralRuntimeTypeNode(typeNode: ts.TypeNode): typeNode is RuntimeTypeNode {
-    switch (typeNode.kind) {
-      case ts.SyntaxKind.NumberKeyword:
-      case ts.SyntaxKind.ObjectKeyword:
-      case ts.SyntaxKind.BooleanKeyword:
-      case ts.SyntaxKind.StringKeyword:
-        return true;
-    }
-
-    return false;
   }
 
   function isImportExportDeclaration(declaration: ts.Declaration): declaration is ImportDeclaration  {

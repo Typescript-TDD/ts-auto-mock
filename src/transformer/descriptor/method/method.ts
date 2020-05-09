@@ -53,7 +53,7 @@ function CreateTypeEquality(signatureType: ts.TypeNode | undefined, primaryDecla
     );
   }
 
-  if (TypescriptHelper.isLiteralRuntimeTypeNode(signatureType)) {
+  if (TypescriptHelper.IsLiteralOrPrimitive(signatureType)) {
     return ts.createStrictEquality(
       ts.createTypeOf(identifier),
       signatureType ? ts.createStringLiteral(signatureType.getText()) : ts.createVoidZero(),
