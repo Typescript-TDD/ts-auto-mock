@@ -2,7 +2,7 @@ import { createMock } from 'ts-auto-mock';
 
 import {
   exportedDeclaredOverloadedFunction,
-  // ExportedDeclaredClass,
+  ExportedDeclaredClass,
 } from '../utils/typeQuery/typeQueryUtils';
 
 describe('for overloads', () => {
@@ -32,14 +32,13 @@ describe('for overloads', () => {
       }
     });
 
-    // FIXME: Support more than just literals
-    // it('should assign the correct function mock for mockable inputs', () => {
-    //   const classMock: typeof ExportedDeclaredClass = createMock<typeof ExportedDeclaredClass>();
+    it('should assign the correct function mock for mockable inputs', () => {
+      const classMock: typeof ExportedDeclaredClass = createMock<typeof ExportedDeclaredClass>();
 
-    //   const functionMock: typeof exportedDeclaredOverloadedFunction = createMock<typeof exportedDeclaredOverloadedFunction>();
+      const functionMock: typeof exportedDeclaredOverloadedFunction = createMock<typeof exportedDeclaredOverloadedFunction>();
 
-    //   expect(functionMock(new classMock())).toBeInstanceOf(ExportedDeclaredClass);
-    // });
+      expect(functionMock(new classMock()).prop).toBe(0);
+    });
 
   });
 

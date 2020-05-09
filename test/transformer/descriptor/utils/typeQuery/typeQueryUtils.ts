@@ -27,11 +27,10 @@ export declare function exportedDeclaredOverloadedFunction(a: number, b: string,
 export declare function exportedDeclaredOverloadedFunction(a: number, b: boolean, c: number): number;
 export declare function exportedDeclaredOverloadedFunction(a: boolean, b: number, c: boolean): boolean;
 export declare function exportedDeclaredOverloadedFunction(a: boolean, b: string, c: boolean): boolean;
+
 export declare function exportedDeclaredOverloadedFunction(a: string | number | boolean, b: string | number | boolean, c: string | number | boolean): string | number | boolean;
-// TODO: ExportedClass may need to be mocked and it is not imported as of this
-// writing. The transformation does take `a instanceof ExportedClass` into
-// consideration though.
-// export declare function exportedDeclaredOverloadedFunction(a: ExportedClass): ExportedClass;
+
+export declare function exportedDeclaredOverloadedFunction(a: ExportedDeclaredClass): ExportedClass;
 export declare function exportedDeclaredOverloadedFunction(a: boolean): boolean;
 export declare function exportedDeclaredOverloadedFunction(a: number): number;
 export declare function exportedDeclaredOverloadedFunction(a: string): string;
