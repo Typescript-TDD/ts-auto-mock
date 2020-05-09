@@ -24,22 +24,33 @@ export { transformer };
 
 type CompatibleStatement = ts.InterfaceDeclaration | ts.FunctionDeclaration | ts.ClassDeclaration | ts.ModuleDeclaration;
 
-function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration): ts.Node {
-    const typeQueryNode: ts.TypeNode = node.typeArguments[0];
+function visitNode(node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> }, declaration: ts.FunctionDeclaration): ts.Node {
+    const [nodeToMock]: ts.NodeArray<ts.TypeNode> = node.typeArguments;
 
-    if (isCreateDefinitelyTypedMock(declaration) && ts.isTypeQueryNode(typeQueryNode)) {
+    if (isCreateDefinitelyTypedMock(declaration) && ts.isTypeQueryNode(nodeToMock)) {
         const typeChecker: ts.TypeChecker = TypeChecker();
-        const typeQuerySymbol: ts.Symbol = typeChecker.getSymbolAtLocation(typeQueryNode.exprName);
+        const typeQuerySymbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(nodeToMock.exprName);
+
+        if (!typeQuerySymbol) {
+            return getMock(nodeToMock, node);
+        }
+
         const typeQuerySymbolDeclaration: ts.ImportEqualsDeclaration = typeQuerySymbol.declarations[0] as ts.ImportEqualsDeclaration;
-        const symbolAlias: ts.Symbol = typeChecker.getSymbolAtLocation(typeQuerySymbolDeclaration.name);
+        const symbolAlias: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(typeQuerySymbolDeclaration.name);
+
+        if (!symbolAlias) {
+            return getMock(nodeToMock, node);
+        }
+
         const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
+
 
         if (!symbol.declarations) {
             const moduleName: string =
                 ((typeQuerySymbolDeclaration.moduleReference as ts.ExternalModuleReference).expression as ts.StringLiteral).text;
             const pathModule =  path.resolve(moduleName);
             const moduleWithoutExportsFile: ts.SourceFile = GetProgram().getSourceFiles().find((file: ts.SourceFile) =>
-                file.fileName.includes(`${pathModule}/index.d.ts`));
+                file.fileName.includes(`${pathModule}/index.d.ts`)) as ts.SourceFile;
 
             const compatibleStatements: ts.Statement[] = moduleWithoutExportsFile.statements.filter(
                 (statement: ts.Statement) => statement.kind === ts.SyntaxKind.InterfaceDeclaration
@@ -72,12 +83,12 @@ function visitNode(node: ts.CallExpression, declaration: ts.FunctionDeclaration)
             return node;
         }
 
-        return getMock(typeQueryNode, node);
+        return getMock(nodeToMock, node);
     }
 
     return node;
 }
 
 function isCreateDefinitelyTypedMock(declaration: ts.FunctionDeclaration): boolean {
-    return declaration.name && declaration.name.getText() === 'createDefinitelyTypedMock';
+    return !!declaration.name && declaration.name.getText() === 'createDefinitelyTypedMock';
 }
