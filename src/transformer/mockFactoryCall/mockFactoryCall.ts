@@ -30,13 +30,7 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
   const declarations: ts.Declaration[] | ts.TypeLiteralNode[] = intersection.types.map((type: ts.TypeNode) => {
     if (ts.isTypeReferenceNode(type)) {
       const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(type.typeName);
-      const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
-
-      if (!declarationKey) {
-        throw new Error(
-          `Failed to look up declaration key in MockDefiner for \`${declaration.getText()}'.`,
-        );
-      }
+      const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
       genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
 
