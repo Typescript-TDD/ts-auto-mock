@@ -20,13 +20,7 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
     throw new Error(`Failed to determine the owner (parent) of the type parameter: \`${declaration.getText()}'.`);
   }
 
-  const genericKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
-
-  if (!genericKey) {
-    throw new Error(
-      `Failed to look up generic key in MockDefiner for \`${typeDeclaration.getText()}'.`,
-    );
-  }
+  const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
 
   return createFunctionToAccessToGenericValue(genericKey + node.name.escapedText, descriptor);
 }
