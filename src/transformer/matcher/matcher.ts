@@ -7,16 +7,12 @@ export interface CustomFunction {
   sourceDts: string;
 }
 
-export function isFunctionFromThisLibrary(signature: ts.Signature, customFunctions: CustomFunction[]): boolean {
-  if (!isDeclarationDefined(signature)) {
+export function isFunctionFromThisLibrary(declaration: ts.Declaration, customFunctions: CustomFunction[]): boolean {
+  if (!ts.isFunctionDeclaration(declaration)) {
     return false;
   }
 
-  if (!signature.declaration || !ts.isFunctionDeclaration(signature.declaration)) {
-    return false;
-  }
-
-  const fileName: string = signature.declaration.getSourceFile().fileName;
+  const fileName: string = declaration.getSourceFile().fileName;
 
   return customFunctions.some((customFunction: CustomFunction) => {
     const functionUrl: string = path.join(__dirname, customFunction.sourceUrl);
@@ -27,8 +23,4 @@ export function isFunctionFromThisLibrary(signature: ts.Signature, customFunctio
 
     return isFileNameFunctionUrl;
   });
-}
-
-function isDeclarationDefined(signature: ts.Signature): boolean {
-  return signature && !!signature.declaration;
 }

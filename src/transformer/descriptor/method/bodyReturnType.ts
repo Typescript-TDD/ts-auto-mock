@@ -7,30 +7,28 @@ export function GetReturnTypeFromBodyDescriptor(node: ts.ArrowFunction | ts.Func
   return GetDescriptor(GetReturnNodeFromBody(node), scope);
 }
 
-export function GetReturnNodeFromBody(node: ts.FunctionLikeDeclaration): ts.Node {
-  let returnValue: ts.Node | undefined;
-
+export function GetReturnNodeFromBody<T extends ts.Node & { body?: ts.ConciseBody }>(node: T): ts.Expression {
   const functionBody: ts.ConciseBody | undefined = node.body;
 
-  if (functionBody && ts.isBlock(functionBody)) {
-    const returnStatement: ts.ReturnStatement = GetReturnStatement(functionBody);
-
-    if (returnStatement) {
-      returnValue = returnStatement.expression;
-    } else {
-      returnValue = GetNullDescriptor();
-    }
-  } else {
-    returnValue = node.body;
+  if (!functionBody) {
+    return GetNullDescriptor();
   }
 
-  if (!returnValue) {
-    throw new Error(`Failed to determine the return value of ${node.getText()}.`);
+  if (!ts.isBlock(functionBody)) {
+    return functionBody;
   }
 
-  return returnValue;
+  const returnStatement: ts.ReturnStatement | undefined = GetReturnStatement(functionBody);
+
+  if (!returnStatement?.expression) {
+    return GetNullDescriptor();
+  }
+
+  return returnStatement.expression;
 }
 
-function GetReturnStatement(body: ts.FunctionBody): ts.ReturnStatement {
-  return body.statements.find((statement: ts.Statement) => statement.kind === ts.SyntaxKind.ReturnStatement) as ts.ReturnStatement;
+function GetReturnStatement(body: ts.FunctionBody): ts.ReturnStatement | undefined {
+  return body.statements.find(
+    (statement: ts.Statement): statement is ts.ReturnStatement => statement.kind === ts.SyntaxKind.ReturnStatement,
+  );
 }

@@ -104,7 +104,7 @@ export namespace TypescriptHelper {
   }
 
 
-  export function getSignatureOfCallExpression(node: ts.CallExpression): ts.Signature | undefined {
+  export function getSignatureOfCallExpression(node: ts.CallLikeExpression): ts.Signature | undefined {
     const typeChecker: ts.TypeChecker = TypeChecker();
 
     return typeChecker.getResolvedSignature(node);

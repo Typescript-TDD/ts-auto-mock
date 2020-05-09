@@ -16,6 +16,22 @@ export namespace TypescriptCreator {
     return ts.createFunctionExpression(undefined, undefined, undefined, undefined, parameter, undefined, block);
   }
 
+  export function createCachedAssignment(property: ts.Expression, value: ts.Expression): ts.ParenthesizedExpression {
+    return ts.createParen(
+      ts.createBinary(
+        property,
+        ts.SyntaxKind.BarBarToken,
+        ts.createParen(
+          ts.createBinary(
+            property,
+            ts.SyntaxKind.EqualsToken,
+            value,
+          ),
+        ),
+      ),
+    );
+  }
+
   export function createCall(expression: ts.Expression, argumentExpressions: ts.Expression[]): ts.CallExpression {
     return ts.createCall(
       expression,
