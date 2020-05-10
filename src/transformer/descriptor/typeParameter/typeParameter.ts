@@ -8,12 +8,13 @@ import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetNullDescriptor } from '../null/null';
 
-export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, scope: Scope): ts.Expression {
+export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, scope: Scope): ts.CallExpression {
   const type: ts.TypeParameter = TypeChecker().getTypeAtLocation(node);
 
   const descriptor: ts.Expression = node.default ? GetDescriptor(node.default, scope) : GetNullDescriptor();
 
   const declaration: ts.Declaration = type.symbol.declarations[0];
+
   const typeDeclaration: ts.Declaration | undefined = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
   if (!typeDeclaration) {

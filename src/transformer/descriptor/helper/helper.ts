@@ -7,7 +7,14 @@ type ImportDeclaration = ts.ImportEqualsDeclaration | ts.ImportOrExportSpecifier
 
 export namespace TypescriptHelper {
   export interface PrimitiveTypeNode extends ts.TypeNode {
-    kind: ts.SyntaxKind.LiteralType | ts.SyntaxKind.NumberKeyword | ts.SyntaxKind.ObjectKeyword | ts.SyntaxKind.BooleanKeyword | ts.SyntaxKind.StringKeyword | ts.SyntaxKind.ArrayType;
+    kind:
+    | ts.SyntaxKind.LiteralType
+    | ts.SyntaxKind.NumberKeyword
+    | ts.SyntaxKind.ObjectKeyword
+    | ts.SyntaxKind.BooleanKeyword
+    | ts.SyntaxKind.StringKeyword
+    | ts.SyntaxKind.ArrayType
+    | ts.SyntaxKind.UndefinedKeyword;
   }
 
   export function ExtractFirstIdentifier(bindingName: ts.BindingName): ts.Identifier {
@@ -33,6 +40,7 @@ export namespace TypescriptHelper {
       case ts.SyntaxKind.ObjectKeyword:
       case ts.SyntaxKind.BooleanKeyword:
       case ts.SyntaxKind.StringKeyword:
+      case ts.SyntaxKind.UndefinedKeyword:
       case ts.SyntaxKind.ArrayType:
         return true;
     }

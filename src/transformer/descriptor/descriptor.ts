@@ -9,6 +9,7 @@ import { GetBooleanFalseDescriptor } from './boolean/booleanFalse';
 import { GetBooleanTrueDescriptor } from './boolean/booleanTrue';
 import { GetCallExpressionDescriptor } from './callExpression/callExpression';
 import { GetClassDeclarationDescriptor } from './class/classDeclaration';
+import { GetConditionalTypeDescriptor } from './conditionalType/conditionalType';
 import { GetConstructorTypeDescriptor } from './constructor/constructorType';
 import { GetEnumDeclarationDescriptor } from './enum/enumDeclaration';
 import { GetExpressionWithTypeArgumentsDescriptor } from './expression/expressionWithTypeArguments';
@@ -143,6 +144,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
       return GetUndefinedDescriptor();
     case ts.SyntaxKind.CallExpression:
       return GetCallExpressionDescriptor(node as ts.CallExpression, scope);
+    case ts.SyntaxKind.ConditionalType:
+      return GetConditionalTypeDescriptor(node as ts.ConditionalTypeNode, scope);
     default:
       TransformerLogger().typeNotSupported(ts.SyntaxKind[node.kind]);
       return GetNullDescriptor();
