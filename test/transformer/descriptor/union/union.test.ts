@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { ImportInterface } from '../utils/interfaces/importInterface';
 
 describe('for union', () => {
   interface Interface {
@@ -10,22 +11,14 @@ describe('for union', () => {
     expect(properties.a).toBe('');
   });
 
-  describe('union optional', () => {
+  describe('type interface import', () => {
     class MyClass {
-      public test: string | void;
-      public test2: string | null;
-      public test3: string | unknown;
-      public test4: string | undefined;
-      public test5: undefined | string | number;
+      public test: string | ImportInterface;
     }
 
-    it('should not set the value', () => {
+    it('should set the value', () => {
       const properties: MyClass = createMock<MyClass>();
-      expect(properties.test).toBeUndefined();
-      expect(properties.test2).toBeUndefined();
-      expect(properties.test3).toBeUndefined();
-      expect(properties.test4).toBeUndefined();
-      expect(properties.test5).toBeUndefined();
+      expect(properties.test).toBe('');
     });
   });
 
@@ -67,6 +60,28 @@ describe('for union', () => {
       const properties: Type = createMock<Type>();
 
       expect(properties.test).toEqual([]);
+    });
+  });
+
+  describe('union type null', () => {
+    interface Interface {
+      a: string | null;
+    }
+
+    it('should set the first type', () => {
+      const properties: Interface = createMock<Interface>();
+      expect(properties.a).toBe('');
+    });
+  });
+
+  describe('union type unknown', () => {
+    interface Interface {
+      a: string | unknown;
+    }
+
+    it('should set the first type', () => {
+      const properties: Interface = createMock<Interface>();
+      expect(properties.a).toBe('');
     });
   });
 });

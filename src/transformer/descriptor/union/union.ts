@@ -17,8 +17,5 @@ export function GetUnionDescriptor(node: ts.UnionTypeNode, scope: Scope): ts.Exp
 }
 
 function isNotDefinedType(typeNode: ts.Node): boolean {
-  return typeNode.kind === ts.SyntaxKind.VoidKeyword
-        || typeNode.kind === ts.SyntaxKind.NullKeyword
-        || typeNode.kind === ts.SyntaxKind.UnknownKeyword
-        || typeNode.kind === ts.SyntaxKind.UndefinedKeyword;
+  return typeNode.kind === ts.SyntaxKind.VoidKeyword || typeNode.kind === ts.SyntaxKind.UndefinedKeyword;
 }
