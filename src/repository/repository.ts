@@ -1,3 +1,5 @@
+import { applyIdentityProperty } from '../utils/applyIdentityProperty';
+
 // eslint-disable-next-line
 type Factory = (...args: any[]) => any;
 
@@ -16,36 +18,7 @@ export class Repository {
   }
 
   public registerFactory(key: string, factory: Factory): void {
-    const proxy: Factory = new Proxy(
-      factory,
-      {
-        apply(target: Factory, _this: unknown, args: Parameters<Factory>): ReturnType<Factory> {
-          const mock: ReturnType<Factory> = target(...args);
-
-          if (typeof mock === 'undefined') {
-            return;
-          }
-
-          if (!(mock instanceof Object)) {
-            return mock;
-          }
-
-          if (typeof mock.__factory !== 'undefined') {
-            return mock;
-          }
-
-          Object.defineProperty(mock, '__factory', {
-            enumerable: false,
-            writable: false,
-            value: key,
-          });
-
-          return mock;
-        },
-      },
-    );
-
-    this._repository[key] = proxy;
+    this._repository[key] = applyIdentityProperty(factory, key);
   }
 
   public getFactory(key: string): Factory {
