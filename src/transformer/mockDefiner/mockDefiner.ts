@@ -147,17 +147,13 @@ export class MockDefiner {
   }
 
   public getDeclarationKeyMap(declaration: ts.Declaration): string {
-    let key: string | undefined;
-
     if (!this._declarationCache.has(declaration)) {
-      key = this._factoryUniqueName.createForDeclaration(declaration as PossibleDeclaration);
-
-      this._declarationCache.set(declaration, key);
+      this._declarationCache.set(declaration, this._factoryUniqueName.createForDeclaration(declaration as PossibleDeclaration));
     }
 
     // NOTE: TypeScript does not support inference through has/get, but we know
     // for a fact that the result here is a string!
-    return (key || this._declarationCache.get(declaration)) as string;
+    return this._declarationCache.get(declaration) as string;
   }
 
   public storeRegisterMockFor(declaration: ts.Declaration, factory: ts.FunctionExpression): void {
