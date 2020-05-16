@@ -1,11 +1,12 @@
 import * as ts from 'typescript';
-import { TypescriptCreator } from '../../helper/creator';
+import { TypescriptCreator, MethodSignature } from '../../helper/creator';
+import { Scope } from '../../scope/scope';
 import { MockIdentifierInternalValues, MockIdentifierObjectReturnValue } from '../../mockIdentifier/mockIdentifier';
-import { GetMethodDescriptor, MethodSignature } from '../method/method';
+import { GetMethodDescriptor } from '../method/method';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 import { PropertyAssignments } from './mockPropertiesAssignments';
 
-export function GetMockCall(properties: PropertyAssignments, signatures: MethodSignature[]): ts.CallExpression {
+export function GetMockCall(properties: PropertyAssignments, signatures: MethodSignature[], scope: Scope): ts.CallExpression {
   const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
 
   const variableStatements: ts.VariableDeclaration[] = [
@@ -18,7 +19,7 @@ export function GetMockCall(properties: PropertyAssignments, signatures: MethodS
     // FIXME: It'd probably be wise to extract the name of the callable
     // signature and only fallback to `new` if there is none (or something
     // shorter).
-    const callableEntry: ts.CallExpression = GetMethodDescriptor(ts.createStringLiteral('new'), signatures);
+    const callableEntry: ts.CallExpression = GetMethodDescriptor(ts.createStringLiteral('new'), signatures, scope);
 
     variableStatements.push(
       TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, callableEntry),

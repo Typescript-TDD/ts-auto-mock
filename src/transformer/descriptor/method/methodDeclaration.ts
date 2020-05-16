@@ -1,9 +1,9 @@
 import * as ts from 'typescript';
+import { MethodSignature, TypescriptCreator } from '../../helper/creator';
 import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
-import { GetDescriptor } from '../descriptor';
-import { GetFunctionReturnType } from './functionReturnType';
-import { GetMethodDescriptor, MethodSignature } from './method';
+import { GetReturnNodeFromBody } from './bodyReturnType';
+import { GetMethodDescriptor } from './method';
 
 export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.FunctionDeclaration, scope: Scope): ts.Expression {
   const declarationType: ts.Type | undefined = TypeChecker().getTypeAtLocation(node);
@@ -17,7 +17,18 @@ export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.F
     methodDeclarations.push(node);
   }
 
-  const methodSignatures: MethodSignature[] = methodDeclarations.map((declaration: ts.MethodDeclaration | ts.FunctionDeclaration) => ReshapeCallableDeclaration(declaration, scope));
+  const methodSignatures: MethodSignature[] = methodDeclarations.map((signature: ts.MethodDeclaration | ts.FunctionDeclaration) => {
+    let signatureType: ts.TypeNode | undefined = signature.type;
+
+    if (!signatureType) {
+      signatureType = ts.createLiteralTypeNode(GetReturnNodeFromBody(signature) as ts.LiteralExpression);
+    }
+
+    return TypescriptCreator.createMethodSignature(
+      signature.parameters.map((p: ts.ParameterDeclaration) => p.type),
+      signatureType,
+    );
+  });
 
   if (!node.name) {
     throw new Error(
@@ -25,14 +36,5 @@ export function GetMethodDeclarationDescriptor(node: ts.MethodDeclaration | ts.F
     );
   }
 
-  return GetMethodDescriptor(node.name, methodSignatures);
-}
-
-export function ReshapeCallableDeclaration(declaration: ts.SignatureDeclaration, scope: Scope): MethodSignature {
-  const returnTypeNode: ts.Node = GetFunctionReturnType(declaration);
-
-  return {
-    parameters: declaration.parameters.map((parameter: ts.ParameterDeclaration) => parameter),
-    returnValue: GetDescriptor(returnTypeNode, scope),
-  };
+  return GetMethodDescriptor(node.name, methodSignatures, scope);
 }
