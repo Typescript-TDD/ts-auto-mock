@@ -10,6 +10,22 @@ export namespace TypescriptHelper {
     kind: ts.SyntaxKind.LiteralType | ts.SyntaxKind.NumberKeyword | ts.SyntaxKind.ObjectKeyword | ts.SyntaxKind.BooleanKeyword | ts.SyntaxKind.StringKeyword | ts.SyntaxKind.ArrayType;
   }
 
+  export function ExtractFirstIdentifier(bindingName: ts.BindingName): ts.Identifier {
+    let identifier: ts.BindingName = bindingName;
+    let saneSearchLimit: number = 10;
+
+    while (!ts.isIdentifier(identifier)) {
+      const [bindingElement]: Array<ts.BindingElement | undefined> = (identifier.elements as ts.NodeArray<ts.ArrayBindingElement>).filter(ts.isBindingElement);
+      if (!bindingElement || !--saneSearchLimit) {
+        throw new Error('Failed to find an identifier for the primary declaration!');
+      }
+
+      identifier = bindingElement.name;
+    }
+
+    return identifier;
+  }
+
   export function IsLiteralOrPrimitive(typeNode: ts.Node): typeNode is PrimitiveTypeNode {
     switch (typeNode.kind) {
       case ts.SyntaxKind.LiteralType:
