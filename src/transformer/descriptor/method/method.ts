@@ -1,4 +1,5 @@
 import ts from 'typescript';
+import { GetTsAutoMockOverloadOptions, TsAutoMockOverloadOptions } from '../../../options/overload';
 import { MethodSignature, TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
@@ -8,8 +9,11 @@ import { TypescriptHelper } from '../helper/helper';
 
 export function GetMethodDescriptor(_propertyName: ts.PropertyName, methodSignatures: MethodSignature[], scope: Scope): ts.CallExpression {
   const providerGetMethod: ts.PropertyAccessExpression = CreateProviderGetMethod();
+  const transformOverloadsOption: TsAutoMockOverloadOptions = GetTsAutoMockOverloadOptions();
 
-  const signatureWithMostParameters: MethodSignature = methodSignatures.reduce(
+  const signatures: MethodSignature[] = methodSignatures.filter((_: unknown, notFirst: number) => transformOverloadsOption || !notFirst);
+
+  const signatureWithMostParameters: MethodSignature = signatures.reduce(
     (acc: MethodSignature, signature: MethodSignature) => {
       const longestParametersLength: number = (acc.parameters || []).length;
       const parametersLength: number = (signature.parameters || []).length;
@@ -21,7 +25,7 @@ export function GetMethodDescriptor(_propertyName: ts.PropertyName, methodSignat
   const declarationVariableMap: Map<ts.TypeNode, ts.Identifier> = new Map<ts.TypeNode, ts.Identifier>();
 
   let i: number = 0;
-  const declarationVariables: ts.VariableDeclaration[] = methodSignatures.reduce(
+  const declarationVariables: ts.VariableDeclaration[] = signatures.reduce(
     (variables: ts.VariableDeclaration[], { parameters }: MethodSignature) => {
       for (const parameter of parameters) {
         if (declarationVariableMap.has(parameter.type)) {
@@ -54,7 +58,7 @@ export function GetMethodDescriptor(_propertyName: ts.PropertyName, methodSignat
     statements.push(TypescriptCreator.createVariableStatement(declarationVariables));
   }
 
-  statements.push(ResolveSignatureElseBranch(declarationVariableMap, methodSignatures, signatureWithMostParameters, scope));
+  statements.push(ResolveSignatureElseBranch(declarationVariableMap, signatures, signatureWithMostParameters, scope));
 
   const block: ts.Block = ts.createBlock(statements, true);
 
