@@ -7,8 +7,12 @@ import { Scope } from '../../scope/scope';
 import { ResolveSignatureElseBranch } from '../helper/branching';
 import { TypescriptHelper } from '../helper/helper';
 
-export function GetMethodDescriptor(_propertyName: ts.PropertyName, methodSignatures: MethodSignature[], scope: Scope): ts.CallExpression {
+export function GetMethodDescriptor(propertyName: ts.PropertyName, methodSignatures: MethodSignature[], scope: Scope): ts.CallExpression {
   const providerGetMethod: ts.PropertyAccessExpression = CreateProviderGetMethod();
+
+  const propertyNameString: string = TypescriptHelper.GetStringPropertyName(propertyName);
+  const propertyNameStringLiteral: ts.StringLiteral = ts.createStringLiteral(propertyNameString);
+
   const transformOverloadsOption: TsAutoMockOverloadOptions = GetTsAutoMockOverloadOptions();
 
   const signatures: MethodSignature[] = methodSignatures.filter((_: unknown, notFirst: number) => transformOverloadsOption || !notFirst);
@@ -67,11 +71,7 @@ export function GetMethodDescriptor(_propertyName: ts.PropertyName, methodSignat
     signatureWithMostParameters.parameters,
   );
 
-  const propName: ts.StringLiteral = ts.createStringLiteral(
-    TypescriptCreator.createSignatureHash(methodSignatures),
-  );
-
-  return TypescriptCreator.createCall(providerGetMethod, [propName, propertyValueFunction]);
+  return TypescriptCreator.createCall(providerGetMethod, [propertyNameStringLiteral, propertyValueFunction]);
 }
 
 function CreateProviderGetMethod(): ts.PropertyAccessExpression {
