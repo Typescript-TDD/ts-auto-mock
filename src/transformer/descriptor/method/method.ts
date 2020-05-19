@@ -47,7 +47,8 @@ export function GetMethodDescriptor(propertyName: ts.PropertyName, methodSignatu
           variables.push(
             TypescriptCreator.createVariableDeclaration(
               variableIdentifier,
-              ts.createStringLiteral(MockDefiner.instance.getDeclarationKeyMap(declaration)),
+              // FIXME: Remove the non nullable operator when/if https://github.com/Typescript-TDD/ts-auto-mock/pull/314 is merged
+              ts.createStringLiteral(MockDefiner.instance.getDeclarationKeyMap(declaration)!),
             ),
           );
         }
