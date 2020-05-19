@@ -54,8 +54,7 @@ describe('for overloads', () => {
         const properties: InterfaceWithConstructSignatureOverload = createMock<InterfaceWithConstructSignatureOverload>();
         expect((new properties(0)).a).toBe(0);
         expect((new properties('')).b).toBe('');
-        // FIXME: Enable after Date PR
-        // expect((new properties()).c).toBeInstanceOf(Date);
+        expect((new properties()).c).toBeInstanceOf(Date);
       });
     });
   });
