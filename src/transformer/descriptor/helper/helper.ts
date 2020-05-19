@@ -6,12 +6,46 @@ type Declaration = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.TypeAliasD
 type ImportDeclaration = ts.ImportEqualsDeclaration | ts.ImportOrExportSpecifier | ts.ImportClause;
 
 export namespace TypescriptHelper {
-  export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
-    return ts.isLiteralTypeNode(typeNode) ||
-            typeNode.kind === ts.SyntaxKind.StringKeyword ||
-            typeNode.kind === ts.SyntaxKind.BooleanKeyword ||
-            typeNode.kind === ts.SyntaxKind.NumberKeyword ||
-            typeNode.kind === ts.SyntaxKind.ArrayType;
+  export interface PrimitiveTypeNode extends ts.TypeNode {
+    kind:
+    | ts.SyntaxKind.LiteralType
+    | ts.SyntaxKind.NumberKeyword
+    | ts.SyntaxKind.ObjectKeyword
+    | ts.SyntaxKind.BooleanKeyword
+    | ts.SyntaxKind.StringKeyword
+    | ts.SyntaxKind.ArrayType
+    | ts.SyntaxKind.UndefinedKeyword;
+  }
+
+  export function ExtractFirstIdentifier(bindingName: ts.BindingName): ts.Identifier {
+    let identifier: ts.BindingName = bindingName;
+    let saneSearchLimit: number = 10;
+
+    while (!ts.isIdentifier(identifier)) {
+      const [bindingElement]: Array<ts.BindingElement | undefined> = (identifier.elements as ts.NodeArray<ts.ArrayBindingElement>).filter(ts.isBindingElement);
+      if (!bindingElement || !--saneSearchLimit) {
+        throw new Error('Failed to find an identifier for the primary declaration!');
+      }
+
+      identifier = bindingElement.name;
+    }
+
+    return identifier;
+  }
+
+  export function IsLiteralOrPrimitive(typeNode: ts.Node): typeNode is PrimitiveTypeNode {
+    switch (typeNode.kind) {
+      case ts.SyntaxKind.LiteralType:
+      case ts.SyntaxKind.NumberKeyword:
+      case ts.SyntaxKind.ObjectKeyword:
+      case ts.SyntaxKind.BooleanKeyword:
+      case ts.SyntaxKind.StringKeyword:
+      case ts.SyntaxKind.UndefinedKeyword:
+      case ts.SyntaxKind.ArrayType:
+        return true;
+    }
+
+    return false;
   }
 
   export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {

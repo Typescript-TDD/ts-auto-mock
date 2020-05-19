@@ -6,11 +6,12 @@ module.exports = function(config, url) {
     const processService = ProcessService(process);
     const debug = processService.getArgument('DEBUG');
     const disableCache = processService.getArgument('DISABLECACHE');
+    const feature = processService.getArgument('FEATURE') || process.env.FEATURE;
 
     return {
         basePath: '',
         frameworks: ['jasmine'],
-        webpack: webpackConfig(debug, disableCache),
+        webpack: webpackConfig(debug, disableCache, feature),
         webpackMiddleware: {
             stats: 'errors-only'
         },

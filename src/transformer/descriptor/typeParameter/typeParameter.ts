@@ -8,25 +8,20 @@ import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetNullDescriptor } from '../null/null';
 
-export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, scope: Scope): ts.Expression {
+export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, scope: Scope): ts.CallExpression {
   const type: ts.TypeParameter = TypeChecker().getTypeAtLocation(node);
 
   const descriptor: ts.Expression = node.default ? GetDescriptor(node.default, scope) : GetNullDescriptor();
 
   const declaration: ts.Declaration = type.symbol.declarations[0];
+
   const typeDeclaration: ts.Declaration | undefined = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
   if (!typeDeclaration) {
     throw new Error(`Failed to determine the owner (parent) of the type parameter: \`${declaration.getText()}'.`);
   }
 
-  const genericKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
-
-  if (!genericKey) {
-    throw new Error(
-      `Failed to look up generic key in MockDefiner for \`${typeDeclaration.getText()}'.`,
-    );
-  }
+  const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
 
   return createFunctionToAccessToGenericValue(genericKey + node.name.escapedText, descriptor);
 }

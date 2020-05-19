@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
+import { MethodSignature, TypescriptCreator } from '../../helper/creator';
 import { Scope } from '../../scope/scope';
-import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetMockCall } from './mockCall';
 import { GetMockPropertiesAssignments, PropertyAssignments } from './mockPropertiesAssignments';
@@ -34,6 +34,12 @@ export function GetMockPropertiesFromDeclarations(list: ReadonlyArray<PropertyLi
 
   const accessorDeclaration: PropertyAssignments = GetMockPropertiesAssignments(propertiesFilter, scope);
 
-  const signaturesDescriptor: ts.Expression | null = signatures.length ? GetDescriptor(signatures[0], scope) : null;
-  return GetMockCall(accessorDeclaration, signaturesDescriptor);
+  const methodSignatures: MethodSignature[] = signatures.map((signature: SignatureLike) =>
+    TypescriptCreator.createMethodSignature(
+      signature.parameters.map((p: ts.ParameterDeclaration) => p.type),
+      signature.type,
+    ),
+  );
+
+  return GetMockCall(accessorDeclaration, methodSignatures, scope);
 }

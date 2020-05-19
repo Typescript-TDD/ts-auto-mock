@@ -11,13 +11,13 @@ import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier
 import { Scope } from '../scope/scope';
 import { TypescriptCreator } from '../helper/creator';
 
-export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
+export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.CallExpression {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeReferenceNode.typeName);
 
   return getDeclarationMockFactoryCall(declaration, typeReferenceNode, scope);
 }
 
-export function CreateMockFactory(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
+export function CreateMockFactory(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.CallExpression {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeReferenceNode.typeName);
   MockDefiner.instance.createMockFactory(declaration);
 
@@ -30,13 +30,7 @@ export function GetMockFactoryCallIntersection(intersection: ts.IntersectionType
   const declarations: ts.Declaration[] | ts.TypeLiteralNode[] = intersection.types.map((type: ts.TypeNode) => {
     if (ts.isTypeReferenceNode(type)) {
       const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(type.typeName);
-      const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
-
-      if (!declarationKey) {
-        throw new Error(
-          `Failed to look up declaration key in MockDefiner for \`${declaration.getText()}'.`,
-        );
-      }
+      const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
       genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
 
@@ -74,7 +68,7 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
   );
 }
 
-function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
+function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.CallExpression {
   const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
   if (!declarationKey) {

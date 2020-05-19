@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x]
+        feature: ['', 'transformOverloads']
 
     steps:
     - uses: actions/checkout@v2
@@ -16,7 +17,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: install ts auto mock and run test
+    - name: install ts auto mock and run test - ${{ matrix.feature }}
       run: |
         sudo apt-get update
         sudo apt-get install -y libgbm-dev
@@ -25,5 +26,4 @@ jobs:
         npm test
       env:
         CI: true
-
-
+        FEATURE: ${{ matrix.feature }}
