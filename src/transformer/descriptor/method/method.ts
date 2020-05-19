@@ -1,5 +1,5 @@
 import ts from 'typescript';
-import { GetTsAutoMockOverloadOptions, TsAutoMockOverloadOptions } from '../../../options/overload';
+import { GetTsAutoMockFeaturesOptions, TsAutoMockFeaturesOptions } from '../../../options/features';
 import { MethodSignature, TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
@@ -13,9 +13,9 @@ export function GetMethodDescriptor(propertyName: ts.PropertyName, methodSignatu
   const propertyNameString: string = TypescriptHelper.GetStringPropertyName(propertyName);
   const propertyNameStringLiteral: ts.StringLiteral = ts.createStringLiteral(propertyNameString);
 
-  const transformOverloadsOption: TsAutoMockOverloadOptions = GetTsAutoMockOverloadOptions();
+  const features: TsAutoMockFeaturesOptions = GetTsAutoMockFeaturesOptions();
 
-  const signatures: MethodSignature[] = methodSignatures.filter((_: unknown, notFirst: number) => transformOverloadsOption || !notFirst);
+  const signatures: MethodSignature[] = methodSignatures.filter((_: unknown, notFirst: number) => features.includes('transformOverloads') || !notFirst);
 
   const signatureWithMostParameters: MethodSignature = signatures.reduce(
     (acc: MethodSignature, signature: MethodSignature) => {
