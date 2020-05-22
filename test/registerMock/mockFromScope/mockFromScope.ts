@@ -1,6 +1,6 @@
 import { createMock, registerMock } from 'ts-auto-mock';
 
-describe('registerMock for interface', () => {
+describe('registerMock using vars from the scope', () => {
   it('should override standard behaviour of mock creation using values from the scope', () => {
     interface APropInterface {
       internalProp: string;
