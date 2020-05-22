@@ -66,10 +66,9 @@ export function getMockForList(nodeToMock: ts.TypeNode, node: ts.CallExpression)
 export function storeRegisterMock(typeToMock: ts.TypeNode, node: ts.CallExpression): ts.Node {
   if (ts.isTypeReferenceNode(typeToMock)) {
     const factory: ts.FunctionExpression = node.arguments[0] as ts.FunctionExpression;
-    MockDefiner.instance.storeRegisterMockFor(TypescriptHelper.GetDeclarationFromNode(typeToMock.typeName), factory);
+    return MockDefiner.instance.registerMockFor(TypescriptHelper.GetDeclarationFromNode(typeToMock.typeName), factory);
   } else {
     Logger('RegisterMock').error('registerMock can be used only to mock type references.');
+    return ts.createEmptyStatement();
   }
-
-  return ts.createEmptyStatement();
 }
