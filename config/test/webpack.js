@@ -1,7 +1,8 @@
 const transformer = require('../../dist/transformer');
 const path = require('path');
+const webpack = require('webpack');
 
-module.exports = function (debug, disableCache) {
+module.exports = function (debug, disableCache, feature = '') {
     return {
         mode: "development",
         resolve: {
@@ -12,6 +13,11 @@ module.exports = function (debug, disableCache) {
                 ['ts-auto-mock/extension']: path.join(__dirname, '../../dist/extension'),
             }
         },
+        plugins: [
+          new webpack.DefinePlugin({
+            'process.env.FEATURE': `"${feature}"`,
+          }),
+        ],
         module: {
             rules: [
                 {
@@ -26,7 +32,8 @@ module.exports = function (debug, disableCache) {
                         getCustomTransformers: (program) => ({
                             before: [transformer.default(program, {
                                 debug: debug ? debug : false,
-                                cacheBetweenTests: disableCache !== 'true'
+                                cacheBetweenTests: disableCache !== 'true',
+                                features: [feature],
                             })]
                         })
                     }

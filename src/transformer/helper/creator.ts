@@ -1,5 +1,17 @@
-import { PropertyName, VariableDeclaration, VariableStatement} from 'typescript';
+import { PropertyName, VariableDeclaration, VariableStatement } from 'typescript';
 import * as ts from 'typescript';
+import { IsTypescriptType } from '../descriptor/tsLibs/typecriptLibs';
+import { TypescriptHelper } from '../descriptor/helper/helper';
+import { NodeToString } from '../printNode';
+
+export interface MethodSignature extends ts.MethodSignature {
+  parameters: ts.NodeArray<ParameterDeclaration>;
+  type: ts.TypeNode;
+}
+
+export interface ParameterDeclaration extends ts.ParameterDeclaration {
+  type: ts.TypeNode;
+}
 
 export namespace TypescriptCreator {
   export function createArrowFunction(block: ts.ConciseBody, parameter: ReadonlyArray<ts.ParameterDeclaration> = []): ts.ArrowFunction {
@@ -89,6 +101,129 @@ export namespace TypescriptCreator {
       undefined,
       body,
     );
+  }
+
+  function serialize(node: ts.TypeNode): string {
+    if (TypescriptHelper.IsLiteralOrPrimitive(node) || ts.isTypeReferenceNode(node)) {
+      return NodeToString(node);
+    }
+
+    if (ts.isTypeLiteralNode(node)) {
+      const serialized: string = node.members
+        .filter((member: ts.TypeElement): member is ts.PropertySignature => ts.isPropertySignature(member))
+        .map((member: ts.PropertySignature) => member.type ? serialize(member.type) : '').join('|');
+      return `{${serialized}}`;
+    }
+
+    if (ts.isUnionTypeNode(node) || ts.isIntersectionTypeNode(node)) {
+      const serialized: string = node.types.map((member: ts.TypeNode) => serialize(member)).join('|');
+      return `[${serialized}]`;
+    }
+
+    return '';
+  }
+
+  export function createSignatureHash(signature: ts.SignatureDeclaration | ts.SignatureDeclaration[]): string {
+    function serializeSignature(s: ts.SignatureDeclaration): string {
+      const parameters: ts.NodeArray<ts.ParameterDeclaration> = s.parameters;
+
+      const signatureParts: string[] = [];
+
+      if (parameters.length) {
+        signatureParts.push(
+          ...parameters.map(<T extends { type?: ts.TypeNode }>(p: T) => {
+            const type: ts.TypeNode | undefined = p.type;
+
+            if (!type) {
+              return '';
+            }
+
+            if (ts.isFunctionLike(type)) {
+              return `(${serializeSignature(type)})`;
+            }
+
+            return serialize(type);
+          })
+        );
+      }
+
+      const signatureType: ts.TypeNode | undefined = s.type;
+
+      if (signatureType) {
+        signatureParts.push(serialize(signatureType));
+      }
+
+      return signatureParts.join('|');
+    }
+
+    const signatures: ts.SignatureDeclaration[] = Array.isArray(signature) ? signature : [signature];
+
+    // TODO: Check debug option and emit a verbose string representation
+
+    // TODO: Make sure this doesn't result in collisions
+    return Buffer.from(
+      [
+        Array.from(signatures.map((s: ts.SignatureDeclaration) => serializeSignature(s)).join('|'))
+          .reduce((s: number, c: string) => {
+            // eslint-disable-next-line
+            const charCode: number = c.charCodeAt(0) | 0;
+
+            return Math.imul(31, s) + charCode;
+          }, 0),
+      ],
+    ).toString('base64');
+  }
+
+  function isDefinitiveMethodSignature(signature: ts.MethodSignature): signature is MethodSignature {
+    return !!signature.type;
+  }
+
+  function isDefinitiveParameterDeclaration(parameter: ts.ParameterDeclaration): parameter is ParameterDeclaration {
+    return !!parameter.type;
+  }
+
+  export function createMethodSignature(parameterTypes: Array<ts.TypeNode | undefined> = [], returnType: ts.TypeNode | undefined): MethodSignature {
+    const parameters: ParameterDeclaration[] = parameterTypes
+      .filter((type: ts.TypeNode | undefined): type is ts.TypeNode => !!type)
+      .map((parameterType: ts.TypeNode, i: number) => {
+        // TODO: Merge/move this block with/to typescriptLibs.ts
+        if (ts.isTypeReferenceNode(parameterType)) {
+          const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(parameterType.typeName);
+          if (IsTypescriptType(declaration)) {
+            parameterType = ts.createFunctionTypeNode(undefined, [], ts.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword));
+          }
+        }
+
+        const parameter: ts.ParameterDeclaration = ts.createParameter(
+          undefined,
+          undefined,
+          undefined,
+          `__${i++}`,
+          undefined,
+          parameterType,
+          undefined,
+        );
+
+        if (!isDefinitiveParameterDeclaration(parameter)) {
+          throw new Error();
+        }
+
+        return parameter;
+      });
+
+    const signature: ts.MethodSignature = ts.createMethodSignature(
+      undefined,
+      parameters,
+      returnType || ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword),
+      '',
+      undefined,
+    );
+
+    if (!isDefinitiveMethodSignature(signature)) {
+      throw new Error();
+    }
+
+    return signature;
   }
 
   export function createVariableDeclaration(variableIdentifier: ts.Identifier, initializer: ts.Expression): ts.VariableDeclaration {

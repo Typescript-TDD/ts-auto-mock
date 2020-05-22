@@ -58,22 +58,6 @@ describe('for methods', () => {
     });
   });
 
-  describe('for interface call signature with overload', () => {
-    interface InterfaceWithCallSignature {
-      (a: number): number;
-      (a: string): string;
-      b: string;
-    }
-
-    it('should only consider the first signature declaration', () => {
-      const properties: InterfaceWithCallSignature = createMock<InterfaceWithCallSignature>();
-      expect(properties(2)).toBe(0);
-      // @ts-ignore
-      expect(properties('2')).toBe(0);
-      expect(properties.b).toBe('');
-    });
-  });
-
   describe('for interface call signature with recursive', () => {
     interface InterfaceWithCallSignature<T>  {
       (a: number): InterfaceWithCallSignature<T>;
@@ -99,12 +83,6 @@ describe('for methods', () => {
       b: string;
     }
 
-    interface InterfaceWithConstructSignatureOverload {
-      new (a: number): { a: number };
-      new (b: string): { b: string };
-      new (): { c: Date };
-    }
-
     it('should set the constructor and properties', () => {
       const properties: InterfaceWithConstructSignature = createMock<InterfaceWithConstructSignature>();
       expect(new properties(2).a).toBe(0);
@@ -116,12 +94,6 @@ describe('for methods', () => {
       expect(new (new properties(2))(2).a).toBe(0);
       expect(new properties(2).b).toBe('');
       expect(properties.b).toBe('');
-    });
-
-    it('should use the first overload if any', () => {
-      const properties: InterfaceWithConstructSignatureOverload = createMock<InterfaceWithConstructSignatureOverload>();
-      // eslint-disable-next-line
-      expect((new properties() as any).a).toBe(0);
     });
   });
 
