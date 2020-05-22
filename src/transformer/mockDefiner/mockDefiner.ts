@@ -33,7 +33,6 @@ export class MockDefiner {
   private _neededImportIdentifierPerFile: { [key: string]: Array<ModuleNameIdentifier> } = {};
   private _internalModuleImportIdentifierPerFile: { [key: string]: { [key in ModuleName]: ts.Identifier } } = {};
   private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
-  private _registerMockFactoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
   private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
   private _factoryCache: DeclarationCache;
   private _registerMockFactoryCache: DeclarationCache;
@@ -92,7 +91,6 @@ export class MockDefiner {
       ...this._getImportsToAddInFile(sourceFile),
       ...this._getExportsToAddInFile(sourceFile),
       ...this._getExportsIntersectionToAddInFile(sourceFile),
-      ...this._getRegisterMockInFile(sourceFile),
     ];
   }
 
@@ -104,7 +102,6 @@ export class MockDefiner {
     }
     this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
     this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName] = [];
-    this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName] = [];
   }
 
   public createMockFactory(declaration: ts.Declaration): void {
@@ -162,7 +159,7 @@ export class MockDefiner {
     return this._declarationCache.get(declaration);
   }
 
-  public storeRegisterMockFor(declaration: ts.Declaration, factory: ts.FunctionExpression): void {
+  public registerMockFor(declaration: ts.Declaration, factory: ts.FunctionExpression): ts.Node {
     const key: string | undefined = this.getDeclarationKeyMap(declaration);
 
     if (!key) {
@@ -173,11 +170,7 @@ export class MockDefiner {
 
     this._registerMockFactoryCache.set(declaration, key);
 
-    this._registerMockFactoryRegistrationsPerFile[this._fileName] = this._registerMockFactoryRegistrationsPerFile[this._fileName] || [];
-    this._registerMockFactoryRegistrationsPerFile[this._fileName].push({
-      key: declaration,
-      factory,
-    });
+    return this._getCallRegisterMock(this._fileName, key, factory);
   }
 
   public hasMockForDeclaration(declaration: ts.Declaration): boolean {
@@ -300,33 +293,20 @@ export class MockDefiner {
     return [];
   }
 
-  private _getRegisterMockInFile(sourceFile: ts.SourceFile): ts.Statement[] {
-    if (this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]) {
-      return this._registerMockFactoryRegistrationsPerFile[sourceFile.fileName]
-        .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
-          // NOTE: this._registerMockFactoryCache and
-          // this._registerMockFactoryCache are populated in the same routine
-          // and if the former is defined the latter will be too!
-          // eslint-disable-next-line
-          const key: string = this._registerMockFactoryCache.get(reg.key)!;
-
-          return this._createRegistration(sourceFile.fileName, key, reg.factory);
-        });
-    }
-
-    return [];
-  }
-
   private _createRegistration(fileName: string, key: string, factory: ts.Expression): ts.Statement {
     return ts.createExpressionStatement(
-      ts.createCall(
-        ts.createPropertyAccess(
-          this._mockRepositoryAccess(fileName),
-          ts.createIdentifier('registerFactory'),
-        ),
-        [],
-        [ts.createStringLiteral(key), factory],
+      this._getCallRegisterMock(fileName, key, factory)
+    );
+  }
+
+  private _getCallRegisterMock(fileName: string, key: string, factory: ts.Expression): ts.CallExpression {
+    return ts.createCall(
+      ts.createPropertyAccess(
+        this._mockRepositoryAccess(fileName),
+        ts.createIdentifier('registerFactory'),
       ),
+      [],
+      [ts.createStringLiteral(key), factory],
     );
   }
 
