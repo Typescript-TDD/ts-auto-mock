@@ -110,13 +110,7 @@ export class MockDefiner {
   public createMockFactory(declaration: ts.Declaration): void {
     const thisFileName: string = this._fileName;
 
-    const key: string | undefined = this.getDeclarationKeyMap(declaration);
-
-    if (!key) {
-      throw new Error(
-        `Failed to obtain key while creating mock factory for \`${declaration.getText()}'.`,
-      );
-    }
+    const key: string = this.getDeclarationKeyMap(declaration);
 
     this._factoryCache.set(declaration, key);
 
@@ -152,24 +146,18 @@ export class MockDefiner {
     return this._getCallGetFactory(key);
   }
 
-  public getDeclarationKeyMap(declaration: ts.Declaration): string | undefined {
+  public getDeclarationKeyMap(declaration: ts.Declaration): string {
     if (!this._declarationCache.has(declaration)) {
-      const key: string = this._factoryUniqueName.createForDeclaration(declaration as PossibleDeclaration);
-
-      this._declarationCache.set(declaration, key);
+      this._declarationCache.set(declaration, this._factoryUniqueName.createForDeclaration(declaration as PossibleDeclaration));
     }
 
-    return this._declarationCache.get(declaration);
+    // NOTE: TypeScript does not support inference through has/get, but we know
+    // for a fact that the result here is a string!
+    return this._declarationCache.get(declaration) as string;
   }
 
   public storeRegisterMockFor(declaration: ts.Declaration, factory: ts.FunctionExpression): void {
-    const key: string | undefined = this.getDeclarationKeyMap(declaration);
-
-    if (!key) {
-      throw new Error(
-        `Failed to obtain key while storing mock for \`${declaration.getText()}'.`,
-      );
-    }
+    const key: string = this.getDeclarationKeyMap(declaration);
 
     this._registerMockFactoryCache.set(declaration, key);
 
@@ -207,13 +195,7 @@ export class MockDefiner {
       return cachedFactory;
     }
 
-    const key: string | undefined = this.getDeclarationKeyMap(declaration);
-
-    if (!key) {
-      throw new Error(
-        `Failed to obtain key while resolving factory identifier (internal) for \`${declaration.getText()}'.`,
-      );
-    }
+    const key: string = this.getDeclarationKeyMap(declaration);
 
     this._factoryCache.set(declaration, key);
 
