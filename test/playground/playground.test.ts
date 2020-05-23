@@ -9,9 +9,10 @@ import { createMock } from 'ts-auto-mock';
  */
 
 it('should work', () => {
-  type WithNumber = {
-    propertyName: number;
-  };
+  interface A {
+    a: string;
+  }
 
-  createMock<WithNumber>();
+  const type: A = createMock<A>();
+  expect(type).toBeDefined();
 });
