@@ -3,14 +3,14 @@ import { IsTsAutoMockRandomEnabled } from '../../../options/random';
 
 export function GetNumberDescriptor(): ts.Expression {
   if (IsTsAutoMockRandomEnabled()) {
-    return generateRandomNumber();
+    return GenerateRandomNumber();
   }
   return ts.createLiteral(0);
 }
 
 const RANDOM_MAX_VALUE: number = 10000;
 
-function generateRandomNumber(): ts.BinaryExpression {
+function GenerateRandomNumber(): ts.BinaryExpression {
   return ts.createBinary(
     ts.createBinary(
       ts.createCall(
