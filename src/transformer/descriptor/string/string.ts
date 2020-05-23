@@ -5,12 +5,12 @@ import { PropertySignatureCache } from '../property/cache';
 export function GetStringDescriptor(): ts.Expression {
   if (IsTsAutoMockRandomEnabled()) {
     const propertyName: ts.PropertyName = PropertySignatureCache.instance.get();
-    return generateRandomStringWithPrefix(propertyName as ts.Identifier);
+    return generateRandomStringWithPrefix(propertyName as ts.Identifier, '6');
   }
   return ts.createLiteral('');
 }
 
-function generateRandomStringWithPrefix(prefix: ts.Identifier): ts.BinaryExpression {
+function generateRandomStringWithPrefix(prefix: ts.Identifier, length: string): ts.BinaryExpression {
   return ts.createBinary(
     ts.createStringLiteral(`${prefix.escapedText}`),
     ts.createToken(ts.SyntaxKind.PlusToken),
@@ -36,7 +36,7 @@ function generateRandomStringWithPrefix(prefix: ts.Identifier): ts.BinaryExpress
       undefined,
       [
         ts.createNumericLiteral('2'),
-        ts.createNumericLiteral('6'),
+        ts.createNumericLiteral(length),
       ]
     )
   );
