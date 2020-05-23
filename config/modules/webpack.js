@@ -7,7 +7,7 @@ const DetermineDevToolFromDebugEnvironment = require("../utils/devtool");
 module.exports = merge(base({
     tsConfigFile: 'config/modules/tsconfig.json'
 }), {
-    devTool: DetermineDevToolFromDebugEnvironment(),
+    devtool: DetermineDevToolFromDebugEnvironment(),
     entry: {
         index: './src/index.ts',
         'extension/index': './src/extension/index.ts',
