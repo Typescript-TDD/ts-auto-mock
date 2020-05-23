@@ -20,8 +20,25 @@ function ProcessService(process) {
                     throw new Error(`Argument ${passedArgumentNames[i]} is not accepted, only available arguments are ${acceptedArguments.join(', ')}`)
                 }
             }
+        },
+        getEnvironmentValue(envKey) {
+            const environmentVariables = process.env;
+
+            return convertToBooleanWhenTrueOrFalse(environmentVariables[envKey]);
         }
     };
+
+    function convertToBooleanWhenTrueOrFalse(maybeBoolean) {
+        if (maybeBoolean === 'true') {
+            return true;
+        }
+
+        if (maybeBoolean === 'false') {
+            return false;
+        }
+
+        return maybeBoolean;
+    }
 
     function getArguments() {
         const processArguments = process.argv.slice(2);
