@@ -3,8 +3,8 @@ export class Random {
     return Math.random() * (10000 - -10000) + -10000;
   }
 
-  public static string(prefix: string, length: number): string {
-    return prefix + Math.random().toString(20).substr(2, length);
+  public static string(prefix: string): string {
+    return prefix + Math.random().toString(20).substr(2, 6);
   }
 
   public static boolean(): boolean {
