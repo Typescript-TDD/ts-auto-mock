@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: Bug reports
 about: Create a report to help us improve
 title: ''
 labels: ''
@@ -15,13 +15,13 @@ Describe your issue here.
 * typescript version:
 * node version:
 * npm version:
-* list any other dependencies version that you think is relevant
+* list any other dependencies that you think are relevant
 
 ### Steps to reproduce
-Tell us how to reproduce this issue. Please provide a test code example
+Tell us how to reproduce this issue. Please provide a test code example.
 
 ### Expected behavior
-Tell us what should happen
+Tell us what should happen.
 
 ### Actual behavior
-Tell us what happens instead
+Tell us what happens instead.

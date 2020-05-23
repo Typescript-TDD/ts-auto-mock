@@ -1,16 +1,11 @@
 const webpackConfig = require('../test/webpack.js');
-const ProcessService = require('../../utils/process/process');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config, url) {
-    const processService = ProcessService(process);
-    const debug = processService.getArgument('DEBUG');
-    const disableCache = processService.getArgument('DISABLECACHE');
-
     return {
         basePath: '',
         frameworks: ['jasmine'],
-        webpack: webpackConfig(debug, disableCache),
+        webpack: webpackConfig(),
         webpackMiddleware: {
             stats: 'errors-only'
         },
