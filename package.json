@@ -3,13 +3,14 @@
   "version": "2.0.0",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "scripts": {
-    "build:transformer": "webpack --config config/modules/transformer/webpack.js",
-    "build:modules": "webpack --config config/modules/webpack.js",
     "build": "npm run build:modules && npm run build:transformer",
-    "build:transformer:debug": "webpack --config config/modules/transformer/webpack.debug.js",
-    "build:modules:debug": "webpack --config config/modules/webpack.debug.js",
     "build:debug": "npm run build:modules:debug && npm run build:transformer:debug",
+    "build:transformer": "webpack --config config/modules/transformer/webpack.js",
+    "build:transformer:debug": "webpack --config config/modules/transformer/webpack.debug.js",
+    "build:modules": "webpack --config config/modules/webpack.js",
+    "build:modules:debug": "webpack --config config/modules/webpack.debug.js",
     "build:transformer:definitelyTyped": "webpack --config config/modules/definitelyTypedTransformer/webpack.functions.js && webpack --config config/modules/definitelyTypedTransformer/webpack.js",
+    "build:playground": "ttsc --project tsconfig.playground.json",
     "test": "npm run test:transformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:registerMock && npm run test:unit",
     "test:unit": "karma start config/karma/karma.config.unit.js",
     "test:transformer": "karma start config/karma/karma.config.transformer.js",
@@ -21,8 +22,7 @@
     "test:framework": "karma start config/karma/karma.config.framework.js DISABLECACHE=true",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
-    "preparePublish": "npm run build && npm run copyForPublish",
-    "build:playground": "ttsc --project tsconfig.playground.json"
+    "preparePublish": "npm run build && npm run copyForPublish"
   },
   "keywords": [
     "typescript",
