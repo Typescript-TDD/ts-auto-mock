@@ -30,15 +30,4 @@ describe('Random string', () => {
 
     expect(mock.fnReturnsString()).toMatch(/fnReturnsString.*/);
   });
-
-  it('should be different for the same mock used twice', () => {
-    type WithString = {
-      propertyName: string;
-    };
-
-    const mock: WithString = createMock<WithString>();
-    const mock2: WithString = createMock<WithString>();
-
-    expect(mock2.propertyName).not.toBe(mock.propertyName);
-  });
 });
