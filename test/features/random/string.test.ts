@@ -1,14 +1,14 @@
 import { createMock } from 'ts-auto-mock';
 
 describe('Random string', () => {
-  it('should return a random string value', () => {
+  it('should return a random string value with the property name and 6 character', () => {
     interface WithString {
       prop: string;
     }
 
     const mock: WithString = createMock<WithString>();
 
-    expect(mock.prop).not.toBe('');
+    expect(mock.prop).toMatch(/prop.{6}/);
   });
 
   it('should include the property name at the beginning of the value', () => {
