@@ -18,7 +18,7 @@
     "test:framework:context": "cross-env CACHE=true karma start config/karma/karma.config.framework.context.js",
     "test:frameworkDeprecated": "cross-env CACHE=true karma start config/karma/karma.config.framework.deprecated.js",
     "test:framework": "cross-env CACHE=false karma start config/karma/karma.config.framework.js",
-    "test:features": "cross-env CACHE=true karma start config/karma/karma.config.features.js",
+    "test:features": "cross-env CACHE=true FEATURES=true karma start config/karma/karma.config.features.js",
     "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
     "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
