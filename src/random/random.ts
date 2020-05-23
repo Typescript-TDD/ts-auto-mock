@@ -6,4 +6,8 @@ export class Random {
   public static string(prefix: string, length: number): string {
     return prefix + Math.random().toString(20).substr(2, length);
   }
+
+  public static boolean(): boolean {
+    return !Math.round(Math.random());
+  }
 }

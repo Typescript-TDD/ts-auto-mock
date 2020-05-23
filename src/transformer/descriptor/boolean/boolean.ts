@@ -1,32 +1,11 @@
 import * as ts from 'typescript';
 import { IsTsAutoMockRandomEnabled } from '../../../options/random';
+import { RandomPropertyAccessor } from '../random/random';
 import { GetBooleanFalseDescriptor } from './booleanFalse';
 
 export function GetBooleanDescriptor(): ts.Expression {
   if (IsTsAutoMockRandomEnabled()) {
-    return GetRandomBoolean();
+    return ts.createCall(RandomPropertyAccessor('boolean'), [], []);
   }
   return GetBooleanFalseDescriptor();
 }
-
-function GetRandomBoolean(): ts.PrefixUnaryExpression {
-  return ts.createPrefix(
-    ts.SyntaxKind.ExclamationToken,
-    ts.createCall(
-      ts.createPropertyAccess(
-        ts.createIdentifier('Math'),
-        ts.createIdentifier('round')
-      ),
-      undefined,
-      [ts.createCall(
-        ts.createPropertyAccess(
-          ts.createIdentifier('Math'),
-          ts.createIdentifier('random')
-        ),
-        undefined,
-        []
-      )]
-    )
-  );
-}
-
