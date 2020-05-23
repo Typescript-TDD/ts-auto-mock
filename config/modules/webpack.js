@@ -12,7 +12,8 @@ module.exports = merge(base({
         index: './src/index.ts',
         'extension/index': './src/extension/index.ts',
         'merge/index': './src/merge/index.ts',
-        'repository/index': './src/repository/index.ts'
+        'repository/index': './src/repository/index.ts',
+        'random/index': './src/random/index.ts'
     },
     output: {
         path: path.resolve(__dirname, "../../dist")
