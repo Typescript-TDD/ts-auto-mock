@@ -34,7 +34,7 @@ function ProcessService(process) {
         }
 
         if (maybeBoolean === 'false') {
-            return false
+            return false;
         }
 
         return maybeBoolean;
