@@ -1,7 +1,9 @@
 const transformer = require('../../dist/transformer');
 const path = require('path');
+const DetermineCacheBetweenTestsFromDebugEnvironment = require('./../utils/cache');
+const DetermineFeaturesFromEnvironment = require('./../utils/features');
 
-module.exports = function (debug, disableCache) {
+module.exports = function () {
     return {
         mode: "development",
         resolve: {
@@ -25,8 +27,9 @@ module.exports = function (debug, disableCache) {
                     options: {
                         getCustomTransformers: (program) => ({
                             before: [transformer.default(program, {
-                                debug: debug ? debug : false,
-                                cacheBetweenTests: disableCache !== 'true'
+                                debug: false,
+                                cacheBetweenTests: DetermineCacheBetweenTestsFromDebugEnvironment(),
+                                features: DetermineFeaturesFromEnvironment(),
                             })]
                         })
                     }
