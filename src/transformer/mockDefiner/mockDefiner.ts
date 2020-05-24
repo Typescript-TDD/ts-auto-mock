@@ -73,6 +73,7 @@ export class MockDefiner {
       [ModuleName.Extension]: PrivateIdentifier(ModuleName.Extension),
       [ModuleName.Merge]: PrivateIdentifier(ModuleName.Merge),
       [ModuleName.Repository]: PrivateIdentifier(ModuleName.Repository),
+      [ModuleName.Random]: PrivateIdentifier(ModuleName.Random),
     };
 
     this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
