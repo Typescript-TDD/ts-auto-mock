@@ -16,11 +16,11 @@ describe('Random number', () => {
     expect(mock.propertyName).toBe(10000);
 
     spy.calls.reset();
-    spy.and.returnValue(10);
+    spy.and.returnValue(0);
 
     const mock2: WithNumber = createMock<WithNumber>();
 
     // because we are mocking the return value of Math.random with 10 the result should be = 10 * (10000 - -10000) + -10000
-    expect(mock2.propertyName).toBe(190000);
+    expect(mock2.propertyName).toBe(-10000);
   });
 });
