@@ -1,6 +1,9 @@
+const MIN_NUMBER: number = -10000;
+const MAX_NUMBER: number = 10000;
+
 export class Random {
   public static number(): number {
-    return Math.random() * (10000 - -10000) + -10000;
+    return Math.random() * (MAX_NUMBER - MIN_NUMBER) + MIN_NUMBER;
   }
 
   public static string(prefix: string): string {
