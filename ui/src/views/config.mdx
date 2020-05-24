@@ -10,25 +10,33 @@ tsAutoMockTransformer(program: ts.Program, options: TsAutoMockOptions)
 interface TsAutoMockOptions {
     debug: boolean | 'file' | 'console';
     cacheBetweenTests: boolean;
+    features: TsAutoMockFeaturesOption[];
 }
+
+export type TsAutoMockFeaturesOption = 'random';
+
 ```
 options:
 
-| Name                 |  Value    |  Description                                 | Default
-| -------------------- |  -------- | -------------------------------------------- | --------
-| `debug`              |  `false`  | it will NOT log to the console               | false
-|                      |  `true`   | it will log to the console                   |
-|                      |  `true`   | it will log to a file (tsAutoMock.log)       |
-| `cacheBetweenTests`  |  `true`   | it will reuse mocks between different tests  | true
-|                      |  `false`  | it create new mocks for each different tests |
+| Name                 |  Value         |  Description                                 | Default
+| -------------------- |  --------      | -------------------------------------------- | --------
+| `debug`              |  `false`       | it will NOT log to the console               | false
+|                      |  `true`        | it will log to the console                   |
+|                      |  `file`        | it will log to a file (tsAutoMock.log)       |
+| `cacheBetweenTests`  |  `true`        | it will reuse mocks between different tests  | true
+|                      |  `false`       | it create new mocks for each different tests |
+| `features`           |  `feature[]`   | it will enable a specific feature            | []
 
-## debug
+---
+
+## Debug
 We currently support
 - Logs for [not supported types](./types-not-supported)
 It will log any  not supported type automatically converted to null.
 This is useful to report an issue or to investigate a potential bug
+---
 
-## cacheBetweenTests
+## CacheBetweenTests
 One of the main functionality of ts auto mock is to generate mocks and cache them.
 
 Mocks are currently created in the test file making tests to depend to each other
@@ -44,3 +52,47 @@ If test2 run in a different context than test1 it will not be able to access to 
 Set this property to false when your test run in different context.
 
 We are working on an [issue](https://github.com/Typescript-TDD/ts-auto-mock/issues/101) to make sure tests do not depend to each other but they will still take advance of a cache system
+
+---
+## Features
+We currently support the following features
+### Random ('random')
+
+When adding random to the feature list any string, boolean and number will be transformed to a random values
+
+#### String
+Example
+```ts
+interface WithString {
+    prop: string;
+}
+
+createMock<WithString>() // { prop: 'propQsdeos'}
+```
+
+The name of the property will be prepended following 6 random character
+
+### Number
+Example
+```ts
+interface WithNumber {
+    prop: number;
+}
+
+createMock<WithNumber>() // { prop: 5000.213123}
+```
+
+A random number will be generated between -10000 and 10000
+
+
+### Boolean
+Example
+```ts
+interface WithBoolean {
+    prop: boolean;
+}
+
+createMock<WithBoolean>() // { prop: true|false}
+```
+
+true|false will be random
