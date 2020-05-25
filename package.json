@@ -1,6 +1,6 @@
 {
   "name": "ts-auto-mock",
-  "version": "2.1.0",
+  "version": "2.1.21",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "scripts": {
     "build": "npm run build:modules && npm run build:transformer",
