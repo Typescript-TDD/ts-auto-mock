@@ -86,5 +86,13 @@
     "hooks": {
       "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi"
     }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./scripts/commitizen.js"
+    }
   }
 }
