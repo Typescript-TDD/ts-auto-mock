@@ -1,5 +1,6 @@
 allowMergeCommits: true
-titleAndCommits: true
+allowRevertCommits: true
+commitsOnly: true
 
 # Any changes should also me made on the commitizen.js
 types:
