@@ -66,7 +66,7 @@
       "@semantic-release/github"
     ]
   ],
-  "dryRun": true,
+  "dryRun": false,
   "ci": false,
   "debug": false,
   "preset": "angular",
