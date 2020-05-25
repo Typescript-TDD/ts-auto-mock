@@ -30,6 +30,7 @@ jobs:
           git add CHANGELOG.md
           git add package.json
           git add package-lock.json
+          git commit -m ${GITHUB_REF##*/}
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
