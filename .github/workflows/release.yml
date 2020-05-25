@@ -1,47 +1,41 @@
 name: Release
-
 on:
-  release:
-    types: [published]
-
+  push:
+    branches:
+      - master
 jobs:
   release:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [10.x]
-
+        node-version:
+          - 10.x
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
-      - name: commit configuration
-        run: |
-          git config --global user.name 'typescripttdd'
-          git config --global user.email 'typescripttdd@gmail.com'
-      - name: npm install and version
-        run: |
-          npm install
-          npm --no-git-tag-version version ${GITHUB_REF##*/}
-          git add CHANGELOG.md
-          git add package.json
-          git add package-lock.json
-          git commit -m ${GITHUB_REF##*/}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
-      - name: Register Token
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > /home/runner/work/_temp/.npmrc
-          echo "_auth=$NODE_AUTH_TOKEN" >>  /home/runner/work/_temp/.npmrc
-          echo "email=<vittorio.gue@gmail.com>" >>  /home/runner/work/_temp/.npmrc
-          echo "always-auth=true" >>  /home/runner/work/_temp/.npmrc
+      - name: Cache node_modules
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        uses: actions/cache@v1
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm run release
 
 
