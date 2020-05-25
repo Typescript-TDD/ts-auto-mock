@@ -67,7 +67,7 @@
     ]
   ],
   "dryRun": false,
-  "ci": false,
+  "ci": true,
   "debug": false,
   "preset": "angular",
   "tagFormat": "${version}"
