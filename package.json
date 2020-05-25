@@ -20,10 +20,7 @@
     "test:framework": "cross-env CACHE=false karma start config/karma/karma.config.framework.js",
     "test:features": "cross-env CACHE=true FEATURES=true karma start config/karma/karma.config.features.js",
     "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
-    "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r -0",
-    "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
-    "preparePublish": "npm run build && npm run copyForPublish"
+    "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js"
   },
   "keywords": [
     "typescript",

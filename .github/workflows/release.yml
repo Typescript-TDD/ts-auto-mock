@@ -43,10 +43,5 @@ jobs:
           echo "always-auth=true" >>  /home/runner/work/_temp/.npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish
-        run: |
-          npm run preparePublish
-          cd dist
-          npm publish
 
 
