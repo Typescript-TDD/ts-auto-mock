@@ -47,4 +47,61 @@ describe('Random enum', () => {
 
     expect(mock.propertyName).toBe(0);
   });
+
+  it('const enum declaration should work correctly with random', () => {
+    const enum Direction {
+      Up,
+      Down,
+      None = 'Nothing'
+    }
+
+    interface Movement {
+      direction: Direction;
+    }
+
+    const spy: jasmine.Spy = spyOn(Math, 'floor');
+
+    spy.and.returnValue(0);
+    const firstMock: Movement = createMock<Movement>();
+
+    expect(firstMock.direction).toBe(Direction.Up);
+
+    spy.and.returnValue(1);
+    const secondMock: Movement = createMock<Movement>();
+
+    expect(secondMock.direction).toBe(Direction.Down);
+
+    spy.and.returnValue(2);
+    const thirdMock: Movement = createMock<Movement>();
+
+    expect(thirdMock.direction).toBe(Direction.None);
+  });
+
+  it('should have 0 in "computed" properties, because transformer don\'t support computed Enum values', () => {
+    // Issue https://github.com/Typescript-TDD/ts-auto-mock/issues/339
+    function getComputed(): number {
+      return 12;
+    }
+
+    enum WithComputed {
+      Computed = getComputed(),
+      Computed2 = 1 + 4,
+    }
+
+    interface IWithComputed {
+      computed: WithComputed;
+    }
+
+    const spy: jasmine.Spy = spyOn(Math, 'floor');
+
+    spy.and.returnValue(0);
+    const mock1: IWithComputed = createMock<IWithComputed>();
+
+    expect(mock1.computed).toBe(0);
+
+    spy.and.returnValue(1);
+    const mock2: IWithComputed = createMock<IWithComputed>();
+
+    expect(mock2.computed).toBe(0);
+  });
 });
