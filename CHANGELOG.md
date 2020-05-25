@@ -1,3 +1,23 @@
+<a name="2.1.22"></a>
+## [2.1.22](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.1.21...2.1.22) (2020-05-25)
+
+
+
+<a name="2.1.21"></a>
+## [2.1.21](https://github.com/Typescript-TDD/ts-auto-mock/compare/v2.0.0...2.1.21) (2020-05-25)
+
+
+### Features
+
+* **random:** enable random feature for primitives types ([9666efc](https://github.com/Typescript-TDD/ts-auto-mock/commit/9666efc))
+
+
+
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.0.0...v2.0.0) (2020-05-13)
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.6.2...2.0.0) (2020-05-13)
 
@@ -14,13 +34,20 @@
 
 before
 ```ts
-type Test = string | null // undefined
+type = string | null // undefined
 ```
 
 after
 ```ts
-type Test = string | null // '' (empty string)
+type = string | null // '' (empty string)
 ```
+
+
+
+<a name="1.6.2"></a>
+## [1.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.6.2...v1.6.2) (2020-05-11)
+
+
 
 <a name="1.6.2"></a>
 ## [1.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.6.1...1.6.2) (2020-05-11)
@@ -34,6 +61,7 @@ type Test = string | null // '' (empty string)
 ### Features
 
 * **date:** add support for Date type ([#310](https://github.com/Typescript-TDD/ts-auto-mock/issues/310)) ([7480aad](https://github.com/Typescript-TDD/ts-auto-mock/commit/7480aad))
+
 
 
 <a name="1.6.0"></a>
@@ -147,7 +175,7 @@ type Test = string | null // '' (empty string)
 
 
 <a name="1.5.5"></a>
-## [1.5.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.8...1.5.5) (2020-04-11)
+## [1.5.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.5.4...1.5.5) (2020-04-11)
 
 
 ### Bug Fixes
@@ -156,34 +184,11 @@ type Test = string | null // '' (empty string)
 * upgrade ttypescript from 1.5.8 to 1.5.10 ([#298](https://github.com/Typescript-TDD/ts-auto-mock/issues/298)) ([7e7bd59](https://github.com/Typescript-TDD/ts-auto-mock/commit/7e7bd59))
 
 
-
-<a name="1.5.8"></a>
-## [1.5.8](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.6...v1.5.8) (2020-03-29)
-
-
-### Features
-
-* **typescript:** add support for typescript 3.8 ([#246](https://github.com/Typescript-TDD/ts-auto-mock/issues/246)) ([2a18bed](https://github.com/Typescript-TDD/ts-auto-mock/commit/2a18bed))
-
-
-
-<a name="1.5.6"></a>
-## [1.5.6](https://github.com/Typescript-TDD/ts-auto-mock/compare/v1.5.5...v1.5.6) (2020-02-16)
-
-
 ### Features
 
 * **extendsMappedType:** make sure extending mapped types do not prevent to compile ([#241](https://github.com/Typescript-TDD/ts-auto-mock/issues/241)) ([627b9bc](https://github.com/Typescript-TDD/ts-auto-mock/commit/627b9bc))
-
-
-
-<a name="1.5.5"></a>
-## [1.5.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/1.5.4...v1.5.5) (2020-02-09)
-
-
-### Features
-
 * **set:** add Set support as a type ([#233](https://github.com/Typescript-TDD/ts-auto-mock/issues/233)) ([446c090](https://github.com/Typescript-TDD/ts-auto-mock/commit/446c090))
+* **typescript:** add support for typescript 3.8 ([#246](https://github.com/Typescript-TDD/ts-auto-mock/issues/246)) ([2a18bed](https://github.com/Typescript-TDD/ts-auto-mock/commit/2a18bed))
 
 
 
