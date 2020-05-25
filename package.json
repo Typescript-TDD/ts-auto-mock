@@ -95,7 +95,7 @@
       "path": "./node_modules/cz-customizable"
     },
     "cz-customizable": {
-      "config": "./scripts/commitizen.js"
+      "config": "./commitizen.js"
     }
   }
 }
