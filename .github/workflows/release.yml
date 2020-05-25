@@ -27,6 +27,9 @@ jobs:
         run: |
           npm install
           npm --no-git-tag-version version ${GITHUB_REF##*/}
+          git add CHANGELOG.md
+          git add package.json
+          git add package-lock.json
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
