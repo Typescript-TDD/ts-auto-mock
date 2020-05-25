@@ -1,0 +1,13 @@
+allowMergeCommits: true
+titleAndCommits: true
+
+# Any changes should also me made on the commitizen.js
+types:
+  - feat
+  - fix
+  - style
+  - refactor
+  - perf
+  - test
+  - build
+  - chore
