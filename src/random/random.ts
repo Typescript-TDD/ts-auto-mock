@@ -7,7 +7,7 @@ export class Random {
   }
 
   public static enumValue(...args: Array<string | number>): string | number {
-    return args[Math.floor(Math.random() * args.length)];
+    return args[Math.floor(Math.random() * args.length)] ?? 0;
   }
 
   public static string(prefix: string): string {

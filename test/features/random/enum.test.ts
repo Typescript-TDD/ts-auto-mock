@@ -6,38 +6,45 @@ describe('Random enum', () => {
       firstValue = 'firstValue',
       secondValue = 'secondValue',
       thirdValue = 2,
-      fourthValue = 3,
     }
 
     type WithEnum = {
-      propertyName1: EnumType;
-      propertyName2: EnumType;
-      propertyName3: EnumType;
-      propertyName4: EnumType;
+      propertyName: EnumType;
     };
 
+    const spy: jasmine.Spy = spyOn(Math, 'floor');
+
+    spy.and.returnValue(0);
     const firstMock: WithEnum = createMock<WithEnum>();
+
+    expect(firstMock.propertyName).toBe(EnumType.firstValue);
+
+    spy.and.returnValue(1);
     const secondMock: WithEnum = createMock<WithEnum>();
+
+    expect(secondMock.propertyName).toBe(EnumType.secondValue);
+
+    spy.and.returnValue(2);
     const thirdMock: WithEnum = createMock<WithEnum>();
 
-    const mockValues: EnumType[] = [
-      firstMock.propertyName1,
-      firstMock.propertyName2,
-      firstMock.propertyName3,
-      firstMock.propertyName4,
-      secondMock.propertyName1,
-      secondMock.propertyName2,
-      secondMock.propertyName3,
-      secondMock.propertyName4,
-      thirdMock.propertyName1,
-      thirdMock.propertyName2,
-      thirdMock.propertyName3,
-      thirdMock.propertyName4,
-    ];
+    expect(thirdMock.propertyName).toBe(EnumType.thirdValue);
 
-    expect(mockValues.every((it: EnumType) => it === EnumType.firstValue)).toBe(false);
-    expect(mockValues.every((it: EnumType) => it === EnumType.secondValue)).toBe(false);
-    expect(mockValues.every((it: EnumType) => it === EnumType.thirdValue)).toBe(false);
-    expect(mockValues.every((it: EnumType) => it === EnumType.fourthValue)).toBe(false);
+    // Should have 0, when does't have value in array
+    spy.and.returnValue(100);
+    const fourthMock: WithEnum = createMock<WithEnum>();
+
+    expect(fourthMock.propertyName).toBe(0);
+  });
+
+  it('should have 0 value, when enum empty', () => {
+    enum EmptyEnum {}
+
+    type WithEmptyEnum = {
+      propertyName: EmptyEnum;
+    };
+
+    const mock: WithEmptyEnum = createMock<WithEmptyEnum>();
+
+    expect(mock.propertyName).toBe(0);
   });
 });
