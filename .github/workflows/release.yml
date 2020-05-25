@@ -26,7 +26,7 @@ jobs:
       - name: npm install and version
         run: |
           npm install
-          npm version ${GITHUB_REF##*/}
+          npm --no-git-tag-version version ${GITHUB_REF##*/}
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
