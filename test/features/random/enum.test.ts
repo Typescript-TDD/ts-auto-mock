@@ -49,7 +49,7 @@ describe('Random enum', () => {
   });
 
   describe('for enum from a module', () => {
-    it('should assign the first enum value', () => {
+    it('should assign correct random value', () => {
       // We cannot check against the real ENUM because is a d.ts, it cannot be used as a value
       const spy: jasmine.Spy = spyOn(Math, 'floor');
       spy.and.returnValue(0);
