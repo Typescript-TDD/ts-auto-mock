@@ -45,8 +45,12 @@ module.exports = {
       value: `test`
     },
     {
-      name: `build:    Changes that affect the build system, CI configuration or external dependencies`,
+      name: `build:    Changes that affect the build system or external dependencies`,
       value: `build`
+    },
+    {
+      name: `ci:       Changes that affect the CI configuration`,
+      value: `ci`
     },
     {
       name: `chore:    Anything else`,

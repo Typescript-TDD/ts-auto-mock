@@ -11,4 +11,5 @@ types:
   - perf
   - test
   - build
+  - ci
   - chore
