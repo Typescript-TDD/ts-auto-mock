@@ -6,7 +6,7 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "config": "commitizen",
+        "preset": "angular",
         "releaseRules": [
           {
             "type": "feat",
@@ -32,7 +32,7 @@
     [
       "@semantic-release/release-notes-generator",
       {
-        "config": "commitizen",
+        "preset": "angular",
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
