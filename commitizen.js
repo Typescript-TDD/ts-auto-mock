@@ -1,8 +1,7 @@
 module.exports = {
   allowBreakingChanges: [
     `feat`,
-    `fix`,
-    `build`
+    `fix`
   ],
   allowCustomScopes: true,
   allowTicketNumber: false,
