@@ -8,12 +8,12 @@ export function GetEnumDeclarationDescriptor(node: ts.EnumDeclaration): ts.Expre
   const typesList: ts.LiteralType[] = node.members.map((it: ts.EnumMember) => typeChecker.getTypeAtLocation(it)) as ts.LiteralType[];
 
   if (IsTsAutoMockRandomEnabled()) {
-    const nodesList: ts.Expression[] = typesList.map((type: ts.LiteralType) => {
+    const nodesList: ts.Expression[] = typesList.map((type: ts.LiteralType, index: number) => {
       if (type.hasOwnProperty('value')) {
         return ts.createLiteral(type.value);
       }
 
-      return ts.createLiteral(0);
+      return ts.createLiteral(index);
     });
 
     return ts.createCall(RandomPropertyAccessor('enumValue'), [], [...nodesList]);

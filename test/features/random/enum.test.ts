@@ -48,6 +48,25 @@ describe('Random enum', () => {
     expect(mock.propertyName).toBe(0);
   });
 
+  describe('for enum from a module', () => {
+    it('should assign the first enum value', () => {
+      // We cannot check against the real ENUM because is a d.ts, it cannot be used as a value
+      const spy: jasmine.Spy = spyOn(Math, 'floor');
+      spy.and.returnValue(0);
+
+      const mock1: NameSpace.WithEnum = createMock<NameSpace.WithEnum>();
+
+      expect(mock1.propertyWithoutDefaultValue).toBe(0);
+      expect(mock1.propertyWithDefaultValue).toBe('1');
+
+      spy.and.returnValue(1);
+      const mock2: NameSpace.WithEnum = createMock<NameSpace.WithEnum>();
+
+      expect(mock2.propertyWithoutDefaultValue).toBe(1);
+      expect(mock2.propertyWithDefaultValue).toBe('2');
+    });
+  });
+
   it('const enum declaration should work correctly with random', () => {
     const enum Direction {
       Up,
@@ -77,7 +96,7 @@ describe('Random enum', () => {
     expect(thirdMock.direction).toBe(Direction.None);
   });
 
-  it('should have 0 in "computed" properties, because transformer don\'t support computed Enum values', () => {
+  it('should have position of "computed" property, because transformer don\'t support computed Enum values', () => {
     // Issue https://github.com/Typescript-TDD/ts-auto-mock/issues/339
     function getComputed(): number {
       return 12;
@@ -102,6 +121,6 @@ describe('Random enum', () => {
     spy.and.returnValue(1);
     const mock2: IWithComputed = createMock<IWithComputed>();
 
-    expect(mock2.computed).toBe(0);
+    expect(mock2.computed).toBe(1);
   });
 });
