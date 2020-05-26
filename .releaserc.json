@@ -6,7 +6,21 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "angular",
+        "config": "commitizen",
+        "releaseRules": [
+          {
+            "type": "feat",
+            "release": "minor"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          },
+          {
+            "type": "perf",
+            "release": "patch"
+          }
+        ],
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
@@ -18,7 +32,7 @@
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "angular",
+        "config": "commitizen",
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
@@ -30,7 +44,7 @@
             "subject",
             "scope"
           ],
-          "owner": "uittorio"
+          "owner": "typescripttdd"
         },
         "linkCompare": true,
         "linkReferences": true,
@@ -66,9 +80,8 @@
       "@semantic-release/github"
     ]
   ],
-  "dryRun": false,
+  "dryRun": true,
   "ci": true,
   "debug": false,
-  "preset": "angular",
   "tagFormat": "${version}"
 }
