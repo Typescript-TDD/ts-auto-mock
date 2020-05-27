@@ -83,5 +83,6 @@
   "dryRun": true,
   "ci": true,
   "debug": false,
+  "preset": "angular",
   "tagFormat": "${version}"
 }
