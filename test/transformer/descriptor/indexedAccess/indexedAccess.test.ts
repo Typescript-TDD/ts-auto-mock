@@ -60,4 +60,17 @@ describe('indexedAccess', () => {
     expect(mock.c.a.b).toEqual(0);
     expect(mock.c.b).toEqual('');
   });
+
+  it('should not break the compiler for unsupported generic', () => {
+    interface StandardInterface {
+      prop: string;
+    }
+    interface WithKeyGeneric<U extends keyof StandardInterface> {
+      test(): StandardInterface[U];
+    }
+
+    const type: WithKeyGeneric<'prop'> = createMock<WithKeyGeneric<'prop'>>();
+
+    expect(type.test()).toBeNull();
+  });
 });

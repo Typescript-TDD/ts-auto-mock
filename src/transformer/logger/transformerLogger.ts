@@ -8,6 +8,7 @@ export interface TransformerLogger {
   unexpectedCreateMock(mockFileName: string, expectedFileName: string): void;
   typeNotSupported(type: string): void;
   typeOfFunctionCallNotFound(node: string): void;
+  indexedAccessTypeFailed(propertyName: string, nodeText: string): void;
 }
 
 export function TransformerLogger(): TransformerLogger {
@@ -30,6 +31,9 @@ export function TransformerLogger(): TransformerLogger {
     },
     typeOfFunctionCallNotFound(node: string): void {
       logger.warning(`Cannot find type of function call: ${node} - it will convert to null`);
+    },
+    indexedAccessTypeFailed(propertyName: string, nodeText: string ): void {
+      logger.warning(`IndexedAccessType transformation failed: cannot find property ${propertyName} of - ${nodeText}`);
     },
   };
 }
