@@ -40,9 +40,10 @@ export function GetIndexedAccessTypeDescriptor(node: ts.IndexedAccessTypeNode, s
     const propertySymbol: ts.Symbol | undefined = typeChecker.getPropertyOfType(typeChecker.getTypeFromTypeNode(node.objectType), propertyName);
 
     if (!propertySymbol) {
-      throw new Error(
-        `The type checker failed to look up symbol for property: \`${propertyName}' of \`${node.getText()}'.`,
-      );
+      // FIXME: Currently not all IndexedAccessType transformation are supported.
+      // See https://github.com/Typescript-TDD/ts-auto-mock/issues/201 for more details.
+      TransformerLogger().indexedAccessTypeFailed(propertyName, node.getText());
+      return GetNullDescriptor();
     }
 
     return GetDescriptor(TypescriptHelper.GetDeclarationFromSymbol(propertySymbol), scope);
