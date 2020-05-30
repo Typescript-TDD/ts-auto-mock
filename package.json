@@ -86,7 +86,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi"
+      "commit-msg": "if git-branch-is develop; then commitlint -E HUSKY_GIT_PARAMS; fi"
     }
   },
   "config": {

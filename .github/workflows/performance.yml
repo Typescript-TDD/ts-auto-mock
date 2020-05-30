@@ -3,7 +3,7 @@ name: Performance
 on:
   push:
     branches:
-      - master
+      - develop
     paths:
       - 'src/**'
       - 'performance/**'
