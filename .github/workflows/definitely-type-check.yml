@@ -1,9 +1,9 @@
-name: Definuitely Type build
+name: Definitely Type build
 
 on:
   push:
     branches:
-      - master
+      - develop
   pull_request:
 
 jobs:
