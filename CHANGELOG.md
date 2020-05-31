@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.2.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.2...2.2.3) (2020-05-31)
+
+
+### Bug Fixes
+
+* **token:** ensure performance and definitely typed pull requests are created with the right token ([869fa37](https://github.com/Typescript-TDD/ts-auto-mock/commit/869fa378482d9cb35e3bb019fb89a4f7fc6dfce2))
+
 ## [2.2.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.0...2.2.1) (2020-05-31)
 
 
