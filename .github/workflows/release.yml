@@ -52,5 +52,13 @@ jobs:
           GIT_COMMITTER_NAME: typescripttdd
           GIT_COMMITTER_EMAIL: typescripttdd
         run: npm run release
+      - name: Rebase
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+          ref: develop
+        run: |
+          git rebase origin/master
+          git push --force
 
 
