@@ -79,6 +79,13 @@
     ],
     [
       "@semantic-release/github"
+    ],
+    [
+      "semantic-release-slack-bot",
+      {
+        "notifyOnSuccess": true,
+        "markdownReleaseNotes": true
+      }
     ]
   ],
   "dryRun": false,
