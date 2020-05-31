@@ -41,11 +41,11 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
         with:
           commit-message: "chore(definitelyTyped) add definitelyTyped tests data"
           committer: typescripttdd <typescripttdd@gmail.com>
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
           branch: definitely-typed-tests
-          token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+          token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
