@@ -61,4 +61,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
         run: |
-          git merge master --no-ff
+          git merge origin/master --no-ff
+          git push
