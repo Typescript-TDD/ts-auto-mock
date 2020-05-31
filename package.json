@@ -21,7 +21,8 @@
     "test:features": "cross-env CACHE=true FEATURES=true karma start config/karma/karma.config.features.js",
     "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
     "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js",
-    "release": "semantic-release",
+    "release": "cp -r package.json package-lock.json README.md CHANGELOG.md dist && semantic-release",
+    "postpublish": "cp -r dist/package.json . && cp -r dist/package-lock.json . && cp -r dist/CHANGELOG.md .",
     "cz": "git-cz",
     "commit": "npm run cz"
   },
