@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.2.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.4...2.2.5) (2020-05-31)
+
+
+### Bug Fixes
+
+* **indexedAccessType:** ensure compiler doesn't break for unsupported indexed access type ([2ef31c7](https://github.com/Typescript-TDD/ts-auto-mock/commit/2ef31c72a44f3f4b53dc22f737902e9abe7fb699))
+
 ## [2.2.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.3...2.2.4) (2020-05-31)
 
 
