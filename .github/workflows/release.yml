@@ -52,3 +52,13 @@ jobs:
           GIT_COMMITTER_NAME: typescripttdd
           GIT_COMMITTER_EMAIL: typescripttdd
         run: npm run release
+      - name: Checkout develop
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+          ref: develop
+      - name: Merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+        run: |
+          git merge master --no-ff
