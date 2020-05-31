@@ -19,6 +19,7 @@ const customFunctions: CustomFunction[] = [
   },
 ];
 
+
 const transformer:
 (program: ts.Program, options?: TsAutoMockOptions) => ts.TransformerFactory<ts.SourceFile> =
     baseTransformer(visitNode, customFunctions);
