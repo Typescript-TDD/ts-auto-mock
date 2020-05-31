@@ -43,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
         with:
-          commit-message: Add DefinitelyTyped Tests data
+          commit-message: chore(definitelyTyped) add definitelyTyped tests data
           committer: typescripttdd <typescripttdd@gmail.com>
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
