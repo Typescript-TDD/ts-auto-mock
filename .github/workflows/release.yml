@@ -44,7 +44,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
         run: npm run release
 
 
