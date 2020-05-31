@@ -52,11 +52,14 @@ jobs:
           GIT_COMMITTER_NAME: typescripttdd
           GIT_COMMITTER_EMAIL: typescripttdd
         run: npm run release
-      - name: Rebase
+      - name: Checkout develop
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
           ref: develop
+      - name: Rebase
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
         run: |
           git rebase origin/master
           git push --force
