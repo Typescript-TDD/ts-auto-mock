@@ -45,6 +45,10 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+          GIT_AUTHOR_NAME: typescripttdd
+          GIT_AUTHOR_EMAIL: typescripttdd@gmail.com
+          GIT_COMMITTER_NAME: typescripttdd
+          GIT_COMMITTER_EMAIL: typescripttdd
         run: npm run release
 
 
