@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.2.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.0...2.2.1) (2020-05-31)
+
+
+### Bug Fixes
+
+* **release:** test release pipeline version ([b8f78dd](https://github.com/Typescript-TDD/ts-auto-mock/commit/b8f78dd3ed41701aa6c93230c7128c9f68312a65))
+
 # [2.2.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.1.22...2.2.0) (2020-05-31)
 
 
