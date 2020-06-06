@@ -54,14 +54,3 @@ jobs:
           GIT_COMMITTER_EMAIL: typescripttdd
           SLACK_WEBHOOK: ${{ secrets.SEMANTIC_RELEASE_SLACK_WEBHOOK }}
         run: npm run release
-      - name: Checkout develop
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
-          ref: develop
-      - name: Merge
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
-        run: |
-          git merge origin/master --no-ff
-          git push
