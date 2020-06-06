@@ -5,6 +5,7 @@ on:
       - master
 jobs:
   release:
+    if: "startsWith(github.event.head_commit.message, 'ci(release): ts auto mock new version') != true"
     runs-on: ubuntu-latest
     strategy:
       matrix:
