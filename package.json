@@ -1,6 +1,6 @@
 {
   "name": "ts-auto-mock",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "scripts": {
     "build": "npm run build:modules && npm run build:transformer",
@@ -88,7 +88,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "if git-branch-is develop; then commitlint -E HUSKY_GIT_PARAMS; fi"
+      "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi"
     }
   },
   "config": {

@@ -4,7 +4,6 @@ const gitHelper = require('./core/git/gitHelper');
 const testRunner = require('./testRunner/testRunner');
 const LocalRepository = require("./repository/localRepository");
 const localFileData = path.join(__dirname, '../', 'data');
-
 const localRepository = LocalRepository(localFileData, 'performance.json');
 
 (async function () {

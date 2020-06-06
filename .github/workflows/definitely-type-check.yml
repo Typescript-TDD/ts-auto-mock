@@ -3,8 +3,11 @@ name: Definitely Type build
 on:
   push:
     branches:
-      - develop
+      - master
   pull_request:
+    paths-ignore:
+      - 'data/**'
+      - 'ui/**'
 
 jobs:
   test:
