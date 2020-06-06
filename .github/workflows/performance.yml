@@ -3,7 +3,7 @@ name: Performance
 on:
   push:
     branches:
-      - master
+      - develop
     paths:
       - 'src/**'
       - 'performance/**'
@@ -42,9 +42,9 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v2
       with:
-        commit-message: Add Performance data
+        commit-message: "chore(performance): add performance data"
         committer: typescripttdd <typescripttdd@gmail.com>
         author: typescripttdd <typescripttdd@gmail.com>
         title: Performance Data on ${{ env.DATE }}
         branch: performance-${{ env.DATE }}
-        token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+        token: ${{ secrets.GITHUBTYPESCRIPTTDD }}

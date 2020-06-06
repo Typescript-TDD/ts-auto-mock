@@ -1,36 +1,41 @@
 name: Release
-
 on:
-  release:
-    types: [published]
-
+  push:
+    branches:
+      - master
 jobs:
   release:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [10.x]
-
+        node-version:
+          - 10.x
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
-      - name: commit configuration
-        run: |
-          git config --global user.name 'typescripttdd'
-          git config --global user.email 'typescripttdd@gmail.com'
-      - name: npm install and version
-        run: |
-          npm install
-          npm version ${GITHUB_REF##*/}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Cache node_modules
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN_TYPESCRIPTTDD }}
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci
+      - name: build library
+        run: npm run build
       - name: Register Token
         run: |
           echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > /home/runner/work/_temp/.npmrc
@@ -39,10 +44,23 @@ jobs:
           echo "always-auth=true" >>  /home/runner/work/_temp/.npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+          GIT_AUTHOR_NAME: typescripttdd
+          GIT_AUTHOR_EMAIL: typescripttdd@gmail.com
+          GIT_COMMITTER_NAME: typescripttdd
+          GIT_COMMITTER_EMAIL: typescripttdd
+          SLACK_WEBHOOK: ${{ secrets.SEMANTIC_RELEASE_SLACK_WEBHOOK }}
+        run: npm run release
+      - name: Checkout develop
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+          ref: develop
+      - name: Merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
         run: |
-          npm run preparePublish
-          cd dist
-          npm publish
-
-
+          git merge origin/master --no-ff
+          git push

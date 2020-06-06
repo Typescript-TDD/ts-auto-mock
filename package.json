@@ -1,6 +1,6 @@
 {
   "name": "ts-auto-mock",
-  "version": "2.0.0",
+  "version": "2.2.5",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "scripts": {
     "build": "npm run build:modules && npm run build:transformer",
@@ -21,9 +21,10 @@
     "test:features": "cross-env CACHE=true FEATURES=true karma start config/karma/karma.config.features.js",
     "test:playground": "karma start config/karma/karma.config.transformer.playground.js",
     "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "copyForPublish": "cp -rf package.json README.md CHANGELOG.md dist",
-    "preparePublish": "npm run build && npm run copyForPublish"
+    "release": "cp -r package.json package-lock.json README.md dist && semantic-release",
+    "postversion": "cp -r package.json ../ && cp -r package-lock.json ../",
+    "cz": "git-cz",
+    "commit": "npm run cz"
   },
   "keywords": [
     "typescript",
@@ -40,6 +41,9 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-angular": "^8.3.4",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.0.7",
     "@types/jasmine": "^3.5.10",
     "@types/node": "^13.13.5",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
@@ -47,9 +51,11 @@
     "@typescript-eslint/parser": "^2.31.0",
     "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^3.0.0",
-    "conventional-changelog-cli": "^2.0.34",
+    "commitizen": "^4.1.2",
+    "conventional-changelog-angular": "^5.0.10",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.2",
+    "cz-customizable": "^6.2.0",
     "eslint": "^7.0.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.20.2",
@@ -61,6 +67,8 @@
     "karma-jasmine": "^3.1.1",
     "karma-webpack": "^4.0.2",
     "puppeteer": "^3.0.4",
+    "semantic-release": "^17.0.8",
+    "semantic-release-slack-bot": "^1.6.2",
     "ts-loader": "^7.0.3",
     "ts-node": "^8.10.1",
     "tslint": "^6.1.2",
@@ -80,7 +88,15 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi"
+      "commit-msg": "if git-branch-is develop; then commitlint -E HUSKY_GIT_PARAMS; fi"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./commitizen.js"
     }
   }
 }
