@@ -46,5 +46,6 @@ jobs:
         committer: typescripttdd <typescripttdd@gmail.com>
         author: typescripttdd <typescripttdd@gmail.com>
         title: Performance Data on ${{ env.DATE }}
+        labels: ts-auto-mock-automerge
         branch: performance-${{ env.DATE }}
         token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
