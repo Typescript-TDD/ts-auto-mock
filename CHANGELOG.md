@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.2.7](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.6...2.2.7) (2020-06-10)
+
+
+### Bug Fixes
+
+* **registerMock:** allow to use mocks defined in variables ([#330](https://github.com/Typescript-TDD/ts-auto-mock/issues/330)) ([b14bd5c](https://github.com/Typescript-TDD/ts-auto-mock/commit/b14bd5c3e19e62f30f609f297925c5eb5fda30f4))
+
 ## [2.2.6](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.5...2.2.6) (2020-06-06)
 
 
