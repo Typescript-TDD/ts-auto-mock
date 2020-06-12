@@ -248,11 +248,17 @@ describe('for generic', () => {
     interface A extends ClassWithGenerics<A> {
       b: number;
     }
+    interface B extends ClassWithGenerics<B> {
+      c: string;
+    }
 
     it('should avoid infinite extension', () => {
-      const properties: A = createMock<A>();
-      expect(properties.a).toBeDefined();
-      expect(properties.b).toBe(0);
+      const propertiesA: A = createMock<A>();
+      const propertiesB: B = createMock<B>();
+      expect(propertiesA.a.b).toBe(0);
+      expect(propertiesA.b).toBe(0);
+      expect(propertiesB.a.c).toBe('');
+      expect(propertiesB.c).toBe('');
     });
   });
 
