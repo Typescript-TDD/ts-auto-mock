@@ -14,7 +14,7 @@ export class FactoryUniqueName {
   public createForDeclaration(declaration: PossibleDeclaration): string {
     const declarationNameIdentifier: ts.Identifier | undefined = declaration.name;
 
-    return this.createUniqueName(declarationNameIdentifier && declarationNameIdentifier.text);
+    return this._createUniqueName(declarationNameIdentifier && declarationNameIdentifier.text);
   }
 
   public createForIntersection(nodes: ts.Node[]): string {
@@ -30,10 +30,10 @@ export class FactoryUniqueName {
       return acc;
     }, '');
 
-    return this.createUniqueName(nameOfDeclarations);
+    return this._createUniqueName(nameOfDeclarations);
   }
 
-  private createUniqueName(name?: string): string {
+  private _createUniqueName(name?: string): string {
     const declarationNameSanitized: string = name || MockCallAnonymousText;
     const baseFactoryName: string = `@${declarationNameSanitized}`;
     const count: number = this._keyCounter.getFor(baseFactoryName);
