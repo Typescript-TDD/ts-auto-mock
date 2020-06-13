@@ -61,6 +61,7 @@ describe('typeQuery', () => {
 
     it('should return correct properties with multiple declarations', () => {
       function MultipleDeclaration(): MultipleDeclaration {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return { a: 's'};
       }
@@ -71,6 +72,7 @@ describe('typeQuery', () => {
 
       const functionMock: typeof MultipleDeclaration = createMock<typeof MultipleDeclaration>();
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(functionMock()).toEqual({
         b: '',
