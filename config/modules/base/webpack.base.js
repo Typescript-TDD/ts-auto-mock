@@ -26,7 +26,7 @@ module.exports = (options) => {
             ]
         },
         output: {
-            libraryTarget: "commonjs",
+            libraryTarget: "commonjs2",
             filename: "[name].js"
         },
         plugins: [
