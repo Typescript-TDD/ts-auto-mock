@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.2.8](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.7...2.2.8) (2020-06-14)
+
+
+### Bug Fixes
+
+* **module:** switch to commonjs2 libraryTarget ([#379](https://github.com/Typescript-TDD/ts-auto-mock/issues/379)) ([9259f10](https://github.com/Typescript-TDD/ts-auto-mock/commit/9259f10bb3aaab49584768fa8bc17230567f52b2))
+
 ## [2.2.7](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.6...2.2.7) (2020-06-10)
 
 
