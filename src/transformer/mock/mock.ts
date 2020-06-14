@@ -25,7 +25,7 @@ function getNumberFromNumericLiteral(numericLiteral: ts.NumericLiteral): number 
 }
 
 function getMockMergeListExpression(mock: ts.Expression, length: number, defaultValues: ts.Expression): ts.Expression[] {
-  return ArrayHelper.ArrayFromLength(length).map((index: number) => getMockMergeIteratorExpression(mock, defaultValues, ts.createNumericLiteral('' + index)));
+  return ArrayHelper.ArrayFromLength(length).map((index: number) => getMockMergeIteratorExpression(mock, defaultValues, ts.createNumericLiteral('' + index.toString())));
 }
 
 function getMockListExpression(mock: ts.Expression, length: number): ts.Expression[] {

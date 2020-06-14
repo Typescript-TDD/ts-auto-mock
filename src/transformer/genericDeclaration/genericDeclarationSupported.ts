@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { InterfaceOrClassDeclaration } from '../scope/scope';
 
-export type GenericDeclarationSupported = InterfaceOrClassDeclaration & ts.TypeAliasDeclaration;
+export type GenericDeclarationSupported = InterfaceOrClassDeclaration;
 
 export function extensionExpressionSupported(expression: ts.LeftHandSideExpression): expression is ts.Identifier {
   // This check is to prevent extends function() to die.

@@ -30,8 +30,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     typeParameterDeclaration: ts.TypeParameterDeclaration,
     declarationKey: string,
     extensionDeclarationKey: string): void {
-    const existingUniqueName: string = declarationKey + typeParameterDeclaration.name.escapedText;
-    const uniqueName: string = extensionDeclarationKey + ownerParameterDeclaration.name.escapedText;
+    const existingUniqueName: string = declarationKey + typeParameterDeclaration.name.escapedText.toString();
+    const uniqueName: string = extensionDeclarationKey + ownerParameterDeclaration.name.escapedText.toString();
 
     const parameterToAdd: GenericParameter | undefined = generics.find((genericParameter: GenericParameter) => genericParameter.ids.includes(existingUniqueName));
 
@@ -41,7 +41,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   }
 
   function createGenericParameter(ownerKey: string, nodeOwnerParameter: ts.TypeParameterDeclaration, genericDescriptor: ts.Expression): GenericParameter {
-    const uniqueName: string = ownerKey + nodeOwnerParameter.name.escapedText;
+    const uniqueName: string = ownerKey + nodeOwnerParameter.name.escapedText.toString();
     const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(ts.createBlock(
       [ts.createReturn(genericDescriptor)],
     ));

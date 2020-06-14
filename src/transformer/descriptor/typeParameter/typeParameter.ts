@@ -22,7 +22,7 @@ export function GetTypeParameterDescriptor(node: ts.TypeParameterDeclaration, sc
 
   const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(typeDeclaration);
 
-  return createFunctionToAccessToGenericValue(genericKey + node.name.escapedText, descriptor);
+  return createFunctionToAccessToGenericValue(genericKey + node.name.escapedText.toString(), descriptor);
 }
 
 function createFunctionToAccessToGenericValue(key: string, descriptor: ts.Expression): ts.CallExpression {
