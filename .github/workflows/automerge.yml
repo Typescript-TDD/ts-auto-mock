@@ -1,6 +1,9 @@
 name: automerge
 on:
   pull_request:
+    branches:
+      paths:
+        - "data/**"
     types:
       - labeled
       - unlabeled
