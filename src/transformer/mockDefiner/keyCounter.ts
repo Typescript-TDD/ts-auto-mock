@@ -2,7 +2,7 @@ export class KeyCounter {
   private _keyCounters: Map<string, number>;
 
   constructor() {
-    this._keyCounters = new Map();
+    this._keyCounters = new Map<string, number>();
   }
 
   public getFor(name: string): number {

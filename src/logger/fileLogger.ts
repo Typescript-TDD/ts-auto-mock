@@ -3,6 +3,7 @@ import * as winston from 'winston';
 import { FileTransportInstance } from 'winston/lib/winston/transports';
 
 export function FileLogger(): FileTransportInstance {
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   const customFormat: Format = winston.format.printf((info: TransformableInfo) => `${info.timestamp} - ${info.level}: ${info.message}`);
 
   return new winston.transports.File(
