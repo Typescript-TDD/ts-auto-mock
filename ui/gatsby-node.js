@@ -5,38 +5,37 @@ const development = 'development';
 const activeEnv = process.env.NODE_ENV || development;
 
 exports.onCreateWebpackConfig = ({
-                                     stage,
-                                     rules,
-                                     loaders,
-                                     plugins,
-                                     actions,
-                                 }) => {
-
-    actions.setWebpackConfig({
-        plugins: [
-            new WebpackCopyPlugin([
-                {
-                    from: path.resolve('..', '..', 'data'),
-                    to: 'resources'
-                },
-                {
-                    from: path.resolve('..', '_config.yml'),
-                    to: ''
-                }
-            ]),
-            new Dotenv({
-                path: resolveEnvironmentVariables(activeEnv)
-            })
-        ],
-    });
+  stage,
+  rules,
+  loaders,
+  plugins,
+  actions,
+}) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new WebpackCopyPlugin([
+        {
+          from: path.resolve('..', '..', 'data'),
+          to: 'resources'
+        },
+        {
+          from: path.resolve('..', '_config.yml'),
+          to: ''
+        }
+      ]),
+      new Dotenv({
+        path: resolveEnvironmentVariables(activeEnv)
+      })
+    ],
+  });
 };
 
 function resolveEnvironmentVariables(env) {
-    const isDevelopment = activeEnv === development;
+  const isDevelopment = activeEnv === development;
 
-    if (isDevelopment) {
-        return path.resolve('..', '.env.development');
-    }
+  if (isDevelopment) {
+    return path.resolve('..', '.env.development');
+  }
 
-    return path.resolve('..', '.env');
+  return path.resolve('..', '.env');
 }
