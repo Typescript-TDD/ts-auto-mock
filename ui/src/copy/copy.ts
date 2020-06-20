@@ -1,20 +1,20 @@
 export const TsAutoMockCopy = {
-  title: "Typescript transformer to create mocks for any types",
+  title: "TypeScript transformer to create mocks for any type",
   homeButton: "Get Started",
   apiButton: "API Documentation",
   slack: "Need help? Join us on Slack",
   features: {
     real: {
       title: "Real mocks",
-      description: "The creation of the mocks is done during typescript compilation, it will preserve all the types information"
+      description: "The creation of mocks is done during TypeScript compilation and preserves all type information"
     },
     extendible: {
       title: "Extendible",
-      description: "This library can be used with any testing framework. You can provide your own implementation"
+      description: "This library can be used with any testing framework. You can even provide your own implementation!"
     },
     typeSafety: {
       title: "Type Safety",
-      description: "No more casting to any to get your spy or your mock. This library provides a mechanism to get your spies and persists the types"
+      description: "No more casting to `any' to get your spy or mock. This library provides a mechanism to inject your spies while preserving the types"
     }
   }
 }
