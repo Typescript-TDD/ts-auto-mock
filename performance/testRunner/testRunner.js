@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const fileSystem = require('../core/fs/fileSystem');
 const typescriptRunner = require('./typescriptRunner');
@@ -37,6 +38,17 @@ async function generateFeatureTests(featureConfig, volume) {
 function testForFeature(feature, volume) {
     const performanceTestFolder = getDistPerformanceFolder();
     const templateFolder = path.join(__dirname, "..", "templates");
+
+    const directories = path.dirname(feature);
+    directories.split('/').reduce((accPath, directory) => {
+        const nextPath = path.join(accPath, directory);
+
+        try {
+            fs.mkdirSync(path.join(performanceTestFolder, nextPath));
+        } catch (_) {}
+
+        return nextPath;
+    }, '');
 
     for (let i = 0; i < volume; i++) {
         const filePath = path.join(performanceTestFolder, `${feature}${i}.test.ts`);

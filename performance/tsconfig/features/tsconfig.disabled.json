@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "transform": "../../../dist/transformer",
+        "debug": true,
+        "features": []
+      }
+    ]
+  }
+}
