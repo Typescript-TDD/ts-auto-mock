@@ -18,6 +18,21 @@ const localRepository = LocalRepository(localFileData, 'performance.json');
     const data = addTestResultsToData(existingData, testResults, currentBranch, currentCommit);
 
     await localRepository.update(data);
+
+    console.table(
+      testResults.reduce((rows, { types, result }) => {
+        rows[types] = Object.values(result)
+          .map(({ title, value }) => ({ [title]: value }))
+          .reduce((columns, col) => {
+            return {
+              ...columns,
+              ...col,
+            };
+          }, {});
+
+      return rows;
+      }, {}),
+    );
 })();
 
 function addTestResultsToData(data, results, currentBranch, currentCommit) {
