@@ -5,8 +5,8 @@ export const TsAutoMockCopy = {
   slack: "Need help? Join us on Slack",
   features: {
     real: {
-      title: "Real mocks",
-      description: "The creation of mocks is done during TypeScript compilation and preserves all type information"
+      title: "Real Mocks",
+      description: "The creation of mocks is done during TypeScript compilation and preserves all type information."
     },
     extendible: {
       title: "Extendible",
@@ -14,7 +14,7 @@ export const TsAutoMockCopy = {
     },
     typeSafety: {
       title: "Type Safety",
-      description: "No more casting to `any' to get your spy or mock. This library provides a mechanism to inject your spies while preserving the types"
+      description: "No more casting to `any' to get your spy or mock. This library provides a mechanism to inject your spies while preserving their types."
     }
   }
 }
