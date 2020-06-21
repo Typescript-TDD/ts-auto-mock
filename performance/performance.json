@@ -27,6 +27,20 @@
       "name": "One Interface / Reuse",
       "tsConfig": "tsconfig/tsconfig.performance.json",
       "types": ["oneInterfacePerFile","reuseInterface"]
+    },
+    {
+      "name": "Features (disabled)",
+      "tsConfig": "tsconfig/features/tsconfig.disabled.json",
+      "types": [
+        "features/overloads"
+      ]
+    },
+    {
+      "name": "Features - Overloads",
+      "tsConfig": "tsconfig/features/tsconfig.overloads.json",
+      "types": [
+        "features/overloads"
+      ]
     }
   ]
 }

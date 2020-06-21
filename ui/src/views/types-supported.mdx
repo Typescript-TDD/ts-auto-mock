@@ -33,7 +33,9 @@ interface Person {
 */
 ```
 ## Interfaces with call signatures
-For overload methods it will use the first one
+
+For overload methods it will use the first signature if the signatures are indistinguishable or if the overloads feature is disabled.
+
 ```ts
 interface Person {
     (): number
@@ -47,7 +49,8 @@ mock.name // ""
 ```
 
 ## Interfaces with construct signatures
-For overload constructors it will use the first one
+
+For overload constructors it will use the first one, or if the overloads feature is enabled, use the matching signature, i.e.:
 
 ```ts
 interface PersonWithHat {
@@ -65,7 +68,8 @@ interface Person {
 }
 
 const mock = createMock<Person>();
-new mock() // { hatSize: 0 }
+new mock() // { shirtSize: 0 }
+new mock(0) // { hatSize: 0 }
 mock.name // ""
 ```
 

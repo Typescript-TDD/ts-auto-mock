@@ -6,7 +6,8 @@ function DetermineFeaturesFromEnvironment() {
 
     if (features) {
        return [
-           'random'
+           'overloads',
+           'random',
        ];
     }
 

@@ -1,27 +1,45 @@
-import * as ts from 'typescript';
+import ts from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
+import { Scope } from '../../scope/scope';
 import { MockIdentifierInternalValues, MockIdentifierObjectReturnValue } from '../../mockIdentifier/mockIdentifier';
+import { GetMethodDescriptor } from '../method/method';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 import { PropertyAssignments } from './mockPropertiesAssignments';
 
-export function GetMockCall(properties: PropertyAssignments, signature: ts.Expression | null): ts.CallExpression {
+export function GetMockCall(properties: PropertyAssignments, signatures: ReadonlyArray<ts.CallSignatureDeclaration | ts.ConstructSignatureDeclaration>, scope: Scope): ts.CallExpression {
   const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
-  const statements: ts.Statement[] = [
-    TypescriptCreator.createVariableStatement([
-      TypescriptCreator.createVariableDeclaration(MockIdentifierInternalValues, ts.createObjectLiteral()),
-      TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, signature || ts.createObjectLiteral(properties.literals)),
-    ]),
+
+  const variableStatements: ts.VariableDeclaration[] = [
+    TypescriptCreator.createVariableDeclaration(MockIdentifierInternalValues, ts.createObjectLiteral()),
   ];
+  const propertyAssignmentStatements: ts.ExpressionStatement[] = [];
 
-  if (signature) {
-    let literalProperty: ts.PropertyAssignment;
-    let index: number = 0;
+  const isCallable: boolean = !!signatures.length;
+  if (isCallable) {
+    // FIXME: It'd probably be wise to extract the name of the callable
+    // signature and only fallback to `new` if there is none (or something
+    // shorter).
+    const callableEntry: ts.CallExpression = GetMethodDescriptor(ts.createStringLiteral('new'), signatures, scope);
 
-    // tslint:disable-next-line:no-conditional-assignment
-    while ((literalProperty = properties.literals[index++])) {
-      statements.push(AssignLiteralPropertyTo(mockObjectReturnValueName, literalProperty));
-    }
+    variableStatements.push(
+      TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, callableEntry),
+    );
+
+    propertyAssignmentStatements.push(
+      ...properties.literals.map(
+        (literalProperty: ts.PropertyAssignment) => AssignLiteralPropertyTo(mockObjectReturnValueName, literalProperty)
+      ),
+    );
+  } else {
+    variableStatements.push(
+      TypescriptCreator.createVariableDeclaration(mockObjectReturnValueName, ts.createObjectLiteral(properties.literals)),
+    );
   }
+
+  const statements: ts.Statement[] = [
+    TypescriptCreator.createVariableStatement(variableStatements),
+    ...propertyAssignmentStatements,
+  ];
 
   if (properties.lazy.length) {
     const addPropertiesToUniqueVariable: ts.ExpressionStatement = AssignPropertiesTo(properties.lazy, mockObjectReturnValueName);
@@ -30,12 +48,12 @@ export function GetMockCall(properties: PropertyAssignments, signature: ts.Expre
 
   const addMockMarkerToUniqueVariable: ts.ExpressionStatement = AssignMockMarkerPropertyTo(mockObjectReturnValueName);
   statements.push(addMockMarkerToUniqueVariable);
-
   statements.push(ts.createReturn(mockObjectReturnValueName));
 
   const functionBlock: ts.Block = ts.createBlock(statements);
   const functionExpression: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(functionBlock);
   const IFFEFunction: ts.ParenthesizedExpression = ts.createParen(functionExpression);
+
   return ts.createCall(IFFEFunction, [], []);
 }
 

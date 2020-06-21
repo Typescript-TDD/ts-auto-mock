@@ -11,13 +11,13 @@ import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier
 import { Scope } from '../scope/scope';
 import { TypescriptCreator } from '../helper/creator';
 
-export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
+export function GetMockFactoryCall(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.CallExpression {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeReferenceNode.typeName);
 
   return getDeclarationMockFactoryCall(declaration, typeReferenceNode, scope);
 }
 
-export function CreateMockFactory(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
+export function CreateMockFactory(typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.CallExpression {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(typeReferenceNode.typeName);
   MockDefiner.instance.createMockFactory(declaration);
 
@@ -68,7 +68,7 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
   );
 }
 
-function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.Expression {
+function getDeclarationMockFactoryCall(declaration: ts.Declaration, typeReferenceNode: ts.TypeReferenceNode, scope: Scope): ts.CallExpression {
   const declarationKey: string | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
 
   if (!declarationKey) {

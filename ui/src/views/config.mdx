@@ -55,7 +55,12 @@ We are working on an [issue](https://github.com/Typescript-TDD/ts-auto-mock/issu
 
 ---
 ## Features
+
 We currently support the following features
+
+- Random
+- Overloads
+
 ### Random ('random')
 
 When adding random to the feature list any string, boolean and number will be transformed to a random values
@@ -92,7 +97,23 @@ interface WithBoolean {
     prop: boolean;
 }
 
-createMock<WithBoolean>() // { prop: true|false}
+createMock<WithBoolean>() // { prop: true | false }
 ```
 
-true|false will be random
+`true | false` will be random
+
+### Overloads ('overloads')
+
+By default, the `ts-auto-mock` transformer will pick the very first signature of whatever function it comes by. Enabling the overloads feature will make the transformer consider overloaded- functions and interface call signatures and emit additional logic in order to select the correct mock at runtime. It utilizes the information the type checker provides and attaches it to the context of a function call which is then used to determine the mocked return value using a lazy jump table, thereby only evaluating those values on-demand.
+
+The expected behavior (type-wise) is to have this feature enabled, but do note it emits additional code that may affect performance.
+
+Example:
+```ts
+declare function overloadedFunction(a: string): boolean;
+declare function overloadedFunction(a: boolean): string;
+
+const func = createMock<typeof overloadedFunction>();
+func(''); // Returns false
+func(false); // Returns ''
+```

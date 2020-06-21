@@ -1,1 +1,1 @@
-export type TsAutoMockFeaturesOption = 'random';
+export type TsAutoMockFeaturesOption = 'random' | 'overloads';
