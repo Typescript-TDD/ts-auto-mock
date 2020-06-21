@@ -7,6 +7,7 @@ export default {
     initialColorMode: 'dark',
     showDarkModeSwitch: false
   },
+  title: 'TS auto mock',
   base: `/${libName}/`,
   menu: [
     { name: 'Home'},
