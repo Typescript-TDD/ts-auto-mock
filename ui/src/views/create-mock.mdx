@@ -17,13 +17,15 @@ interface Person {
 const mock = createMock<Person>();
 mock.id // ""
 mock.getName() // ""
-mock.details // "{phone: 0} "
+mock.details // { phone: 0 }
 ```
 
-## Default values
+## Property overrides
 
-You can also define default values to overrides specific fields
-You dont have to provide the entire interface, just a partial of the one to mock
+If you desire, you may override the otherwise mocked properties of an interface.
+
+You don't have to provide the entire interface, just a partial object of the one you are mocking.
+
 ```ts
 import { createMock } from 'ts-auto-mock';
 
@@ -31,15 +33,17 @@ interface Person {
   id: string;
   getName(): string;
   details: {
-      phone: number
+    phone: number
   }
 }
+
 const mock = createMock<Person>({
     details: {
-        phone: 07423232323
+      phone: 7423232323
     }
 });
+
 mock.id // ""
 mock.getName() // ""
-mock.details // "{phone: 07423232323} "
+mock.details // { phone: 7423232323 }
 ```
