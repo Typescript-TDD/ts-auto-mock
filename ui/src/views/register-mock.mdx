@@ -4,16 +4,17 @@ route: /register-mock
 ---
 
 # Register mock
-registerMock will register your custom mock that will be re used automatically whenever a another mock will convert the same interface
 
-./person.ts
+`registerMock` will register your custom mock that will be re-used automatically whenever another mock is identified as converting the same interface.
+
+#### **`./person.ts`**
 ```ts
 export interface Person {
   id: string;
 }
 ```
 
-./person-fake.ts
+#### **`./person-fake.ts`**
 ```ts
 import { Person } from './person';
 
@@ -28,7 +29,7 @@ export class PersonFake extends Person {
 }
 ```
 
-./context.ts
+#### **`./context.ts`**
 ```ts context.ts
 import { registerMock } from 'ts-auto-mock';
 import { Person } from './person';
@@ -37,10 +38,10 @@ import { PersonFake } from './person-fake';
 registerMock<Person>(() => new PersonFake());
 ```
 
-./my-test.ts
-```ts my-test.ts
+#### **`./my-test.ts`**
+```ts
 interface Wrapper {
-    person: Person;
+  person: Person;
 }
 
 const mock: Wrapper = createMock<Wrapper>();
@@ -49,7 +50,8 @@ mock.person.id // "Basic Id"
 mock.person.name // "Basic name"
 ```
 
-When using a fake we recommend using the [extension strategy](./extension) to retrieve the fake object.
+When injecting fake (/stubbed) implementations, we recommend using the [extension strategy](./extension) to retrieve the faked object.
+
 An example of usage for Promise->FakePromise can be found in [the test folder](https://github.com/Typescript-TDD/ts-auto-mock/blob/master/test/registerMock/extensionStrategy/extensionStrategy.test.ts).
 
-**Note:** You can use it only in the common file (webpack context.ts, mocha tsnode.js, etc), using `registerMock` in other files will have unexpected results.
+**Note:** You can only use it in a common file (webpack context.ts, mocha tsnode.js, etc), using `registerMock` in other files will give unexpected results.
