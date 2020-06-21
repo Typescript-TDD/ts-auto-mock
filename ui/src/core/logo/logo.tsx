@@ -10,5 +10,5 @@ import logoDark from './logo_dark.svg';
 export function Logo(): JSX.Element {
   const theme = useTheme();
   const logo = theme === Theme.LIGHT ? logoLight : logoDark;
-  return <img src={logo} alt={"ts auto mock logo"}/>
+  return <img src={logo} alt={"TS auto mock logo"}/>
 }
