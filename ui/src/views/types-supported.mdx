@@ -5,7 +5,7 @@ route: /types-supported
 
 # Types supported
 
-The library try to convert the type given to createMock so you dont need to create concrete mock manually.
+The library tries to convert the type argument passed to createMock so you don't have to mock them manually.
 
 ## Primitive
 ```ts
@@ -22,23 +22,25 @@ never // undefined
 ## Interfaces
 ```ts
 interface Person {
-    id: string
-    name: string
+  id: string
+  name: string
 }
 /*
 {
-    id: "",
-    name: ""
+  id: "",
+  name: ""
 }
 */
 ```
+
 ## Interfaces with call signatures
+
 For overload methods it will use the first one
 ```ts
 interface Person {
-    (): number
-    (): string
-    name: string
+  (): number
+  (): string
+  name: string
 }
 
 const mock = createMock<Person>();
@@ -51,17 +53,17 @@ For overload constructors it will use the first one
 
 ```ts
 interface PersonWithHat {
-    hatSize: number;
+  hatSize: number;
 }
 
 interface PersonWithoutHat {
-    shirtSize: number;
+  shirtSize: number;
 }
 
 interface Person {
-    new (hatSize: number): PersonWithHat
-    new (): PersonWithoutHat
-    name: string
+  new (hatSize: number): PersonWithHat
+  new (): PersonWithoutHat
+  name: string
 }
 
 const mock = createMock<Person>();
@@ -72,24 +74,24 @@ mock.name // ""
 ## Classes
 ```ts
 class Person {
-    private _id: string;
-    name: string
+  private _id: string;
+  name: string
 }
 /*
 {
-    name: ""
+  name: ""
 }
 */
 ```
 ## Methods
 ```ts
 interface InterfaceWithMethod {
-    method(): string
+  method(): string
 }
 /*
 {
   method: () => {
-      return ""
+    return ""
   }
 }
 */
@@ -98,13 +100,13 @@ interface InterfaceWithMethod {
 ## Literal
 ```ts
 type Data = {
-    id: "I am a specific string",
-    number: 2
+  id: "I am a specific string",
+  number: 2
 }
 /*
 {
-    id: "I am a specific string",
-    number: 2
+  id: "I am a specific string",
+  number: 2
 }
 /*
 ```
@@ -112,16 +114,16 @@ type Data = {
 ## Enum (it will select the first value)
 ```ts
 enum Direction {
-    LEFT,
-    RIGHT
+  LEFT,
+  RIGHT
 }
 
 interface WithEnum {
-    direction: Direction
+  direction: Direction
 }
 /*
 {
-    direction: DIRECTION.LEFT
+  direction: DIRECTION.LEFT
 }
 /*
 ```
@@ -133,14 +135,14 @@ mock // () => ""
 
 ## Object
 ```ts
-const mock = createMock<{a: string}>();
+const mock = createMock<{ a: string }>();
 mock // { a: "" }
 ```
 
 ## Key in
 ```ts
 type Keys = "a" | "b";
-type myType = {[key in Keys]: string}
+type myType = { [key in Keys]: string }
 const mock = createMock<myType>();
 mock // { a: "", b: "" }
 ```
@@ -150,7 +152,7 @@ mock // { a: "", b: "" }
 type Keys = {
 	a: number;
 }
-type keyInKeyof = {[key in keyof Keys]: string}
+type keyInKeyof = { [key in keyof Keys]: string }
 const mock = createMock<keyInKeyof>();
 mock // { a: "" }
 ```
@@ -165,7 +167,7 @@ mock // { test: undefined }
 ```
 
 ## Typescript libraries (Array, Number... ecc)
-This is a special case. The library try to convert to the most useful type.
+This is a special case. The library tries to convert to the most useful type.
 ```ts
 class MyClass {
   array: Array<number>; // []
@@ -212,7 +214,7 @@ interface Keys {
   a: string;
 }
 interface Interface extends Keys {
-    b: boolean;
+  b: boolean;
 }
 
 const mock = createMock<Interface>();
@@ -238,6 +240,7 @@ interface IntersectionA {
 interface IntersectionB {
   b: number;
 }
+
 interface Interface {
   intersection: IntersectionA & IntersectionB,
 }
@@ -250,7 +253,7 @@ mock // { intersection: { a: "", b: 0 } }
 
 ```ts
 interface Test {
-    a: string;
+  a: string;
 }
 const mockType = createMock<new () => Test>();
 const mock = new mockType();
@@ -261,8 +264,8 @@ mock = // { a: "" }
 ## TypeQuery
 ```ts
 enum AnEnum {
-    a,
-    b = 'something',
+  a,
+  b = 'something',
 }
 
 const mock = createMock<typeof AnEnum>();
@@ -271,7 +274,7 @@ mock.b // 'something'
 mock[0] // 'a'
 
 class AClass {
-    a: string
+  a: string
 }
 
 const mockClass = createMock<typeof AClass>();
@@ -286,10 +289,10 @@ mockFunction() // 0
 ## IndexedAccessType
 ```ts
 class Class {
- a: string
+  a: string
 }
 
-type KeyOf = {[key in keyof Class]: Class[key]};
+type KeyOf = { [key in keyof Class]: Class[key] };
 const mock = createMock<KeyOf>();
 mock.a // ''
 ```
