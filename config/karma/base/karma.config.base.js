@@ -1,7 +1,6 @@
-const webpackConfig = require('../test/webpack.js');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-module.exports = function(config, url) {
+module.exports = function(config, url, webpackConfig) {
     return {
         basePath: '',
         frameworks: ['jasmine'],
