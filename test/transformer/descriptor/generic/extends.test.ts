@@ -255,9 +255,9 @@ describe('for generic', () => {
     it('should avoid infinite extension', () => {
       const propertiesA: A = createMock<A>();
       const propertiesB: B = createMock<B>();
-      expect(propertiesA.a.a.b).toBe(0);
+      expect(propertiesA.a.a.a.b).toBe(0);
       expect(propertiesA.b).toBe(0);
-      expect(propertiesB.a.a.c).toBe('');
+      expect(propertiesB.a.a.a.c).toBe('');
       expect(propertiesB.c).toBe('');
     });
   });
