@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [2.3.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.8...2.3.0) (2020-06-27)
+
+
+### Features
+
+* **transformer:** error when running tests with no transformer installation ([16506e5](https://github.com/Typescript-TDD/ts-auto-mock/commit/16506e5ae72d70dcf5c09c8881fe5b1bd71ce2e9))
+* **transformer:** extract repeated error in a constant, fixed error wording ([dd73b57](https://github.com/Typescript-TDD/ts-auto-mock/commit/dd73b57454a2c41e93e39a15b0057c9e0344edeb))
+
 ## [2.2.8](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.7...2.2.8) (2020-06-14)
 
 
