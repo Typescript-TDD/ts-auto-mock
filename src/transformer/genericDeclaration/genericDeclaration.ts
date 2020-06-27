@@ -167,8 +167,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           }
         }
 
-        if (!typeParameterDeclaration || scope.currentMockKey !== declarationKey) {
-          genericValueDescriptor = GetDescriptor(genericNode, new Scope(declarationKey));
+        if (!typeParameterDeclaration || !scope.isBound()) {
+          genericValueDescriptor = GetDescriptor(genericNode, (new Scope(declarationKey)).bind());
         }
 
         const genericParameter: GenericParameter = createGenericParameter(
