@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
-import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
+import { MockIdentifierGenericCircularReference, MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
@@ -64,23 +64,33 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
         genericDescriptor ? TypescriptCreator.createFunctionExpression(
           ts.createBlock(
             [
+              TypescriptCreator.createVariableStatement([
+                TypescriptCreator.createVariableDeclaration(MockIdentifierGenericCircularReference, ts.createIdentifier('this')),
+              ]),
               ts.createExpressionStatement(
                 ts.createCall(
                   ts.createPropertyAccess(
                     ts.createIdentifier('Object'),
-                    ts.createIdentifier('assign'),
+                    ts.createIdentifier('defineProperties'),
                   ),
                   undefined,
                   [
                     ts.createIdentifier('this'),
-                    genericDescriptor,
+                    ts.createCall(
+                      ts.createPropertyAccess(
+                        ts.createIdentifier('Object'),
+                        ts.createIdentifier('getOwnPropertyDescriptors'),
+                      ),
+                      undefined,
+                      [genericDescriptor]
+                    ),
                   ]
                 ),
               ),
             ],
           ),
         ) : ts.createPropertyAccess(
-          ts.createIdentifier('this'),
+          MockIdentifierGenericCircularReference,
           ts.createIdentifier('constructor'),
         ),
         undefined,

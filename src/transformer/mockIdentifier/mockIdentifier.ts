@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 
+export const MockIdentifierGenericCircularReference: ts.Identifier = ts.createIdentifier('that');
 export const MockIdentifierGenericParameter: ts.Identifier = ts.createIdentifier('t');
 export const MockIdentifierGenericParameterIds: ts.Identifier = ts.createIdentifier('i');
 export const MockIdentifierGenericParameterValue: ts.Identifier = ts.createIdentifier('w');
