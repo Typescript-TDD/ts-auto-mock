@@ -22,7 +22,7 @@ const PARALLEL_NPM_INSTALL = 20;
 })();
 
 function cloneRepository() {
-    const command = `git clone https://github.com/DefinitelyTyped/DefinitelyTyped.git ${definitelyTyped.folder}`;
+    const command = `git clone --depth 1 https://github.com/DefinitelyTyped/DefinitelyTyped.git ${definitelyTyped.folder}`;
     console.log(`Cloning repository using ${command}`);
 
     return execPromise(command)
