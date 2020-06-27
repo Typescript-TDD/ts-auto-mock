@@ -247,9 +247,11 @@ describe('for generic', () => {
   describe('with circular', () => {
     interface A extends ClassWithGenerics<A> {
       b: number;
+      B: B;
     }
     interface B extends ClassWithGenerics<B> {
       c: string;
+      A: A;
     }
 
     it('should avoid infinite extension', () => {
@@ -259,6 +261,7 @@ describe('for generic', () => {
       expect(propertiesA.b).toBe(0);
       expect(propertiesB.a.a.a.c).toBe('');
       expect(propertiesB.c).toBe('');
+      expect(propertiesB.A.B.A.a.b).toBe(0);
     });
   });
 
