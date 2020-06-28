@@ -5,7 +5,10 @@ on:
       - master
 jobs:
   release:
-    if: "startsWith(github.event.head_commit.message, 'ci(release): ts auto mock new version') != true"
+    if: |
+      startsWith(github.event.head_commit.message, 'ci(release): ts auto mock new version') != true
+      && startsWith(github.event.head_commit.message, 'chore(performance): add performance data') != true
+      && startsWith(github.event.head_commit.message, 'chore(definitelyTyped): add definitelyTyped tests data') != true
     runs-on: ubuntu-latest
     strategy:
       matrix:
