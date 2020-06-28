@@ -6,8 +6,8 @@ on:
 jobs:
   release:
     if: |
-    "startsWith(github.event.head_commit.message, 'ci(release): hello') != true"
-    "startsWith(github.event.head_commit.message, 'ci(release2): hello') != true"
+     startsWith(github.event.head_commit.message, 'ci(release): hello') != true
+     && startsWith(github.event.head_commit.message, 'ci(release2): hello') != true
     runs-on: ubuntu-latest
     strategy:
       matrix:
