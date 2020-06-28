@@ -14,7 +14,7 @@ jobs:
         node-version:
         - 10.x
     steps:
-    - name: Checkout 1
+    - name: Checkout
       uses: actions/checkout@v2
       with:
         token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
