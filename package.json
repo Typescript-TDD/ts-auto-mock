@@ -1,6 +1,6 @@
 {
   "name": "ts-auto-mock",
-  "version": "2.2.8",
+  "version": "2.3.0",
   "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
   "scripts": {
     "build": "npm run build:modules && npm run build:transformer",
@@ -11,9 +11,10 @@
     "build:modules:debug": "cross-env DEBUG=true webpack --config config/modules/webpack.js",
     "build:transformer:definitelyTyped": "webpack --config config/modules/definitelyTypedTransformer/webpack.functions.js && webpack --config config/modules/definitelyTypedTransformer/webpack.js",
     "build:playground": "ttsc --project tsconfig.playground.json",
-    "test": "npm run test:transformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:registerMock && npm run test:features && npm run test:unit",
+    "test": "npm run test:transformer && npm run test:noTransformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:registerMock && npm run test:features && npm run test:unit",
     "test:unit": "karma start config/karma/karma.config.unit.js",
     "test:transformer": "cross-env CACHE=true karma start config/karma/karma.config.transformer.js",
+    "test:noTransformer": "cross-env CACHE=true karma start config/karma/karma.config.noTransformer.js",
     "test:registerMock": "cross-env CACHE=true karma start config/karma/karma.config.registerMock.js",
     "test:framework:context": "cross-env CACHE=true karma start config/karma/karma.config.framework.context.js",
     "test:frameworkDeprecated": "cross-env CACHE=true karma start config/karma/karma.config.framework.deprecated.js",
