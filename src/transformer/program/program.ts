@@ -1,11 +1,11 @@
 import ts from 'typescript';
 
-let __program: ts.Program;
+let tsAutoMockProgram: ts.Program;
 
 export function SetProgram(program: ts.Program): void {
-  __program = program;
+  tsAutoMockProgram = program;
 }
 
 export function GetProgram(): ts.Program {
-  return __program;
+  return tsAutoMockProgram;
 }

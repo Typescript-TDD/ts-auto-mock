@@ -1,7 +1,7 @@
 {
   "name": "ts-auto-mock",
   "version": "1.0.0",
-  "description": "ts auto mock website",
+  "description": "ts-auto-mock website",
   "main": "index.js",
   "scripts": {
     "docz:dev": "docz dev",

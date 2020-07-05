@@ -74,7 +74,7 @@
           "package-lock.json",
           "CHANGELOG.md"
         ],
-        "message": "ci(release): new version ${nextRelease.version}"
+        "message": "ci(release): ts auto mock new version ${nextRelease.version}"
       }
     ],
     [

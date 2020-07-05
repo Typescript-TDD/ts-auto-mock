@@ -27,7 +27,7 @@ export class ExtensionHandler<TMock> {
 
     if (!maybePropertyHandler) {
       throw new Error(
-        `It looks like you are trying to get an extension for ${extensionOrPropertyName} without specifying the handler.`,
+        `It looks like you are trying to get an extension for ${extensionOrPropertyName as string} without specifying the handler.`,
       );
     }
 
