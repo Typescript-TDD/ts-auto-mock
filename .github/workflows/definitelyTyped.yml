@@ -43,9 +43,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
         with:
-          commit-message: "chore(definitelyTyped) add definitelyTyped tests data"
+          commit-message: "chore(definitelyTyped): add definitelyTyped tests data"
           committer: typescripttdd <typescripttdd@gmail.com>
           author: typescripttdd <typescripttdd@gmail.com>
           title: DefinitelyTyped Tests Data on ${{ env.DATE }}
+          labels: ts-auto-mock-automerge
           branch: definitely-typed-tests
           token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
