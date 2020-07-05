@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.3.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.0...2.3.1) (2020-07-05)
+
+
+### Bug Fixes
+
+* upgrade typescript from 3.9.3 to 3.9.5 ([82bf1b8](https://github.com/Typescript-TDD/ts-auto-mock/commit/82bf1b83b06545787817dad81bf5ad98860bf09a))
+
 # [2.3.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.8...2.3.0) (2020-06-27)
 
 
