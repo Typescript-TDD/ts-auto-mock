@@ -24,7 +24,9 @@
     "release": "cp -r package.json package-lock.json README.md dist && semantic-release",
     "postversion": "cp -r package.json ../ && cp -r package-lock.json ../",
     "cz": "git-cz",
-    "commit": "npm run cz"
+    "commit": "npm run cz",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "typescript",
@@ -81,7 +83,8 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.15",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "snyk": "^1.360.0"
   },
   "peerDependencies": {
     "typescript": "^3.8.3"
@@ -98,5 +101,6 @@
     "cz-customizable": {
       "config": "./commitizen.js"
     }
-  }
+  },
+  "snyk": true
 }
