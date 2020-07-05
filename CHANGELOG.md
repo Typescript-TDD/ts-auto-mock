@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.3.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.1...2.3.2) (2020-07-05)
+
+
+### Bug Fixes
+
+* upgrade gatsby-plugin-google-analytics from 2.3.1 to 2.3.3 ([52c1b88](https://github.com/Typescript-TDD/ts-auto-mock/commit/52c1b8857303eb09f93e7079be8ca0d12f570f56))
+
 ## [2.3.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.0...2.3.1) (2020-07-05)
 
 
