@@ -4,6 +4,7 @@ on:
     paths:
       - "data/**"
     types:
+      - labeled
       - opened
   check_suite:
     types:
