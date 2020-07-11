@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.3.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.2...2.3.3) (2020-07-11)
+
+
+### Bug Fixes
+
+* **typeof-module:** prevent unsupported declaration to be transformer when mocking typeof of a module that uses exports = ([09aa3b3](https://github.com/Typescript-TDD/ts-auto-mock/commit/09aa3b3700a23b7c0e745b7496e9a2e7ba530115))
+
 ## [2.3.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.1...2.3.2) (2020-07-05)
 
 
