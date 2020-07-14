@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.15",
-    "winston": "^3.2.1"
+    "winston": "^3.3.2"
   },
   "peerDependencies": {
     "typescript": "^3.9.5"
