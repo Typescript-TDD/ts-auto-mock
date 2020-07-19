@@ -3,25 +3,24 @@ import * as ts from 'typescript';
 export type InterfaceOrClassDeclaration = ts.InterfaceDeclaration | ts.ClassDeclaration;
 export class Scope {
   constructor(currentMockKey?: string) {
-    this._bound = false;
     this._currentMockKey = currentMockKey;
   }
 
   private readonly _currentMockKey: string | undefined;
-  private _bound: boolean;
+  private _boundFor: string | undefined;
 
   private _appendConstructorMarker(): string {
-    return this._bound ? '_C' : '';
+    return this._boundFor !== undefined ? '_C' : '';
   }
 
-  public bind(): this {
-    this._bound = true;
+  public bindFor(key: string): this {
+    this._boundFor = key;
 
     return this;
   }
 
-  public isBound(): boolean {
-    return this._bound;
+  public isBoundFor(key: string): boolean {
+    return this._boundFor === key;
   }
 
   public get currentMockKey(): string | undefined {

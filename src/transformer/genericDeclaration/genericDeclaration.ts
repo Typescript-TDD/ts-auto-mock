@@ -167,8 +167,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           }
         }
 
-        if (!typeParameterDeclaration || !scope.isBound()) {
-          genericValueDescriptor = GetDescriptor(genericNode, (new Scope(declarationKey)).bind());
+        if (!typeParameterDeclaration || !scope.isBoundFor(extensionDeclarationKey)) {
+          genericValueDescriptor = GetDescriptor(genericNode, (new Scope(declarationKey)).bindFor(extensionDeclarationKey));
         }
 
         const genericParameter: GenericParameter = createGenericParameter(
