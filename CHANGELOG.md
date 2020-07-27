@@ -1,5 +1,26 @@
 # Semantic Versioning Changelog
 
+## [2.3.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.2...2.3.3) (2020-07-11)
+
+
+### Bug Fixes
+
+* **typeof-module:** prevent unsupported declaration to be transformer when mocking typeof of a module that uses exports = ([09aa3b3](https://github.com/Typescript-TDD/ts-auto-mock/commit/09aa3b3700a23b7c0e745b7496e9a2e7ba530115))
+
+## [2.3.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.1...2.3.2) (2020-07-05)
+
+
+### Bug Fixes
+
+* upgrade gatsby-plugin-google-analytics from 2.3.1 to 2.3.3 ([52c1b88](https://github.com/Typescript-TDD/ts-auto-mock/commit/52c1b8857303eb09f93e7079be8ca0d12f570f56))
+
+## [2.3.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.0...2.3.1) (2020-07-05)
+
+
+### Bug Fixes
+
+* upgrade typescript from 3.9.3 to 3.9.5 ([82bf1b8](https://github.com/Typescript-TDD/ts-auto-mock/commit/82bf1b83b06545787817dad81bf5ad98860bf09a))
+
 # [2.3.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.2.8...2.3.0) (2020-06-27)
 
 
