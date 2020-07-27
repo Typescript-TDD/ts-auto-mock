@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
-import { MockIdentifierGenericCircularReference, MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
+import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
@@ -60,12 +60,14 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
         return genericDescriptor || ts.createNull();
       }
 
+      const ownerReference: ts.Identifier = ts.createIdentifier(uniqueName.replace('@', '_'));
+
       return ts.createNew(
         genericDescriptor ? TypescriptCreator.createFunctionExpression(
           ts.createBlock(
             [
               TypescriptCreator.createVariableStatement([
-                TypescriptCreator.createVariableDeclaration(MockIdentifierGenericCircularReference, ts.createIdentifier('this')),
+                TypescriptCreator.createVariableDeclaration(ownerReference, ts.createIdentifier('this')),
               ]),
               ts.createExpressionStatement(
                 ts.createCall(
@@ -90,7 +92,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
             ],
           ),
         ) : ts.createPropertyAccess(
-          MockIdentifierGenericCircularReference,
+          ownerReference,
           ts.createIdentifier('constructor'),
         ),
         undefined,
@@ -140,6 +142,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       extensionDeclaration: GenericDeclarationSupported,
       extensionDeclarationKey: string,
       extension: ts.ExpressionWithTypeArguments): void {
+      const nextScope: Scope = scope.currentMockKey ? scope : new Scope(declarationKey);
+
       const extensionDeclarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> | undefined = extensionDeclaration.typeParameters;
 
       if (!extensionDeclarationTypeParameters?.length) {
@@ -167,8 +171,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           }
         }
 
-        if (!typeParameterDeclaration || !scope.isBoundFor(extensionDeclarationKey)) {
-          genericValueDescriptor = GetDescriptor(genericNode, (new Scope(declarationKey)).bindFor(extensionDeclarationKey));
+        if (!typeParameterDeclaration || !nextScope.isBoundFor(extensionDeclarationKey)) {
+          genericValueDescriptor = GetDescriptor(genericNode, nextScope.bindFor(extensionDeclarationKey));
         }
 
         const genericParameter: GenericParameter = createGenericParameter(
