@@ -10,10 +10,6 @@ export class Scope {
   private readonly _currentMockKey: string | undefined;
   private _boundFor: Set<string>;
 
-  private _appendConstructorMarker(): string {
-    return this._boundFor !== undefined ? '_C' : '';
-  }
-
   public bindFor(key: string): this {
     this._boundFor.add(key);
 
@@ -25,10 +21,6 @@ export class Scope {
   }
 
   public get currentMockKey(): string | undefined {
-    if (this._currentMockKey === undefined) {
-      return;
-    }
-
-    return this._currentMockKey + this._appendConstructorMarker();
+    return this._currentMockKey;
   }
 }
