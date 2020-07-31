@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
-import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
+import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue, MockPrivatePrefix } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
@@ -60,7 +60,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
         return genericDescriptor || ts.createNull();
       }
 
-      const ownerReference: ts.Identifier = ts.createIdentifier(uniqueName.replace('@', '_'));
+      const scopeOwnerName: string = [nextScope.currentMockKey, uniqueName].join('_').replace(/@/g, '');
+      const ownerReference: ts.Identifier = ts.createIdentifier([MockPrivatePrefix, scopeOwnerName].join(''));
 
       return ts.createNew(
         genericDescriptor ? TypescriptCreator.createFunctionExpression(
