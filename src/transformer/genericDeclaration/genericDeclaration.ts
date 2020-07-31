@@ -52,7 +52,13 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     }
   }
 
-  function createGenericParameter(ownerKey: string, nodeOwnerParameter: ts.TypeParameterDeclaration, genericDescriptor: ts.Expression | undefined, instantiable: boolean): GenericParameter {
+  function createGenericParameter(
+    ownerKey: string,
+    nodeOwnerParameter: ts.TypeParameterDeclaration,
+    genericDescriptor: ts.Expression | undefined,
+    instantiable: boolean,
+    nextScope: Scope,
+  ): GenericParameter {
     const uniqueName: string = ownerKey + nodeOwnerParameter.name.escapedText.toString();
 
     const genericValueDescriptor: ts.Expression = ((): ts.Expression => {
@@ -132,6 +138,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           typeParameterDeclarations[index],
           GetDescriptor(genericNode, scope),
           false,
+          scope,
         );
 
         generics.push(genericParameter);
@@ -143,7 +150,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       extensionDeclaration: GenericDeclarationSupported,
       extensionDeclarationKey: string,
       extension: ts.ExpressionWithTypeArguments): void {
-      const nextScope: Scope = scope.currentMockKey ? scope : new Scope(declarationKey);
+      const nextScope: Scope = scope.newNestedScope(declarationKey);
 
       const extensionDeclarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> | undefined = extensionDeclaration.typeParameters;
 
@@ -181,6 +188,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           declaration,
           genericValueDescriptor,
           isInstantiable(typeParameterDeclaration),
+          nextScope,
         );
 
         acc.push(genericParameter);

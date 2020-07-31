@@ -273,6 +273,12 @@ describe('for generic', () => {
       const propertiesA: A = createMock<A>();
       const propertiesB: B = createMock<B>();
 
+      expect(propertiesA.B.d.a).toBe(0);
+      expect(propertiesA.B.e.a).toBe(0);
+
+      expect(propertiesB.A.d.a).toBe(0);
+      expect(propertiesB.A.e.b).toBe('');
+
       // NOTE: First generic reference becomes a new instance and the second
       // reference becomes a call to the parent's constructor.
       expect(propertiesA.c.c.c.a).toBe(0);
