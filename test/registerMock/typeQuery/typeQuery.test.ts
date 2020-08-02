@@ -1,6 +1,6 @@
-import Interface2 = ImportNamespace.Interface2;
 import { createMock, registerMock } from 'ts-auto-mock';
 import { ImportNamespace } from '../../transformer/descriptor/utils/interfaces/importNameSpace';
+import Interface2 = ImportNamespace.Interface2;
 
 describe('registerMock of typeQuery', () => {
   it('should not work for enum', () => {
