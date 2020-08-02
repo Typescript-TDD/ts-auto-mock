@@ -11,7 +11,10 @@ describe('registerMock using vars from the scope', () => {
       prop: APropInterface;
     }
 
-    const propInstance: APropInterface = { internalProp: 'whaaat', call: () => propInstance };
+    const propInstance: APropInterface = {
+      internalProp: 'whaaat',
+      call: () => propInstance,
+    };
 
     registerMock<APropInterface>(() => propInstance);
 

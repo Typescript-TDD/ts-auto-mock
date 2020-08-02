@@ -20,7 +20,9 @@ describe('for dictionary', () => {
     }
 
     it('should set an empty object', () => {
-      const properties: InterfaceWithDictionary<Test> = createMock<InterfaceWithDictionary<Test>>();
+      const properties: InterfaceWithDictionary<Test> = createMock<
+        InterfaceWithDictionary<Test>
+      >();
       expect(properties.a).toBe('');
       expect(properties.dictionary).toEqual({});
     });

@@ -1,6 +1,5 @@
 import { createMock } from 'ts-auto-mock';
 
-
 describe('properties inferred type', () => {
   function funcReturningNumber(): number {
     return 3;

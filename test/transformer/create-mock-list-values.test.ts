@@ -7,9 +7,12 @@ describe('create-mock-list-values', () => {
   }
 
   it('should create an array of mocks with the values merged with the function provided', () => {
-    const properties: Array<Interface> = createMockList<Interface>(2, (index: number) => ({
-      property: 'sss' + index,
-    }));
+    const properties: Array<Interface> = createMockList<Interface>(
+      2,
+      (index: number) => ({
+        property: `sss${index}`,
+      })
+    );
 
     expect(properties[0].property).toBe('sss0');
     expect(properties[0].method());

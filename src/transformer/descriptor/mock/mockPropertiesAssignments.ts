@@ -1,7 +1,10 @@
 import * as ts from 'typescript';
 import { SyntaxKind } from 'typescript';
 import { TypescriptCreator } from '../../helper/creator';
-import { MockIdentifierInternalValues, MockIdentifierSetParameterName } from '../../mockIdentifier/mockIdentifier';
+import {
+  MockIdentifierInternalValues,
+  MockIdentifierSetParameterName,
+} from '../../mockIdentifier/mockIdentifier';
 import { Scope } from '../../scope/scope';
 import { GetBooleanTrueDescriptor } from '../boolean/booleanTrue';
 import { GetDescriptor } from '../descriptor';
@@ -13,7 +16,10 @@ export interface PropertyAssignments {
   literals: ts.PropertyAssignment[];
 }
 
-export function GetMockPropertiesAssignments(properties: PropertyLike[], scope: Scope): PropertyAssignments {
+export function GetMockPropertiesAssignments(
+  properties: PropertyLike[],
+  scope: Scope
+): PropertyAssignments {
   return properties.reduce(
     (acc: PropertyAssignments, member: PropertyLike): PropertyAssignments => {
       const descriptor: ts.Expression = GetDescriptor(member, scope);
@@ -30,24 +36,46 @@ export function GetMockPropertiesAssignments(properties: PropertyLike[], scope: 
 
       return acc;
     },
-    { lazy: [], literals: []},
+    { lazy: [], literals: [] }
   );
 }
 
-function GetLiteralMockProperty(descriptor: ts.Expression, member: PropertyLike): ts.PropertyAssignment {
-  const propertyName: string = TypescriptHelper.GetStringPropertyName(member.name);
+function GetLiteralMockProperty(
+  descriptor: ts.Expression,
+  member: PropertyLike
+): ts.PropertyAssignment {
+  const propertyName: string = TypescriptHelper.GetStringPropertyName(
+    member.name
+  );
 
-  return ts.createPropertyAssignment(ts.createStringLiteral(propertyName), descriptor);
+  return ts.createPropertyAssignment(
+    ts.createStringLiteral(propertyName),
+    descriptor
+  );
 }
 
-function GetLazyMockProperty(descriptor: ts.Expression, member: PropertyLike): ts.PropertyAssignment {
-  const propertyName: string = TypescriptHelper.GetStringPropertyName(member.name);
+function GetLazyMockProperty(
+  descriptor: ts.Expression,
+  member: PropertyLike
+): ts.PropertyAssignment {
+  const propertyName: string = TypescriptHelper.GetStringPropertyName(
+    member.name
+  );
 
-  const stringPropertyName: ts.StringLiteral = ts.createStringLiteral(propertyName);
-  const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(MockIdentifierInternalValues, stringPropertyName);
+  const stringPropertyName: ts.StringLiteral = ts.createStringLiteral(
+    propertyName
+  );
+  const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(
+    MockIdentifierInternalValues,
+    stringPropertyName
+  );
   const setVariableParameterName: ts.Identifier = MockIdentifierSetParameterName;
 
-  const expressionGetAssignment: ts.BinaryExpression = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, descriptor);
+  const expressionGetAssignment: ts.BinaryExpression = ts.createBinary(
+    variableDeclarationName,
+    ts.SyntaxKind.EqualsToken,
+    descriptor
+  );
 
   const hasOwnProperty: ts.Expression = ts.createCall(
     ts.createPropertyAccess(MockIdentifierInternalValues, 'hasOwnProperty'),
@@ -62,20 +90,40 @@ function GetLazyMockProperty(descriptor: ts.Expression, member: PropertyLike): t
     ts.createToken(SyntaxKind.ColonToken),
     expressionGetAssignment
   );
-  const setExpressionBody: ts.BinaryExpression = ts.createBinary(variableDeclarationName, ts.SyntaxKind.EqualsToken, setVariableParameterName);
+  const setExpressionBody: ts.BinaryExpression = ts.createBinary(
+    variableDeclarationName,
+    ts.SyntaxKind.EqualsToken,
+    setVariableParameterName
+  );
 
-  const returnGetStatement: ts.ReturnStatement = ts.createReturn(getExpressionBody);
+  const returnGetStatement: ts.ReturnStatement = ts.createReturn(
+    getExpressionBody
+  );
   const getBody: ts.Block = ts.createBlock([returnGetStatement]);
 
-  const returnSetStatement: ts.Statement = ts.createExpressionStatement(setExpressionBody);
+  const returnSetStatement: ts.Statement = ts.createExpressionStatement(
+    setExpressionBody
+  );
   const setBody: ts.Block = ts.createBlock([returnSetStatement]);
 
-  const get: ts.MethodDeclaration = TypescriptCreator.createMethod('get', getBody, []);
-  const set: ts.MethodDeclaration = TypescriptCreator.createMethod('set', setBody, [setVariableParameterName]);
-  const literal: ts.ObjectLiteralExpression = ts.createObjectLiteral([get, set, ts.createPropertyAssignment(
-    ts.createIdentifier('enumerable'),
-    GetBooleanTrueDescriptor(),
-  )]);
+  const get: ts.MethodDeclaration = TypescriptCreator.createMethod(
+    'get',
+    getBody,
+    []
+  );
+  const set: ts.MethodDeclaration = TypescriptCreator.createMethod(
+    'set',
+    setBody,
+    [setVariableParameterName]
+  );
+  const literal: ts.ObjectLiteralExpression = ts.createObjectLiteral([
+    get,
+    set,
+    ts.createPropertyAssignment(
+      ts.createIdentifier('enumerable'),
+      GetBooleanTrueDescriptor()
+    ),
+  ]);
 
   return ts.createPropertyAssignment(stringPropertyName, literal);
 }

@@ -3,8 +3,16 @@ import { Logger } from '../logger/logger';
 import { ILogger } from '../logger/logger.interface';
 
 export function NodeToString(node: ts.Node): string {
-  const resultFile: ts.SourceFile = ts.createSourceFile('someFileName.ts', '', ts.ScriptTarget.Latest, /* setParentNodes*/ false, ts.ScriptKind.TS);
-  const printer: ts.Printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+  const resultFile: ts.SourceFile = ts.createSourceFile(
+    'someFileName.ts',
+    '',
+    ts.ScriptTarget.Latest,
+    /* setParentNodes*/ false,
+    ts.ScriptKind.TS
+  );
+  const printer: ts.Printer = ts.createPrinter({
+    newLine: ts.NewLineKind.LineFeed,
+  });
 
   return printer.printNode(ts.EmitHint.Unspecified, node, resultFile);
 }

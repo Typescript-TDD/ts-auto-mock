@@ -8,17 +8,25 @@ import { TypescriptHelper } from '../helper/helper';
 import { GetFunctionReturnType } from '../method/functionReturnType';
 import { GetNullDescriptor } from '../null/null';
 
-export function GetCallExpressionDescriptor(node: ts.CallExpression, scope: Scope): ts.Expression {
+export function GetCallExpressionDescriptor(
+  node: ts.CallExpression,
+  scope: Scope
+): ts.Expression {
   return GetDescriptor(GetCallExpressionType(node), scope);
 }
 
 export function GetCallExpressionType(node: ts.CallExpression): ts.Node {
-  const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.expression);
+  const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
+    node.expression
+  );
 
   return GetFinalFunctionTypeFromDeclaration(node, declaration);
 }
 
-function GetFinalFunctionTypeFromDeclaration(initialNode: ts.Node, node: ts.Node): ts.Node {
+function GetFinalFunctionTypeFromDeclaration(
+  initialNode: ts.Node,
+  node: ts.Node
+): ts.Node {
   if (ts.isFunctionLike(node)) {
     return GetFunctionReturnType(node as FunctionLikeDeclaration);
   } else if (ts.isVariableDeclaration(node)) {

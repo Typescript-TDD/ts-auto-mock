@@ -48,7 +48,10 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.TypeLiteral:
       return GetTypeLiteralDescriptor(node as ts.TypeLiteralNode, scope);
     case ts.SyntaxKind.InterfaceDeclaration:
-      return GetInterfaceDeclarationDescriptor(node as ts.InterfaceDeclaration, scope);
+      return GetInterfaceDeclarationDescriptor(
+        node as ts.InterfaceDeclaration,
+        scope
+      );
     case ts.SyntaxKind.ClassDeclaration:
       return GetClassDeclarationDescriptor(node as ts.ClassDeclaration, scope);
     case ts.SyntaxKind.PropertySignature:
@@ -59,13 +62,16 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.LiteralType:
       return GetLiteralDescriptor(node as ts.LiteralTypeNode, scope);
     case ts.SyntaxKind.ExpressionWithTypeArguments:
-      return GetExpressionWithTypeArgumentsDescriptor(node as ts.ExpressionWithTypeArguments, scope);
+      return GetExpressionWithTypeArgumentsDescriptor(
+        node as ts.ExpressionWithTypeArguments,
+        scope
+      );
     case ts.SyntaxKind.Identifier:
       return GetIdentifierDescriptor(node as ts.Identifier, scope);
     case ts.SyntaxKind.ThisType:
       if (!scope.currentMockKey) {
         throw new Error(
-          `The transformer attempted to look up a mock factory call for \`${node.getText()}' without a mock key.`,
+          `The transformer attempted to look up a mock factory call for \`${node.getText()}' without a mock key.`
         );
       }
 
@@ -73,26 +79,44 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.ImportSpecifier:
       return GetImportDescriptor(node as ts.ImportSpecifier, scope);
     case ts.SyntaxKind.TypeParameter:
-      return GetTypeParameterDescriptor(node as ts.TypeParameterDeclaration, scope);
+      return GetTypeParameterDescriptor(
+        node as ts.TypeParameterDeclaration,
+        scope
+      );
     case ts.SyntaxKind.ImportClause:
       return GetImportDescriptor(node as ts.ImportClause, scope);
     case ts.SyntaxKind.MethodSignature:
       return GetMethodSignatureDescriptor(node as ts.MethodSignature, scope);
     case ts.SyntaxKind.FunctionDeclaration:
-      return GetMethodDeclarationDescriptor(node as ts.FunctionDeclaration, scope);
+      return GetMethodDeclarationDescriptor(
+        node as ts.FunctionDeclaration,
+        scope
+      );
     case ts.SyntaxKind.MethodDeclaration:
-      return GetMethodDeclarationDescriptor(node as ts.MethodDeclaration, scope);
+      return GetMethodDeclarationDescriptor(
+        node as ts.MethodDeclaration,
+        scope
+      );
     case ts.SyntaxKind.FunctionType:
       return GetFunctionTypeDescriptor(node as ts.FunctionTypeNode, scope);
     case ts.SyntaxKind.ConstructSignature:
-      return GetFunctionTypeDescriptor(node as ts.ConstructSignatureDeclaration, scope);
+      return GetFunctionTypeDescriptor(
+        node as ts.ConstructSignatureDeclaration,
+        scope
+      );
     case ts.SyntaxKind.CallSignature:
-      return GetFunctionTypeDescriptor(node as ts.CallSignatureDeclaration, scope);
+      return GetFunctionTypeDescriptor(
+        node as ts.CallSignatureDeclaration,
+        scope
+      );
     case ts.SyntaxKind.ArrowFunction:
     case ts.SyntaxKind.FunctionExpression:
       return GetFunctionAssignmentDescriptor(node as ts.ArrowFunction, scope);
     case ts.SyntaxKind.ConstructorType:
-      return GetConstructorTypeDescriptor(node as ts.ConstructorTypeNode, scope);
+      return GetConstructorTypeDescriptor(
+        node as ts.ConstructorTypeNode,
+        scope
+      );
     case ts.SyntaxKind.TypeQuery:
       return GetTypeQueryDescriptor(node as ts.TypeQueryNode, scope);
     case ts.SyntaxKind.UnionType:
@@ -104,7 +128,10 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.MappedType:
       return GetMappedDescriptor(node as ts.MappedTypeNode, scope);
     case ts.SyntaxKind.ParenthesizedType:
-      return GetParenthesizedDescriptor(node as ts.ParenthesizedTypeNode, scope);
+      return GetParenthesizedDescriptor(
+        node as ts.ParenthesizedTypeNode,
+        scope
+      );
     case ts.SyntaxKind.ArrayType:
     case ts.SyntaxKind.TupleType:
       return GetArrayDescriptor();
@@ -120,9 +147,15 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.StringLiteral:
       return GetLiteralDescriptor(node as ts.LiteralTypeNode, scope);
     case ts.SyntaxKind.ObjectLiteralExpression:
-      return GetObjectLiteralDescriptor(node as ts.ObjectLiteralExpression, scope);
+      return GetObjectLiteralDescriptor(
+        node as ts.ObjectLiteralExpression,
+        scope
+      );
     case ts.SyntaxKind.IndexedAccessType:
-      return GetIndexedAccessTypeDescriptor(node as ts.IndexedAccessTypeNode, scope);
+      return GetIndexedAccessTypeDescriptor(
+        node as ts.IndexedAccessTypeNode,
+        scope
+      );
     case ts.SyntaxKind.BooleanKeyword:
     case ts.SyntaxKind.TypePredicate:
     case ts.SyntaxKind.FirstTypeNode:
@@ -132,7 +165,10 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.NullKeyword:
       return GetNullDescriptor();
     case ts.SyntaxKind.ImportEqualsDeclaration:
-      return GetImportEqualsDescriptor(node as ts.ImportEqualsDeclaration, scope);
+      return GetImportEqualsDescriptor(
+        node as ts.ImportEqualsDeclaration,
+        scope
+      );
     case ts.SyntaxKind.BigIntKeyword:
       return GetBigIntDescriptor();
     case ts.SyntaxKind.AnyKeyword:

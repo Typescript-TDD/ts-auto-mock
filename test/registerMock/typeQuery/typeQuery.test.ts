@@ -1,18 +1,24 @@
+import Interface2 = ImportNamespace.Interface2;
 import { createMock, registerMock } from 'ts-auto-mock';
 import { ImportNamespace } from '../../transformer/descriptor/utils/interfaces/importNameSpace';
-import Interface2 = ImportNamespace.Interface2;
 
 describe('registerMock of typeQuery', () => {
   it('should not work for enum', () => {
     enum MyEnum {
       A,
-      B = 'B'
+      B = 'B',
     }
 
-    registerMock<typeof MyEnum>(() => ({A: 0, B: MyEnum.B, C: 'Something'}));
+    registerMock<typeof MyEnum>(() => ({
+      A: 0,
+      B: MyEnum.B,
+      C: 'Something',
+    }));
 
     const mock1: typeof MyEnum = createMock<typeof MyEnum>();
-    const mock2: { sub: typeof MyEnum } = createMock<{ sub: typeof MyEnum }>();
+    const mock2: { sub: typeof MyEnum } = createMock<{
+      sub: typeof MyEnum;
+    }>();
 
     interface Interface {
       sub: typeof MyEnum;
@@ -22,7 +28,7 @@ describe('registerMock of typeQuery', () => {
     type Literal = typeof MyEnum;
     const mock4: Literal = createMock<Literal>();
 
-    type Intersection = typeof MyEnum & {some: number};
+    type Intersection = typeof MyEnum & { some: number };
     const mock5: Intersection = createMock<Intersection>();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,10 +47,19 @@ describe('registerMock of typeQuery', () => {
       public prop: string;
     }
 
-    registerMock<typeof MyClass>(() => (Object.assign(class Some { public prop: string; }, { C: 'something' })));
+    registerMock<typeof MyClass>(() =>
+      Object.assign(
+        class Some {
+          public prop: string;
+        },
+        { C: 'something' }
+      )
+    );
 
     const mock1: typeof MyClass = createMock<typeof MyClass>();
-    const mock2: { sub: typeof MyClass } = createMock<{ sub: typeof MyClass }>();
+    const mock2: { sub: typeof MyClass } = createMock<{
+      sub: typeof MyClass;
+    }>();
 
     interface Interface {
       sub: typeof MyClass;
@@ -54,7 +69,7 @@ describe('registerMock of typeQuery', () => {
     type Literal = typeof MyClass;
     const mock4: Literal = createMock<Literal>();
 
-    type Intersection = typeof MyClass & {some: number};
+    type Intersection = typeof MyClass & { some: number };
     const mock5: Intersection = createMock<Intersection>();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -84,7 +99,7 @@ describe('registerMock of typeQuery', () => {
     type Literal = typeof a;
     const mock4: Literal = createMock<Literal>();
 
-    type Intersection = typeof a & {some: number};
+    type Intersection = typeof a & { some: number };
     const mock5: Intersection = createMock<Intersection>();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

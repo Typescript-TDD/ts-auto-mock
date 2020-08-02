@@ -13,34 +13,48 @@ import { GetType } from '../type/type';
 import { GetTypeReferenceDescriptor } from '../typeReference/typeReference';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 
-export function GetTypeQueryDescriptor(node: ts.TypeQueryNode, scope: Scope): ts.Expression {
+export function GetTypeQueryDescriptor(
+  node: ts.TypeQueryNode,
+  scope: Scope
+): ts.Expression {
   const symbol: ts.Symbol | undefined = getTypeQuerySymbol(node);
 
   if (!symbol?.declarations.length) {
     return GetUndefinedDescriptor();
   }
 
-  const declaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(symbol);
+  const declaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(
+    symbol
+  );
 
   return GetTypeQueryDescriptorFromDeclaration(declaration, scope);
 }
 
-export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDeclaration, scope: Scope): ts.Expression {
+export function GetTypeQueryDescriptorFromDeclaration(
+  declaration: ts.NamedDeclaration,
+  scope: Scope
+): ts.Expression {
   const typeChecker: ts.TypeChecker = TypeChecker();
 
   switch (declaration.kind) {
     case ts.SyntaxKind.ClassDeclaration:
       return TypescriptCreator.createFunctionExpressionReturn(
         GetTypeReferenceDescriptor(
-          ts.createTypeReferenceNode(declaration.name as ts.Identifier, undefined),
-          scope,
-        ),
+          ts.createTypeReferenceNode(
+            declaration.name as ts.Identifier,
+            undefined
+          ),
+          scope
+        )
       );
     case ts.SyntaxKind.TypeAliasDeclaration:
     case ts.SyntaxKind.InterfaceDeclaration:
       return GetTypeReferenceDescriptor(
-        ts.createTypeReferenceNode(declaration.name as ts.Identifier, undefined),
-        scope,
+        ts.createTypeReferenceNode(
+          declaration.name as ts.Identifier,
+          undefined
+        ),
+        scope
       );
     case ts.SyntaxKind.NamespaceImport:
     case ts.SyntaxKind.ImportEqualsDeclaration:
@@ -52,7 +66,10 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
       return GetMockFactoryCallTypeofEnum(declaration as ts.EnumDeclaration);
     case ts.SyntaxKind.FunctionDeclaration:
     case ts.SyntaxKind.MethodSignature:
-      return GetMethodDeclarationDescriptor(declaration as ts.FunctionDeclaration, scope);
+      return GetMethodDeclarationDescriptor(
+        declaration as ts.FunctionDeclaration,
+        scope
+      );
     case ts.SyntaxKind.VariableDeclaration:
       const variable: ts.VariableDeclaration = declaration as ts.VariableDeclaration;
 
@@ -62,22 +79,31 @@ export function GetTypeQueryDescriptorFromDeclaration(declaration: ts.NamedDecla
 
       if (!variable.initializer) {
         throw new Error(
-          `The transformer cannot determine a value for \`${variable.getText()}' without a specified type or no initializer value.`,
+          `The transformer cannot determine a value for \`${variable.getText()}' without a specified type or no initializer value.`
         );
       }
 
       const inferredType: ts.Node = GetType(variable.initializer, scope);
-      const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(inferredType);
+      const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
+        inferredType
+      );
 
       if (symbol) {
-        const inferredTypeDeclaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(symbol);
+        const inferredTypeDeclaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(
+          symbol
+        );
 
-        return GetTypeQueryDescriptorFromDeclaration(inferredTypeDeclaration, scope);
+        return GetTypeQueryDescriptorFromDeclaration(
+          inferredTypeDeclaration,
+          scope
+        );
       } else {
         return GetDescriptor(inferredType, scope);
       }
     default:
-      TransformerLogger().typeNotSupported(`TypeQuery of ${ts.SyntaxKind[declaration.kind]}`);
+      TransformerLogger().typeNotSupported(
+        `TypeQuery of ${ts.SyntaxKind[declaration.kind]}`
+      );
       return GetNullDescriptor();
   }
 }
@@ -86,7 +112,9 @@ function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol | undefined {
   return TypeChecker().getSymbolAtLocation(node.exprName);
 }
 
-function getTypeQueryDeclarationFromSymbol(symbol: ts.Symbol): ts.NamedDeclaration {
+function getTypeQueryDeclarationFromSymbol(
+  symbol: ts.Symbol
+): ts.NamedDeclaration {
   const declaration: ts.Declaration = symbol.declarations[0];
 
   if (ts.isImportEqualsDeclaration(declaration)) {

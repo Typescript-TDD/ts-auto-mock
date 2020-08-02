@@ -3,35 +3,37 @@ import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { ModuleName } from '../mockDefiner/modules/moduleName';
 import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 
-function mergePropertyAccessor(methodName: string): ts.PropertyAccessExpression {
+function mergePropertyAccessor(
+  methodName: string
+): ts.PropertyAccessExpression {
   return ts.createPropertyAccess(
     ts.createPropertyAccess(
       MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Merge),
       PrivateIdentifier('Merge')
     ),
-    ts.createIdentifier(methodName),
+    ts.createIdentifier(methodName)
   );
 }
 
-export function getMockMergeExpression(nodeMocked: ts.Expression, defaultValues: ts.Expression): ts.Expression {
+export function getMockMergeExpression(
+  nodeMocked: ts.Expression,
+  defaultValues: ts.Expression
+): ts.Expression {
   return ts.createCall(
     mergePropertyAccessor('merge'),
     [],
-    [
-      nodeMocked,
-      defaultValues,
-    ],
+    [nodeMocked, defaultValues]
   );
 }
 
-export function getMockMergeIteratorExpression(nodeMocked: ts.Expression, defaultValuesFunction: ts.Expression, index: ts.NumericLiteral): ts.Expression {
+export function getMockMergeIteratorExpression(
+  nodeMocked: ts.Expression,
+  defaultValuesFunction: ts.Expression,
+  index: ts.NumericLiteral
+): ts.Expression {
   return ts.createCall(
     mergePropertyAccessor('mergeIterator'),
     [],
-    [
-      nodeMocked,
-      defaultValuesFunction,
-      index,
-    ],
+    [nodeMocked, defaultValuesFunction, index]
   );
 }

@@ -17,8 +17,7 @@ describe('for interfaces', () => {
   });
 
   describe('without properties', () => {
-    interface Interface {
-    }
+    interface Interface {}
 
     it('should not fail', () => {
       const properties: Interface = createMock<Interface>();
@@ -67,12 +66,12 @@ describe('for interfaces', () => {
       a: Type;
     }
 
-        type Type = string;
+    type Type = string;
 
-        it('should set the default property', () => {
-          const properties: Interface = createMock<Interface>();
-          expect(properties.a).toBe('');
-        });
+    it('should set the default property', () => {
+      const properties: Interface = createMock<Interface>();
+      expect(properties.a).toBe('');
+    });
   });
 
   describe('with nested type reference with objects', () => {

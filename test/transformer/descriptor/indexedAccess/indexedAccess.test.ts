@@ -9,14 +9,14 @@ describe('indexedAccess', () => {
   }
 
   it('should work with key in keyof', () => {
-    type AType = {[key in keyof A]: A[key]};
+    type AType = { [key in keyof A]: A[key] };
     const mock: AType = createMock<AType>();
     expect(mock.a).toEqual('');
     expect(mock.b).toEqual(0);
   });
 
   it('should work with key in literal', () => {
-    type AType = {[key in 'a']: A[key]};
+    type AType = { [key in 'a']: A[key] };
     const mock: AType = createMock<AType>();
     expect(mock.a).toEqual('');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,21 +24,21 @@ describe('indexedAccess', () => {
   });
 
   it('should work with key in keyof with literal index', () => {
-    type AType = {[key in keyof A]: A['b']};
+    type AType = { [key in keyof A]: A['b'] };
     const mock: AType = createMock<AType>();
     expect(mock.a).toEqual(0);
     expect(mock.b).toEqual(0);
   });
 
   it('should work with key in keyof with imported literal index', () => {
-    type AType = {[key in keyof A]: A[LiteralA]};
+    type AType = { [key in keyof A]: A[LiteralA] };
     const mock: AType = createMock<AType>();
     expect(mock.a).toEqual('');
     expect(mock.b).toEqual('');
   });
 
   it('should work with key in keyof with imported interface and literal index', () => {
-    type AType = {[key in keyof Interface]: Interface[LiteralA]};
+    type AType = { [key in keyof Interface]: Interface[LiteralA] };
     const mock: AType = createMock<AType>();
     expect(mock.a).toEqual('');
     expect(mock.b).toEqual('');
@@ -51,7 +51,9 @@ describe('indexedAccess', () => {
       c: InterfaceWithComplex;
     }
 
-    type InterfaceType = {[key in keyof InterfaceWithComplex]: InterfaceWithComplex[key]};
+    type InterfaceType = {
+      [key in keyof InterfaceWithComplex]: InterfaceWithComplex[key];
+    };
     const mock: InterfaceType = createMock<InterfaceType>();
     expect(mock.a.a).toEqual('');
     expect(mock.a.b).toEqual(0);

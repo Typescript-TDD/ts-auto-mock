@@ -20,13 +20,18 @@ describe('for generic', () => {
     }
 
     it('should set the generic value', () => {
-      const properties: WithExtends<ItWillExtend> = createMock<WithExtends<ItWillExtend>>();
+      const properties: WithExtends<ItWillExtend> = createMock<
+        WithExtends<ItWillExtend>
+      >();
       expect(properties.iAmGeneric.b).toBe(false);
       expect(properties.iAmGeneric.a).toBe('');
     });
 
-    it('should return the value as null', () => { // we do not know the type at runtime of the invoke function
-      const properties: WithExtendsMethod<ToBeExtended> = createMock<WithExtendsMethod<ToBeExtended>>();
+    it('should return the value as null', () => {
+      // we do not know the type at runtime of the invoke function
+      const properties: WithExtendsMethod<ToBeExtended> = createMock<
+        WithExtendsMethod<ToBeExtended>
+      >();
       expect(properties.method()).toBeNull();
     });
   });
@@ -67,25 +72,25 @@ describe('for generic', () => {
       value: string;
     }
 
-        type Test = number;
-        interface A<T> {
-          a: T;
-        }
+    type Test = number;
+    interface A<T> {
+      a: T;
+    }
 
-        interface C<T> {
-          c: T;
-        }
+    interface C<T> {
+      c: T;
+    }
 
-        interface B<T> extends A<Type>, C<Test> {
-          b: number;
-        }
+    interface B<T> extends A<Type>, C<Test> {
+      b: number;
+    }
 
-        it('should set the generic value', () => {
-          const properties: B<string> = createMock<B<string>>();
-          expect(properties.a.value).toBe('');
-          expect(properties.c).toBe(0);
-          expect(properties.b).toBe(0);
-        });
+    it('should set the generic value', () => {
+      const properties: B<string> = createMock<B<string>>();
+      expect(properties.a.value).toBe('');
+      expect(properties.c).toBe(0);
+      expect(properties.b).toBe(0);
+    });
   });
 
   describe('with nested generics declared with literal type', () => {
@@ -93,7 +98,7 @@ describe('for generic', () => {
       a: T;
     }
 
-    interface B<T> extends A<{a: number}> {
+    interface B<T> extends A<{ a: number }> {
       b: number;
     }
 
@@ -138,6 +143,7 @@ describe('for generic', () => {
       expect(properties.a).toBe(0);
       expect(properties.c).toBe(0);
       expect(properties.b.b.a).toBe(0);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(properties.d).toBeUndefined();
     });
@@ -190,7 +196,9 @@ describe('for generic', () => {
     }
 
     it('should assign the correct values to generics', () => {
-      const properties: B<number, string, boolean> = createMock<B<number, string, boolean>>();
+      const properties: B<number, string, boolean> = createMock<
+        B<number, string, boolean>
+      >();
       expect(properties.c).toBe('');
       expect(properties.a).toBe(0);
       expect(properties.b).toBe(false);
@@ -255,5 +263,4 @@ describe('for generic', () => {
       expect(properties.b).toBe(0);
     });
   });
-
 });

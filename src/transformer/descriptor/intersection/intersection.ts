@@ -5,10 +5,16 @@ import { TypescriptHelper } from '../helper/helper';
 import { GetTypes } from '../type/type';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 
-export function GetIntersectionDescriptor(intersectionTypeNode: ts.IntersectionTypeNode, scope: Scope): ts.Expression {
+export function GetIntersectionDescriptor(
+  intersectionTypeNode: ts.IntersectionTypeNode,
+  scope: Scope
+): ts.Expression {
   const nodes: ts.Node[] = GetTypes(intersectionTypeNode.types, scope);
 
-  const hasInvalidIntersections: boolean = nodes.some((node: ts.Node) => TypescriptHelper.IsLiteralOrPrimitive(node) || ts.isTypeQueryNode(node));
+  const hasInvalidIntersections: boolean = nodes.some(
+    (node: ts.Node) =>
+      TypescriptHelper.IsLiteralOrPrimitive(node) || ts.isTypeQueryNode(node)
+  );
 
   if (hasInvalidIntersections) {
     return GetUndefinedDescriptor();

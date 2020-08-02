@@ -16,10 +16,16 @@ export function GetMockMarkerProperty(): Property {
         MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
         PrivateIdentifier('Marker')
       ),
-      ts.createIdentifier('instance')),
-    ts.createIdentifier('get'));
+      ts.createIdentifier('instance')
+    ),
+    ts.createIdentifier('get')
+  );
 
-  const mockMarkerCall: ts.CallExpression = ts.createCall(propertyAccessExpression, [], []);
+  const mockMarkerCall: ts.CallExpression = ts.createCall(
+    propertyAccessExpression,
+    [],
+    []
+  );
 
   return {
     name: mockMarkerCall,

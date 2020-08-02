@@ -158,7 +158,9 @@ describe('This', () => {
       expect(properties.typeLiteral.a).toBe('');
       expect(properties.getThisAfter.typeLiteral.a).toBe('');
       expect(properties.getThisBefore.typeLiteral.a).toBe('');
-      expect(properties.getThisAfter.getThisBefore.getThisAfter.typeLiteral.a).toBe('');
+      expect(
+        properties.getThisAfter.getThisBefore.getThisAfter.typeLiteral.a
+      ).toBe('');
     });
   });
 

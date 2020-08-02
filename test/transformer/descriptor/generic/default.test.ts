@@ -6,8 +6,7 @@ describe('generic default', () => {
       prop: P;
     }
 
-    interface A<P = { a: string }> extends B<P> {
-    }
+    interface A<P = { a: string }> extends B<P> {}
 
     const mock: A = createMock<A>();
 
@@ -20,8 +19,7 @@ describe('generic default', () => {
       prop2: S;
     }
 
-    interface A<P = { a: string }, S = number> extends B<P, S> {
-    }
+    interface A<P = { a: string }, S = number> extends B<P, S> {}
 
     const mock: A<{ a: number }> = createMock<A<{ a: number }>>();
 
@@ -38,8 +36,7 @@ describe('generic default', () => {
       bProp: P;
     }
 
-    interface A extends B {
-    }
+    interface A extends B {}
 
     const mock: A = createMock<A>();
 

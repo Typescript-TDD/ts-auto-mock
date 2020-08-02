@@ -1,6 +1,15 @@
 import { createMock } from 'ts-auto-mock';
-import { ClassDeclaration, InterfaceDeclaration, TypeDeclaration } from '../utils/declarations/declaration';
-import { MultipleClassDeclaration, MultipleInterfaceDeclaration, MultipleLiteralTypeDeclaration, MultipleTypeDeclaration } from '../utils/declarations/multipleDeclaration';
+import {
+  ClassDeclaration,
+  InterfaceDeclaration,
+  TypeDeclaration,
+} from '../utils/declarations/declaration';
+import {
+  MultipleClassDeclaration,
+  MultipleInterfaceDeclaration,
+  MultipleLiteralTypeDeclaration,
+  MultipleTypeDeclaration,
+} from '../utils/declarations/multipleDeclaration';
 
 describe('declarations', () => {
   describe('for one declaration', () => {
@@ -40,11 +49,12 @@ describe('declarations', () => {
 
     describe('interface imported', () => {
       it('should return the correct properties', () => {
-        const properties: InterfaceDeclaration = createMock<InterfaceDeclaration>();
+        const properties: InterfaceDeclaration = createMock<
+          InterfaceDeclaration
+        >();
         expect(properties.a).toBe('');
       });
     });
-
 
     describe('class imported', () => {
       it('should return the correct properties', () => {
@@ -61,14 +71,15 @@ describe('declarations', () => {
     });
   });
 
-
   describe('for multiple declaration', () => {
     describe('class', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       class MyClass {
         public value: 2;
       }
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       class MyClass {
         public value: 3;
@@ -78,11 +89,11 @@ describe('declarations', () => {
       it('should return the properties from the first declaration', () => {
         const properties: MyClass = createMock<MyClass>();
         expect(properties.value).toBe(2);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(properties.value2).toBeUndefined();
       });
     });
-
 
     describe('interface', () => {
       interface Interface {
@@ -119,11 +130,13 @@ describe('declarations', () => {
     });
 
     describe('type', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       type Type = {
         value: boolean;
       };
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       type Type = {
         value: string;
@@ -136,12 +149,14 @@ describe('declarations', () => {
     });
 
     describe('function and interface', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       interface AAA {
         b: number;
       }
 
       function AAA(): AAA {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return { a: 'ss' };
       }
@@ -154,23 +169,27 @@ describe('declarations', () => {
 
     describe('interface imported', () => {
       it('should ignore variables declaration', () => {
-        const properties: MultipleInterfaceDeclaration = createMock<MultipleInterfaceDeclaration>();
+        const properties: MultipleInterfaceDeclaration = createMock<
+          MultipleInterfaceDeclaration
+        >();
         expect(properties.a).toBe('');
       });
     });
 
-
     describe('class imported', () => {
       it('should consider first declarations', () => {
-        // @ts-ignore
-        const properties: MultipleClassDeclaration = createMock<MultipleClassDeclaration>();
+        const properties: MultipleClassDeclaration = createMock<
+          MultipleClassDeclaration
+        >();
         expect(properties.a).toBe('');
       });
     });
 
     describe('type imported', () => {
       it('should return the correct properties', () => {
-        const properties: MultipleTypeDeclaration = createMock<MultipleTypeDeclaration>();
+        const properties: MultipleTypeDeclaration = createMock<
+          MultipleTypeDeclaration
+        >();
         expect(properties.a).toBe('');
       });
     });

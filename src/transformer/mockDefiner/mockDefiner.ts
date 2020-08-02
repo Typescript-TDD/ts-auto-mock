@@ -1,5 +1,8 @@
 import * as ts from 'typescript';
-import { GetTsAutoMockCacheOptions, TsAutoMockCacheOptions } from '../../options/cache';
+import {
+  GetTsAutoMockCacheOptions,
+  TsAutoMockCacheOptions,
+} from '../../options/cache';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { GetProperties } from '../descriptor/properties/properties';
 import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
@@ -30,8 +33,12 @@ interface FactoryIntersectionRegistrationPerFile {
 }
 
 export class MockDefiner {
-  private _neededImportIdentifierPerFile: { [key: string]: Array<ModuleNameIdentifier> } = {};
-  private _internalModuleImportIdentifierPerFile: { [key: string]: { [key in ModuleName]: ts.Identifier } } = {};
+  private _neededImportIdentifierPerFile: {
+    [key: string]: Array<ModuleNameIdentifier>;
+  } = {};
+  private _internalModuleImportIdentifierPerFile: {
+    [key: string]: { [key in ModuleName]: ts.Identifier };
+  } = {};
   private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
   private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
   private _factoryCache: DeclarationCache;
@@ -75,12 +82,18 @@ export class MockDefiner {
       [ModuleName.Random]: PrivateIdentifier(ModuleName.Random),
     };
 
-    this._neededImportIdentifierPerFile[this._fileName] = this._neededImportIdentifierPerFile[this._fileName] || [];
+    this._neededImportIdentifierPerFile[this._fileName] =
+      this._neededImportIdentifierPerFile[this._fileName] || [];
 
-    Array.prototype.push.apply(this._neededImportIdentifierPerFile[this._fileName], Object.keys(ModulesImportUrl).map((key: ModuleName) => ({
-      moduleUrl: ModulesImportUrl[key],
-      identifier: this._internalModuleImportIdentifierPerFile[this._fileName][key],
-    })));
+    Array.prototype.push.apply(
+      this._neededImportIdentifierPerFile[this._fileName],
+      Object.keys(ModulesImportUrl).map((key: ModuleName) => ({
+        moduleUrl: ModulesImportUrl[key],
+        identifier: this._internalModuleImportIdentifierPerFile[this._fileName][
+          key
+        ],
+      }))
+    );
   }
 
   public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
@@ -112,13 +125,20 @@ export class MockDefiner {
 
     this._factoryCache.set(declaration, key);
 
-    this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
+    this._factoryRegistrationsPerFile[thisFileName] =
+      this._factoryRegistrationsPerFile[thisFileName] || [];
 
-    const descriptor: ts.Expression = GetDescriptor(declaration, new Scope(key));
+    const descriptor: ts.Expression = GetDescriptor(
+      declaration,
+      new Scope(key)
+    );
 
     const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
-    const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(descriptor, [mockGenericParameter]);
+    const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
+      descriptor,
+      [mockGenericParameter]
+    );
 
     this._factoryRegistrationsPerFile[thisFileName].push({
       key: declaration,
@@ -126,14 +146,22 @@ export class MockDefiner {
     });
   }
 
-  public getMockFactoryTypeofEnum(declaration: ts.EnumDeclaration): ts.Expression {
+  public getMockFactoryTypeofEnum(
+    declaration: ts.EnumDeclaration
+  ): ts.Expression {
     const key: string = this._getMockFactoryIdForTypeofEnum(declaration);
 
     return this.getMockFactoryByKey(key);
   }
 
-  public getMockFactoryIntersection(declarations: ts.Declaration[], type: ts.IntersectionTypeNode): ts.Expression {
-    const key: string = this._getMockFactoryIdForIntersections(declarations, type);
+  public getMockFactoryIntersection(
+    declarations: ts.Declaration[],
+    type: ts.IntersectionTypeNode
+  ): ts.Expression {
+    const key: string = this._getMockFactoryIdForIntersections(
+      declarations,
+      type
+    );
 
     return this.getMockFactoryByKey(key);
   }
@@ -146,7 +174,12 @@ export class MockDefiner {
 
   public getDeclarationKeyMap(declaration: ts.Declaration): string {
     if (!this._declarationCache.has(declaration)) {
-      this._declarationCache.set(declaration, this._factoryUniqueName.createForDeclaration(declaration as PossibleDeclaration));
+      this._declarationCache.set(
+        declaration,
+        this._factoryUniqueName.createForDeclaration(
+          declaration as PossibleDeclaration
+        )
+      );
     }
 
     // NOTE: TypeScript does not support inference through has/get, but we know
@@ -154,7 +187,10 @@ export class MockDefiner {
     return this._declarationCache.get(declaration) as string;
   }
 
-  public registerMockFor(declaration: ts.Declaration, factory: ts.FunctionExpression): ts.Node {
+  public registerMockFor(
+    declaration: ts.Declaration,
+    factory: ts.FunctionExpression
+  ): ts.Node {
     const key: string = this.getDeclarationKeyMap(declaration);
 
     this._registerMockFactoryCache.set(declaration, key);
@@ -163,28 +199,38 @@ export class MockDefiner {
   }
 
   public hasMockForDeclaration(declaration: ts.Declaration): boolean {
-    return this._factoryCache.has(declaration) || this._registerMockFactoryCache.has(declaration);
-  }
-
-  private _mockRepositoryAccess(filename: string): ts.Expression {
-    const repository: ts.Identifier = this._getModuleIdentifier(filename, ModuleName.Repository);
-
-    return ts.createPropertyAccess(
-      ts.createPropertyAccess(
-        repository,
-        PrivateIdentifier('Repository')
-      ),
-      ts.createIdentifier('instance'),
+    return (
+      this._factoryCache.has(declaration) ||
+      this._registerMockFactoryCache.has(declaration)
     );
   }
 
-  private _getModuleIdentifier(fileName: string, module: ModuleName): ts.Identifier {
+  private _mockRepositoryAccess(filename: string): ts.Expression {
+    const repository: ts.Identifier = this._getModuleIdentifier(
+      filename,
+      ModuleName.Repository
+    );
+
+    return ts.createPropertyAccess(
+      ts.createPropertyAccess(repository, PrivateIdentifier('Repository')),
+      ts.createIdentifier('instance')
+    );
+  }
+
+  private _getModuleIdentifier(
+    fileName: string,
+    module: ModuleName
+  ): ts.Identifier {
     return this._internalModuleImportIdentifierPerFile[fileName][module];
   }
-  private _getMockFactoryIdForTypeofEnum(declaration: ts.EnumDeclaration): string {
+  private _getMockFactoryIdForTypeofEnum(
+    declaration: ts.EnumDeclaration
+  ): string {
     const thisFileName: string = this._fileName;
 
-    const cachedFactory: string | undefined = this._factoryCache.get(declaration);
+    const cachedFactory: string | undefined = this._factoryCache.get(
+      declaration
+    );
     if (cachedFactory) {
       return cachedFactory;
     }
@@ -193,7 +239,8 @@ export class MockDefiner {
 
     this._factoryCache.set(declaration, key);
 
-    this._factoryRegistrationsPerFile[thisFileName] = this._factoryRegistrationsPerFile[thisFileName] || [];
+    this._factoryRegistrationsPerFile[thisFileName] =
+      this._factoryRegistrationsPerFile[thisFileName] || [];
 
     const factory: ts.Expression = GetTypeofEnumDescriptor(declaration);
 
@@ -205,7 +252,10 @@ export class MockDefiner {
     return key;
   }
 
-  private _getMockFactoryIdForIntersections(declarations: ts.Declaration[], intersectionTypeNode: ts.IntersectionTypeNode): string {
+  private _getMockFactoryIdForIntersections(
+    declarations: ts.Declaration[],
+    intersectionTypeNode: ts.IntersectionTypeNode
+  ): string {
     const thisFileName: string = this._fileName;
 
     if (this._factoryIntersectionCache.has(declarations)) {
@@ -213,17 +263,26 @@ export class MockDefiner {
       return this._factoryIntersectionCache.get(declarations)!;
     }
 
-    const key: string = this._factoryUniqueName.createForIntersection(declarations);
+    const key: string = this._factoryUniqueName.createForIntersection(
+      declarations
+    );
 
     this._factoryIntersectionCache.set(declarations, key);
 
-    this._factoryIntersectionsRegistrationsPerFile[thisFileName] = this._factoryIntersectionsRegistrationsPerFile[thisFileName] || [];
+    this._factoryIntersectionsRegistrationsPerFile[thisFileName] =
+      this._factoryIntersectionsRegistrationsPerFile[thisFileName] || [];
 
-    const descriptor: ts.Expression = GetProperties(intersectionTypeNode, new Scope(key));
+    const descriptor: ts.Expression = GetProperties(
+      intersectionTypeNode,
+      new Scope(key)
+    );
 
     const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
-    const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(descriptor, [mockGenericParameter]);
+    const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
+      descriptor,
+      [mockGenericParameter]
+    );
 
     this._factoryIntersectionsRegistrationsPerFile[thisFileName].push({
       keys: declarations,
@@ -235,8 +294,14 @@ export class MockDefiner {
 
   private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
     if (this._neededImportIdentifierPerFile[sourceFile.fileName]) {
-      return this._neededImportIdentifierPerFile[sourceFile.fileName]
-        .map((moduleIdentifier: ModuleNameIdentifier) => createImportOnIdentifier(moduleIdentifier.moduleUrl, moduleIdentifier.identifier));
+      return this._neededImportIdentifierPerFile[
+        sourceFile.fileName
+      ].map((moduleIdentifier: ModuleNameIdentifier) =>
+        createImportOnIdentifier(
+          moduleIdentifier.moduleUrl,
+          moduleIdentifier.identifier
+        )
+      );
     }
 
     return [];
@@ -244,52 +309,68 @@ export class MockDefiner {
 
   private _getExportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
     if (this._factoryRegistrationsPerFile[sourceFile.fileName]) {
-      return this._factoryRegistrationsPerFile[sourceFile.fileName]
-        .map((reg: { key: ts.Declaration; factory: ts.Expression }) => {
+      return this._factoryRegistrationsPerFile[sourceFile.fileName].map(
+        (reg: { key: ts.Declaration; factory: ts.Expression }) => {
           // NOTE: this._factoryRegistrationsPerFile and this._factoryCache are
           // populated in the same routine and if the former is defined the
           // latter will be too!
           // eslint-disable-next-line
           const key: string = this._factoryCache.get(reg.key)!;
 
-          return this._createRegistration(sourceFile.fileName, key, reg.factory);
-        });
+          return this._createRegistration(
+            sourceFile.fileName,
+            key,
+            reg.factory
+          );
+        }
+      );
     }
 
     return [];
   }
 
-  private _getExportsIntersectionToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
+  private _getExportsIntersectionToAddInFile(
+    sourceFile: ts.SourceFile
+  ): ts.Statement[] {
     if (this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]) {
-      return this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName]
-        .map((reg: { keys: ts.Declaration[]; factory: ts.Expression }) => {
-          // NOTE: this._factoryIntersectionsRegistrationsPerFile and
-          // this._factoryIntersectionCache are populated in the same routine
-          // and if the former is defined the latter will be too!
-          // eslint-disable-next-line
-          const key: string = this._factoryIntersectionCache.get(reg.keys)!;
+      return this._factoryIntersectionsRegistrationsPerFile[
+        sourceFile.fileName
+      ].map((reg: { keys: ts.Declaration[]; factory: ts.Expression }) => {
+        // NOTE: this._factoryIntersectionsRegistrationsPerFile and
+        // this._factoryIntersectionCache are populated in the same routine
+        // and if the former is defined the latter will be too!
+        // eslint-disable-next-line
+        const key: string = this._factoryIntersectionCache.get(reg.keys)!;
 
-          return this._createRegistration(sourceFile.fileName, key, reg.factory);
-        });
+        return this._createRegistration(sourceFile.fileName, key, reg.factory);
+      });
     }
 
     return [];
   }
 
-  private _createRegistration(fileName: string, key: string, factory: ts.Expression): ts.Statement {
+  private _createRegistration(
+    fileName: string,
+    key: string,
+    factory: ts.Expression
+  ): ts.Statement {
     return ts.createExpressionStatement(
       this._getCallRegisterMock(fileName, key, factory)
     );
   }
 
-  private _getCallRegisterMock(fileName: string, key: string, factory: ts.Expression): ts.CallExpression {
+  private _getCallRegisterMock(
+    fileName: string,
+    key: string,
+    factory: ts.Expression
+  ): ts.CallExpression {
     return ts.createCall(
       ts.createPropertyAccess(
         this._mockRepositoryAccess(fileName),
-        ts.createIdentifier('registerFactory'),
+        ts.createIdentifier('registerFactory')
       ),
       [],
-      [ts.createStringLiteral(key), factory],
+      [ts.createStringLiteral(key), factory]
     );
   }
 
@@ -297,14 +378,19 @@ export class MockDefiner {
     return ts.createCall(
       ts.createPropertyAccess(
         this._mockRepositoryAccess(this._fileName),
-        ts.createIdentifier('getFactory'),
+        ts.createIdentifier('getFactory')
       ),
       [],
-      [ts.createStringLiteral(key)],
+      [ts.createStringLiteral(key)]
     );
   }
 
   private _getMockGenericParameter(): ts.ParameterDeclaration {
-    return ts.createParameter([], [], undefined, MockIdentifierGenericParameter);
+    return ts.createParameter(
+      [],
+      [],
+      undefined,
+      MockIdentifierGenericParameter
+    );
   }
 }
