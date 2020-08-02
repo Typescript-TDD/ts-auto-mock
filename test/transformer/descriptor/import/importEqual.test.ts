@@ -1,12 +1,11 @@
-// eslint-disable-next-line import/order
-import { NameSpaceInterfaceImport } from '../utils/namespace/namespace';
-// eslint-disable-next-line import/order
-import IAmAnotherExportedWithEqual from '../utils/interfaces/anotherExportEqual';
 import { createMock } from 'ts-auto-mock';
-import Enum = NameSpaceInterfaceImport.Enum;
+import { NameSpaceInterfaceImport } from '../utils/namespace/namespace';
+import IAmAnotherExportedWithEqual from '../utils/interfaces/anotherExportEqual';
+// eslint-disable-next-line import/order
+import IAmExportedWithEqual = require('../utils/interfaces/exportEqual');
 import Interface = NameSpaceInterfaceImport.Interface;
 import SubInterface = NameSpaceInterfaceImport.SubNamespace.SubInterface;
-import IAmExportedWithEqual = require('../utils/interfaces/exportEqual');
+import Enum = NameSpaceInterfaceImport.Enum;
 
 describe('import equal', () => {
   it('should use the correct import for an interface', () => {
