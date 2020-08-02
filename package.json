@@ -84,7 +84,7 @@
         "webpack": "^4.44.1",
         "webpack-cli": "^3.3.12",
         "webpack-merge": "^4.2.2",
-        "webpack-node-externals": "^1.7.2"
+        "webpack-node-externals": "^2.5.0"
     },
     "dependencies": {
         "lodash-es": "^4.17.15",
