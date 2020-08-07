@@ -60,10 +60,10 @@ export namespace TypescriptHelper {
     return declarations[0];
   }
 
-  export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> {
+  export function GetParameterOfNode(node: ts.EntityName): ts.NodeArray<ts.TypeParameterDeclaration> | undefined {
     const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
-    const { typeParameters = ts.createNodeArray([]) }: Declaration = (declaration as Declaration);
+    const { typeParameters }: Declaration = (declaration as Declaration);
 
     return typeParameters;
   }

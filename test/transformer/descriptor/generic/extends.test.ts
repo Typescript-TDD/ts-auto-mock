@@ -245,14 +245,56 @@ describe('for generic', () => {
   });
 
   describe('with circular', () => {
-    interface A extends ClassWithGenerics<A> {
-      b: number;
+    interface GenericC<T> {
+      c: T;
+    }
+
+    interface GenericD<T> {
+      d: T;
+    }
+
+    interface GenericE<T> {
+      e: T;
+    }
+
+    // NOTE: A, A, B
+    interface A extends GenericC<A>, GenericD<A>, GenericE<B> {
+      a: number;
+      B: B;
+    }
+
+    // NOTE: B, A, A
+    interface B extends GenericC<B>, GenericD<A>, GenericE<A> {
+      b: string;
+      A: A;
     }
 
     it('should avoid infinite extension', () => {
-      const properties: A = createMock<A>();
-      expect(properties.a).toBeDefined();
-      expect(properties.b).toBe(0);
+      const propertiesA: A = createMock<A>();
+      const propertiesB: B = createMock<B>();
+
+      expect(propertiesA.B.d.a).toBe(0);
+      expect(propertiesA.B.e.a).toBe(0);
+
+      expect(propertiesB.A.d.a).toBe(0);
+      expect(propertiesB.A.e.b).toBe('');
+
+      // NOTE: First generic reference becomes a new instance and the second
+      // reference becomes a call to the parent's constructor.
+      expect(propertiesA.c.c.c.a).toBe(0);
+      expect(propertiesB.c.c.c.b).toBe('');
+
+      expect(propertiesA.d.d.d.a).toBe(0);
+      expect(propertiesB.d.d.d.a).toBe(0);
+
+      expect(propertiesA.e.e.e.b).toBe('');
+      expect(propertiesB.e.e.e.a).toBe(0);
+
+      expect(propertiesA.e.e.e.A.a).toBe(0);
+      expect(propertiesB.e.e.e.B.b).toBe('');
+
+      expect(propertiesA.c.d.e.b).toBe('');
+      expect(propertiesB.c.d.e.b).toBe('');
     });
   });
 

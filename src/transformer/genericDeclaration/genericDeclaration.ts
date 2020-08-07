@@ -2,13 +2,25 @@ import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TypescriptCreator } from '../helper/creator';
-import { TransformerLogger } from '../logger/transformerLogger';
-import { MockDefiner } from '../mockDefiner/mockDefiner';
-import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue } from '../mockIdentifier/mockIdentifier';
+import { MockIdentifierGenericParameterIds, MockIdentifierGenericParameterValue, MockPrivatePrefix } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
 import { GenericParameter } from './genericParameter';
+
+function isInstantiable(node: ts.Declaration | undefined): boolean {
+  let actualType: ts.Node | undefined = node;
+
+  if (!actualType) {
+    return false;
+  }
+
+  while (ts.isTypeAliasDeclaration(actualType)) {
+    actualType = actualType.type;
+  }
+
+  return !TypescriptHelper.IsLiteralOrPrimitive(actualType);
+}
 
 export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   const generics: GenericParameter[] = [];
@@ -17,7 +29,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     return !!node.typeArguments && !!node.typeArguments[index];
   }
 
-  function getGenericNode(node: ts.TypeReferenceNode | ts.ExpressionWithTypeArguments, nodeDeclaration: ts.TypeParameterDeclaration, index: number): ts.Node {
+  function getGenericNode(node: ts.TypeReferenceNode | ts.ExpressionWithTypeArguments, nodeDeclaration: ts.TypeParameterDeclaration, index: number): ts.TypeNode {
     if (isGenericProvided(node, index)) {
       return node.typeArguments[index];
     }
@@ -40,11 +52,69 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     }
   }
 
-  function createGenericParameter(ownerKey: string, nodeOwnerParameter: ts.TypeParameterDeclaration, genericDescriptor: ts.Expression): GenericParameter {
+  function createGenericParameter(
+    ownerKey: string,
+    nodeOwnerParameter: ts.TypeParameterDeclaration,
+    genericDescriptor: ts.Expression | undefined,
+    instantiable: boolean,
+    nextScope: Scope,
+  ): GenericParameter {
     const uniqueName: string = ownerKey + nodeOwnerParameter.name.escapedText.toString();
-    const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(ts.createBlock(
-      [ts.createReturn(genericDescriptor)],
-    ));
+
+    const genericValueDescriptor: ts.Expression = ((): ts.Expression => {
+      if (!instantiable) {
+        return genericDescriptor || ts.createNull();
+      }
+
+      const scopeOwnerName: string = [nextScope.currentMockKey, uniqueName].join('_').replace(/@/g, '');
+      const ownerReference: ts.Identifier = ts.createIdentifier([MockPrivatePrefix, scopeOwnerName].join(''));
+
+      return ts.createNew(
+        genericDescriptor ? TypescriptCreator.createFunctionExpression(
+          ts.createBlock(
+            [
+              TypescriptCreator.createVariableStatement([
+                TypescriptCreator.createVariableDeclaration(ownerReference, ts.createIdentifier('this')),
+              ]),
+              ts.createExpressionStatement(
+                ts.createCall(
+                  ts.createPropertyAccess(
+                    ts.createIdentifier('Object'),
+                    ts.createIdentifier('defineProperties'),
+                  ),
+                  undefined,
+                  [
+                    ts.createIdentifier('this'),
+                    ts.createCall(
+                      ts.createPropertyAccess(
+                        ts.createIdentifier('Object'),
+                        ts.createIdentifier('getOwnPropertyDescriptors'),
+                      ),
+                      undefined,
+                      [genericDescriptor]
+                    ),
+                  ]
+                ),
+              ),
+            ],
+          ),
+        ) : ts.createPropertyAccess(
+          ownerReference,
+          ts.createIdentifier('constructor'),
+        ),
+        undefined,
+        undefined,
+      );
+    })();
+
+    const genericFunction: ts.FunctionExpression =
+      TypescriptCreator.createFunctionExpression(
+        ts.createBlock([
+          ts.createReturn(
+            genericValueDescriptor,
+          ),
+        ]),
+      );
 
     return {
       ids: [uniqueName],
@@ -54,9 +124,9 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
 
   return {
     addFromTypeReferenceNode(node: ts.TypeReferenceNode, declarationKey: string): void {
-      const typeParameterDeclarations: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.GetParameterOfNode(node.typeName);
+      const typeParameterDeclarations: ts.NodeArray<ts.TypeParameterDeclaration> | undefined = TypescriptHelper.GetParameterOfNode(node.typeName);
 
-      if (!typeParameterDeclarations) {
+      if (!typeParameterDeclarations?.length) {
         return;
       }
 
@@ -66,7 +136,10 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
         const genericParameter: GenericParameter = createGenericParameter(
           declarationKey,
           typeParameterDeclarations[index],
-          GetDescriptor(genericNode, scope));
+          GetDescriptor(genericNode, scope),
+          false,
+          scope,
+        );
 
         generics.push(genericParameter);
       });
@@ -77,26 +150,22 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       extensionDeclaration: GenericDeclarationSupported,
       extensionDeclarationKey: string,
       extension: ts.ExpressionWithTypeArguments): void {
+      const nextScope: Scope = scope.newNestedScope(declarationKey);
+
       const extensionDeclarationTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration> | undefined = extensionDeclaration.typeParameters;
 
-      if (!extensionDeclarationTypeParameters) {
+      if (!extensionDeclarationTypeParameters?.length) {
         return;
       }
 
       extensionDeclarationTypeParameters.reduce((acc: GenericParameter[], declaration: ts.TypeParameterDeclaration, index: number) => {
         const genericNode: ts.Node = getGenericNode(extension, declaration, index);
 
-        if (ts.isTypeReferenceNode(genericNode)) {
-          const typeParameterDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(genericNode.typeName);
+        let typeParameterDeclaration: ts.Declaration | undefined;
+        let genericValueDescriptor: ts.Expression | undefined;
 
-          const isExtendingItself: boolean = MockDefiner.instance.getDeclarationKeyMap(typeParameterDeclaration) === declarationKey;
-          if (isExtendingItself) {
-            // FIXME: Currently, circular generics aren't supported. See
-            // https://github.com/Typescript-TDD/ts-auto-mock/pull/312 for more
-            // details.
-            TransformerLogger().circularGenericNotSupported(genericNode.getText());
-            return acc;
-          }
+        if (ts.isTypeReferenceNode(genericNode)) {
+          typeParameterDeclaration = TypescriptHelper.GetDeclarationFromNode(genericNode.typeName);
 
           if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
             addGenericParameterToExisting(
@@ -110,10 +179,16 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           }
         }
 
+        if (!typeParameterDeclaration || !nextScope.isBoundFor(extensionDeclarationKey)) {
+          genericValueDescriptor = GetDescriptor(genericNode, nextScope.bindFor(extensionDeclarationKey));
+        }
+
         const genericParameter: GenericParameter = createGenericParameter(
           extensionDeclarationKey,
-          extensionDeclarationTypeParameters[index],
-          GetDescriptor(genericNode, scope),
+          declaration,
+          genericValueDescriptor,
+          isInstantiable(typeParameterDeclaration),
+          nextScope,
         );
 
         acc.push(genericParameter);
