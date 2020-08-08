@@ -66,7 +66,7 @@ describe('for extends', () => {
     it('should set the correct value', () => {
       const properties: Interface = createMock<Interface>();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(properties as any).toEqual({a: 0});
+      expect(properties as any).toEqual({ a: 0 });
     });
   });
 
@@ -83,13 +83,13 @@ describe('for extends', () => {
   });
 
   describe('extends type with boolean', () => {
-        type Type = boolean[];
-        interface Interface extends Type {}
+    type Type = boolean[];
+    interface Interface extends Type {}
 
-        it('should ignore the typescript library', () => {
-          const properties: Interface = createMock<Interface>();
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          expect(properties as any).toEqual({});
-        });
+    it('should ignore the typescript library', () => {
+      const properties: Interface = createMock<Interface>();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(properties as any).toEqual({});
+    });
   });
 });

@@ -5,6 +5,9 @@ module.exports = (options) => {
 
     return {
         mode: "production",
+        node: {
+            __dirname: false
+        },
         resolve: {
             extensions: ['.ts', '.js']
         },

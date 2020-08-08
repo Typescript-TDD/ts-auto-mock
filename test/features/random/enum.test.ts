@@ -3,9 +3,9 @@ import { createMock } from 'ts-auto-mock';
 describe('Random enum', () => {
   it('should have random enum values', () => {
     enum EnumType {
-      firstValue = 'firstValue',
-      secondValue = 'secondValue',
-      thirdValue = 2,
+      FirstValue = 'FirstValue',
+      SecondValue = 'SecondValue',
+      ThirdValue = 2,
     }
 
     type WithEnum = {
@@ -17,17 +17,17 @@ describe('Random enum', () => {
     spy.and.returnValue(0);
     const firstMock: WithEnum = createMock<WithEnum>();
 
-    expect(firstMock.propertyName).toBe(EnumType.firstValue);
+    expect(firstMock.propertyName).toBe(EnumType.FirstValue);
 
     spy.and.returnValue(1);
     const secondMock: WithEnum = createMock<WithEnum>();
 
-    expect(secondMock.propertyName).toBe(EnumType.secondValue);
+    expect(secondMock.propertyName).toBe(EnumType.SecondValue);
 
     spy.and.returnValue(2);
     const thirdMock: WithEnum = createMock<WithEnum>();
 
-    expect(thirdMock.propertyName).toBe(EnumType.thirdValue);
+    expect(thirdMock.propertyName).toBe(EnumType.ThirdValue);
 
     // Should have 0, when does't have value in array
     spy.and.returnValue(100);
@@ -71,7 +71,7 @@ describe('Random enum', () => {
     const enum Direction {
       Up,
       Down,
-      None = 'Nothing'
+      None = 'Nothing',
     }
 
     interface Movement {

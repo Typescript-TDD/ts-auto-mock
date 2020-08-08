@@ -3,6 +3,9 @@ const path = require('path');
 module.exports = function () {
     return {
         mode: "development",
+        node: {
+            __dirname: false
+        },
         resolve: {
             extensions: ['.ts', '.js'],
             alias: {
@@ -17,10 +20,6 @@ module.exports = function () {
                     test: /\.ts$/,
                     enforce: 'pre',
                     loader: 'eslint-loader'
-                },
-                {
-                    test: /\.ts$/,
-                    loader: 'awesome-typescript-loader'
                 }
             ]
         }

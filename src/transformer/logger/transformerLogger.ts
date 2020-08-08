@@ -18,7 +18,7 @@ export function TransformerLogger(): TransformerLogger {
     circularGenericNotSupported(nodeName: string): void {
       logger.warning(
         `Found a circular generic of \`${nodeName}' and such generics are currently not supported. ` +
-          'The generated mock will be incomplete.',
+          'The generated mock will be incomplete.'
       );
     },
     unexpectedCreateMock(mockFileName: string, expectedFileName: string): void {
@@ -30,10 +30,14 @@ export function TransformerLogger(): TransformerLogger {
       logger.warning(`Not supported type: ${type} - it will convert to null`);
     },
     typeOfFunctionCallNotFound(node: string): void {
-      logger.warning(`Cannot find type of function call: ${node} - it will convert to null`);
+      logger.warning(
+        `Cannot find type of function call: ${node} - it will convert to null`
+      );
     },
-    indexedAccessTypeFailed(propertyName: string, nodeText: string ): void {
-      logger.warning(`IndexedAccessType transformation failed: cannot find property ${propertyName} of - ${nodeText}`);
+    indexedAccessTypeFailed(propertyName: string, nodeText: string): void {
+      logger.warning(
+        `IndexedAccessType transformation failed: cannot find property ${propertyName} of - ${nodeText}`
+      );
     },
   };
 }

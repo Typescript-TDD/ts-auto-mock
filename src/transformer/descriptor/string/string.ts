@@ -6,7 +6,9 @@ import { TypescriptHelper } from '../helper/helper';
 
 export function GetStringDescriptor(): ts.Expression {
   if (IsTsAutoMockRandomEnabled()) {
-    const propertyName: string = TypescriptHelper.GetStringPropertyName(PropertySignatureCache.instance.get());
+    const propertyName: string = TypescriptHelper.GetStringPropertyName(
+      PropertySignatureCache.instance.get()
+    );
     const prefix: ts.StringLiteral = ts.createLiteral(propertyName);
     return ts.createCall(RandomPropertyAccessor('string'), [], [prefix]);
   }

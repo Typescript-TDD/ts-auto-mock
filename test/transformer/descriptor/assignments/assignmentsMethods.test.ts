@@ -4,7 +4,7 @@ describe('when assigned directly from a functionMethod', () => {
   describe('return number', () => {
     class MyClass {
       // eslint-disable-next-line
-      public value = () =>  2;
+      public value = () => 2;
     }
 
     it('should return the number', () => {
@@ -16,7 +16,7 @@ describe('when assigned directly from a functionMethod', () => {
   describe('return string', () => {
     class MyClass {
       // eslint-disable-next-line
-      public value = function() {
+      public value = function () {
         return 'valueString';
       };
     }
@@ -67,7 +67,9 @@ describe('when assigned directly from a functionMethod', () => {
     }
 
     it('should set the function', () => {
-      const properties: MyClassWithReturnArrow = createMock<MyClassWithReturnArrow>();
+      const properties: MyClassWithReturnArrow = createMock<
+        MyClassWithReturnArrow
+      >();
       expect(properties.method()()).toBe('s');
     });
 
@@ -80,16 +82,16 @@ describe('when assigned directly from a functionMethod', () => {
   describe('return expression', () => {
     class MyClass {
       // eslint-disable-next-line
-      public method = function() {
+      public method = function () {
         return 's';
       };
     }
 
     class MyClassWithReturnExpression {
       // eslint-disable-next-line
-      public method = function() {
+      public method = function () {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        return function() {
+        return function () {
           return 's';
         };
       };
@@ -101,7 +103,9 @@ describe('when assigned directly from a functionMethod', () => {
     });
 
     it('should set the function', () => {
-      const properties: MyClassWithReturnExpression = createMock<MyClassWithReturnExpression>();
+      const properties: MyClassWithReturnExpression = createMock<
+        MyClassWithReturnExpression
+      >();
       expect(properties.method()()).toBe('s');
     });
   });

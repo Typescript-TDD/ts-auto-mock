@@ -75,7 +75,7 @@ describe('union optional', () => {
   });
 
   describe('type reference optional and extends', () => {
-    type TypeOptional = { a: string } & { b: number } | void;
+    type TypeOptional = ({ a: string } & { b: number }) | void;
 
     class MyClass {
       public test: number | TypeOptional;

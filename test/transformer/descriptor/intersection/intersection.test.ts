@@ -41,40 +41,40 @@ describe('for intersection', () => {
   });
 
   describe('literal and basic', () => {
-        type TypeIntersection = 's' & string & 's2';
-        type TypeIntersectionNumber = {} & number;
-        type TypeIntersectionString = {} & string;
-        type TypeIntersectionBoolean = {} & boolean;
-        type TypeIntersectionBooleanArray = {} & boolean[];
+    type TypeIntersection = 's' & string & 's2';
+    type TypeIntersectionNumber = {} & number;
+    type TypeIntersectionString = {} & string;
+    type TypeIntersectionBoolean = {} & boolean;
+    type TypeIntersectionBooleanArray = {} & boolean[];
 
-        interface Intersection {
-          a: TypeIntersection;
-          b: TypeIntersectionNumber;
-          c: TypeIntersectionBoolean;
-          d: TypeIntersectionBooleanArray;
-          e: TypeIntersectionString;
-        }
-        it('should be undefined', () => {
-          const properties: Intersection = createMock<Intersection>();
-          expect(properties.a).toBeUndefined();
-          expect(properties.b).toBeUndefined();
-          expect(properties.c).toBeUndefined();
-          expect(properties.d).toBeUndefined();
-          expect(properties.e).toBeUndefined();
-        });
+    interface Intersection {
+      a: TypeIntersection;
+      b: TypeIntersectionNumber;
+      c: TypeIntersectionBoolean;
+      d: TypeIntersectionBooleanArray;
+      e: TypeIntersectionString;
+    }
+    it('should be undefined', () => {
+      const properties: Intersection = createMock<Intersection>();
+      expect(properties.a).toBeUndefined();
+      expect(properties.b).toBeUndefined();
+      expect(properties.c).toBeUndefined();
+      expect(properties.d).toBeUndefined();
+      expect(properties.e).toBeUndefined();
+    });
   });
 
   describe('with typescript lib', () => {
-        type TypeIntersection = {} & Promise<string>;
+    type TypeIntersection = {} & Promise<string>;
 
-        interface Intersection {
-          a: TypeIntersection;
-        }
+    interface Intersection {
+      a: TypeIntersection;
+    }
 
-        it('should ignore the types typescript lib', () => {
-          const properties: Intersection = createMock<Intersection>();
-          expect(properties.a.then).toBeUndefined();
-        });
+    it('should ignore the types typescript lib', () => {
+      const properties: Intersection = createMock<Intersection>();
+      expect(properties.a.then).toBeUndefined();
+    });
   });
 
   describe('with interface call signature', () => {

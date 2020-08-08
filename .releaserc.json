@@ -1,7 +1,5 @@
 {
-  "branches": [
-    "master"
-  ],
+  "branches": ["master"],
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
@@ -22,10 +20,7 @@
           }
         ],
         "parserOpts": {
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES"
-          ]
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
         }
       }
     ],
@@ -34,16 +29,10 @@
       {
         "preset": "angular",
         "parserOpts": {
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES"
-          ]
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
         },
         "writerOpts": {
-          "commitsSort": [
-            "subject",
-            "scope"
-          ],
+          "commitsSort": ["subject", "scope"],
           "owner": "typescripttdd"
         },
         "linkCompare": true,
@@ -69,17 +58,11 @@
     [
       "@semantic-release/git",
       {
-        "assets": [
-          "package.json",
-          "package-lock.json",
-          "CHANGELOG.md"
-        ],
+        "assets": ["package.json", "package-lock.json", "CHANGELOG.md"],
         "message": "ci(release): ts auto mock new version ${nextRelease.version}"
       }
     ],
-    [
-      "@semantic-release/github"
-    ],
+    ["@semantic-release/github"],
     [
       "semantic-release-slack-bot",
       {

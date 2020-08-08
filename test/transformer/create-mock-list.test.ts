@@ -24,6 +24,7 @@ describe('create-mock-list', () => {
   });
 
   it('should create an empty array when number is not provided', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const properties: Interface[] = createMockList<Interface>();
     expect(properties.length).toBe(0);

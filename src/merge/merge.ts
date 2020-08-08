@@ -1,4 +1,4 @@
-import { merge} from 'lodash-es';
+import { merge } from 'lodash-es';
 import { DeepPartial } from '../partial/deepPartial';
 
 export class Merge {
@@ -6,7 +6,11 @@ export class Merge {
     return merge(a, b);
   }
 
-  public static mergeIterator<T>(a: T, b: (index: number) => DeepPartial<T>, index: number): T {
+  public static mergeIterator<T>(
+    a: T,
+    b: (index: number) => DeepPartial<T>,
+    index: number
+  ): T {
     return merge(a, b(index));
   }
 }

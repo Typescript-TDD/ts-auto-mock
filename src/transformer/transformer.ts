@@ -19,13 +19,20 @@ const customFunctions: CustomFunction[] = [
   },
 ];
 
-const transformer:
-(program: ts.Program, options?: TsAutoMockOptions) => ts.TransformerFactory<ts.SourceFile> =
-    baseTransformer(visitNode, customFunctions);
+const transformer: (
+  program: ts.Program,
+  options?: TsAutoMockOptions
+) => ts.TransformerFactory<ts.SourceFile> = baseTransformer(
+  visitNode,
+  customFunctions
+);
 
 export { transformer };
 
-function visitNode(node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> }, declaration: ts.FunctionDeclaration): ts.Node {
+function visitNode(
+  node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> },
+  declaration: ts.FunctionDeclaration
+): ts.Node {
   const [nodeToMock]: ts.NodeArray<ts.TypeNode> = node.typeArguments;
 
   if (isCreateMock(declaration)) {

@@ -18,6 +18,8 @@ export function SetTsAutoMockOptions(options: TsAutoMockOptions): void {
   };
 }
 
-export function GetOptionByKey<T extends keyof TsAutoMockOptions>(optionKey: T): TsAutoMockOptions[T] {
+export function GetOptionByKey<T extends keyof TsAutoMockOptions>(
+  optionKey: T
+): TsAutoMockOptions[T] {
   return tsAutoMockOptions[optionKey];
 }

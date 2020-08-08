@@ -7,7 +7,7 @@ export enum ModuleImportUrl {
   Merge = 'ts-auto-mock/merge',
 }
 
-export const ModulesImportUrl: {[key in ModuleName]: ModuleImportUrl } = {
+export const ModulesImportUrl: { [key in ModuleName]: ModuleImportUrl } = {
   Repository: ModuleImportUrl.Repository,
   Extension: ModuleImportUrl.Extension,
   Merge: ModuleImportUrl.Merge,

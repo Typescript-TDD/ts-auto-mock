@@ -1,5 +1,5 @@
 import { createMock } from 'ts-auto-mock';
-const computedProperty: 'C' = 'C';
+const computedProperty: 'C' = 'C' as const;
 
 describe('computed properties constant', () => {
   interface Computed {

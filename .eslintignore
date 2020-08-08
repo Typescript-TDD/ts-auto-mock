@@ -1,3 +1,8 @@
+node_modules
+dist
+definitelyTypedTests/build
+.idea
+DefinitelyTyped
 /commitizen.js
 /commitlint.config.js
 /config

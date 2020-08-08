@@ -4,7 +4,10 @@ import { GetCallExpressionType } from '../callExpression/callExpression';
 import { TypescriptHelper } from '../helper/helper';
 import { GetTypeImport } from './typeImport';
 
-export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: Scope): ts.Node[] {
+export function GetTypes(
+  nodes: ts.NodeArray<ts.Node>,
+  scope: Scope
+): ts.Node[] {
   let newNodes: ts.Node[] = [];
 
   nodes.forEach((node: ts.Node) => {
@@ -16,7 +19,10 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: Scope): ts.Node[] 
     } else if (ts.isIntersectionTypeNode(type)) {
       const intersectionTypes: ts.Node[] = GetTypes(type.types, scope);
 
-      const hasLiteralOrPrimitive: boolean = intersectionTypes.some((intersectionType: ts.Node) => TypescriptHelper.IsLiteralOrPrimitive(intersectionType));
+      const hasLiteralOrPrimitive: boolean = intersectionTypes.some(
+        (intersectionType: ts.Node) =>
+          TypescriptHelper.IsLiteralOrPrimitive(intersectionType)
+      );
 
       if (!hasLiteralOrPrimitive) {
         newNodes = newNodes.concat(intersectionTypes);
@@ -31,13 +37,17 @@ export function GetTypes(nodes: ts.NodeArray<ts.Node>, scope: Scope): ts.Node[] 
 
 export function GetType(node: ts.Node, scope: Scope): ts.Node {
   if (ts.isTypeReferenceNode(node)) {
-    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node.typeName);
+    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
+      node.typeName
+    );
 
     return GetType(declaration, scope);
   }
 
   if (ts.isThisTypeNode(node)) {
-    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(node);
+    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
+      node
+    );
     return GetType(declaration, scope);
   }
 

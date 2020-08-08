@@ -1,7 +1,7 @@
 /*globals module, require */
 const webpackNodeExternals = require("webpack-node-externals");
 const path = require("path");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const base = require("../base/webpack.base");
 const DetermineDevToolFromEnvironmentDebugMode = require("../../utils/devtool");
 
@@ -10,9 +10,6 @@ module.exports = merge(base({
 }), {
     devtool: DetermineDevToolFromEnvironmentDebugMode(),
     target: "node",
-    node: {
-        __dirname: false
-    },
     externals: [
         webpackNodeExternals()
     ],

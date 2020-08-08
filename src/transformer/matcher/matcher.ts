@@ -7,12 +7,18 @@ export interface CustomFunction {
   sourceDts: string;
 }
 
-export function isFunctionFromThisLibrary(signature: ts.Signature, customFunctions: CustomFunction[]): boolean {
+export function isFunctionFromThisLibrary(
+  signature: ts.Signature,
+  customFunctions: CustomFunction[]
+): boolean {
   if (!isDeclarationDefined(signature)) {
     return false;
   }
 
-  if (!signature.declaration || !ts.isFunctionDeclaration(signature.declaration)) {
+  if (
+    !signature.declaration ||
+    !ts.isFunctionDeclaration(signature.declaration)
+  ) {
     return false;
   }
 
@@ -20,7 +26,8 @@ export function isFunctionFromThisLibrary(signature: ts.Signature, customFunctio
 
   return customFunctions.some((customFunction: CustomFunction) => {
     const functionUrl: string = path.join(__dirname, customFunction.sourceUrl);
-    const isFileNameFunctionUrl: boolean = path.relative(fileName, functionUrl) === '';
+    const isFileNameFunctionUrl: boolean =
+      path.relative(fileName, functionUrl) === '';
     if (fileName.includes(customFunction.sourceDts) && !isFileNameFunctionUrl) {
       TransformerLogger().unexpectedCreateMock(fileName, functionUrl);
     }
