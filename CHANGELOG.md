@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.3.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.3...2.3.4) (2020-08-09)
+
+
+### Bug Fixes
+
+* **partial:** improve deep partial type to ensure compilation without errors when passing default values to create mock and create mock list ([7463501](https://github.com/Typescript-TDD/ts-auto-mock/commit/746350171a46da82f74956f1d13500a1399ef1ae))
+
 ## [2.3.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.2...2.3.3) (2020-07-11)
 
 
