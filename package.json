@@ -75,6 +75,7 @@
         "karma-webpack": "^4.0.2",
         "prettier": "^2.0.5",
         "puppeteer": "^5.2.1",
+        "regenerator-runtime": "^0.13.7",
         "semantic-release": "^17.1.1",
         "semantic-release-slack-bot": "^1.6.2",
         "ts-loader": "^8.0.2",
