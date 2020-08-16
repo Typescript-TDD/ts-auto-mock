@@ -27,7 +27,7 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-6110fe3c616ef43a8797.js"
+    "url": "webpack-runtime-578a0aac06806ec250b2.js"
   },
   {
     "url": "framework-36467be9857b1ff04ea4.js"
@@ -39,14 +39,14 @@ self.__precacheManifest = [
     "url": "styles-f2018a32e4474efdf222.js"
   },
   {
-    "url": "app-c885441496e13d7c403c.js"
+    "url": "app-e1f30a2507e46bdb1785.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "31d1de2ab04a398d5d324ea68babba0c"
+    "revision": "4bf86a22f55cae4c5eb95757193b030b"
   },
   {
-    "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-04c2e215d63a3873b306.js"
+    "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-227e53eae3834fb99c1c.js"
   },
   {
     "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
@@ -54,19 +54,18 @@ self.__precacheManifest = [
   },
   {
     "url": "page-data/app-data.json",
-    "revision": "6fefbcadea18051de4d778b21814b974"
+    "revision": "c2c424acba1eb71463ede70d6034dbe4"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 workbox.routing.registerRoute(/(\.js$|\.css$|static\/)/, new workbox.strategies.CacheFirst(), 'GET');
-workbox.routing.registerRoute(/^https?:.*\page-data\/.*\/page-data\.json/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
+workbox.routing.registerRoute(/^https?:.*\/page-data\/.*\.json/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
 workbox.routing.registerRoute(/^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
 workbox.routing.registerRoute(/^https?:\/\/fonts\.googleapis\.com\/css/, new workbox.strategies.StaleWhileRevalidate(), 'GET');
 
 /* global importScripts, workbox, idbKeyval */
-
-importScripts(`idb-keyval-iife.min.js`)
+importScripts(`idb-keyval-3.2.0-iife.min.js`)
 
 const { NavigationRoute } = workbox.routing
 
@@ -142,12 +141,12 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   lastNavigationRequest = event.request.url
 
   let { pathname } = new URL(event.request.url)
-  pathname = pathname.replace(new RegExp(`^/ts-auto-mock`), ``)
+  pathname = pathname.replace(new RegExp(`^/ts-auto-mock-ui`), ``)
 
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/ts-auto-mock/app-c885441496e13d7c403c.js`))) {
+  if (!resources || !(await caches.match(`/ts-auto-mock-ui/app-e1f30a2507e46bdb1785.js`))) {
     return await fetch(event.request)
   }
 
@@ -160,7 +159,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
     }
   }
 
-  const offlineShell = `/ts-auto-mock/offline-plugin-app-shell-fallback/index.html`
+  const offlineShell = `/ts-auto-mock-ui/offline-plugin-app-shell-fallback/index.html`
   const offlineShellWithKey = workbox.precaching.getCacheKeyForURL(offlineShell)
   return await caches.match(offlineShellWithKey)
 })
