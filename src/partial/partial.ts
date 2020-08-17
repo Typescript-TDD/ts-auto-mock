@@ -42,5 +42,13 @@ interface PartialReadonlySetDeep<T> extends ReadonlySet<PartialDeep<T>> {}
  Same as `PartialDeep`, but accepts only `object`s as inputs. Internal helper for `PartialDeep`.
  */
 type PartialObjectDeep<ObjectType extends object> = {
-  [KeyType in keyof ObjectType]?: PartialDeep<ObjectType[KeyType]>;
+  [KeyType in keyof SuppressObjectPrototypeOverrides<ObjectType>]?: PartialDeep<
+    SuppressObjectPrototypeOverrides<ObjectType>[KeyType]
+  >;
 };
+
+type SuppressObjectPrototypeOverrides<ObjectType> = Pick<
+  ObjectType,
+  Exclude<keyof ObjectType, keyof Object>
+> &
+  Object;
