@@ -51,4 +51,4 @@ type SuppressObjectPrototypeOverrides<ObjectType> = Pick<
   ObjectType,
   Exclude<keyof ObjectType, keyof Object>
 > &
-  Object;
+  Pick<Object, Extract<keyof Object, keyof ObjectType>>;
