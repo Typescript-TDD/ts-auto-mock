@@ -10,10 +10,10 @@ export type PartialDeep<T> = T extends Primitive
   ? PartialReadonlyMapDeep<KeyType, ValueType>
   : T extends ReadonlySet<infer ItemType>
   ? PartialReadonlySetDeep<ItemType>
-  : T extends object
-  ? PartialObjectDeep<T>
   : T extends (...args: any[]) => unknown // eslint-disable-line @typescript-eslint/no-explicit-any
   ? T | undefined
+  : T extends object
+  ? PartialObjectDeep<T>
   : unknown;
 
 /**
