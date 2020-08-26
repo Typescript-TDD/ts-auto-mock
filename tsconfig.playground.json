@@ -10,9 +10,6 @@
       }
     ]
   },
-  "files": [
-    "test/playground/playground.test.ts"
-  ],
+  "files": ["test/playground/playground.test.ts"],
   "include": []
 }
-

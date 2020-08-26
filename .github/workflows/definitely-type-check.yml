@@ -1,10 +1,13 @@
-name: Definuitely Type build
+name: Definitely Type build
 
 on:
   push:
     branches:
       - master
   pull_request:
+    paths-ignore:
+      - 'data/**'
+      - 'ui/**'
 
 jobs:
   test:

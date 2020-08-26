@@ -56,9 +56,7 @@ describe('mocking the registered promise', () => {
 
   describe('when doing it in an interface', () => {
     it('should not interfere for an extension', () => {
-      interface A extends Promise<string> {
-
-      }
+      interface A extends Promise<string> {}
 
       const interfaceMock: A = createMock<A>();
       const actualPromiseMock: Promise<number> = createMock<Promise<number>>();
@@ -69,9 +67,7 @@ describe('mocking the registered promise', () => {
     });
 
     it('should not interfere for an extension with generics', () => {
-      interface A<T> extends Promise<T> {
-
-      }
+      interface A<T> extends Promise<T> {}
 
       const interfaceMock: A<string> = createMock<A<string>>();
       const actualPromiseMock: Promise<number> = createMock<Promise<number>>();

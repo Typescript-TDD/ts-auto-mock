@@ -22,7 +22,7 @@ export class FakePromise<T> {
     this._rej(t);
   }
 
-  public then<T2>(t: (tt: T) => (T2 | Promise<T2>)): Promise<T2> {
+  public then<T2>(t: (tt: T) => T2 | Promise<T2>): Promise<T2> {
     return this._promise.then(t);
   }
 

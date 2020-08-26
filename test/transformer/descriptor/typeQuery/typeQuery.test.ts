@@ -20,7 +20,9 @@ declare function functionDeclaration(): number;
 describe('typeQuery', () => {
   describe('for function', () => {
     it('should assign the function mock for a function declaration', () => {
-      const functionMock: typeof functionDeclaration = createMock<typeof functionDeclaration>();
+      const functionMock: typeof functionDeclaration = createMock<
+        typeof functionDeclaration
+      >();
 
       expect(functionMock()).toEqual(0);
     });
@@ -36,13 +38,17 @@ describe('typeQuery', () => {
     });
 
     it('should assign the function mock for an imported function declaration', () => {
-      const functionMock: typeof exportedDeclaredFunction = createMock<typeof exportedDeclaredFunction>();
+      const functionMock: typeof exportedDeclaredFunction = createMock<
+        typeof exportedDeclaredFunction
+      >();
 
       expect(functionMock()).toEqual('');
     });
 
     it('should assign the function mock for an imported function declaration with body', () => {
-      const functionMock: typeof exportedFunction = createMock<typeof exportedFunction>();
+      const functionMock: typeof exportedFunction = createMock<
+        typeof exportedFunction
+      >();
 
       expect(functionMock()).toEqual(0);
     });
@@ -52,25 +58,29 @@ describe('typeQuery', () => {
         return 'ok';
       }
 
-            type Intersection = {} & typeof func;
+      type Intersection = {} & typeof func;
 
-            const functionMock: Intersection = createMock<Intersection>();
+      const functionMock: Intersection = createMock<Intersection>();
 
-            expect(functionMock).toBeUndefined();
+      expect(functionMock).toBeUndefined();
     });
 
     it('should return correct properties with multiple declarations', () => {
       function MultipleDeclaration(): MultipleDeclaration {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return { a: 's'};
+        return { a: 's' };
       }
 
       interface MultipleDeclaration {
         b: string;
       }
 
-      const functionMock: typeof MultipleDeclaration = createMock<typeof MultipleDeclaration>();
+      const functionMock: typeof MultipleDeclaration = createMock<
+        typeof MultipleDeclaration
+      >();
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(functionMock()).toEqual({
         b: '',
@@ -90,13 +100,17 @@ describe('typeQuery', () => {
     });
 
     it('should create a newable class for an imported class declaration', () => {
-      const classMock: typeof ExportedDeclaredClass = createMock<typeof ExportedDeclaredClass>();
+      const classMock: typeof ExportedDeclaredClass = createMock<
+        typeof ExportedDeclaredClass
+      >();
 
       expect(new classMock().prop).toEqual('');
     });
 
     it('should create a newable class for an imported class', () => {
-      const classMock: typeof ExportedClass = createMock<typeof ExportedClass>();
+      const classMock: typeof ExportedClass = createMock<
+        typeof ExportedClass
+      >();
 
       expect(new classMock().prop).toEqual(0);
     });
@@ -108,11 +122,11 @@ describe('typeQuery', () => {
     });
 
     it('should return undefined for an intersection', () => {
-            type Intersection = {} & WrapExportedClass;
+      type Intersection = {} & WrapExportedClass;
 
-            const functionMock: Intersection = createMock<Intersection>();
+      const functionMock: Intersection = createMock<Intersection>();
 
-            expect(functionMock).toBeUndefined();
+      expect(functionMock).toBeUndefined();
     });
   });
 
@@ -138,13 +152,13 @@ describe('typeQuery', () => {
     });
 
     it('should assign the imported enum to the mock when typeof wrapped in a type', () => {
-            type WrapEnum = typeof ExportedEnum;
+      type WrapEnum = typeof ExportedEnum;
 
-            const enumMock: WrapEnum = createMock<WrapEnum>();
+      const enumMock: WrapEnum = createMock<WrapEnum>();
 
-            expect(enumMock.A).toEqual(0);
-            expect(enumMock.B).toEqual('B');
-            expect(enumMock.C).toEqual('MaybeC');
+      expect(enumMock.A).toEqual(0);
+      expect(enumMock.B).toEqual('B');
+      expect(enumMock.C).toEqual('MaybeC');
     });
 
     it('should assign the enum to the mock when importing enum wrapper', () => {
@@ -156,11 +170,11 @@ describe('typeQuery', () => {
     });
 
     it('should return undefined for an intersection', () => {
-            type Intersection = {} & WrapExportedEnum;
+      type Intersection = {} & WrapExportedEnum;
 
-            const functionMock: Intersection = createMock<Intersection>();
+      const functionMock: Intersection = createMock<Intersection>();
 
-            expect(functionMock).toBeUndefined();
+      expect(functionMock).toBeUndefined();
     });
   });
 
@@ -235,7 +249,9 @@ describe('typeQuery', () => {
       });
 
       it('should mock the default', () => {
-        const mock: typeof REQUIRE_DEFAULT = createMock<typeof REQUIRE_DEFAULT>();
+        const mock: typeof REQUIRE_DEFAULT = createMock<
+          typeof REQUIRE_DEFAULT
+        >();
 
         expect(mock.functionDefault('input')).toBe(false);
         expect(mock.default('input')).toBe(false);
@@ -252,7 +268,7 @@ describe('typeQuery', () => {
     describe('inferred type', () => {
       it('should work for inferred object', () => {
         // eslint-disable-next-line @typescript-eslint/typedef
-        const aVariable = {prop: 'asd'};
+        const aVariable = { prop: 'asd' };
 
         const mock: typeof aVariable = createMock<typeof aVariable>();
 
@@ -270,12 +286,14 @@ describe('typeQuery', () => {
 
       it('should work for function call of a variable with no explicit return type of function', () => {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/typedef
-        const testExplicitType: (value: boolean) => {prop: string} = (value: boolean) => {
+        const testExplicitType: (value: boolean) => { prop: string } = (
+          value: boolean
+        ) => {
           if (value) {
-            return {prop: 'asd'};
+            return { prop: 'asd' };
           }
 
-          return {prop: 'wooo'};
+          return { prop: 'wooo' };
         };
 
         // eslint-disable-next-line @typescript-eslint/typedef
@@ -288,12 +306,12 @@ describe('typeQuery', () => {
 
       it('should work for function call of a variable with no explicit type', () => {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/typedef
-        const test = (value: boolean): {prop: string} => {
+        const test = (value: boolean): { prop: string } => {
           if (value) {
-            return {prop: 'asd'};
+            return { prop: 'asd' };
           }
 
-          return {prop: 'wooo'};
+          return { prop: 'wooo' };
         };
 
         // eslint-disable-next-line @typescript-eslint/typedef
@@ -308,10 +326,10 @@ describe('typeQuery', () => {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/typedef
         const test = (value: boolean) => {
           if (value) {
-            return {prop: 'asd'};
+            return { prop: 'asd' };
           }
 
-          return {prop: 'wooo'};
+          return { prop: 'wooo' };
         };
 
         // eslint-disable-next-line @typescript-eslint/typedef
@@ -325,10 +343,10 @@ describe('typeQuery', () => {
       it('should work for function call', () => {
         function test(value: boolean): { prop: string } {
           if (value) {
-            return {prop: 'asd'};
+            return { prop: 'asd' };
           }
 
-          return {prop: 'wooo'};
+          return { prop: 'wooo' };
         }
 
         // eslint-disable-next-line @typescript-eslint/typedef
@@ -343,10 +361,10 @@ describe('typeQuery', () => {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         function test(value: boolean) {
           if (value) {
-            return {prop: 'asd'};
+            return { prop: 'asd' };
           }
 
-          return {second: 7};
+          return { second: 7 };
         }
 
         // eslint-disable-next-line @typescript-eslint/typedef
@@ -365,10 +383,10 @@ describe('typeQuery', () => {
           count++;
 
           if (value) {
-            return {prop: 'asd'};
+            return { prop: 'asd' };
           }
 
-          return {second: 7};
+          return { second: 7 };
         }
 
         // eslint-disable-next-line @typescript-eslint/typedef

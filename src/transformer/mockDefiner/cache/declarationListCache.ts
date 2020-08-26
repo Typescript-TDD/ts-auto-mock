@@ -28,7 +28,11 @@ export class DeclarationListCache {
     return !!this._find(declarations);
   }
 
-  private _find(declarations: ts.Declaration[]): DeclarationListCacheElement | undefined {
-    return this._cache.find((intersection: DeclarationListCacheElement) => ArrayHelper.AreEqual(declarations, intersection.declarations));
+  private _find(
+    declarations: ts.Declaration[]
+  ): DeclarationListCacheElement | undefined {
+    return this._cache.find((intersection: DeclarationListCacheElement) =>
+      ArrayHelper.AreEqual(declarations, intersection.declarations)
+    );
   }
 }

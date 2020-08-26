@@ -6,6 +6,7 @@ describe('typeQuery undefined ', () => {
     // make sure if a set of type declarations are faulty (from DefinitelyTyped
     // for example) they will "fail" silently.
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const type: typeof undefined = createMock<typeof undefined>();
 

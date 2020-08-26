@@ -10,10 +10,7 @@
     "esModuleInterop": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "paths": {
       "ts-auto-mock": ["dist"],
       "ts-auto-mock/extension": ["dist/extension"],
@@ -21,8 +18,5 @@
     },
     "baseUrl": "./"
   },
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ]
+  "include": ["src/**/*", "test/**/*"]
 }

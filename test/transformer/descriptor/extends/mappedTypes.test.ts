@@ -1,19 +1,18 @@
-import {createMock} from 'ts-auto-mock';
+import { createMock } from 'ts-auto-mock';
 
 describe('extends MappedTypes', () => {
   it('should not convert the properties', () => {
-    enum SOME_ENUM {
+    enum SomeEnum {
       FIRST = 'FIRST',
       SECOND = 'SECOND',
     }
-
 
     interface IBase {
       propertyA: string;
       propertyB: number;
     }
 
-    interface InterfaceWithExtends extends Record<SOME_ENUM, IBase> {}
+    interface InterfaceWithExtends extends Record<SomeEnum, IBase> {}
 
     const type: InterfaceWithExtends = createMock<InterfaceWithExtends>();
     expect(type.FIRST).toBeUndefined();

@@ -5,6 +5,9 @@ on:
     branches:
       - master
   pull_request:
+    paths-ignore:
+      - 'data/**'
+      - 'ui/**'
 
 jobs:
   test:
@@ -27,7 +30,23 @@ jobs:
         npm install
         npm run build
         npm test
-      env:
-        CI: true
+  check-type:
+    runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [10.x]
 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: check eslint and prettier
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgbm-dev
+        npm install
+        npm run eslint
+        npm run prettier

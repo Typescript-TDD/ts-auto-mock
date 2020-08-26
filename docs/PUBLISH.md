@@ -1,4 +1,4 @@
 # Publish
-1) npm run preparePublish
-2) cd dist
-3) npm publish
+
+Semantic release is enabled.  
+A GitHub action is running to create a new release each time the master change.  

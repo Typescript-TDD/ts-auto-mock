@@ -1,15 +1,15 @@
 import * as ts from 'typescript';
 
-let ___typeChecker: ts.TypeChecker | null = null;
+let tsAutoMockTypeChecker: ts.TypeChecker | null = null;
 
 export function SetTypeChecker(typeChecker: ts.TypeChecker): void {
-  ___typeChecker = typeChecker;
+  tsAutoMockTypeChecker = typeChecker;
 }
 
 export function TypeChecker(): ts.TypeChecker {
-  if (!___typeChecker) {
+  if (!tsAutoMockTypeChecker) {
     throw new Error('SetTypeChecker() must be called prior to TypeChecker()!');
   }
 
-  return ___typeChecker;
+  return tsAutoMockTypeChecker;
 }

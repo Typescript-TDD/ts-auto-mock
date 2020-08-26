@@ -6,24 +6,24 @@ describe('for keyin keyof', () => {
       a: number;
     }
 
-    type keyInKeyof = {[key in keyof Keys]: string};
+    type KeyInKeyof = { [key in keyof Keys]: string };
 
     it('should set all the keys as properties', () => {
-      const properties: keyInKeyof = createMock<keyInKeyof>();
+      const properties: KeyInKeyof = createMock<KeyInKeyof>();
       expect(properties.a).toBe('');
     });
   });
 
   describe('of a class', () => {
-  	class Test {
-  		public a: number;
-  	}
+    class Test {
+      public a: number;
+    }
 
-  	type keyInKeyof = {[key in keyof Test]: Test[key]};
+    type KeyInKeyof = { [key in keyof Test]: Test[key] };
 
-  	it('should set all the keys as properties', () => {
-  		const properties: keyInKeyof = createMock<keyInKeyof>();
-  		expect(properties.a).toBe(0);
-  	});
+    it('should set all the keys as properties', () => {
+      const properties: KeyInKeyof = createMock<KeyInKeyof>();
+      expect(properties.a).toBe(0);
+    });
   });
 });

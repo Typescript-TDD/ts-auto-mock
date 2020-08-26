@@ -3,9 +3,9 @@ import { createMock } from 'ts-auto-mock';
 describe('intersection', () => {
   describe('recursion interface', () => {
     interface Interface {
-      a: Interface & {s: string};
+      a: Interface & { s: string };
       b: string;
-      c: Interface & {s: boolean};
+      c: Interface & { s: boolean };
     }
 
     it('should be able to reference to itself', () => {

@@ -2,7 +2,7 @@ import { createMock } from 'ts-auto-mock';
 
 describe('parenthesized type ', () => {
   it('should return the correct type for functions', () => {
-    type A = (() => string);
+    type A = () => string;
 
     const mock: A = createMock<A>();
 
@@ -10,7 +10,7 @@ describe('parenthesized type ', () => {
   });
 
   it('should return the correct type for objects', () => {
-    type A = ({a: string});
+    type A = { a: string };
 
     const mock: A = createMock<A>();
 

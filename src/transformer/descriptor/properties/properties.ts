@@ -19,14 +19,23 @@ export function GetProperties(node: ts.Node, scope: Scope): ts.Expression {
   } else {
     const signatures: Array<ts.Signature> = [];
 
-    Array.prototype.push.apply(signatures, typeChecker.getSignaturesOfType(type, SignatureKind.Call));
-    Array.prototype.push.apply(signatures, typeChecker.getSignaturesOfType(type, SignatureKind.Construct));
+    Array.prototype.push.apply(
+      signatures,
+      typeChecker.getSignaturesOfType(type, SignatureKind.Call)
+    );
+    Array.prototype.push.apply(
+      signatures,
+      typeChecker.getSignaturesOfType(type, SignatureKind.Construct)
+    );
 
     return GetMockPropertiesFromSymbol(symbols, signatures, scope);
   }
 }
 
-export function GetPropertiesFromMembers(node: ts.TypeLiteralNode, scope: Scope): ts.Expression {
+export function GetPropertiesFromMembers(
+  node: ts.TypeLiteralNode,
+  scope: Scope
+): ts.Expression {
   const members: ts.NodeArray<ts.NamedDeclaration> = node.members;
   const signatures: Array<SignatureLike> = [];
   const properties: Array<PropertyLike> = [];

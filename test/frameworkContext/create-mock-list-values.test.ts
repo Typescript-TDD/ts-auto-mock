@@ -10,11 +10,14 @@ describe('create-mock-list-values', () => {
   }
 
   it('should have different mocks for each item with merged values', () => {
-    const properties: Interface[] = createMockList<Interface>(3, (index: number) => ({
-      property: {
-        a: index * 2,
-      },
-    }));
+    const properties: Interface[] = createMockList<Interface>(
+      3,
+      (index: number) => ({
+        property: {
+          a: index * 2,
+        },
+      })
+    );
     properties[0].method();
     properties[2].method();
     expect(properties.length).toBe(3);

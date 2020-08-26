@@ -4,7 +4,7 @@ describe('parenthesized intersection ', () => {
   it('should return undefined for primitive and object ', () => {
     interface B {}
 
-    type A = (string) & B;
+    type A = string & B;
 
     expect(createMock<A>()).toBeUndefined();
   });
@@ -22,7 +22,7 @@ describe('parenthesized intersection ', () => {
   });
 
   it('should return the correct type for objects intersections', () => {
-    type A = ({a: string} & {b: number});
+    type A = { a: string } & { b: number };
 
     const mock: A = createMock<A>();
 

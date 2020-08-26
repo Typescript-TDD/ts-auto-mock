@@ -4,7 +4,6 @@ const gitHelper = require('./core/git/gitHelper');
 const testRunner = require('./testRunner/testRunner');
 const LocalRepository = require("./repository/localRepository");
 const localFileData = path.join(__dirname, '../', 'data');
-
 const localRepository = LocalRepository(localFileData, 'performance.json');
 
 (async function () {
@@ -19,6 +18,21 @@ const localRepository = LocalRepository(localFileData, 'performance.json');
     const data = addTestResultsToData(existingData, testResults, currentBranch, currentCommit);
 
     await localRepository.update(data);
+
+    console.table(
+      testResults.reduce((rows, { types, result }) => {
+        rows[types] = Object.values(result)
+          .map(({ title, value }) => ({ [title]: value }))
+          .reduce((columns, col) => {
+            return {
+              ...columns,
+              ...col,
+            };
+          }, {});
+
+      return rows;
+      }, {}),
+    );
 })();
 
 function addTestResultsToData(data, results, currentBranch, currentCommit) {

@@ -5,6 +5,9 @@ module.exports = (options) => {
 
     return {
         mode: "production",
+        node: {
+            __dirname: false
+        },
         resolve: {
             extensions: ['.ts', '.js']
         },
@@ -26,7 +29,7 @@ module.exports = (options) => {
             ]
         },
         output: {
-            libraryTarget: "commonjs",
+            libraryTarget: "commonjs2",
             filename: "[name].js"
         },
         plugins: [

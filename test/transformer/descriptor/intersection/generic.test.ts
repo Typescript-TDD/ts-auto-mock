@@ -3,7 +3,7 @@ import { createMock } from 'ts-auto-mock';
 describe('intersection', () => {
   describe('one generics', () => {
     interface Interface<T> {
-      a: Interface<T> & {s: T};
+      a: Interface<T> & { s: T };
     }
 
     it('should assign the correct values', () => {
@@ -54,7 +54,9 @@ describe('intersection', () => {
     }
 
     it('should assign the correct values', () => {
-      const properties: Interface<string, number> = createMock<Interface<string, number>>();
+      const properties: Interface<string, number> = createMock<
+        Interface<string, number>
+      >();
       expect(properties.a.test).toBe(0);
       expect(properties.a.c).toBe('');
     });
@@ -74,7 +76,9 @@ describe('intersection', () => {
     }
 
     it('should assign the correct values', () => {
-      const properties: Interface<string, number> = createMock<Interface<string, number>>();
+      const properties: Interface<string, number> = createMock<
+        Interface<string, number>
+      >();
       expect(properties.a.property).toBe(0);
       expect(properties.a.c).toBe('');
     });
@@ -94,7 +98,9 @@ describe('intersection', () => {
     }
 
     it('should assign the correct values', () => {
-      const properties: Interface<ToExtend<string>, number> = createMock<Interface<ToExtend<string>, number>>();
+      const properties: Interface<ToExtend<string>, number> = createMock<
+        Interface<ToExtend<string>, number>
+      >();
       expect(properties.a.property).toBe(0);
       expect(properties.a.c.property).toBe('');
     });

@@ -95,3 +95,39 @@ circle `A` over and over, and result in an infinite nested tree of declaration
 references. The intended behavior is to have the first back-reference stored
 elsewhere in the generated output and let it reference itself, making the
 runtime a lazy-evaluated sequence of getters.
+
+## Indexed access type with generics
+```ts
+interface StandardInterface {
+    prop: string;
+}
+
+interface WithKeyGeneric<U extends keyof StandardInterface> {
+    test(): StandardInterface[U];
+}
+
+const type = createMock<WithKeyGeneric<'prop'>>();
+
+expect(type.test()).toBe(''); // it will be null
+```
+
+These are discussed here:
+[link](https://github.com/Typescript-TDD/ts-auto-mock/issues/201).
+Indexed access type it's a though feature to handle correctly.
+There are few difference scenarios:
+- From MappedTypes
+```ts
+type Test = {[key in keyof A]: A[key]};
+```
+- From Generics -> example above
+- From literal
+```ts
+interface StandardInterface {
+    prop: string;
+}
+
+type Hello = StandardInterface['prop'];
+```
+
+
+

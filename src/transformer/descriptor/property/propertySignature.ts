@@ -6,7 +6,10 @@ import { PropertySignatureCache } from './cache';
 
 type PropertyNode = ts.PropertySignature | ts.PropertyDeclaration;
 
-export function GetPropertyDescriptor(node: PropertyNode, scope: Scope): ts.Expression {
+export function GetPropertyDescriptor(
+  node: PropertyNode,
+  scope: Scope
+): ts.Expression {
   PropertySignatureCache.instance.set(node.name);
 
   if (node.type) {
@@ -19,7 +22,7 @@ export function GetPropertyDescriptor(node: PropertyNode, scope: Scope): ts.Expr
 
   if (!node.initializer) {
     throw new Error(
-      `The transformer couldn't determine a property value for \`${node.getText()}' without a specified type nor an initializer value.`,
+      `The transformer couldn't determine a property value for \`${node.getText()}' without a specified type nor an initializer value.`
     );
   }
 
