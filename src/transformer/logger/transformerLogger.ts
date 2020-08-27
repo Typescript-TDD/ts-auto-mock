@@ -1,5 +1,7 @@
 import { Logger } from '../../logger/logger';
 import { ILogger } from '../../logger/logger.interface';
+import { TypescriptHelper } from '../descriptor/helper/helper';
+import { PropertySignatureCache } from '../descriptor/property/cache';
 
 let logger: ILogger;
 
@@ -29,11 +31,13 @@ export function TransformerLogger(): TransformerLogger {
     },
     typeNotSupported(
       type: Readonly<string>,
-      name?: Readonly<string | undefined>
+      name: Readonly<string> = TypescriptHelper.GetStringPropertyName(
+        PropertySignatureCache.instance.get()
+      )
     ): void {
-      if (name) {
+      if (name && name.length > 0) {
         logger.warning(
-          `Not supported type: ${type} for ${name} - it will convert to null`
+          `Not supported type: ${type} for \`${name}\` - it will convert to null`
         );
       } else {
         logger.warning(`Not supported type: ${type} - it will convert to null`);
