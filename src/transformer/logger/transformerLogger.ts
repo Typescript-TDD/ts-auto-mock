@@ -6,7 +6,8 @@ let logger: ILogger;
 export interface TransformerLogger {
   circularGenericNotSupported(nodeName: string): void;
   unexpectedCreateMock(mockFileName: string, expectedFileName: string): void;
-  typeNotSupported(type: string): void;
+  typeNotSupported(type: Readonly<string>): void;
+  typeNotSupported(type: Readonly<string>, name: Readonly<string>): void;
   typeOfFunctionCallNotFound(node: string): void;
   indexedAccessTypeFailed(propertyName: string, nodeText: string): void;
 }
@@ -26,8 +27,17 @@ export function TransformerLogger(): TransformerLogger {
             found: ${mockFileName}
             expected: ${expectedFileName}`);
     },
-    typeNotSupported(type: string): void {
-      logger.warning(`Not supported type: ${type} - it will convert to null`);
+    typeNotSupported(
+      type: Readonly<string>,
+      name?: Readonly<string | undefined>
+    ): void {
+      if (name) {
+        logger.warning(
+          `Not supported type: ${type} for ${name} - it will convert to null`
+        );
+      } else {
+        logger.warning(`Not supported type: ${type} - it will convert to null`);
+      }
     },
     typeOfFunctionCallNotFound(node: string): void {
       logger.warning(
