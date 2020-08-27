@@ -25,7 +25,7 @@
         "dist:collect": "cp -r package.json package-lock.json README.md dist",
         "ts-check:src": "tsc --noEmit",
         "eslint": "eslint './src/**/*.ts' './test/**/*.ts'",
-        "prettier": "./node_modules/prettier/bin-prettier.js --check '**/*.{ts,json,yaml}'",
+        "prettier": "node node_modules/prettier/bin-prettier.js --check **/*.{ts,json,yaml}",
         "prettier:fix": "npm run prettier -- --write",
         "release": "npm run dist:collect && semantic-release",
         "postversion": "cp -r package.json ../ && cp -r package-lock.json ../",
