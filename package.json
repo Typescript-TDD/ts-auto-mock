@@ -24,7 +24,7 @@
         "test:playground:build": "karma start config/karma/karma.config.transformer.playground.build.js",
         "dist:collect": "cp -r package.json package-lock.json README.md dist",
         "ts-check:src": "tsc --noEmit",
-        "eslint": "eslint './src/**/*.ts' './test/**/*.ts'",
+        "eslint": "eslint ./src/**/*.ts ./test/**/*.ts",
         "prettier": "node node_modules/prettier/bin-prettier.js --check **/*.{ts,json,yaml}",
         "prettier:fix": "npm run prettier -- --write",
         "release": "npm run dist:collect && semantic-release",
