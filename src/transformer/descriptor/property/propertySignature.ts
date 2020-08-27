@@ -22,7 +22,7 @@ export function GetPropertyDescriptor(
 
   if (!node.initializer) {
     throw new Error(
-      `The transformer couldn't determine a property value for \`${node.getText()}' without a specified type nor an initializer value.`
+      `The transformer couldn't determine a property value for \`${node.getText()}\` without a specified type nor an initializer value.`
     );
   }
 
