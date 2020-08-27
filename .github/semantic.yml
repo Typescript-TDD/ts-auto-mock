@@ -12,4 +12,5 @@ types:
   - test
   - build
   - ci
+  - docs
   - chore
