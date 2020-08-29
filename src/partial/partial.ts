@@ -9,8 +9,8 @@ export type PartialDeep<T> = T extends Primitive
   : T extends ReadonlyMap<infer KeyType, infer ValueType>
   ? PartialReadonlyMapDeep<KeyType, ValueType>
   : T extends ReadonlySet<infer ItemType>
-  ? PartialReadonlySetDeep<ItemType> // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  : T extends (...args: any[]) => unknown
+  ? PartialReadonlySetDeep<ItemType>
+  : T extends (...args: any[]) => unknown // eslint-disable-line @typescript-eslint/no-explicit-any
   ? T | undefined
   : T extends object
   ? PartialObjectDeep<T>
@@ -42,5 +42,13 @@ interface PartialReadonlySetDeep<T> extends ReadonlySet<PartialDeep<T>> {}
  Same as `PartialDeep`, but accepts only `object`s as inputs. Internal helper for `PartialDeep`.
  */
 type PartialObjectDeep<ObjectType extends object> = {
-  [KeyType in keyof ObjectType]?: PartialDeep<ObjectType[KeyType]>;
+  [KeyType in keyof SuppressObjectPrototypeOverrides<ObjectType>]?: PartialDeep<
+    SuppressObjectPrototypeOverrides<ObjectType>[KeyType]
+  >;
 };
+
+type SuppressObjectPrototypeOverrides<ObjectType> = Pick<
+  ObjectType,
+  Exclude<keyof ObjectType, keyof Object>
+> &
+  Pick<Object, Extract<keyof Object, keyof ObjectType>>;
