@@ -21,4 +21,21 @@ describe('create-mock-values', () => {
     expect(properties.property.a).toBe(2);
     expect(properties.property.c).toHaveBeenCalled();
   });
+
+  it('should not clash with object prototype properties', () => {
+    interface OverridePrototype {
+      valueOf(): number;
+      props: Interface;
+    }
+
+    createMock<OverridePrototype>({
+      props: {
+        property: {
+          a: 2,
+        },
+      },
+    });
+
+    expect().nothing();
+  });
 });
