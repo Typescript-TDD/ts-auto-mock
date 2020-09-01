@@ -185,6 +185,8 @@
     "use-isnan": "error",
     "valid-typeof": "off",
     "brace-style": "error",
-    "prettier/prettier": "error"
+    "prettier/prettier": ["error",  {
+      "endOfLine":"auto"
+    }]
   }
 }

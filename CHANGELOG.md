@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.3.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.4...2.3.5) (2020-08-29)
+
+
+### Bug Fixes
+
+* **createMock:** PartialDeep to ignore object prototype properties ([37cb34d](https://github.com/Typescript-TDD/ts-auto-mock/commit/37cb34dd3862b4ff75c9d2527cb70d6c0b8c55ef))
+
 ## [2.3.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.3...2.3.4) (2020-08-09)
 
 
