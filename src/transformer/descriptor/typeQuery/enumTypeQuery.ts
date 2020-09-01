@@ -1,10 +1,10 @@
 import * as ts from 'typescript';
-
+/* eslint-disable dot-notation,@typescript-eslint/ban-ts-comment */
 export function GetTypeofEnumDescriptor(
   enumDeclaration: ts.EnumDeclaration
 ): ts.Expression {
-  enumDeclaration.modifiers = undefined;
-
+  // @ts-ignore
+  enumDeclaration['modifiers'] = undefined;
   return ts.createArrowFunction(
     undefined,
     undefined,
