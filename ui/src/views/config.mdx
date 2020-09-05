@@ -23,6 +23,7 @@ options:
 | `debug`              |  `false`       | it will NOT log to the console               | false
 |                      |  `true`        | it will log to the console                   |
 |                      |  `file`        | it will log to a file (tsAutoMock.log)       |
+|                      |  `console`     | alias for `true`                             |
 | `cacheBetweenTests`  |  `true`        | it will reuse mocks between different tests  | true
 |                      |  `false`       | it create new mocks for each different tests |
 | `features`           |  `feature[]`   | it will enable a specific feature            | []
@@ -30,16 +31,17 @@ options:
 ---
 
 ## Debug
-We currently support
+We currently support:
 - Logs for [not supported types](./types-not-supported)
-It will log any  not supported type automatically converted to null.
-This is useful to report an issue or to investigate a potential bug
+
+It will log any not supported type automatically converted to null.
+This is useful to report an issue or to investigate a potential bug.
 ---
 
 ## CacheBetweenTests
 One of the main functionality of ts auto mock is to generate mocks and cache them.
 
-Mocks are currently created in the test file making tests to depend to each other
+Mocks are currently created in the test file making tests to depend to each other.
 
 Example:
 - test1.test.ts has a createMock of Interface.
