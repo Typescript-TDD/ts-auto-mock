@@ -9,6 +9,7 @@ import {
 } from '../mergeExpression/mergeExpression';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { Scope } from '../scope/scope';
+import { SetCurrentCreateMock } from './currentCreateMockNode';
 
 function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
   return GetDescriptor(nodeToMock, new Scope());
@@ -54,6 +55,8 @@ export function getMock(
   nodeToMock: ts.TypeNode,
   node: ts.CallExpression
 ): ts.Expression {
+  SetCurrentCreateMock(node);
+
   const mockExpression: ts.Expression = getMockExpression(nodeToMock);
 
   if (hasDefaultValues(node)) {
@@ -67,6 +70,7 @@ export function getMockForList(
   nodeToMock: ts.TypeNode,
   node: ts.CallExpression
 ): ts.ArrayLiteralExpression {
+  SetCurrentCreateMock(node);
   const mock: ts.Expression = getMockExpression(nodeToMock);
   const lengthLiteral: ts.NumericLiteral = node
     .arguments[0] as ts.NumericLiteral;
@@ -96,6 +100,7 @@ export function storeRegisterMock(
   typeToMock: ts.TypeNode,
   node: ts.CallExpression
 ): ts.Node {
+  SetCurrentCreateMock(node);
   if (ts.isTypeReferenceNode(typeToMock)) {
     const factory: ts.FunctionExpression = node
       .arguments[0] as ts.FunctionExpression;

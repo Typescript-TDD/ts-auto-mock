@@ -1,15 +1,45 @@
+import ts from 'typescript';
 import { Logger } from '../../logger/logger';
 import { ILogger } from '../../logger/logger.interface';
+import { GetCurrentCreateMock } from '../mock/currentCreateMockNode';
 
 let logger: ILogger;
 
 export interface TransformerLogger {
   circularGenericNotSupported(nodeName: string): void;
+
   unexpectedCreateMock(mockFileName: string, expectedFileName: string): void;
-  typeNotSupported(type: string): void;
+
+  typeNotSupported(type: string, currentNode?: ts.Node): void;
+
   typeOfFunctionCallNotFound(node: string): void;
+
   indexedAccessTypeFailed(propertyName: string, nodeText: string): void;
 }
+
+const notSupportedTypeMessage: (
+  type: string,
+  createMockFileUrl: string,
+  currentNodeFileUrl: string
+) => string = (
+  type: string,
+  createMockFileUrl: string,
+  currentNodeFileUrl: string
+) => `Not supported type: ${type} - it will convert to null
+created ${createMockFileUrl}
+used by ${currentNodeFileUrl}`;
+
+export const getNodeFileUrl: (node: ts.Node) => string = (node: ts.Node) => {
+  const sourceFile: ts.SourceFile = node.getSourceFile();
+  const {
+    line,
+    character,
+  }: ts.LineAndCharacter = sourceFile.getLineAndCharacterOfPosition(
+    node.getStart()
+  );
+
+  return `file://${sourceFile.fileName}:${line + 1}:${character + 1}`;
+};
 
 export function TransformerLogger(): TransformerLogger {
   logger = logger || Logger('Transformer');
@@ -26,8 +56,15 @@ export function TransformerLogger(): TransformerLogger {
             found: ${mockFileName}
             expected: ${expectedFileName}`);
     },
-    typeNotSupported(type: string): void {
-      logger.warning(`Not supported type: ${type} - it will convert to null`);
+    typeNotSupported(type: string, currentNode: ts.Node): void {
+      const createMockNode: ts.Node = GetCurrentCreateMock();
+
+      const createMockFileUrl: string = getNodeFileUrl(createMockNode);
+      const currentNodeFileUrl: string = getNodeFileUrl(currentNode);
+
+      logger.warning(
+        notSupportedTypeMessage(type, createMockFileUrl, currentNodeFileUrl)
+      );
     },
     typeOfFunctionCallNotFound(node: string): void {
       logger.warning(

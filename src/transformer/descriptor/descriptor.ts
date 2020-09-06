@@ -180,7 +180,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.CallExpression:
       return GetCallExpressionDescriptor(node as ts.CallExpression, scope);
     default:
-      TransformerLogger().typeNotSupported(ts.SyntaxKind[node.kind]);
+      TransformerLogger().typeNotSupported(ts.SyntaxKind[node.kind], node);
       return GetNullDescriptor();
   }
 }
