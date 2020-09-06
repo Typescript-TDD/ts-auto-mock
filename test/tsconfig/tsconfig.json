@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "sourceMap": false,
+    "baseUrl": "./",
+    "paths": {
+      "ts-auto-mock/extension": ["../../dist/extension"],
+      "ts-auto-mock/repository": ["../../dist/repository"],
+      "ts-auto-mock/merge": ["../../dist/merge"],
+      "ts-auto-mock/random": ["../../dist/random"],
+      "ts-auto-mock": ["../../dist"]
+    }
+  }
+}

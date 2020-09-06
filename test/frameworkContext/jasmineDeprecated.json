@@ -1,0 +1,8 @@
+{
+  "spec_dir": "./test/frameworkContext",
+  "spec_files": ["**/*test.deprecated.ts"],
+  "helpers": [
+    "../reporter.js",
+    "contextDeprecated.ts"
+  ]
+}

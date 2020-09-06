@@ -1,6 +1,6 @@
 import { ArrayHelper } from '../../../../src/transformer/array/array';
 
-describe('when comparing', () => {
+describe('Array: when comparing', () => {
   it('should be true for 2 empty arrays', () => {
     expect(ArrayHelper.AreEqual([], [])).toBe(true);
   });

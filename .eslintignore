@@ -12,3 +12,4 @@ DefinitelyTyped
 /performance
 /ui
 /utils
+/test/reporter.js

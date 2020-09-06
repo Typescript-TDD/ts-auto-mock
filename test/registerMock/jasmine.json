@@ -1,0 +1,8 @@
+{
+  "spec_dir": "./test/registerMock",
+  "spec_files": ["**/*test.ts"],
+  "helpers": [
+    "../reporter.js",
+    "context.ts"
+  ]
+}
