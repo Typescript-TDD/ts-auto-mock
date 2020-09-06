@@ -1,0 +1,5 @@
+{
+  "spec_dir": "./test/unit",
+  "spec_files": ["**/*test.ts"],
+  "helpers": ["../reporter.js"]
+}
