@@ -28,8 +28,8 @@ export namespace TypescriptHelper {
 
     if (!symbol) {
       throw new Error(
-        `The type checker failed to look up a symbol for \`${node.getText()}'. ` +
-          'Perhaps, the checker was searching an outdated source.'
+        `The type checker failed to look up a symbol for \`${node.getText()}'. 
+        Perhaps, the checker was searching an outdated source.`
       );
     }
 

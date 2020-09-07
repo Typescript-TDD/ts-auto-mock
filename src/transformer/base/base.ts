@@ -109,9 +109,9 @@ function visitNode(
     const mockFunction: string = node.getText();
 
     throw new Error(
-      `It seems you've called \`${mockFunction}' without specifying a type argument to mock. ` +
-        `Please refer to the documentation on how to use \`${mockFunction}': ` +
-        'https://github.com/Typescript-TDD/ts-auto-mock#quick-overview'
+      `It seems you've called \`${mockFunction}' without specifying a type argument to mock. 
+      Please refer to the documentation on how to use \`${mockFunction}': 
+      https://github.com/Typescript-TDD/ts-auto-mock#quick-overview`
     );
   }
 

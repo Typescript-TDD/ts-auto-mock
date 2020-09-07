@@ -47,8 +47,8 @@ export function TransformerLogger(): TransformerLogger {
   return {
     circularGenericNotSupported(nodeName: string): void {
       logger.warning(
-        `Found a circular generic of \`${nodeName}' and such generics are currently not supported. ` +
-          'The generated mock will be incomplete.'
+        `Found a circular generic of \`${nodeName}' and such generics are currently not supported. 
+        The generated mock will be incomplete.`
       );
     },
     unexpectedCreateMock(mockFileName: string, expectedFileName: string): void {

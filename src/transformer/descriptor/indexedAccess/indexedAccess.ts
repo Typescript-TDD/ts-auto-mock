@@ -32,8 +32,9 @@ export function GetIndexedAccessTypeDescriptor(
           break;
         default:
           TransformerLogger().typeNotSupported(
-            'IndexedAccess of TypeReference of ' +
-              ts.SyntaxKind[declaration.kind],
+            `IndexedAccess of TypeReference of ${
+              ts.SyntaxKind[declaration.kind]
+            }`,
             declaration
           );
           break;
@@ -45,7 +46,7 @@ export function GetIndexedAccessTypeDescriptor(
       break;
     default:
       TransformerLogger().typeNotSupported(
-        'IndexedAccess of ' + ts.SyntaxKind[node.indexType.kind],
+        `IndexedAccess of ${ts.SyntaxKind[node.indexType.kind]}`,
         node.indexType
       );
       break;
