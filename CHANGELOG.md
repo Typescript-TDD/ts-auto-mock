@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [2.4.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.5...2.4.0) (2020-09-09)
+
+
+### Features
+
+* **logs:** enhance unsupported type logs ([#513](https://github.com/Typescript-TDD/ts-auto-mock/issues/513)) ([5dd6711](https://github.com/Typescript-TDD/ts-auto-mock/commit/5dd6711185812ce08306f8acd78d9b7b353cca02))
+
 ## [2.3.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.4...2.3.5) (2020-08-29)
 
 
