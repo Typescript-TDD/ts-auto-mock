@@ -102,7 +102,8 @@ export function GetTypeQueryDescriptorFromDeclaration(
       }
     default:
       TransformerLogger().typeNotSupported(
-        `TypeQuery of ${ts.SyntaxKind[declaration.kind]}`
+        `TypeQuery of ${ts.SyntaxKind[declaration.kind]}`,
+        declaration
       );
       return GetNullDescriptor();
   }
