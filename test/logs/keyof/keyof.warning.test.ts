@@ -3,8 +3,8 @@ import { getLogsByCreateMockFileName, UnsupportedTypeLog } from '../utils/log';
 import { KeyOfType } from './keyof.warning.type';
 
 describe('KeyOf Warning', () => {
-  it('should log an unsupported type warning', () => {
-    const logs: UnsupportedTypeLog[] = getLogsByCreateMockFileName(
+  it('should log an unsupported type warning', async () => {
+    const logs: UnsupportedTypeLog[] = await getLogsByCreateMockFileName(
       'keyof.warning.test.ts'
     );
 
