@@ -3,8 +3,8 @@ import { ConditionalType } from './conditionalType';
 import { getLogsByCreateMockFileName, UnsupportedTypeLog } from './utils/log';
 
 describe('Create Mock Warning', () => {
-  it('should log an unsupported type warning', () => {
-    const logs: UnsupportedTypeLog[] = getLogsByCreateMockFileName(
+  it('should log an unsupported type warning', async () => {
+    const logs: UnsupportedTypeLog[] = await getLogsByCreateMockFileName(
       'createMock.warning.test.ts'
     );
     interface InterfaceWithConditionalType {
