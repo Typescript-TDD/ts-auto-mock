@@ -2,7 +2,7 @@ import { createMockList } from 'ts-auto-mock';
 import { ConditionalType } from './conditionalType';
 import { getLogsByCreateMockFileName, UnsupportedTypeLog } from './utils/log';
 
-describe('Warning', () => {
+describe('Create Mock List Warning', () => {
   it('should log an unsupported type warning', () => {
     const logs: UnsupportedTypeLog[] = getLogsByCreateMockFileName(
       'createMockList.warning.test.ts'
