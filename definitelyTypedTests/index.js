@@ -133,7 +133,7 @@ createDefinitelyTypedMock<typeof pak>();
                 console.warn('☐');
                 outputService.addData(processId, dir, {
                     response: 'warning',
-                    message: response.toString()
+                    message: removeWarningLogsForFilesInDifferentDirectories(response.toString(), typePath)
                 });
             } else {
                 process.stdout.write(`TYPE: ${dir} P${processId} `);
@@ -160,4 +160,20 @@ createDefinitelyTypedMock<typeof pak>();
                 message: errorData
             });
         });
+}
+
+function removeWarningLogsForFilesInDifferentDirectories(log, typePath) {
+    const logLines = log
+        .split('\n')
+        .filter((line) => !!line);
+
+    for (let i = logLines.length - 1; i >= 0; i--) {
+        if (/WARNING[^\n]+?: Transformer/.test(logLines[i])) {
+            if (!logLines[i+2].includes(typePath)) {
+                logLines.splice(i, 3);
+            }
+        }
+    }
+
+    return logLines.join('\n');
 }
