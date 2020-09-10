@@ -1,12 +1,19 @@
 import { createMock } from 'ts-auto-mock';
 
 describe('for tuple', () => {
-  interface Interface {
-    a: [string, number];
+  interface InterfaceElement {
+    prop: string;
   }
 
-  it('should set an empty string', () => {
+  interface Interface {
+    tuple: [string, number, InterfaceElement];
+  }
+
+  it('should set an instance of tuple', () => {
     const properties: Interface = createMock<Interface>();
-    expect(properties.a).toEqual([]);
+    expect(properties.tuple.length).toBe(3);
+    expect(properties.tuple[0]).toEqual('');
+    expect(properties.tuple[1]).toEqual(0);
+    expect(properties.tuple[2].prop).toEqual('');
   });
 });
