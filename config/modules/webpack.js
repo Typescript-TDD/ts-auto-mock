@@ -17,5 +17,6 @@ module.exports = merge(base({
     },
     output: {
         path: path.resolve(__dirname, "../../dist")
-    }
+    },
+    externals: ['ts-auto-mock/extension']
 });
