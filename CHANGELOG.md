@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [2.5.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.4.0...2.5.0) (2020-09-11)
+
+
+### Bug Fixes
+
+* **logs:** ensure logs tests work on windows ([a160a87](https://github.com/Typescript-TDD/ts-auto-mock/commit/a160a879fa8032e2da5d17ee3d6451737d977754))
+
+
+### Features
+
+* **transformer:** tuple type now gets mocked as an instance of specified tuple, add keyof warning, support readonly array/tuple Pmyl 23 minutes ago ([af9df91](https://github.com/Typescript-TDD/ts-auto-mock/commit/af9df910e58b56ed14341a89c87943ae1b561740))
+
 # [2.4.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.5...2.4.0) (2020-09-09)
 
 
