@@ -47,3 +47,35 @@ mock.id // ""
 mock.getName() // ""
 mock.details // { phone: 7423232323 }
 ```
+
+### Override with created mock as value
+If a mock is used as a value in the override object the mock will be entirely assigned and not merged. This is done to
+avoid issues with recursive mocks. Surely this won't be a problem for anyone but it's worth writing it in the documentation.
+```ts
+import { createMock } from 'ts-auto-mock';
+
+interface Person {
+  id: string;
+}
+
+interface PersonParent {
+  child: Person;
+}
+
+const personMock = createMock<Person>();
+const parentMock = createMock<PersonParent>({
+    child: personMock
+});
+
+parentMock.child === personMock // true
+
+const personMock2 = createMock<Person>();
+delete personMock2.id;
+const parentMock2 = createMock<PersonParent>({
+    child: personMock2
+});
+
+parentMock2.child === personMock2 // true
+parentMock2.child.id // undefined, even if `id` was not in the override object (personMock2) it still did override
+                     // because the entire `personMock2` was assigned to `child`
+```
