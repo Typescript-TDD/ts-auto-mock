@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.5.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.0...2.5.1) (2020-09-12)
+
+
+### Bug Fixes
+
+* **mockValues:** assign, not merge, override value when is a mock to prevent maximum callstack size exceeded errors ([7431d80](https://github.com/Typescript-TDD/ts-auto-mock/commit/7431d801753ab47c6efd14c9d77f6adabe8e6df4))
+
 # [2.5.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.4.0...2.5.0) (2020-09-11)
 
 
