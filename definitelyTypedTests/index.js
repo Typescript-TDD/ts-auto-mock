@@ -5,6 +5,8 @@ process.on('unhandledRejection', (error) => {
 
 require('dotenv').config();
 const fs = require('fs');
+const path = require('path');
+const upath = require('upath');
 const processService = require('../utils/process/process')(process);
 const execPromise = require('../utils/exec/execPromise');
 const definitelyTyped = require('./src/definitelyTyped')();
@@ -115,8 +117,8 @@ async function run(dir, processId) {
     files: [`./${processId}.index.ts`],
   };
 
-  const typePath = `${definitelyTyped.typesFolder}/${dir}`;
-  const typeTsConfigPath = `${typePath}/tsconfig.json`;
+  const typePath = path.join(definitelyTyped.typesFolder, dir);
+  const typeTsConfigPath = path.join(typePath, 'tsconfig.json');
   if (fs.existsSync(typeTsConfigPath)) {
     const typeTsConfigFileContent = await fs.promises.readFile(
       typeTsConfigPath
@@ -140,11 +142,12 @@ async function run(dir, processId) {
   }
 
   fs.writeFileSync(`tsconfig.types.${processId}.json`, JSON.stringify(config));
+  const unixTypePath = upath.toUnix(typePath);
   fs.writeFileSync(
     `${processId}.index.ts`,
     `
 // @ts-ignore
-import pak = require('${typePath}');
+import pak = require('${unixTypePath}');
 import { createDefinitelyTypedMock } from './dist';
 // @ts-ignore
 createDefinitelyTypedMock<typeof pak>();

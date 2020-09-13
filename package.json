@@ -10,6 +10,7 @@
         "build:modules": "webpack --config config/modules/webpack.js",
         "build:modules:debug": "cross-env DEBUG=true webpack --config config/modules/webpack.js",
         "build:transformer:definitelyTyped": "webpack --config config/modules/definitelyTypedTransformer/webpack.functions.js && webpack --config config/modules/definitelyTypedTransformer/webpack.js",
+        "build:transformer:definitelyTyped:debug": "cross-env DEBUG=true webpack --config config/modules/definitelyTypedTransformer/webpack.functions.js && cross-env DEBUG=true webpack --config config/modules/definitelyTypedTransformer/webpack.js",
         "build:playground": "ttsc --project ./test/playground/tsconfig.build.json",
         "test": "npm run test:transformer && npm run test:noTransformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:registerMock && npm run test:features && npm run test:logs && npm run test:unit",
         "test:unit": "cross-env JASMINE_CONFIG=./test/unit/jasmine.json TSCONFIG=./test/tsconfig.json npm run test:common",
