@@ -22,6 +22,7 @@
         "test:features": "cross-env JASMINE_CONFIG=./test/features/jasmine.json TSCONFIG=./test/features/tsconfig.json npm run test:common",
         "test:logs": "cross-env JASMINE_CONFIG=./test/logs/jasmine.json TSCONFIG=./test/logs/tsconfig.json npm run test:common",
         "test:playground": "cross-env JASMINE_CONFIG=./test/playground/jasmine.json TSCONFIG=./test/playground/tsconfig.json npm run test:common",
+        "test:playground:build": "cross-env JASMINE_CONFIG=./test/playground/jasmine.build.json TSCONFIG=./test/playground/tsconfig.json npm run test:common",
         "test:common": "cross-var ts-node --files -r tsconfig-paths/register --compiler ttypescript --project $TSCONFIG node_modules/jasmine/bin/jasmine --config=$JASMINE_CONFIG",
         "dist:collect": "cp -r package.json package-lock.json README.md dist",
         "ts-check:src": "tsc --noEmit",
