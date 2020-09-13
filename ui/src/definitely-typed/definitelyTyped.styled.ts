@@ -1,13 +1,9 @@
-import styled, {StyledFunction} from 'styled-components';
-
+import styled from 'styled-components';
 
 interface Props {
   type: string;
 }
 
-export const TypesContainer = styled.div`
-  margin-top: 20px;
-`;
 export const TypesDetails = styled.details<Props>`
   border: 1px solid #aaa;
   border-radius: 4px;

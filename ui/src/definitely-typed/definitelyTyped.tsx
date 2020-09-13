@@ -155,9 +155,11 @@ export function DefinitelyTyped(): JSX.Element {
 
       <DefinitelyTypedFilters
         filter={(options) => setFilterOptions(options)}
+        data={data}
         runInfo={runInfo}
       />
 
+      <div className="DefinitelyTyped-typesViewCount">Showing list of <b>{types.length}</b> types.</div>
       <div className="DefinitelyTyped-typesContainer">{types}</div>
     </div>
   );
