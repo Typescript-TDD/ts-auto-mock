@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.5.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.1...2.5.2) (2020-09-13)
+
+
+### Bug Fixes
+
+* **enum:** fix enum constant computed properties ([9c96a53](https://github.com/Typescript-TDD/ts-auto-mock/commit/9c96a532b1f59af2d3939c26ef8bf8a85044b46b))
+
 ## [2.5.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.0...2.5.1) (2020-09-12)
 
 
