@@ -5,8 +5,6 @@ route: /config
 
 # Config
 ```ts
-tsAutoMockTransformer(program: ts.Program, options: TsAutoMockOptions)
-
 interface TsAutoMockOptions {
     debug: boolean | 'file' | 'console';
     cacheBetweenTests: boolean;
@@ -31,12 +29,16 @@ options:
 
 ---
 
+There are different ways to pass options to a transformer, every installation type has its own way, to know how to do it
+find your configuration in the [Installation page](./installation).
+
 ## Debug
 We currently support:
 - Logs for [not supported types](./types-not-supported)
 
 It will log any not supported type automatically converted to null.
 This is useful to report an issue or to investigate a potential bug.
+
 ---
 
 ## CacheBetweenTests
