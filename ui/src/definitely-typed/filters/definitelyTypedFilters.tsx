@@ -4,7 +4,7 @@ import '../input/input.scss';
 import { useDebounce } from '../../core/useDebounce/useDebounce';
 import { Option, Select } from '../../style/select/select.styled';
 import { DefinitelyTypedTypeRun } from "../interfaces/definitelyTypedTypeRun.interface";
-import { PresetFilter } from "./errorPresetFilters";
+import { ErrorPresetFilters, PresetFilter } from "./errorPresetFilters";
 
 export interface DefinitelyTypedRunInfo {
   success: number;
@@ -27,12 +27,17 @@ export interface DefinitelyTypedFiltersOptions {
   isShowingErrors: boolean;
 }
 
+enum DefaultOptionId {
+  None = -1,
+  Custom = -2
+}
+
 export function DefinitelyTypedFilters(
   props: DefinitelyTypedFiltersProps
 ): JSX.Element {
   const [filterOut, setFilterOut] = useState('');
   const [filterIn, setFilterIn] = useState('');
-  const [errorPresetFilterId, setErrorPresetFilterId] = useState(0);
+  const [errorPresetFilterId, setErrorPresetFilterId] = useState(DefaultOptionId.None);
   const [isShowing, setIsShowing] = useState(
     '' as keyof DefinitelyTypedRunInfo
   );
@@ -55,12 +60,12 @@ export function DefinitelyTypedFilters(
 
   function buildFilterInOption() {
     if (isShowing === 'error') {
-      return errorPresetFilterId === 1 && filterIn
+      return errorPresetFilterId === DefaultOptionId.Custom && filterIn
         ? new RegExp(filterIn, 'i')
-        : errorPresetFilterId === 0
+        : errorPresetFilterId === DefaultOptionId.None
         ? null
-        : errorPresetFilterId !== 1
-        ? errorPresetFilters[errorPresetFilterId - 3].regex
+        : errorPresetFilterId !== DefaultOptionId.Custom
+        ? errorPresetFilters[errorPresetFilterId].regex
         : null;
     }
 
@@ -102,35 +107,45 @@ export function DefinitelyTypedFilters(
     }
   );
 
-  type PresetFilterOption = PresetFilter & { disabled?: never; };
+  type PresetFilterDefaultOption = { name: string, id?: number, disabled?: boolean; };
 
-  let errorPresetFilters: PresetFilterOption[] = [];
+  let errorPresetFilters: PresetFilter[] = [];
 
   if (isShowing === 'error') {
-    errorPresetFilters = errorPresetFilters.filter(filter => props.data.some(d => filter.regex.test(d.message || '')));
+    errorPresetFilters = ErrorPresetFilters.filter(filter => props.data.some(d => filter.regex.test(d.message || '')));
   }
 
-  const errorPresetFilterOptionsDefault: { name: string, disabled?: boolean }[] = [
+  const errorPresetFilterOptionsDefault: PresetFilterDefaultOption[] = [
     {
-      name: 'None'
+      name: 'None',
+      id: DefaultOptionId.None
     },
     {
-      name: 'Custom'
+      name: 'Custom',
+      id: DefaultOptionId.Custom
     },
     {
       name: '-',
       disabled: true
     }
   ];
-  const errorPresetFilterOptions: JSX.Element[] = errorPresetFilterOptionsDefault.concat(errorPresetFilters).map(
-    (errorFilter: PresetFilterOption, index: number) => {
+  const errorPresetFilterOptions: JSX.Element[] = errorPresetFilterOptionsDefault.map(
+    (errorFilter) => {
       return (
-        <Option key={index} value={index} disabled={errorFilter.disabled}>
+        <Option key={errorFilter.id} value={errorFilter.id} disabled={errorFilter.disabled}>
           {errorFilter.name}
         </Option>
       );
     }
-  );
+  ).concat((errorPresetFilters).map(
+    (errorFilter: PresetFilter, index: number) => {
+      return (
+        <Option key={index} value={index}>
+          {errorFilter.name}
+        </Option>
+      );
+    }
+  ));
 
   return (
     <div className="DefinitelyTypedFilters-container">
@@ -156,7 +171,7 @@ export function DefinitelyTypedFilters(
               </Select>
             </div>
           )}
-          {(isShowing !== 'error' || errorPresetFilterId === 1) && (
+          {(isShowing !== 'error' || errorPresetFilterId === DefaultOptionId.Custom) && (
             <div className="DefinitelyTypedFilters-input">
               <p>Filter in only messages (regex)</p>
               <input
