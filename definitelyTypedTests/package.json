@@ -16,9 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/micromatch": "^4.0.1",
     "dotenv": "^8.2.0",
-    "micromatch": "^4.0.2",
     "ttypescript": "^1.5.10",
     "typescript": "^4.0.2",
     "upath": "^1.2.0",
