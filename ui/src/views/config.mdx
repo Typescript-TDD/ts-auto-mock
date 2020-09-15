@@ -110,39 +110,41 @@ defining `include`, `exclude` and `files` properties.
 
 Examples of usage:
 `files: "**/*.spec.ts"`
-Structure                                    │ Included?
----------------------------------------------------------------
-root                                         │
-└── Projects                                 │
-    └── SuperProject                         │
-        └── tests                            │
-        │   └── feature1                     │
-        │       ├── supporting.mock.ts       │ No
-        │       ├── supportingInterface.ts   │ No
-        │       ├── feature1.spec.ts         │ Yes
-        │       └── feature1.spec.ts         │ Yes
-        └── src                              │
-            └── feature1                     │
-                ├── myClass.model.ts         │ No
-                ├── myClass.api.mock.ts      │ No
-                ├── model.interface.ts       │ No
-                └── feature1.component.ts    │ No
+
+| Structure                                    | Included?
+| -------------------------------------------- | ----------------
+| root                                         |
+| └── Projects                                 |
+|     └── SuperProject                         |
+|         └── tests                            |
+|         │   └── feature1                     |
+|         │       ├── supporting.mock.ts       | No
+|         │       ├── supportingInterface.ts   | No
+|         │       ├── feature1.spec.ts         | Yes
+|         │       └── feature1.spec.ts         | Yes
+|         └── src                              |
+|             └── feature1                     |
+|                 ├── myClass.model.ts         | No
+|                 ├── myClass.api.mock.ts      | No
+|                 ├── model.interface.ts       | No
+|                 └── feature1.component.ts    | No
 
 `files: ["**/tests/**/*.spec.ts", "**/tests/**/*.mock.ts"]`
-Structure                                    │ Included?
----------------------------------------------------------------
-root                                         │
-└── Projects                                 │
-    └── SuperProject                         │
-        └── tests                            │
-        │   └── feature1                     │
-        │       ├── supporting.mock.ts       │ Yes
-        │       ├── supportingInterface.ts   │ No
-        │       ├── feature1.spec.ts         │ Yes
-        │       └── feature1.spec.ts         │ Yes
-        └── src                              │
-            └── feature1                     │
-                ├── myClass.model.ts         │ No
-                ├── myClass.api.mock.ts      │ No
-                ├── model.interface.ts       │ No
-                └── feature1.component.ts    │ No
+
+| Structure                                    | Included?
+| -------------------------------------------- | ----------------
+| root                                         |
+| └── Projects                                 |
+|     └── SuperProject                         |
+|         └── tests                            |
+|         │   └── feature1                     |
+|         │       ├── supporting.mock.ts       | Yes
+|         │       ├── supportingInterface.ts   | No
+|         │       ├── feature1.spec.ts         | Yes
+|         │       └── feature1.spec.ts         | Yes
+|         └── src                              |
+|             └── feature1                     |
+|                 ├── myClass.model.ts         | No
+|                 ├── myClass.api.mock.ts      | No
+|                 ├── model.interface.ts       | No
+|                 └── feature1.component.ts    | No
