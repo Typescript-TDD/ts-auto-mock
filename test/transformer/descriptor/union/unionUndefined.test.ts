@@ -1,7 +1,7 @@
 import { createMock } from 'ts-auto-mock';
 import { ImportType } from '../utils/types/type';
 
-describe('union optional', () => {
+describe('union undefined', () => {
   describe('type reference', () => {
     type Type = void;
 
@@ -9,7 +9,7 @@ describe('union optional', () => {
       public test: string | Type;
     }
 
-    it('should not set the value', () => {
+    it('should set undefined', () => {
       const properties: MyClass = createMock<MyClass>();
       expect(properties.test).toBeUndefined();
     });
@@ -20,7 +20,7 @@ describe('union optional', () => {
       public test: string | ImportType;
     }
 
-    it('should not set the value', () => {
+    it('should set undefined', () => {
       const properties: MyClass = createMock<MyClass>();
       expect(properties.test).toBeUndefined();
     });
@@ -31,7 +31,7 @@ describe('union optional', () => {
       public test: string | { a: string } | undefined;
     }
 
-    it('should not set the value', () => {
+    it('should set undefined', () => {
       const properties: MyClass = createMock<MyClass>();
       expect(properties.test).toBeUndefined();
     });
@@ -42,7 +42,7 @@ describe('union optional', () => {
       public test: '2' | undefined;
     }
 
-    it('should not set the value', () => {
+    it('should set undefined', () => {
       const properties: MyClass = createMock<MyClass>();
       expect(properties.test).toBeUndefined();
     });
@@ -55,33 +55,33 @@ describe('union optional', () => {
       public test: TypeOptional | number;
     }
 
-    it('should not set the value', () => {
+    it('should set undefined', () => {
       const properties: MyClass = createMock<MyClass>();
       expect(properties.test).toBeUndefined();
     });
   });
 
-  describe('type reference optional as second type', () => {
+  describe('type reference void as second type', () => {
     type TypeOptional = string | void;
 
     class MyClass {
       public test: number | TypeOptional;
     }
 
-    it('should not set the value', () => {
+    it('should set undefined', () => {
       const properties: MyClass = createMock<MyClass>();
       expect(properties.test).toBeUndefined();
     });
   });
 
-  describe('type reference optional and extends', () => {
+  describe('type reference void and extends', () => {
     type TypeOptional = ({ a: string } & { b: number }) | void;
 
     class MyClass {
       public test: number | TypeOptional;
     }
 
-    it('should not set the value', () => {
+    it('should set undefined', () => {
       const properties: MyClass = createMock<MyClass>();
       expect(properties.test).toBeUndefined();
     });
