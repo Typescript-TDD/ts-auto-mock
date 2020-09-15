@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.1...2.6.2) (2020-09-15)
+
+
+### Bug Fixes
+
+* **definitelyTyped:** do not fail on mocking module declarations ([4660f58](https://github.com/Typescript-TDD/ts-auto-mock/commit/4660f587d2c268000a79ef9c6bee6045125377a2))
+
 ## [2.6.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.0...2.6.1) (2020-09-15)
 
 
