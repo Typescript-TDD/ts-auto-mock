@@ -158,12 +158,13 @@ mock // { a: "" }
 ```
 
 ## Optional
+The property is not defined in the mock
 ```ts
 class MyClass {
 	test?: string;
 }
 const mock = createMock<MyClass>();
-mock // { test: undefined }
+mock // { }
 ```
 
 ## Typescript libraries (Array, Number... ecc)
@@ -188,7 +189,9 @@ const mock = createMock<MyClass>();
 mock // { tuple: ['', 0] }
 ```
 
-## Union (it will convert to the first type)
+## Union
+It will convert to the first type of the union unless undefined/void are part of the union,
+in that case it will convert to undefined, being the "smallest type"
 ```ts
 class MyClass {
   union: string | number;
@@ -196,6 +199,13 @@ class MyClass {
 
 const mock = createMock<MyClass>();
 mock // { union: "" }
+
+class MyClass1 {
+  union: string | undefined;
+}
+
+const mock1 = createMock<MyClass1>();
+mock1 // { union: undefined }
 ```
 
 ## Dictionary
