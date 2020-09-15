@@ -1,5 +1,19 @@
 # Semantic Versioning Changelog
 
+# [2.6.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.3...2.6.0) (2020-09-15)
+
+
+### Features
+
+* **fileFilter:** add config option to specify files with mocks ([526d677](https://github.com/Typescript-TDD/ts-auto-mock/commit/526d677955b812871bbddb640eb674a60f835b32))
+
+## [2.5.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.2...2.5.3) (2020-09-15)
+
+
+### Bug Fixes
+
+* **properties:** create property when undefined/void, do not emit property only when optional ([70d65ed](https://github.com/Typescript-TDD/ts-auto-mock/commit/70d65ed4518271d2298358e44823ce7dd841a4f8))
+
 ## [2.5.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.1...2.5.2) (2020-09-13)
 
 
