@@ -4,4 +4,5 @@ export const defaultOptions: TsAutoMockOptions = {
   features: [],
   debug: false,
   cacheBetweenTests: true,
+  files: undefined,
 };
