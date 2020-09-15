@@ -74,16 +74,14 @@ async function run(dir, processId) {
 
     try {
       const typeTsConfig = JSON.parse(typeTsConfigFileContent);
-
-      if (typeTsConfig && typeTsConfig.compilerOptions) {
-        if (typeTsConfig.compilerOptions.paths) {
-          config.compilerOptions.paths = typeTsConfig.compilerOptions.paths;
-        }
-
-        if (typeTsConfig.compilerOptions.lib) {
-          config.compilerOptions.lib = typeTsConfig.compilerOptions.lib;
-        }
-      }
+      copyTsConfigValues(typeTsConfig, config,
+        'paths',
+        'lib',
+        'types',
+        'esModuleInterop',
+        'target',
+        'module'
+      );
     } catch {
       console.warn('tsconfig.json of type found but failed to parse.');
     }
@@ -136,6 +134,16 @@ createDefinitelyTypedMock<typeof pak>();
         message: errorData,
       });
     });
+}
+
+function copyTsConfigValues(typeTsConfig, config, ...props) {
+  if (typeTsConfig && typeTsConfig.compilerOptions) {
+    props.forEach(prop => {
+      if (typeTsConfig.compilerOptions[prop]) {
+        config.compilerOptions[prop] = typeTsConfig.compilerOptions[prop];
+      }
+    });
+  }
 }
 
 module.exports = runProcesses;

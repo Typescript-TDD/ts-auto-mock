@@ -5,8 +5,6 @@ route: /config
 
 # Config
 ```ts
-tsAutoMockTransformer(program: ts.Program, options: TsAutoMockOptions)
-
 interface TsAutoMockOptions {
     debug: boolean | 'file' | 'console';
     cacheBetweenTests: boolean;
@@ -18,17 +16,21 @@ export type TsAutoMockFeaturesOption = 'random';
 ```
 options:
 
-| Name                 |  Value         |  Description                                 | Default
-| -------------------- |  --------      | -------------------------------------------- | --------
-| `debug`              |  `false`       | it will NOT log to the console               | false
-|                      |  `true`        | it will log to the console                   |
-|                      |  `file`        | it will log to a file (tsAutoMock.log)       |
-|                      |  `console`     | alias for `true`                             |
-| `cacheBetweenTests`  |  `true`        | it will reuse mocks between different tests  | true
-|                      |  `false`       | it create new mocks for each different tests |
-| `features`           |  `feature[]`   | it will enable a specific feature            | []
+| Name                 |  Value             |  Description                                 | Default
+| -------------------- |  ----------------- | -------------------------------------------- | --------
+| `debug`              |  `false`           | it will NOT log to the console               | false
+|                      |  `true`            | it will log to the console                   |
+|                      |  `file`            | it will log to a file (tsAutoMock.log)       |
+|                      |  `console`         | alias for `true`                             |
+| `cacheBetweenTests`  |  `true`            | it will reuse mocks between different tests  | true
+|                      |  `false`           | it create new mocks for each different tests |
+| `features`           |  `feature[]`       | it will enable a specific feature            | []
+| `files`              |  `string|string[]` | it will include only the files matched       | "**/*"
 
 ---
+
+There are different ways to pass options to a transformer, every installation type has its own way, to know how to do it
+find your configuration in the [Installation page](./installation).
 
 ## Debug
 We currently support:
@@ -36,6 +38,7 @@ We currently support:
 
 It will log any not supported type automatically converted to null.
 This is useful to report an issue or to investigate a potential bug.
+
 ---
 
 ## CacheBetweenTests
@@ -98,3 +101,52 @@ createMock<WithBoolean>() // { prop: true|false}
 ```
 
 true|false will be random
+---
+
+## Files
+To reduce the compilation time you can tell to the transformer the files that contain `createMock`, `createMockValue` and `registerMock`,
+all the other files are going to be ignored by the transformer.
+
+The value of this configuration is a `glob` or array of `glob`, the same type of matcher present in `tsconfig` when
+defining `include`, `exclude` and `files` properties.
+
+Examples of usage:
+`files: "**/*.spec.ts"`
+
+| Structure                                    | Included?
+| -------------------------------------------- | ----------------
+| root                                         |
+| └── Projects                                 |
+|     └── SuperProject                         |
+|         └── tests                            |
+|         │   └── feature1                     |
+|         │       ├── supporting.mock.ts       | No
+|         │       ├── supportingInterface.ts   | No
+|         │       ├── feature1.spec.ts         | Yes
+|         │       └── feature1.spec.ts         | Yes
+|         └── src                              |
+|             └── feature1                     |
+|                 ├── myClass.model.ts         | No
+|                 ├── myClass.api.mock.ts      | No
+|                 ├── model.interface.ts       | No
+|                 └── feature1.component.ts    | No
+
+`files: ["**/tests/**/*.spec.ts", "**/tests/**/*.mock.ts"]`
+
+| Structure                                    | Included?
+| -------------------------------------------- | ----------------
+| root                                         |
+| └── Projects                                 |
+|     └── SuperProject                         |
+|         └── tests                            |
+|         │   └── feature1                     |
+|         │       ├── supporting.mock.ts       | Yes
+|         │       ├── supportingInterface.ts   | No
+|         │       ├── feature1.spec.ts         | Yes
+|         │       └── feature1.spec.ts         | Yes
+|         └── src                              |
+|             └── feature1                     |
+|                 ├── myClass.model.ts         | No
+|                 ├── myClass.api.mock.ts      | No
+|                 ├── model.interface.ts       | No
+|                 └── feature1.component.ts    | No

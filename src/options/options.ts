@@ -2,11 +2,13 @@ import { TsAutoMockCacheOptions } from './cache';
 import { TsAutoMockDebugOptions } from './debug';
 import { defaultOptions } from './default';
 import { TsAutoMockFeaturesOption } from './features';
+import { TsAutoMockFilesOption } from './files';
 
 export interface TsAutoMockOptions {
   debug: TsAutoMockDebugOptions;
   cacheBetweenTests: TsAutoMockCacheOptions;
   features: TsAutoMockFeaturesOption[];
+  files: TsAutoMockFilesOption;
 }
 
 let tsAutoMockOptions: TsAutoMockOptions = defaultOptions;
