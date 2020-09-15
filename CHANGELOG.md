@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.6.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.0...2.6.1) (2020-09-15)
+
+
+### Bug Fixes
+
+* **transformer:** fix interface call signature with undeclared return type ([#533](https://github.com/Typescript-TDD/ts-auto-mock/issues/533)) ([55da89f](https://github.com/Typescript-TDD/ts-auto-mock/commit/55da89fb8fcf96960267dad4a1ebec57bbf545d8))
+
 # [2.6.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.3...2.6.0) (2020-09-15)
 
 
