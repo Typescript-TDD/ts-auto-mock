@@ -38,3 +38,20 @@ describe('for enum from a module', () => {
     expect(properties.propertyWithDefaultValue).toEqual('1');
   });
 });
+
+describe('for enum with constant computed values', () => {
+  it('should assign the computed enum value of the first member', () => {
+    enum DirectionAssignNumber {
+      Right = 1 + 1,
+      Left = 1 + 5,
+    }
+
+    interface Interface {
+      a: DirectionAssignNumber;
+    }
+
+    const properties: Interface = createMock<Interface>();
+
+    expect(properties.a).toEqual(2);
+  });
+});

@@ -96,15 +96,9 @@ describe('Random enum', () => {
     expect(thirdMock.direction).toBe(Direction.None);
   });
 
-  it('should have position of "computed" property, because transformer don\'t support computed Enum values', () => {
-    // Issue https://github.com/Typescript-TDD/ts-auto-mock/issues/339
-    function getComputed(): number {
-      return 12;
-    }
-
-    enum WithComputed {
-      Computed = getComputed(),
-      Computed2 = 1 + 4,
+  it('should get the correct const enum member computed property', () => {
+    const enum WithComputed {
+      Computed = 1 + 4,
     }
 
     interface IWithComputed {
@@ -116,11 +110,52 @@ describe('Random enum', () => {
     spy.and.returnValue(0);
     const mock1: IWithComputed = createMock<IWithComputed>();
 
-    expect(mock1.computed).toBe(0);
+    expect(mock1.computed).toBe(5);
+  });
+
+  it('should get the correct enum member computed property for constant expression', () => {
+    enum WithComputed {
+      Computed = 1 + 4,
+    }
+
+    interface IWithComputed {
+      computed: WithComputed;
+    }
+
+    const spy: jasmine.Spy = spyOn(Math, 'floor');
+
+    spy.and.returnValue(0);
+    const mock1: IWithComputed = createMock<IWithComputed>();
+
+    expect(mock1.computed).toBe(5);
+  });
+
+  it('should have position of non constant "computed" property, because transformer don\'t support non constant computed Enum values', () => {
+    // Issue https://github.com/Typescript-TDD/ts-auto-mock/issues/339
+    function getComputed(): number {
+      return 12;
+    }
+
+    enum WithComputed {
+      NonComputed,
+      Computed = getComputed(),
+      Computed1 = getComputed(),
+    }
+
+    interface IWithComputed {
+      computed: WithComputed;
+    }
+
+    const spy: jasmine.Spy = spyOn(Math, 'floor');
 
     spy.and.returnValue(1);
+    const mock1: IWithComputed = createMock<IWithComputed>();
+
+    expect(mock1.computed).toBe(1);
+
+    spy.and.returnValue(2);
     const mock2: IWithComputed = createMock<IWithComputed>();
 
-    expect(mock2.computed).toBe(1);
+    expect(mock2.computed).toBe(2);
   });
 });
