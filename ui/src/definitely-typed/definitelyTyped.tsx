@@ -33,7 +33,7 @@ export interface HeaderData {
 const dataReader: DataReader<HeaderData, TypeRunData> = dataFileSystemReader<
   HeaderData,
   TypeRunData // @ts-ignore
->(process.env.DEFINITELY_TYPED_DATA_URL, browserFileReader());
+>(process.env.BASE_URL + 'resources/definitelyTyped', browserFileReader());
 
 export function DefinitelyTyped(): JSX.Element {
   const [data, setData] = useState([] as DefinitelyTypedTypeRun[]);
