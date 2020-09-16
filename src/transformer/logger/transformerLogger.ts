@@ -14,7 +14,11 @@ export interface TransformerLogger {
 
   typeOfFunctionCallNotFound(node: string): void;
 
-  indexedAccessTypeFailed(propertyName: string, nodeText: string): void;
+  indexedAccessTypeFailed(
+    propertyName: string,
+    nodeText: string,
+    currentNode: ts.Node
+  ): void;
 }
 
 const notSupportedTypeMessage: (
@@ -26,7 +30,15 @@ const notSupportedTypeMessage: (
   createMockFileUrl: string,
   currentNodeFileUrl: string
 ) => `Not supported type: ${type} - it will convert to null
-created ${createMockFileUrl}
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`;
+
+const warningPositionLog: (
+  createMockFileUrl: string,
+  currentNodeFileUrl: string
+) => string = (
+  createMockFileUrl: string,
+  currentNodeFileUrl: string
+) => `created ${createMockFileUrl}
 used by ${currentNodeFileUrl}`;
 
 export const getNodeFileUrl: (node: ts.Node) => string = (node: ts.Node) => {
@@ -71,9 +83,19 @@ export function TransformerLogger(): TransformerLogger {
         `Cannot find type of function call: ${node} - it will convert to null`
       );
     },
-    indexedAccessTypeFailed(propertyName: string, nodeText: string): void {
+    indexedAccessTypeFailed(
+      propertyName: string,
+      nodeText: string,
+      currentNode: ts.Node
+    ): void {
+      const createMockNode: ts.Node = GetCurrentCreateMock();
+
+      const createMockFileUrl: string = getNodeFileUrl(createMockNode);
+      const currentNodeFileUrl: string = getNodeFileUrl(currentNode);
+
       logger.warning(
-        `IndexedAccessType transformation failed: cannot find property ${propertyName} of - ${nodeText}`
+        `IndexedAccessType transformation failed: cannot find property ${propertyName} of - ${nodeText}
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
       );
     },
   };
