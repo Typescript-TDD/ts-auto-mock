@@ -36,7 +36,7 @@ export function Performance(): JSX.Element {
   const [branch, setBranch] = useState('master');
   const [branches, setBranches] = useState({} as PerformanceListData);
   // @ts-ignore
-  const performanceService: IPerformanceService = PerformanceService(process.env.PERFORMANCE_DATA_URL);
+  const performanceService: IPerformanceService = PerformanceService(process.env.BASE_URL + 'resources/');
 
   useEffect(() => {
     performanceService.get().then((result: PerformanceListData) => {

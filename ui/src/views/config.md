@@ -101,6 +101,7 @@ createMock<WithBoolean>() // { prop: true|false}
 ```
 
 true|false will be random
+
 ---
 
 ## Files
@@ -111,14 +112,16 @@ The value of this configuration is a `glob` or array of `glob`, the same type of
 defining `include`, `exclude` and `files` properties.
 
 Examples of usage:
-`files: "**/*.spec.ts"`
+
+```
+files: "**/*.spec.ts"                       
 
 | Structure                                    | Included?
-| -------------------------------------------- | ----------------
+| -------------------------------------------- | ---------
 | root                                         |
 | └── Projects                                 |
 |     └── SuperProject                         |
-|         └── tests                            |
+|         ├── tests                            |
 |         │   └── feature1                     |
 |         │       ├── supporting.mock.ts       | No
 |         │       ├── supportingInterface.ts   | No
@@ -130,15 +133,17 @@ Examples of usage:
 |                 ├── myClass.api.mock.ts      | No
 |                 ├── model.interface.ts       | No
 |                 └── feature1.component.ts    | No
+```
 
-`files: ["**/tests/**/*.spec.ts", "**/tests/**/*.mock.ts"]`
+```
+files: ["**/tests/**/*.spec.ts", "**/tests/**/*.mock.ts"]
 
 | Structure                                    | Included?
-| -------------------------------------------- | ----------------
+| -------------------------------------------- | ---------
 | root                                         |
 | └── Projects                                 |
 |     └── SuperProject                         |
-|         └── tests                            |
+|         ├── tests                            |
 |         │   └── feature1                     |
 |         │       ├── supporting.mock.ts       | Yes
 |         │       ├── supportingInterface.ts   | No
@@ -150,3 +155,4 @@ Examples of usage:
 |                 ├── myClass.api.mock.ts      | No
 |                 ├── model.interface.ts       | No
 |                 └── feature1.component.ts    | No
+```
