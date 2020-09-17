@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.6.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.2...2.6.3) (2020-09-17)
+
+
+### Bug Fixes
+
+* **transformer:** do not fail when accessing index of extended this for a computed property ([02e7b12](https://github.com/Typescript-TDD/ts-auto-mock/commit/02e7b12a466959f853168289189f4e62c2e03c14))
+
 ## [2.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.1...2.6.2) (2020-09-15)
 
 
