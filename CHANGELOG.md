@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+## [2.6.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.3...2.6.4) (2020-09-18)
+
+
+### Bug Fixes
+
+* **transformer:** apply null and warning when property type cannot be identified ([7cc1ec0](https://github.com/Typescript-TDD/ts-auto-mock/commit/7cc1ec0deb9e1832d68732d7dbb40bd6bf87ad43))
+* **typescript:** restore support for typescript 3 ([825cc01](https://github.com/Typescript-TDD/ts-auto-mock/commit/825cc01f3bf136322b814152ede8fe0d4a322019))
+
 ## [2.6.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.2...2.6.3) (2020-09-17)
 
 
