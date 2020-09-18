@@ -14,6 +14,8 @@ export interface TransformerLogger {
 
   typeOfFunctionCallNotFound(node: string): void;
 
+  typeOfPropertyNotFound(node: ts.Node): void;
+
   indexedAccessTypeFailed(
     propertyName: string,
     nodeText: string,
@@ -81,6 +83,17 @@ export function TransformerLogger(): TransformerLogger {
     typeOfFunctionCallNotFound(node: string): void {
       logger.warning(
         `Cannot find type of function call: ${node} - it will convert to null`
+      );
+    },
+    typeOfPropertyNotFound(node: ts.Node): void {
+      const createMockNode: ts.Node = GetCurrentCreateMock();
+
+      const createMockFileUrl: string = getNodeFileUrl(createMockNode);
+      const currentNodeFileUrl: string = getNodeFileUrl(node);
+
+      logger.warning(
+        `The transformer could not determine a property value for ${node.getText()} without a specified type nor an initializer value - it will convert to null
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
       );
     },
     indexedAccessTypeFailed(
