@@ -16,10 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-var": "^1.1.0",
     "dotenv": "^8.2.0",
     "ttypescript": "^1.5.10",
-    "typescript": "^4.0.2",
-    "upath": "^1.2.0",
-    "cross-var": "^1.1.0"
+    "typescript": "^3.9.7",
+    "upath": "^1.2.0"
   }
 }
