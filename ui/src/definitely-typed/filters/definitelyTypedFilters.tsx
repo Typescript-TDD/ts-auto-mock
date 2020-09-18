@@ -29,7 +29,8 @@ export interface DefinitelyTypedFiltersOptions {
 
 enum DefaultOptionId {
   None = -1,
-  Custom = -2
+  Custom = -2,
+  Others = -3,
 }
 
 export function DefinitelyTypedFilters(
@@ -51,7 +52,7 @@ export function DefinitelyTypedFilters(
   function buildOptions(): DefinitelyTypedFiltersOptions {
     return {
       filterIn: buildFilterInOption(),
-      filterOut: filterOut ? new RegExp(filterOut, 'i') : null,
+      filterOut: buildFilterOutOption(),
       isShowingErrors: isShowing === 'error',
       isShowingWarnings: isShowing === 'warning',
       isShowingSuccesses: isShowing === 'success',
@@ -60,16 +61,26 @@ export function DefinitelyTypedFilters(
 
   function buildFilterInOption() {
     if (isShowing === 'error') {
-      return errorPresetFilterId === DefaultOptionId.Custom && filterIn
-        ? new RegExp(filterIn, 'i')
-        : errorPresetFilterId === DefaultOptionId.None
+      return errorPresetFilterId === DefaultOptionId.Custom
+        ? (filterIn ? new RegExp(filterIn, 'i') : null)
+        : errorPresetFilterId === DefaultOptionId.None || errorPresetFilterId === DefaultOptionId.Others
         ? null
-        : errorPresetFilterId !== DefaultOptionId.Custom
-        ? errorPresetFilters[errorPresetFilterId].regex
-        : null;
+        : errorPresetFilters[errorPresetFilterId].regex;
     }
 
     return filterIn ? new RegExp(filterIn, 'i') : null;
+  }
+
+  function buildFilterOutOption() {
+    if (isShowing === 'error') {
+      return errorPresetFilterId === DefaultOptionId.Custom
+        ? (filterOut ? new RegExp(filterOut, 'i') : null)
+        : errorPresetFilterId === DefaultOptionId.Others
+        ? new RegExp(errorPresetFilters.map(f => `(${f.regex.source})`).join('|'), 'i')
+        : null;
+    }
+
+    return filterOut ? new RegExp(filterOut, 'i') : null
   }
 
   const infoKeys: Array<keyof DefinitelyTypedRunInfo> = [
@@ -125,6 +136,10 @@ export function DefinitelyTypedFilters(
       id: DefaultOptionId.Custom
     },
     {
+      name: 'Others',
+      id: DefaultOptionId.Others
+    },
+    {
       name: '-',
       disabled: true
     }
@@ -151,19 +166,11 @@ export function DefinitelyTypedFilters(
     <div className="DefinitelyTypedFilters-container">
       <div className="DefinitelyTypedFilters-controlsContainer">
         <div className="DefinitelyTypedFilters-inputsContainer">
-          <div className="DefinitelyTypedFilters-input">
-            <p>Filter out messages (regex)</p>
-            <input
-              className="Input"
-              type="text"
-              value={filterOut}
-              onChange={(e) => setFilterOut(e.target.value)}
-            />
-          </div>
           {isShowing === 'error' && (
             <div className="DefinitelyTypedFilters-input">
-              <p>Filter in only messages</p>
+              <label className="DefinitelyTypedFilters-inputLabel" htmlFor="filterSelect">Filter</label>
               <Select
+                id="filterSelect"
                 value={errorPresetFilterId}
                 onChange={(e) => setErrorPresetFilterId(Number(e.target.value))}
               >
@@ -173,8 +180,21 @@ export function DefinitelyTypedFilters(
           )}
           {(isShowing !== 'error' || errorPresetFilterId === DefaultOptionId.Custom) && (
             <div className="DefinitelyTypedFilters-input">
-              <p>Filter in only messages (regex)</p>
+              <label className="DefinitelyTypedFilters-inputLabel" htmlFor="filterOut">Filter out messages (regex)</label>
               <input
+                id="filterOut"
+                className="Input"
+                type="text"
+                value={filterOut}
+                onChange={(e) => setFilterOut(e.target.value)}
+              />
+            </div>
+          )}
+          {(isShowing !== 'error' || errorPresetFilterId === DefaultOptionId.Custom) && (
+            <div className="DefinitelyTypedFilters-input">
+              <label className="DefinitelyTypedFilters-inputLabel" htmlFor="filterIn">Filter in only messages (regex)</label>
+              <input
+                id="filterIn"
                 className="Input"
                 type="text"
                 value={filterIn}
