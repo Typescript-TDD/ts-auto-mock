@@ -1,8 +1,8 @@
 name: DefinitelyTyped Tests
 
-on:
-  schedule:
-    - cron: '0 */2 * * *'
+#on:
+#  schedule:
+#    - cron: '0 /2 * * *'
 
 jobs:
   definitely-typed:
