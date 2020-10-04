@@ -3,7 +3,7 @@ import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { ModuleName } from '../mockDefiner/modules/moduleName';
 import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 
-function mergePropertyAccessor(
+export function mergePropertyAccessor(
   methodName: string
 ): ts.PropertyAccessExpression {
   return ts.createPropertyAccess(
@@ -23,17 +23,5 @@ export function getMockMergeExpression(
     mergePropertyAccessor('merge'),
     [],
     [nodeMocked, defaultValues]
-  );
-}
-
-export function getMockMergeIteratorExpression(
-  nodeMocked: ts.Expression,
-  defaultValuesFunction: ts.Expression,
-  index: ts.NumericLiteral
-): ts.Expression {
-  return ts.createCall(
-    mergePropertyAccessor('mergeIterator'),
-    [],
-    [nodeMocked, defaultValuesFunction, index]
   );
 }

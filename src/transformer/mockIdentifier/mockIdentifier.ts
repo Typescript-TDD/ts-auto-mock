@@ -21,3 +21,10 @@ export const MockIdentifierSetParameterName: ts.Identifier = ts.createIdentifier
 export const MockCallAnonymousText: string = '*';
 export const MockCallLiteralText: string = 'L';
 export const MockPrivatePrefix: string = 'ɵ';
+
+export const MockCreateMockListLoopStep: ts.Identifier = ts.createIdentifier(
+  'k'
+);
+export const MockCreateMockListLoopArray: ts.Identifier = ts.createIdentifier(
+  's'
+);
