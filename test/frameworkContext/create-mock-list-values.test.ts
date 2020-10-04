@@ -30,4 +30,20 @@ describe('create-mock-list-values', () => {
     expect(properties[1].property.a).toBe(2);
     expect(properties[2].property.a).toBe(4);
   });
+
+  it('should create a list of mocks when the count of mocks is not literal', () => {
+    function two(): number {
+      return 2;
+    }
+
+    const mockList: Interface[] = createMockList<Interface>(
+      two(),
+      (index: number) => ({
+        property: {
+          a: index * 2,
+        },
+      })
+    );
+    expect(mockList.length).toBe(2);
+  });
 });

@@ -1,14 +1,17 @@
 import * as ts from 'typescript';
 import { Logger } from '../../logger/logger';
-import { ArrayHelper } from '../array/array';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import {
   getMockMergeExpression,
-  getMockMergeIteratorExpression,
+  mergePropertyAccessor,
 } from '../mergeExpression/mergeExpression';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { Scope } from '../scope/scope';
+import {
+  MockCreateMockListLoopArray,
+  MockCreateMockListLoopStep,
+} from '../mockIdentifier/mockIdentifier';
 import { SetCurrentCreateMock } from './currentCreateMockNode';
 
 function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
@@ -21,34 +24,6 @@ function hasDefaultValues(node: ts.CallExpression): boolean {
 
 function hasDefaultListValues(node: ts.CallExpression): boolean {
   return !!node.arguments[1];
-}
-
-function getNumberFromNumericLiteral(
-  numericLiteral: ts.NumericLiteral
-): number {
-  const numericLiteralNumber: number = parseInt(numericLiteral.text, 10);
-  return numericLiteralNumber > 0 ? numericLiteralNumber : 0;
-}
-
-function getMockMergeListExpression(
-  mock: ts.Expression,
-  length: number,
-  defaultValues: ts.Expression
-): ts.Expression[] {
-  return ArrayHelper.ArrayFromLength(length).map((index: number) =>
-    getMockMergeIteratorExpression(
-      mock,
-      defaultValues,
-      ts.createNumericLiteral('' + index.toString())
-    )
-  );
-}
-
-function getMockListExpression(
-  mock: ts.Expression,
-  length: number
-): ts.Expression[] {
-  return ArrayHelper.ArrayFromLength(length).map(() => mock);
 }
 
 export function getMock(
@@ -69,7 +44,7 @@ export function getMock(
 export function getMockForList(
   nodeToMock: ts.TypeNode,
   node: ts.CallExpression
-): ts.ArrayLiteralExpression {
+): ts.Expression {
   SetCurrentCreateMock(node);
   const mock: ts.Expression = getMockExpression(nodeToMock);
   const lengthLiteral: ts.NumericLiteral = node
@@ -79,21 +54,93 @@ export function getMockForList(
     return ts.createArrayLiteral([]);
   }
 
-  const length: number = getNumberFromNumericLiteral(lengthLiteral);
-
   if (hasDefaultListValues(node)) {
-    const mockMergeList: ts.Expression[] = getMockMergeListExpression(
-      mock,
-      length,
-      node.arguments[1]
+    return getListCallMock(
+      node.arguments[0],
+      ts.createCall(
+        mergePropertyAccessor('mergeIterator'),
+        [],
+        [mock, node.arguments[1], MockCreateMockListLoopStep]
+      )
     );
-
-    return ts.createArrayLiteral(mockMergeList);
   }
 
-  const mockList: ts.Expression[] = getMockListExpression(mock, length);
+  return getListCallMock(node.arguments[0], mock);
+}
 
-  return ts.createArrayLiteral(mockList);
+function getListCallMock(
+  expression: ts.Expression,
+  mockExpr: ts.Expression
+): ts.CallExpression {
+  return ts.createCall(
+    ts.createParen(
+      ts.createFunctionExpression(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        [],
+        undefined,
+        ts.createBlock(
+          [
+            ts.createVariableStatement(
+              undefined,
+              ts.createVariableDeclarationList(
+                [
+                  ts.createVariableDeclaration(
+                    MockCreateMockListLoopArray,
+                    undefined,
+                    ts.createArrayLiteral([], false)
+                  ),
+                ],
+                ts.NodeFlags.Const
+              )
+            ),
+            ts.createFor(
+              ts.createVariableDeclarationList(
+                [
+                  ts.createVariableDeclaration(
+                    MockCreateMockListLoopStep,
+                    undefined,
+                    ts.createNumericLiteral('0')
+                  ),
+                ],
+                ts.NodeFlags.Let
+              ),
+              ts.createBinary(
+                MockCreateMockListLoopStep,
+                ts.createToken(ts.SyntaxKind.LessThanToken),
+                expression
+              ),
+              ts.createPostfix(
+                MockCreateMockListLoopStep,
+                ts.SyntaxKind.PlusPlusToken
+              ),
+              ts.createBlock(
+                [
+                  ts.createExpressionStatement(
+                    ts.createCall(
+                      ts.createPropertyAccess(
+                        MockCreateMockListLoopArray,
+                        ts.createIdentifier('push')
+                      ),
+                      undefined,
+                      [mockExpr]
+                    )
+                  ),
+                ],
+                true
+              )
+            ),
+            ts.createReturn(MockCreateMockListLoopArray),
+          ],
+          true
+        )
+      )
+    ),
+    undefined,
+    []
+  );
 }
 
 export function storeRegisterMock(
