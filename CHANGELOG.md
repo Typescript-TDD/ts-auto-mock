@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [2.6.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.4...2.6.5) (2020-10-08)
+
+
+### Bug Fixes
+
+* **createMockList:** count the number of create mock list on runtime instead of relying on a numeric literal ([eec45dd](https://github.com/Typescript-TDD/ts-auto-mock/commit/eec45dd741b7c7b6ba889ce4a79dd2fd968720b4)), closes [#595](https://github.com/Typescript-TDD/ts-auto-mock/issues/595)
+
 ## [2.6.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.3...2.6.4) (2020-09-18)
 
 
