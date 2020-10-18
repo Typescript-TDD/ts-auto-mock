@@ -24,10 +24,6 @@ export function GetMockPropertiesAssignments(
     (acc: PropertyAssignments, member: PropertyLike): PropertyAssignments => {
       const descriptor: ts.Expression = GetDescriptor(member, scope);
 
-      if (descriptor.kind === ts.SyntaxKind.VoidExpression) {
-        return acc;
-      }
-
       if (ts.isCallLikeExpression(descriptor)) {
         acc.lazy.push(GetLazyMockProperty(descriptor, member));
       } else {

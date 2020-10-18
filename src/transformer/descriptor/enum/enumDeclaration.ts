@@ -7,19 +7,11 @@ export function GetEnumDeclarationDescriptor(
   node: ts.EnumDeclaration
 ): ts.Expression {
   const typeChecker: ts.TypeChecker = TypeChecker();
-  const typesList: ts.LiteralType[] = node.members.map((it: ts.EnumMember) =>
-    typeChecker.getTypeAtLocation(it)
-  ) as ts.LiteralType[];
 
   if (IsTsAutoMockRandomEnabled()) {
-    const nodesList: ts.Expression[] = typesList.map(
-      (type: ts.LiteralType, index: number) => {
-        if (type.hasOwnProperty('value')) {
-          return ts.createLiteral(type.value);
-        }
-
-        return ts.createLiteral(index);
-      }
+    const nodesList: ts.Expression[] = node.members.map(
+      (member: ts.EnumMember, index: number) =>
+        getEnumMemberValue(typeChecker, member, index)
     );
 
     return ts.createCall(
@@ -29,9 +21,13 @@ export function GetEnumDeclarationDescriptor(
     );
   }
 
-  if (typesList[0].hasOwnProperty('value')) {
-    return ts.createLiteral(typesList[0].value);
-  }
+  return getEnumMemberValue(typeChecker, node.members[0]);
+}
 
-  return ts.createLiteral(0);
+function getEnumMemberValue(
+  typeChecker: ts.TypeChecker,
+  member: ts.EnumMember,
+  defaultValue: string | number = 0
+): ts.Expression {
+  return ts.createLiteral(typeChecker.getConstantValue(member) || defaultValue);
 }

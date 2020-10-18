@@ -38,6 +38,8 @@ import { GetTypeQueryDescriptor } from './typeQuery/typeQuery';
 import { GetTypeReferenceDescriptor } from './typeReference/typeReference';
 import { GetUndefinedDescriptor } from './undefined/undefined';
 import { GetUnionDescriptor } from './union/union';
+import { GetTypeOperatorDescriptor } from './typeOperator/typeOperator';
+import { GetTupleDescriptor } from './tuple/tuple';
 
 export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
   switch (node.kind) {
@@ -133,8 +135,9 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         scope
       );
     case ts.SyntaxKind.ArrayType:
-    case ts.SyntaxKind.TupleType:
       return GetArrayDescriptor();
+    case ts.SyntaxKind.TupleType:
+      return GetTupleDescriptor(node as ts.TupleTypeNode, scope);
     case ts.SyntaxKind.StringKeyword:
       return GetStringDescriptor();
     case ts.SyntaxKind.NumberKeyword:
@@ -169,6 +172,8 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         node as ts.ImportEqualsDeclaration,
         scope
       );
+    case ts.SyntaxKind.TypeOperator:
+      return GetTypeOperatorDescriptor(node as ts.TypeOperatorNode, scope);
     case ts.SyntaxKind.BigIntKeyword:
       return GetBigIntDescriptor();
     case ts.SyntaxKind.AnyKeyword:
@@ -180,7 +185,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case ts.SyntaxKind.CallExpression:
       return GetCallExpressionDescriptor(node as ts.CallExpression, scope);
     default:
-      TransformerLogger().typeNotSupported(ts.SyntaxKind[node.kind]);
+      TransformerLogger().typeNotSupported(ts.SyntaxKind[node.kind], node);
       return GetNullDescriptor();
   }
 }

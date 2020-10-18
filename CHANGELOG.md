@@ -1,5 +1,95 @@
 # Semantic Versioning Changelog
 
+## [2.6.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.4...2.6.5) (2020-10-08)
+
+
+### Bug Fixes
+
+* **createMockList:** count the number of create mock list on runtime instead of relying on a numeric literal ([eec45dd](https://github.com/Typescript-TDD/ts-auto-mock/commit/eec45dd741b7c7b6ba889ce4a79dd2fd968720b4)), closes [#595](https://github.com/Typescript-TDD/ts-auto-mock/issues/595)
+
+## [2.6.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.3...2.6.4) (2020-09-18)
+
+
+### Bug Fixes
+
+* **transformer:** apply null and warning when property type cannot be identified ([7cc1ec0](https://github.com/Typescript-TDD/ts-auto-mock/commit/7cc1ec0deb9e1832d68732d7dbb40bd6bf87ad43))
+* **typescript:** restore support for typescript 3 ([825cc01](https://github.com/Typescript-TDD/ts-auto-mock/commit/825cc01f3bf136322b814152ede8fe0d4a322019))
+
+## [2.6.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.2...2.6.3) (2020-09-17)
+
+
+### Bug Fixes
+
+* **transformer:** do not fail when accessing index of extended this for a computed property ([02e7b12](https://github.com/Typescript-TDD/ts-auto-mock/commit/02e7b12a466959f853168289189f4e62c2e03c14))
+
+## [2.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.1...2.6.2) (2020-09-15)
+
+
+### Bug Fixes
+
+* **definitelyTyped:** do not fail on mocking module declarations ([4660f58](https://github.com/Typescript-TDD/ts-auto-mock/commit/4660f587d2c268000a79ef9c6bee6045125377a2))
+
+## [2.6.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.0...2.6.1) (2020-09-15)
+
+
+### Bug Fixes
+
+* **transformer:** fix interface call signature with undeclared return type ([#533](https://github.com/Typescript-TDD/ts-auto-mock/issues/533)) ([55da89f](https://github.com/Typescript-TDD/ts-auto-mock/commit/55da89fb8fcf96960267dad4a1ebec57bbf545d8))
+
+# [2.6.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.3...2.6.0) (2020-09-15)
+
+
+### Features
+
+* **fileFilter:** add config option to specify files with mocks ([526d677](https://github.com/Typescript-TDD/ts-auto-mock/commit/526d677955b812871bbddb640eb674a60f835b32))
+
+## [2.5.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.2...2.5.3) (2020-09-15)
+
+
+### Bug Fixes
+
+* **properties:** create property when undefined/void, do not emit property only when optional ([70d65ed](https://github.com/Typescript-TDD/ts-auto-mock/commit/70d65ed4518271d2298358e44823ce7dd841a4f8))
+
+## [2.5.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.1...2.5.2) (2020-09-13)
+
+
+### Bug Fixes
+
+* **enum:** fix enum constant computed properties ([9c96a53](https://github.com/Typescript-TDD/ts-auto-mock/commit/9c96a532b1f59af2d3939c26ef8bf8a85044b46b))
+
+## [2.5.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.0...2.5.1) (2020-09-12)
+
+
+### Bug Fixes
+
+* **mockValues:** assign, not merge, override value when is a mock to prevent maximum callstack size exceeded errors ([7431d80](https://github.com/Typescript-TDD/ts-auto-mock/commit/7431d801753ab47c6efd14c9d77f6adabe8e6df4))
+
+# [2.5.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.4.0...2.5.0) (2020-09-11)
+
+
+### Bug Fixes
+
+* **logs:** ensure logs tests work on windows ([a160a87](https://github.com/Typescript-TDD/ts-auto-mock/commit/a160a879fa8032e2da5d17ee3d6451737d977754))
+
+
+### Features
+
+* **transformer:** tuple type now gets mocked as an instance of specified tuple, add keyof warning, support readonly array/tuple Pmyl 23 minutes ago ([af9df91](https://github.com/Typescript-TDD/ts-auto-mock/commit/af9df910e58b56ed14341a89c87943ae1b561740))
+
+# [2.4.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.5...2.4.0) (2020-09-09)
+
+
+### Features
+
+* **logs:** enhance unsupported type logs ([#513](https://github.com/Typescript-TDD/ts-auto-mock/issues/513)) ([5dd6711](https://github.com/Typescript-TDD/ts-auto-mock/commit/5dd6711185812ce08306f8acd78d9b7b353cca02))
+
+## [2.3.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.4...2.3.5) (2020-08-29)
+
+
+### Bug Fixes
+
+* **createMock:** PartialDeep to ignore object prototype properties ([37cb34d](https://github.com/Typescript-TDD/ts-auto-mock/commit/37cb34dd3862b4ff75c9d2527cb70d6c0b8c55ef))
+
 ## [2.3.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.3.3...2.3.4) (2020-08-09)
 
 

@@ -6,17 +6,20 @@
   "scripts": {
     "start": "npm run install-types && npm run process-all-types && npm run post-process-types",
     "start-chunk": "npm run install-types && npm run process-chunk && npm run post-process-types",
-    "process-chunk": "npm run process-types TYPES=500 PROCESS_COUNT=20",
+    "process-chunk": "npm run process-types TYPES_COUNT=500 PROCESS_COUNT=20 OUTPUT=true",
     "install-types": "node src/installTypes.js",
-    "process-all-types": "node index.js TYPES=all PROCESS_COUNT=20",
+    "process-all-types": "node index.js TYPES_COUNT=all PROCESS_COUNT=20 OUTPUT=true",
     "process-types": "node index.js",
-    "post-process-types": "node src/postProcessTypes.js"
+    "post-process-types": "node src/postProcessTypes.js",
+    "dry-process-specific-types": "cross-var npm run process-types TYPES=$TYPES_SPECIFIED"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-var": "^1.1.0",
     "dotenv": "^8.2.0",
     "ttypescript": "^1.5.10",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.7",
+    "upath": "^1.2.0"
   }
 }

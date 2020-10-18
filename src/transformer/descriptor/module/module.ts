@@ -134,7 +134,8 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
         }
 
         return TypescriptCreator.createPropertySignature(
-          d.originalDeclaration.name as ts.Identifier,
+          (d.originalDeclaration.name as ts.Identifier) ||
+            ts.createIdentifier('default'),
           ts.createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
         );
       }

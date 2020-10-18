@@ -182,9 +182,8 @@ export class MockDefiner {
       );
     }
 
-    // NOTE: TypeScript does not support inference through has/get, but we know
-    // for a fact that the result here is a string!
-    return this._declarationCache.get(declaration) as string;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this._declarationCache.get(declaration)!;
   }
 
   public registerMockFor(
