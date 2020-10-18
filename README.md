@@ -1,4 +1,7 @@
 # TS auto mock
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 ![Test](https://github.com/Typescript-TDD/ts-auto-mock/workflows/Test/badge.svg)
 [![npm version](https://badge.fury.io/js/ts-auto-mock.svg)](https://badge.fury.io/js/ts-auto-mock)
 [![Downloads](https://img.shields.io/npm/dw/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock)
@@ -53,3 +56,23 @@ You can find the roadmap of this project on the Wiki page: [Roadmap](https://git
 ## License
 
 This project is licensed under the MIT License
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://www.geoffreytestelin.com/"><img src="https://avatars1.githubusercontent.com/u/10194542?v=4?s=60" width="60px;" alt=""/><br /><sub><b>Geoffrey Testelin</b></sub></a><br /><a href="https://github.com/typescripttdd/ts-auto-mock/issues?q=author%3AC0ZEN" title="Bug reports">🐛</a> <a href="https://github.com/typescripttdd/ts-auto-mock/commits?author=C0ZEN" title="Code">💻</a> <a href="#ideas-C0ZEN" title="Ideas, Planning, & Feedback">🤔</a> <a href="#tool-C0ZEN" title="Tools">🔧</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

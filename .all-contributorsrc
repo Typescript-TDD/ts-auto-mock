@@ -1,0 +1,29 @@
+{
+  "projectName": "ts-auto-mock",
+  "projectOwner": "typescripttdd",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "commitConvention": "angular",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 60,
+  "commit": true,
+  "contributorsSortAlphabetically": true,
+  "contributors": [
+    {
+      "login": "C0ZEN",
+      "name": "Geoffrey Testelin",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10194542?v=4",
+      "profile": "http://www.geoffreytestelin.com/",
+      "contributions": [
+        "bug",
+        "code",
+        "ideas",
+        "tool"
+      ]
+    }
+  ],
+  "skipCi": false,
+  "contributorsPerLine": 7
+}
