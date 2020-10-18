@@ -44,6 +44,10 @@ export function GetMockPropertiesFromDeclarations(
         return false;
       }
 
+      if (member.questionToken) {
+        return false;
+      }
+
       if (!modifiers) {
         return true;
       }

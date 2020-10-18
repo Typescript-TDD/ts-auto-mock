@@ -16,6 +16,8 @@ There are different ways to do this depending on how you are currently compiling
 
 ## `jest` + `ts-jest` + `ttypescript`
 
+### Steps
+
 1. Install the dependencies
 
 ```
@@ -138,9 +140,23 @@ npm run test
 
 ... and you are all done!
 
+### Config options
+In the tsconfig.json you can add the config options next to the transformer name:
+```json
+"plugins": [
+  {
+    "transform": "ts-auto-mock/transformer",
+    "cacheBetweenTests": false,
+    "features": ["random"]
+  }
+]
+```
+
 ## Webpack
 
 With Webpack, You can use any TypeScript-related loader that supports custom transformers, e.g. `awesome-typescript-loader` or `ts-loader`:
+
+### Steps
 
 #### **`webpack.config.js`**
 ```js
@@ -166,8 +182,20 @@ module.exports = {
 };
 ```
 
+### Config options
+In webpack.config.js you can pass a second parameter to the transformer:
+```js
+before: [
+  tsAutoMockTransformer(program, {
+    features: ['random']
+  })
+]
+```
+
 ## ttypescript
 See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/README.md) for more information
+
+### Steps
 
 #### **`tsconfig.json`**
 ```json
@@ -182,9 +210,22 @@ See [ttypescript's README](https://github.com/cevek/ttypescript/blob/master/READ
 }
 ```
 
+### Config options
+In the tsconfig.json you can add the config options next to the transformer name:
+```json
+"plugins": [
+  {
+    "transform": "ts-auto-mock/transformer",
+    "cacheBetweenTests": false,
+    "features": ["random"]
+  }
+]
+```
 
 ## ts-patch
 See [ts-patch's README](https://github.com/nonara/ts-patch/blob/master/README.md)
+
+### Steps
 
 Command to run to install it:
 
@@ -207,10 +248,21 @@ tsconfig.json
 }
 ```
 
-## ts-node
+### Config options
+In the tsconfig.json you can add the config options next to the transformer name:
+```json
+"plugins": [
+  {
+    "transform": "ts-auto-mock/transformer",
+    "cacheBetweenTests": false,
+    "features": ["random"]
+  }
+]
+```
 
-### Mocha
+## ts-node + Mocha
 
+### Steps
 #### **`tsnode.js`**
 ```js
 const tsAutoMockTransformer = require('ts-auto-mock/transformer').default;
@@ -228,4 +280,14 @@ Then inject the registration with the `--require` flag that Mocha passes on to N
 
 ```
 mocha --require './tsnode.js' --watch-extensions ts,tsx "test/**/*.{ts,tsx}"
+```
+
+### Config options
+In tsnode.js you can pass a second parameter to the transformer:
+```js
+before: [
+  tsAutoMockTransformer(program, {
+    features: ['random']
+  })
+]
 ```

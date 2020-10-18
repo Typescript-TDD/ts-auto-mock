@@ -7,11 +7,15 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMethodDeclarationDescriptor } from '../method/methodDeclaration';
-import { GetModuleDescriptor } from '../module/module';
+import {
+  GetModuleDescriptor,
+  GetPropertiesFromSourceFileOrModuleDeclaration,
+} from '../module/module';
 import { GetNullDescriptor } from '../null/null';
 import { GetType } from '../type/type';
 import { GetTypeReferenceDescriptor } from '../typeReference/typeReference';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
+import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 
 export function GetTypeQueryDescriptor(
   node: ts.TypeQueryNode,
@@ -56,9 +60,22 @@ export function GetTypeQueryDescriptorFromDeclaration(
         ),
         scope
       );
+    // NamespaceImport, ImportEqualsDeclaration and ModuleDeclaration cannot be used in a typeof
+    // but to test definitely typed this is the only way, eventually we should move this code in the definitely typed folder
+    // and use it using an eventual extensibility opening of this transformer
     case ts.SyntaxKind.NamespaceImport:
     case ts.SyntaxKind.ImportEqualsDeclaration:
       return GetModuleDescriptor(declaration, scope);
+    case ts.SyntaxKind.ModuleDeclaration:
+      return GetMockPropertiesFromDeclarations(
+        GetPropertiesFromSourceFileOrModuleDeclaration(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (declaration as any).symbol as ts.Symbol,
+          scope
+        ),
+        [],
+        scope
+      );
     case ts.SyntaxKind.EnumDeclaration:
       // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
       // TheNewEmitResolver.ensureEmitOf(GetImportDeclarationOf(node.eprName as ts.Identifier);
@@ -102,7 +119,8 @@ export function GetTypeQueryDescriptorFromDeclaration(
       }
     default:
       TransformerLogger().typeNotSupported(
-        `TypeQuery of ${ts.SyntaxKind[declaration.kind]}`
+        `TypeQuery of ${ts.SyntaxKind[declaration.kind]}`,
+        declaration
       );
       return GetNullDescriptor();
   }

@@ -5,6 +5,7 @@ import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { SetProgram } from '../program/program';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { CustomFunction, isFunctionFromThisLibrary } from '../matcher/matcher';
+import { GetIsFilesExcludedFromOptions } from '../../options/files';
 
 export type Visitor = (
   node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> },
@@ -29,11 +30,19 @@ export function baseTransformer(
     SetTypeChecker(program.getTypeChecker());
     SetProgram(program);
 
+    const isFileExcluded: (
+      _sf: ts.SourceFile
+    ) => boolean = GetIsFilesExcludedFromOptions();
+
     return (
       context: ts.TransformationContext
     ): ((file: ts.SourceFile) => ts.SourceFile) => (
       file: ts.SourceFile
     ): ts.SourceFile => {
+      if (isFileExcluded(file)) {
+        return file;
+      }
+
       MockDefiner.instance.initFile(file);
       let sourceFile: ts.SourceFile = visitNodeAndChildren(
         file,
@@ -109,9 +118,9 @@ function visitNode(
     const mockFunction: string = node.getText();
 
     throw new Error(
-      `It seems you've called \`${mockFunction}' without specifying a type argument to mock. ` +
-        `Please refer to the documentation on how to use \`${mockFunction}': ` +
-        'https://github.com/Typescript-TDD/ts-auto-mock#quick-overview'
+      `It seems you've called \`${mockFunction}' without specifying a type argument to mock. 
+      Please refer to the documentation on how to use \`${mockFunction}': 
+      https://github.com/Typescript-TDD/ts-auto-mock#quick-overview`
     );
   }
 

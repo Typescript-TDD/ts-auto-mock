@@ -10,7 +10,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "tsconfig.json",
+    "project": "tsconfig.eslint.json",
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "import", "prettier"],
@@ -127,6 +127,7 @@
     "@typescript-eslint/type-annotation-spacing": "error",
     "@typescript-eslint/unified-signatures": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "_" }],
     "arrow-body-style": "error",
     "arrow-parens": ["error", "as-needed"],
     "camelcase": "off",
@@ -185,6 +186,8 @@
     "use-isnan": "error",
     "valid-typeof": "off",
     "brace-style": "error",
-    "prettier/prettier": "error"
+    "prettier/prettier": ["error",  {
+      "endOfLine":"auto"
+    }]
   }
 }

@@ -100,6 +100,19 @@ describe('for methods', () => {
     });
   });
 
+  describe('for interface call signature with undeclared return value', () => {
+    interface InterfaceWithCallSignature {
+      (a: number);
+    }
+
+    it('should set the function with undefined return value', () => {
+      const properties: InterfaceWithCallSignature = createMock<
+        InterfaceWithCallSignature
+      >();
+      expect(properties(1)).toBeUndefined();
+    });
+  });
+
   describe('for interface construct signature', () => {
     interface InterfaceWithConstructSignature {
       new (a: number): { a: number };

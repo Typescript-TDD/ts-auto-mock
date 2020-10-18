@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "transform": "./dist/transformer",
+        "features": [],
+        "debug": false,
+        "cacheBetweenTests": false
+      }
+    ]
+  }
+}

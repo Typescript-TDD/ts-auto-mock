@@ -19,6 +19,12 @@
       > .DefinitelyTypedFilters-input:not(:first-child) {
         margin-left: 25px;
       }
+
+      .DefinitelyTypedFilters-inputLabel {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
     }
 
     .DefinitelyTypedFilters-checkboxesContainer {

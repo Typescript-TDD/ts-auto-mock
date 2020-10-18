@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "transform": "../../dist/transformer",
+        "features": [],
+        "debug": "console",
+        "cacheBetweenTests": true
+      }
+    ]
+  },
+  "files": ["./playground.test.ts"],
+  "include": []
+}

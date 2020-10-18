@@ -11,6 +11,7 @@ import * as path from 'path';
 import { GetPropertiesFromSourceFileOrModuleDeclaration } from '../../../src/transformer/descriptor/module/module';
 import { Scope } from '../../../src/transformer/scope/scope';
 import { GetMockPropertiesFromDeclarations } from '../../../src/transformer/descriptor/mock/mockProperties';
+import { SetCurrentCreateMock } from '../../../src/transformer/mock/currentCreateMockNode';
 
 const customFunctions: CustomFunction[] = [
     {
@@ -28,6 +29,7 @@ function visitNode(node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.Ty
     const [nodeToMock]: ts.NodeArray<ts.TypeNode> = node.typeArguments;
 
     if (isCreateDefinitelyTypedMock(declaration) && ts.isTypeQueryNode(nodeToMock)) {
+        SetCurrentCreateMock(node);
         const typeChecker: ts.TypeChecker = TypeChecker();
         const typeQuerySymbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(nodeToMock.exprName);
 
@@ -44,13 +46,13 @@ function visitNode(node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.Ty
 
         const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
 
-
         if (!symbol.declarations) {
             const moduleName: string =
                 ((typeQuerySymbolDeclaration.moduleReference as ts.ExternalModuleReference).expression as ts.StringLiteral).text;
-            const pathModule =  path.resolve(moduleName);
+            const pathModule: string = path.resolve(moduleName);
             const moduleWithoutExportsFile: ts.SourceFile = GetProgram().getSourceFiles().find((file: ts.SourceFile) =>
-                file.fileName.includes(`${pathModule}/index.d.ts`)) as ts.SourceFile;
+                path.relative(file.fileName, path.join(pathModule, 'index.d.ts')) === ''
+            ) as ts.SourceFile;
 
             const compatibleStatements: ts.Statement[] = moduleWithoutExportsFile.statements.filter(
                 (statement: ts.Statement) => statement.kind === ts.SyntaxKind.InterfaceDeclaration
@@ -67,10 +69,10 @@ function visitNode(node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.Ty
 
                     if (ts.isModuleDeclaration(workingStatement)) {
                         return GetMockPropertiesFromDeclarations(
-                                GetPropertiesFromSourceFileOrModuleDeclaration((workingStatement as any).symbol, scope),
-                                [],
-                                scope
-                            )
+                            GetPropertiesFromSourceFileOrModuleDeclaration((workingStatement as any).symbol, scope),
+                            [],
+                            scope
+                        );
                     }
 
                     const nodeToMock: ts.TypeReferenceNode = ts.createTypeReferenceNode(name, undefined);

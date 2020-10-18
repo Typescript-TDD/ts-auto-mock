@@ -23,8 +23,9 @@ export function GetIndexedAccessTypeDescriptor(
       switch (declaration.kind) {
         case ts.SyntaxKind.TypeParameter:
           const propertyNameIdentifier: ts.PropertyName = PropertySignatureCache.instance.get();
-          propertyName = (propertyNameIdentifier as ts.Identifier)
-            .escapedText as string;
+          propertyName = TypescriptHelper.GetStringPropertyName(
+            propertyNameIdentifier
+          );
           break;
         case ts.SyntaxKind.TypeAliasDeclaration:
           propertyName = (((declaration as ts.TypeAliasDeclaration)
@@ -32,8 +33,10 @@ export function GetIndexedAccessTypeDescriptor(
           break;
         default:
           TransformerLogger().typeNotSupported(
-            'IndexedAccess of TypeReference of ' +
+            `IndexedAccess of TypeReference of ${
               ts.SyntaxKind[declaration.kind]
+            }`,
+            declaration
           );
           break;
       }
@@ -44,7 +47,8 @@ export function GetIndexedAccessTypeDescriptor(
       break;
     default:
       TransformerLogger().typeNotSupported(
-        'IndexedAccess of ' + ts.SyntaxKind[node.indexType.kind]
+        `IndexedAccess of ${ts.SyntaxKind[node.indexType.kind]}`,
+        node.indexType
       );
       break;
   }
@@ -58,7 +62,11 @@ export function GetIndexedAccessTypeDescriptor(
     if (!propertySymbol) {
       // FIXME: Currently not all IndexedAccessType transformation are supported.
       // See https://github.com/Typescript-TDD/ts-auto-mock/issues/201 for more details.
-      TransformerLogger().indexedAccessTypeFailed(propertyName, node.getText());
+      TransformerLogger().indexedAccessTypeFailed(
+        propertyName,
+        node.getText(),
+        node
+      );
       return GetNullDescriptor();
     }
 
