@@ -22,6 +22,21 @@
         "ideas",
         "tool"
       ]
+    },
+    {
+      "login": "uittorio",
+      "name": "Vittorio Guerriero",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17477623?v=4",
+      "profile": "https://uittorio.github.io/",
+      "contributions": [
+        "question",
+        "code",
+        "ideas",
+        "infra",
+        "maintenance",
+        "projectManagement",
+        "tool"
+      ]
     }
   ],
   "skipCi": false,
