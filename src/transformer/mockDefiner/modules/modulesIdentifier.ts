@@ -30,7 +30,7 @@ export class ModulesIdentifier {
     return this._importsPerFile[fileName] || [];
   }
 
-  public getModuleIdentifier(module: ModuleName): ts.Identifier {
+  public get(module: ModuleName): ts.Identifier {
     return PrivateIdentifier(module);
   }
 }

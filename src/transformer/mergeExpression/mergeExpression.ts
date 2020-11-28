@@ -8,7 +8,7 @@ export function mergePropertyAccessor(
 ): ts.PropertyAccessExpression {
   return ts.createPropertyAccess(
     ts.createPropertyAccess(
-      MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Merge),
+      MockDefiner.instance.getModuleIdentifier(ModuleName.Merge),
       PrivateIdentifier('Merge')
     ),
     ts.createIdentifier(methodName)

@@ -8,7 +8,7 @@ export function RandomPropertyAccessor(
 ): ts.PropertyAccessExpression {
   return ts.createPropertyAccess(
     ts.createPropertyAccess(
-      MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Random),
+      MockDefiner.instance.getModuleIdentifier(ModuleName.Random),
       PrivateIdentifier('Random')
     ),
     ts.createIdentifier(methodName)

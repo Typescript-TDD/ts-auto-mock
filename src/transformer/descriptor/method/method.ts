@@ -31,7 +31,7 @@ function CreateProviderGetMethod(): ts.PropertyAccessExpression {
   return ts.createPropertyAccess(
     ts.createPropertyAccess(
       ts.createPropertyAccess(
-        MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
+        MockDefiner.instance.getModuleIdentifier(ModuleName.Extension),
         ts.createIdentifier('Provider')
       ),
       ts.createIdentifier('instance')
