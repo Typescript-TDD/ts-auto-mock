@@ -127,7 +127,7 @@ function visitNode(
   const [nodeToMock]: ts.NodeArray<ts.TypeNode> = node.typeArguments;
 
   MockDefiner.instance.setFileNameFromNode(nodeToMock);
-  MockDefiner.instance.setTsAutoMockImportIdentifier();
+  MockDefiner.instance.prepareModuleImports();
 
   const declaration: ts.FunctionDeclaration = signature.declaration as ts.FunctionDeclaration;
 

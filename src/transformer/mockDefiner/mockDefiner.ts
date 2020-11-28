@@ -16,7 +16,7 @@ import { DeclarationListCache } from './cache/declarationListCache';
 import { FactoryUniqueName, PossibleDeclaration } from './factoryUniqueName';
 import { ModuleName } from './modules/moduleName';
 import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
-import { ModulesImportUrl } from './modules/modulesImportUrl';
+import { ModulesIdentifier } from './modules/modulesIdentifier';
 
 interface FactoryRegistrationPerFile {
   [key: string]: Array<{
@@ -33,12 +33,7 @@ interface FactoryIntersectionRegistrationPerFile {
 }
 
 export class MockDefiner {
-  private _neededImportIdentifierPerFile: {
-    [key: string]: Array<ModuleNameIdentifier>;
-  } = {};
-  private _internalModuleImportIdentifierPerFile: {
-    [key: string]: { [key in ModuleName]: ts.Identifier };
-  } = {};
+  private _moduleImports: ModulesIdentifier;
   private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
   private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
   private _factoryCache: DeclarationCache;
@@ -55,6 +50,7 @@ export class MockDefiner {
     this._factoryIntersectionCache = new DeclarationListCache();
     this._factoryUniqueName = new FactoryUniqueName();
     this._registerMockFactoryCache = new DeclarationCache();
+    this._moduleImports = new ModulesIdentifier();
     this._cacheEnabled = GetTsAutoMockCacheOptions();
   }
 
@@ -65,35 +61,13 @@ export class MockDefiner {
     return this._instance;
   }
 
+  public prepareModuleImports(): void {
+    this._moduleImports.storeImportsForFile(this._fileName);
+  }
+
   public setFileNameFromNode(node: ts.Node): void {
     const thisFile: ts.SourceFile = node.getSourceFile();
     this._fileName = thisFile.fileName;
-  }
-
-  public setTsAutoMockImportIdentifier(): void {
-    if (this._internalModuleImportIdentifierPerFile[this._fileName]) {
-      return;
-    }
-
-    this._internalModuleImportIdentifierPerFile[this._fileName] = {
-      [ModuleName.Extension]: PrivateIdentifier(ModuleName.Extension),
-      [ModuleName.Merge]: PrivateIdentifier(ModuleName.Merge),
-      [ModuleName.Repository]: PrivateIdentifier(ModuleName.Repository),
-      [ModuleName.Random]: PrivateIdentifier(ModuleName.Random),
-    };
-
-    this._neededImportIdentifierPerFile[this._fileName] =
-      this._neededImportIdentifierPerFile[this._fileName] || [];
-
-    Array.prototype.push.apply(
-      this._neededImportIdentifierPerFile[this._fileName],
-      Object.keys(ModulesImportUrl).map((key: ModuleName) => ({
-        moduleUrl: ModulesImportUrl[key],
-        identifier: this._internalModuleImportIdentifierPerFile[this._fileName][
-          key
-        ],
-      }))
-    );
   }
 
   public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
@@ -167,8 +141,6 @@ export class MockDefiner {
   }
 
   public getMockFactoryByKey(key: string): ts.Expression {
-    this.setTsAutoMockImportIdentifier();
-
     return this._getCallGetFactory(key);
   }
 
@@ -217,10 +189,10 @@ export class MockDefiner {
   }
 
   private _getModuleIdentifier(
-    fileName: string,
+    _fileName: string,
     module: ModuleName
   ): ts.Identifier {
-    return this._internalModuleImportIdentifierPerFile[fileName][module];
+    return this._moduleImports.getModuleIdentifier(module);
   }
   private _getMockFactoryIdForTypeofEnum(
     declaration: ts.EnumDeclaration
@@ -292,18 +264,14 @@ export class MockDefiner {
   }
 
   private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
-    if (this._neededImportIdentifierPerFile[sourceFile.fileName]) {
-      return this._neededImportIdentifierPerFile[
-        sourceFile.fileName
-      ].map((moduleIdentifier: ModuleNameIdentifier) =>
+    return this._moduleImports
+      .getImportsPerFile(sourceFile.fileName)
+      .map((moduleIdentifier: ModuleNameIdentifier) =>
         createImportOnIdentifier(
           moduleIdentifier.moduleUrl,
           moduleIdentifier.identifier
         )
       );
-    }
-
-    return [];
   }
 
   private _getExportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
