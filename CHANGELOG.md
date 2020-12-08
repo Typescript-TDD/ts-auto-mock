@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [2.7.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.5...2.7.0) (2020-12-08)
+
+
+### Features
+
+* **registerMock:** allow use of mocked generics in register mock factory ([512e150](https://github.com/Typescript-TDD/ts-auto-mock/commit/512e150436572e59c1070b2540d0b2310d655137))
+
 ## [2.6.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.4...2.6.5) (2020-10-08)
 
 

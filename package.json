@@ -1,6 +1,6 @@
 {
     "name": "ts-auto-mock",
-    "version": "2.6.5",
+    "version": "2.7.0",
     "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
     "scripts": {
         "build": "npm run build:modules && npm run build:transformer",
@@ -37,7 +37,7 @@
         "commit": "npm run cz",
         "contributors:add": "all-contributors add",
         "contributors:generate": "all-contributors generate"
-    }, 
+    },
     "keywords": [
         "typescript",
         "spy",
