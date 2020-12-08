@@ -8,7 +8,10 @@ import { GetProperties } from '../descriptor/properties/properties';
 import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
 import { TypescriptCreator } from '../helper/creator';
 import { createImportOnIdentifier } from '../helper/import';
-import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
+import {
+  MockIdentifierGenericParameter,
+  MockIdentifierGenericParameterValue,
+} from '../mockIdentifier/mockIdentifier';
 import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 import { Scope } from '../scope/scope';
 import { DeclarationCache } from './cache/declarationCache';
@@ -194,7 +197,11 @@ export class MockDefiner {
 
     this._registerMockFactoryCache.set(declaration, key);
 
-    return this._getCallRegisterMock(this._fileName, key, factory);
+    return this._getCallRegisterMock(
+      this._fileName,
+      key,
+      this._wrapRegisterMockFactory(factory)
+    );
   }
 
   public hasMockForDeclaration(declaration: ts.Declaration): boolean {
@@ -355,6 +362,34 @@ export class MockDefiner {
   ): ts.Statement {
     return ts.createExpressionStatement(
       this._getCallRegisterMock(fileName, key, factory)
+    );
+  }
+
+  private _wrapRegisterMockFactory(factory: ts.Expression): ts.Expression {
+    return TypescriptCreator.createArrowFunction(
+      TypescriptCreator.createCall(factory, [
+        ts.createSpread(
+          TypescriptCreator.createCall(
+            ts.createPropertyAccess(
+              ts.createIdentifier('generics'),
+              ts.createIdentifier('map')
+            ),
+            [
+              TypescriptCreator.createArrowFunction(
+                TypescriptCreator.createCall(
+                  ts.createPropertyAccess(
+                    ts.createIdentifier('g'),
+                    MockIdentifierGenericParameterValue
+                  ),
+                  []
+                ),
+                [TypescriptCreator.createParameter('g')]
+              ),
+            ]
+          )
+        ),
+      ]),
+      [TypescriptCreator.createParameter('generics')]
     );
   }
 
