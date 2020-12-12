@@ -15,9 +15,7 @@ describe('properties with literal', () => {
 
 describe('properties with imported interface literal', () => {
   it('should assign the correct values', () => {
-    const mock: WithStringLiteralProperties = createMock<
-      WithStringLiteralProperties
-    >();
+    const mock: WithStringLiteralProperties = createMock<WithStringLiteralProperties>();
 
     expect(mock['!']).toBe(0);
     expect(mock['literal-special-characters-property']).toBeUndefined();

@@ -255,9 +255,7 @@ describe('typescript lib', () => {
       prop: InsertPosition;
     }
 
-    const mock: WithLiteralTypescriptType = createMock<
-      WithLiteralTypescriptType
-    >();
+    const mock: WithLiteralTypescriptType = createMock<WithLiteralTypescriptType>();
 
     expect(mock.prop).toBeUndefined();
   });
