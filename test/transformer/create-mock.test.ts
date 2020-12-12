@@ -6,9 +6,7 @@ describe('create-mock', () => {
     it('should not be affected by createMock', () => {
       const h: ClassThatUseDifferentCreateMock = new ClassThatUseDifferentCreateMock();
       expect(h.propertyGenerated).toBe('property');
-      const properties: ClassThatUseDifferentCreateMock = createMock<
-        ClassThatUseDifferentCreateMock
-      >();
+      const properties: ClassThatUseDifferentCreateMock = createMock<ClassThatUseDifferentCreateMock>();
       expect(properties.property).toBe('');
     });
   });
