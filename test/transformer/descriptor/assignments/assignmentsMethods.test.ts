@@ -67,9 +67,7 @@ describe('when assigned directly from a functionMethod', () => {
     }
 
     it('should set the function', () => {
-      const properties: MyClassWithReturnArrow = createMock<
-        MyClassWithReturnArrow
-      >();
+      const properties: MyClassWithReturnArrow = createMock<MyClassWithReturnArrow>();
       expect(properties.method()()).toBe('s');
     });
 
@@ -103,9 +101,7 @@ describe('when assigned directly from a functionMethod', () => {
     });
 
     it('should set the function', () => {
-      const properties: MyClassWithReturnExpression = createMock<
-        MyClassWithReturnExpression
-      >();
+      const properties: MyClassWithReturnExpression = createMock<MyClassWithReturnExpression>();
       expect(properties.method()()).toBe('s');
     });
   });

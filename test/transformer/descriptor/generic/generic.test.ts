@@ -73,9 +73,7 @@ describe('for generic', () => {
     });
 
     it('should set the value for default generics when not provided', () => {
-      const propertiesWithGeneric: GenericDefault = createMock<
-        GenericDefault
-      >();
+      const propertiesWithGeneric: GenericDefault = createMock<GenericDefault>();
 
       expect(propertiesWithGeneric.a).toBe('');
     });

@@ -49,9 +49,7 @@ describe('declarations', () => {
 
     describe('interface imported', () => {
       it('should return the correct properties', () => {
-        const properties: InterfaceDeclaration = createMock<
-          InterfaceDeclaration
-        >();
+        const properties: InterfaceDeclaration = createMock<InterfaceDeclaration>();
         expect(properties.a).toBe('');
       });
     });
@@ -169,27 +167,21 @@ describe('declarations', () => {
 
     describe('interface imported', () => {
       it('should ignore variables declaration', () => {
-        const properties: MultipleInterfaceDeclaration = createMock<
-          MultipleInterfaceDeclaration
-        >();
+        const properties: MultipleInterfaceDeclaration = createMock<MultipleInterfaceDeclaration>();
         expect(properties.a).toBe('');
       });
     });
 
     describe('class imported', () => {
       it('should consider first declarations', () => {
-        const properties: MultipleClassDeclaration = createMock<
-          MultipleClassDeclaration
-        >();
+        const properties: MultipleClassDeclaration = createMock<MultipleClassDeclaration>();
         expect(properties.a).toBe('');
       });
     });
 
     describe('type imported', () => {
       it('should return the correct properties', () => {
-        const properties: MultipleTypeDeclaration = createMock<
-          MultipleTypeDeclaration
-        >();
+        const properties: MultipleTypeDeclaration = createMock<MultipleTypeDeclaration>();
         expect(properties.a).toBe('');
       });
     });
