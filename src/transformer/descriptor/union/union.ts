@@ -15,7 +15,11 @@ export function GetUnionDescriptor(
       (typeNode: ts.TypeNode) => !isNotDefinedType(typeNode)
     );
 
-    return GetDescriptor(removeUndefinedNodes[0], scope);
+    if (removeUndefinedNodes.length) {
+      return GetDescriptor(removeUndefinedNodes[0], scope);
+    }
+
+    return GetUndefinedDescriptor();
   }
 
   const notDefinedType: ts.Node[] = findNodes.filter((typeNode: ts.TypeNode) =>

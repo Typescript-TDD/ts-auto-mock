@@ -29,5 +29,31 @@ describe('create-hydrated-mock', () => {
       expect(mock.test3()).toBe('');
       expect(mock.test4()).toBe('');
     });
+
+    it('should ignore not defined property types', () => {
+      interface Interface {
+        test: string | undefined;
+        test2: undefined | string;
+        test3: string | void;
+        test4: void | string;
+      }
+
+      const mock: Interface = createHydratedMock<Interface>();
+      expect(mock.test).toBe('');
+      expect(mock.test2).toBe('');
+      expect(mock.test3).toBe('');
+      expect(mock.test4).toBe('');
+    });
+
+    it('should still return undefined for union types with only undefined types', () => {
+      interface Interface {
+        test: void | undefined;
+        test2: undefined | void;
+      }
+
+      const mock: Interface = createHydratedMock<Interface>();
+      expect(mock.test).toBeUndefined();
+      expect(mock.test2).toBeUndefined();
+    });
   });
 });
