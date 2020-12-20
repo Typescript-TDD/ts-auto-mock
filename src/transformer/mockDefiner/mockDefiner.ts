@@ -7,7 +7,6 @@ import { GetDescriptor } from '../descriptor/descriptor';
 import { GetProperties } from '../descriptor/properties/properties';
 import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
 import { TypescriptCreator } from '../helper/creator';
-import { createImportOnIdentifier } from '../helper/import';
 import {
   MockIdentifierGenericParameter,
   MockIdentifierGenericParameterValue,
@@ -18,8 +17,7 @@ import { DeclarationCache } from './cache/declarationCache';
 import { DeclarationListCache } from './cache/declarationListCache';
 import { FactoryUniqueName, PossibleDeclaration } from './factoryUniqueName';
 import { ModuleName } from './modules/moduleName';
-import { ModuleNameIdentifier } from './modules/moduleNameIdentifier';
-import { ModulesImportUrl } from './modules/modulesImportUrl';
+import { ModuleImportIdentifierPerFile } from './modules/moduleImportIdentifierPerFile';
 
 interface FactoryRegistrationPerFile {
   [key: string]: Array<{
@@ -36,12 +34,7 @@ interface FactoryIntersectionRegistrationPerFile {
 }
 
 export class MockDefiner {
-  private _neededImportIdentifierPerFile: {
-    [key: string]: Array<ModuleNameIdentifier>;
-  } = {};
-  private _internalModuleImportIdentifierPerFile: {
-    [key: string]: { [key in ModuleName]: ts.Identifier };
-  } = {};
+  private _moduleImportIdentifierPerFile: ModuleImportIdentifierPerFile;
   private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
   private _hydratedFactoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
   private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
@@ -63,6 +56,7 @@ export class MockDefiner {
     this._factoryIntersectionCache = new DeclarationListCache();
     this._factoryUniqueName = new FactoryUniqueName();
     this._registerMockFactoryCache = new DeclarationCache();
+    this._moduleImportIdentifierPerFile = new ModuleImportIdentifierPerFile();
     this._cacheEnabled = GetTsAutoMockCacheOptions();
   }
 
@@ -79,29 +73,11 @@ export class MockDefiner {
   }
 
   public setTsAutoMockImportIdentifier(): void {
-    if (this._internalModuleImportIdentifierPerFile[this._fileName]) {
+    if (this._moduleImportIdentifierPerFile.has(this._fileName)) {
       return;
     }
 
-    this._internalModuleImportIdentifierPerFile[this._fileName] = {
-      [ModuleName.Extension]: PrivateIdentifier(ModuleName.Extension),
-      [ModuleName.Merge]: PrivateIdentifier(ModuleName.Merge),
-      [ModuleName.Repository]: PrivateIdentifier(ModuleName.Repository),
-      [ModuleName.Random]: PrivateIdentifier(ModuleName.Random),
-    };
-
-    this._neededImportIdentifierPerFile[this._fileName] =
-      this._neededImportIdentifierPerFile[this._fileName] || [];
-
-    Array.prototype.push.apply(
-      this._neededImportIdentifierPerFile[this._fileName],
-      Object.keys(ModulesImportUrl).map((key: ModuleName) => ({
-        moduleUrl: ModulesImportUrl[key],
-        identifier: this._internalModuleImportIdentifierPerFile[this._fileName][
-          key
-        ],
-      }))
-    );
+    this._moduleImportIdentifierPerFile.set(this._fileName);
   }
 
   public getCurrentModuleIdentifier(module: ModuleName): ts.Identifier {
@@ -278,7 +254,7 @@ export class MockDefiner {
     fileName: string,
     module: ModuleName
   ): ts.Identifier {
-    return this._internalModuleImportIdentifierPerFile[fileName][module];
+    return this._moduleImportIdentifierPerFile.getModule(fileName, module);
   }
   private _getMockFactoryIdForTypeofEnum(
     declaration: ts.EnumDeclaration
@@ -350,15 +326,8 @@ export class MockDefiner {
   }
 
   private _getImportsToAddInFile(sourceFile: ts.SourceFile): ts.Statement[] {
-    if (this._neededImportIdentifierPerFile[sourceFile.fileName]) {
-      return this._neededImportIdentifierPerFile[
-        sourceFile.fileName
-      ].map((moduleIdentifier: ModuleNameIdentifier) =>
-        createImportOnIdentifier(
-          moduleIdentifier.moduleUrl,
-          moduleIdentifier.identifier
-        )
-      );
+    if (this._moduleImportIdentifierPerFile.has(sourceFile.fileName)) {
+      return this._moduleImportIdentifierPerFile.get(sourceFile.fileName);
     }
 
     return [];
