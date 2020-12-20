@@ -17,43 +17,40 @@ describe('create-hydrated-mock', () => {
   describe('for union types', () => {
     it('should ignore not defined types from the signature', () => {
       interface Interface {
-        test(): string | undefined;
-        test2(): undefined | string;
-        test3(): string | void;
-        test4(): void | string;
+        method(): string | undefined;
+        method2(): undefined | string;
+        method3(): string | void;
+        method4(): void | string;
+        property: string | undefined;
+        property2: undefined | string;
+        property3: string | void;
+        property4: void | string;
       }
 
       const mock: Interface = createHydratedMock<Interface>();
-      expect(mock.test()).toBe('');
-      expect(mock.test2()).toBe('');
-      expect(mock.test3()).toBe('');
-      expect(mock.test4()).toBe('');
-    });
-
-    it('should ignore not defined property types', () => {
-      interface Interface {
-        test: string | undefined;
-        test2: undefined | string;
-        test3: string | void;
-        test4: void | string;
-      }
-
-      const mock: Interface = createHydratedMock<Interface>();
-      expect(mock.test).toBe('');
-      expect(mock.test2).toBe('');
-      expect(mock.test3).toBe('');
-      expect(mock.test4).toBe('');
+      expect(mock.method()).toBe('');
+      expect(mock.method2()).toBe('');
+      expect(mock.method3()).toBe('');
+      expect(mock.method4()).toBe('');
+      expect(mock.property).toBe('');
+      expect(mock.property2).toBe('');
+      expect(mock.property3).toBe('');
+      expect(mock.property4).toBe('');
     });
 
     it('should still return undefined for union types with only undefined types', () => {
       interface Interface {
-        test: void | undefined;
-        test2: undefined | void;
+        method(): void | undefined;
+        method2(): undefined | void;
+        property: void | undefined;
+        property2: undefined | void;
       }
 
       const mock: Interface = createHydratedMock<Interface>();
-      expect(mock.test).toBeUndefined();
-      expect(mock.test2).toBeUndefined();
+      expect(mock.method()).toBeUndefined();
+      expect(mock.method()).toBeUndefined();
+      expect(mock.property).toBeUndefined();
+      expect(mock.property2).toBeUndefined();
     });
   });
 });
