@@ -17,6 +17,10 @@ const customFunctions: CustomFunction[] = [
     sourceDts: 'register-mock.d.ts',
     sourceUrl: '../register-mock.d.ts',
   },
+  {
+    sourceDts: 'create-hydrated-mock.d.ts',
+    sourceUrl: '../create-hydrated-mock.d.ts',
+  },
 ];
 
 const transformer: (
@@ -39,6 +43,10 @@ function visitNode(
     return getMock(nodeToMock, node);
   }
 
+  if (isCreateHydratedMock(declaration)) {
+    return getMock(nodeToMock, node);
+  }
+
   if (isCreateMockList(declaration)) {
     return getMockForList(nodeToMock, node);
   }
@@ -52,6 +60,10 @@ function visitNode(
 
 function isCreateMock(declaration: ts.FunctionDeclaration): boolean {
   return declaration.name?.getText() === 'createMock';
+}
+
+function isCreateHydratedMock(declaration: ts.FunctionDeclaration): boolean {
+  return declaration.name?.getText() === 'createHydratedMock';
 }
 
 function isCreateMockList(declaration: ts.FunctionDeclaration): boolean {

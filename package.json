@@ -17,6 +17,7 @@
         "test:transformer": "cross-env JASMINE_CONFIG=./test/transformer/jasmine.json TSCONFIG=./test/transformer/tsconfig.json npm run test:common",
         "test:noTransformer": "cross-env JASMINE_CONFIG=./test/noTransformer/jasmine.json TSCONFIG=./test/tsconfig.json npm run test:common",
         "test:registerMock": "cross-env JASMINE_CONFIG=./test/registerMock/jasmine.json TSCONFIG=./test/registerMock/tsconfig.json npm run test:common",
+        "test:createHydratedMock": "cross-env JASMINE_CONFIG=./test/createHydratedMock/jasmine.json TSCONFIG=./test/createHydratedMock/tsconfig.json npm run test:common",
         "test:framework:context": "cross-env JASMINE_CONFIG=./test/frameworkContext/jasmine.json TSCONFIG=./test/frameworkContext/tsconfig.json npm run test:common",
         "test:frameworkDeprecated": "cross-env JASMINE_CONFIG=./test/frameworkContext/jasmineDeprecated.json TSCONFIG=./test/frameworkContext/tsconfig.json npm run test:common",
         "test:framework": "cross-env JASMINE_CONFIG=./test/framework/jasmine.json TSCONFIG=./test/framework/tsconfig.json npm run test:common",
