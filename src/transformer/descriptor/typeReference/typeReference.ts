@@ -21,7 +21,7 @@ export function GetTypeReferenceDescriptor(
     node.typeName
   );
 
-  if (MockDefiner.instance.hasMockForDeclaration(declaration)) {
+  if (MockDefiner.instance.hasMockForDeclaration(declaration, scope)) {
     return GetMockFactoryCall(node, declaration, scope);
   }
 

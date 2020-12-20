@@ -204,7 +204,14 @@ export class MockDefiner {
     );
   }
 
-  public hasMockForDeclaration(declaration: ts.Declaration): boolean {
+  public hasMockForDeclaration(
+    declaration: ts.Declaration,
+    scope: Scope
+  ): boolean {
+    if (scope.hydrated) {
+      return false;
+    }
+
     return (
       this._factoryCache.has(declaration) ||
       this._registerMockFactoryCache.has(declaration)
