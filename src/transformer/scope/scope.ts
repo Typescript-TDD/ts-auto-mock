@@ -4,6 +4,7 @@ export type InterfaceOrClassDeclaration =
   | ts.InterfaceDeclaration
   | ts.ClassDeclaration;
 export class Scope {
+  private _hydrated: boolean;
   constructor(currentMockKey?: string) {
     this._currentMockKey = currentMockKey;
   }
@@ -12,5 +13,13 @@ export class Scope {
 
   public get currentMockKey(): string | undefined {
     return this._currentMockKey;
+  }
+
+  public get hydrated(): boolean {
+    return this._hydrated;
+  }
+
+  public set hydrated(hydrated: boolean) {
+    this._hydrated = hydrated;
   }
 }

@@ -24,7 +24,7 @@ export function CreateMockFactory(
   declaration: ts.Declaration,
   scope: Scope
 ): ts.Expression {
-  MockDefiner.instance.createMockFactory(declaration);
+  MockDefiner.instance.createMockFactory(declaration, scope);
 
   return getDeclarationMockFactoryCall(declaration, typeReferenceNode, scope);
 }

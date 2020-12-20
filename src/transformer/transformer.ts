@@ -1,7 +1,12 @@
 import * as ts from 'typescript';
 import { TsAutoMockOptions } from '../options/options';
 import { CustomFunction } from './matcher/matcher';
-import { getMock, getMockForList, storeRegisterMock } from './mock/mock';
+import {
+  getHydratedMock,
+  getMock,
+  getMockForList,
+  storeRegisterMock,
+} from './mock/mock';
 import { baseTransformer } from './base/base';
 
 const customFunctions: CustomFunction[] = [
@@ -44,7 +49,7 @@ function visitNode(
   }
 
   if (isCreateHydratedMock(declaration)) {
-    return getMock(nodeToMock, node);
+    return getHydratedMock(nodeToMock, node);
   }
 
   if (isCreateMockList(declaration)) {

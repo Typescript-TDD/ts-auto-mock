@@ -121,7 +121,7 @@ export class MockDefiner {
     this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName] = [];
   }
 
-  public createMockFactory(declaration: ts.Declaration): void {
+  public createMockFactory(declaration: ts.Declaration, scope: Scope): void {
     const thisFileName: string = this._fileName;
 
     const key: string = this.getDeclarationKeyMap(declaration);
@@ -131,10 +131,10 @@ export class MockDefiner {
     this._factoryRegistrationsPerFile[thisFileName] =
       this._factoryRegistrationsPerFile[thisFileName] || [];
 
-    const descriptor: ts.Expression = GetDescriptor(
-      declaration,
-      new Scope(key)
-    );
+    const newScope: Scope = new Scope(key);
+    newScope.hydrated = scope.hydrated;
+
+    const descriptor: ts.Expression = GetDescriptor(declaration, newScope);
 
     const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
