@@ -1,4 +1,4 @@
-import { createHydratedMock } from 'ts-auto-mock';
+import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 describe('create-hydrated-mock', () => {
   describe('for not optional properties', () => {
@@ -49,6 +49,19 @@ describe('create-hydrated-mock', () => {
       expect(mock.method()).toBeUndefined();
       expect(mock.property).toBeUndefined();
       expect(mock.property2).toBeUndefined();
+    });
+  });
+
+  describe('when an interface has already been mocked by createMock', () => {
+    it('should create a different mock with optional properties defined', () => {
+      interface Interface {
+        notRequired?: string;
+      }
+
+      const mockFromCreateMock: Interface = createMock<Interface>();
+      const mock: Interface = createHydratedMock<Interface>();
+      expect(mockFromCreateMock.notRequired).toBeUndefined();
+      expect(mock.notRequired).toBe('');
     });
   });
 });
