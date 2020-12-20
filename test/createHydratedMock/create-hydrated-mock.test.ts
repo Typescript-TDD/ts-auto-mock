@@ -85,5 +85,34 @@ describe('create-hydrated-mock', () => {
       const mock: Interface<string> = createHydratedMock<Interface<string>>();
       expect(mock.notRequired).toBe('');
     });
+
+    it('should duplicate the mocks', () => {
+      interface AnotherInterface {
+        prop: boolean;
+      }
+      interface Interface<T> {
+        notRequired?: T;
+      }
+
+      createMock<AnotherInterface>();
+      const mock: Interface<AnotherInterface> = createHydratedMock<
+        Interface<AnotherInterface>
+      >();
+      expect(mock.notRequired?.prop).toBe(false);
+    });
+
+    it('should find the correct generic with extensions', () => {
+      interface A<T> {
+        a: T;
+      }
+
+      interface B<T> extends A<T> {
+        b?: number;
+      }
+
+      const mock: B<string> = createHydratedMock<B<string>>();
+      expect(mock.b).toBe(0);
+      expect(mock.a).toBe('');
+    });
   });
 });
