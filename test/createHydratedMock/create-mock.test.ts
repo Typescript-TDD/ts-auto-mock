@@ -13,4 +13,21 @@ describe('create-hydrated-mock', () => {
       expect(mock.notRequired).toBe('');
     });
   });
+
+  describe('for union types', () => {
+    it('should ignore not defined types from the signature', () => {
+      interface Interface {
+        test(): string | undefined;
+        test2(): undefined | string;
+        test3(): string | void;
+        test4(): void | string;
+      }
+
+      const mock: Interface = createHydratedMock<Interface>();
+      expect(mock.test()).toBe('');
+      expect(mock.test2()).toBe('');
+      expect(mock.test3()).toBe('');
+      expect(mock.test4()).toBe('');
+    });
+  });
 });
