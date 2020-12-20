@@ -13,22 +13,17 @@ import { TypescriptCreator } from '../helper/creator';
 
 export function GetMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
+  declaration: ts.Declaration,
   scope: Scope
 ): ts.Expression {
-  const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-    typeReferenceNode.typeName
-  );
-
   return getDeclarationMockFactoryCall(declaration, typeReferenceNode, scope);
 }
 
 export function CreateMockFactory(
   typeReferenceNode: ts.TypeReferenceNode,
+  declaration: ts.Declaration,
   scope: Scope
 ): ts.Expression {
-  const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-    typeReferenceNode.typeName
-  );
   MockDefiner.instance.createMockFactory(declaration);
 
   return getDeclarationMockFactoryCall(declaration, typeReferenceNode, scope);
@@ -100,9 +95,9 @@ function getDeclarationMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
   scope: Scope
 ): ts.Expression {
-  const declarationKey:
-    | string
-    | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
+  const declarationKey: string | undefined =
+    MockDefiner.instance.getFactoryCache(declaration) ||
+    MockDefiner.instance.getRegisterFactoryCache(declaration);
 
   if (!declarationKey) {
     throw new Error(

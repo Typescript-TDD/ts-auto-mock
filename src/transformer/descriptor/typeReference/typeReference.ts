@@ -22,7 +22,7 @@ export function GetTypeReferenceDescriptor(
   );
 
   if (MockDefiner.instance.hasMockForDeclaration(declaration)) {
-    return GetMockFactoryCall(node, scope);
+    return GetMockFactoryCall(node, declaration, scope);
   }
 
   if (IsTypescriptType(declaration)) {
@@ -30,7 +30,7 @@ export function GetTypeReferenceDescriptor(
   }
 
   if (isTypeReferenceReusable(declaration)) {
-    return CreateMockFactory(node, scope);
+    return CreateMockFactory(node, declaration, scope);
   }
 
   return GetDescriptor(declaration, scope);
