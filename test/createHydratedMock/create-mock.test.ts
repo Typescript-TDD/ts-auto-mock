@@ -5,17 +5,15 @@ describe('create-hydrated-mock', () => {
     it('should treat not required properties as required', () => {
       interface Interface {
         notRequired?: string;
-        required: number;
       }
 
       const mock: Interface = createHydratedMock<Interface>();
-      expect(mock.required).toBe(0);
       expect(mock.notRequired).toBe('');
     });
   });
 
   describe('for union types', () => {
-    it('should ignore not defined types from the signature', () => {
+    it('should ignore not defined types', () => {
       interface Interface {
         method(): string | undefined;
         method2(): undefined | string;
