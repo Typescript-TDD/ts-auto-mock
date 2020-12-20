@@ -1,8 +1,8 @@
 import { createHydratedMock } from 'ts-auto-mock';
 
 describe('create-hydrated-mock', () => {
-  describe('when creating an hydrated mock', () => {
-    it('should treat not required properties as required', () => {
+  describe('for not optional properties', () => {
+    it('should treat them as non optional', () => {
       interface Interface {
         notRequired?: string;
       }
