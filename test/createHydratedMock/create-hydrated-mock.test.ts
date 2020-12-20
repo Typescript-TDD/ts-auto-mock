@@ -75,4 +75,15 @@ describe('create-hydrated-mock', () => {
       expect(mock.notRequired).toBeUndefined();
     });
   });
+
+  describe('for generics', () => {
+    it('should use the correct declaration to find the correct generic value', () => {
+      interface Interface<T> {
+        notRequired?: T;
+      }
+
+      const mock: Interface<string> = createHydratedMock<Interface<string>>();
+      expect(mock.notRequired).toBe('');
+    });
+  });
 });

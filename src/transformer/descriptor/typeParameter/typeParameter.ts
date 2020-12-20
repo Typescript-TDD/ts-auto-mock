@@ -33,6 +33,17 @@ export function GetTypeParameterDescriptor(
     );
   }
 
+  if (scope.hydrated) {
+    const genericKey: string = MockDefiner.instance.getHydratedDeclarationKeyMap(
+      typeDeclaration
+    );
+
+    return createFunctionToAccessToGenericValue(
+      genericKey + node.name.escapedText.toString(),
+      descriptor
+    );
+  }
+
   const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(
     typeDeclaration
   );
