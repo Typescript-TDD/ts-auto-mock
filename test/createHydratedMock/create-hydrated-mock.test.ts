@@ -63,4 +63,16 @@ describe('create-hydrated-mock', () => {
       expect(mock.notRequired).toBe('');
     });
   });
+
+  describe('when an interface has already been mocked by createHydratedMock', () => {
+    it('should create a different mock for createMock with optional properties undefined', () => {
+      interface Interface {
+        notRequired?: string;
+      }
+
+      createHydratedMock<Interface>();
+      const mock: Interface = createMock<Interface>();
+      expect(mock.notRequired).toBeUndefined();
+    });
+  });
 });
