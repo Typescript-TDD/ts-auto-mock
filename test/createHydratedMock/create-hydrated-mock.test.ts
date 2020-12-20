@@ -58,9 +58,8 @@ describe('create-hydrated-mock', () => {
         notRequired?: string;
       }
 
-      const mockFromCreateMock: Interface = createMock<Interface>();
+      createMock<Interface>();
       const mock: Interface = createHydratedMock<Interface>();
-      expect(mockFromCreateMock.notRequired).toBeUndefined();
       expect(mock.notRequired).toBe('');
     });
   });
