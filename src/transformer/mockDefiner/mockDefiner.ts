@@ -43,10 +43,13 @@ export class MockDefiner {
     [key: string]: { [key in ModuleName]: ts.Identifier };
   } = {};
   private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
+  private _hydratedFactoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
   private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
   private _factoryCache: DeclarationCache;
+  private _hydratedFactoryCache: DeclarationCache;
   private _registerMockFactoryCache: DeclarationCache;
   private _declarationCache: DeclarationCache;
+  private _hydratedDeclarationCache: DeclarationCache;
   private _factoryIntersectionCache: DeclarationListCache;
   private _fileName: string;
   private _factoryUniqueName: FactoryUniqueName;
@@ -55,6 +58,8 @@ export class MockDefiner {
   private constructor() {
     this._factoryCache = new DeclarationCache();
     this._declarationCache = new DeclarationCache();
+    this._hydratedDeclarationCache = new DeclarationCache();
+    this._hydratedFactoryCache = new DeclarationCache();
     this._factoryIntersectionCache = new DeclarationListCache();
     this._factoryUniqueName = new FactoryUniqueName();
     this._registerMockFactoryCache = new DeclarationCache();
@@ -107,6 +112,7 @@ export class MockDefiner {
     return [
       ...this._getImportsToAddInFile(sourceFile),
       ...this._getExportsToAddInFile(sourceFile),
+      ...this._getHydratedExportsToAddInFile(sourceFile),
       ...this._getExportsIntersectionToAddInFile(sourceFile),
     ];
   }
@@ -114,39 +120,63 @@ export class MockDefiner {
   public initFile(sourceFile: ts.SourceFile): void {
     if (!this._cacheEnabled) {
       this._factoryCache = new DeclarationCache();
+      this._hydratedFactoryCache = new DeclarationCache();
       this._declarationCache = new DeclarationCache();
+      this._hydratedDeclarationCache = new DeclarationCache();
       this._factoryIntersectionCache = new DeclarationListCache();
     }
     this._factoryRegistrationsPerFile[sourceFile.fileName] = [];
+    this._hydratedFactoryRegistrationsPerFile[sourceFile.fileName] = [];
     this._factoryIntersectionsRegistrationsPerFile[sourceFile.fileName] = [];
   }
 
   public createMockFactory(declaration: ts.Declaration, scope: Scope): void {
     const thisFileName: string = this._fileName;
 
-    const key: string = this.getDeclarationKeyMap(declaration);
+    if (scope.hydrated) {
+      const key: string = this.getHydratedDeclarationKeyMap(declaration);
+      this._hydratedFactoryCache.set(declaration, key);
+      this._hydratedFactoryRegistrationsPerFile[thisFileName] =
+        this._hydratedFactoryRegistrationsPerFile[thisFileName] || [];
 
-    this._factoryCache.set(declaration, key);
+      const newScope: Scope = new Scope(key);
+      newScope.hydrated = scope.hydrated;
 
-    this._factoryRegistrationsPerFile[thisFileName] =
-      this._factoryRegistrationsPerFile[thisFileName] || [];
+      const descriptor: ts.Expression = GetDescriptor(declaration, newScope);
 
-    const newScope: Scope = new Scope(key);
-    newScope.hydrated = scope.hydrated;
+      const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
-    const descriptor: ts.Expression = GetDescriptor(declaration, newScope);
+      const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
+        descriptor,
+        [mockGenericParameter]
+      );
+      this._hydratedFactoryRegistrationsPerFile[thisFileName].push({
+        key: declaration,
+        factory,
+      });
+    } else {
+      const key: string = this.getDeclarationKeyMap(declaration);
+      this._factoryCache.set(declaration, key);
+      this._factoryRegistrationsPerFile[thisFileName] =
+        this._factoryRegistrationsPerFile[thisFileName] || [];
 
-    const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+      const newScope: Scope = new Scope(key);
+      newScope.hydrated = scope.hydrated;
 
-    const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
-      descriptor,
-      [mockGenericParameter]
-    );
+      const descriptor: ts.Expression = GetDescriptor(declaration, newScope);
 
-    this._factoryRegistrationsPerFile[thisFileName].push({
-      key: declaration,
-      factory,
-    });
+      const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+
+      const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
+        descriptor,
+        [mockGenericParameter]
+      );
+
+      this._factoryRegistrationsPerFile[thisFileName].push({
+        key: declaration,
+        factory,
+      });
+    }
   }
 
   public getMockFactoryTypeofEnum(
@@ -189,6 +219,20 @@ export class MockDefiner {
     return this._declarationCache.get(declaration)!;
   }
 
+  public getHydratedDeclarationKeyMap(declaration: ts.Declaration): string {
+    if (!this._hydratedDeclarationCache.has(declaration)) {
+      this._hydratedDeclarationCache.set(
+        declaration,
+        this._factoryUniqueName.createForDeclaration(
+          declaration as PossibleDeclaration
+        )
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this._hydratedDeclarationCache.get(declaration)!;
+  }
+
   public registerMockFor(
     declaration: ts.Declaration,
     factory: ts.FunctionExpression
@@ -209,7 +253,7 @@ export class MockDefiner {
     scope: Scope
   ): boolean {
     if (scope.hydrated) {
-      return false;
+      return this._hydratedFactoryCache.has(declaration);
     }
 
     return (
@@ -329,6 +373,30 @@ export class MockDefiner {
           // latter will be too!
           // eslint-disable-next-line
           const key: string = this._factoryCache.get(reg.key)!;
+
+          return this._createRegistration(
+            sourceFile.fileName,
+            key,
+            reg.factory
+          );
+        }
+      );
+    }
+
+    return [];
+  }
+
+  private _getHydratedExportsToAddInFile(
+    sourceFile: ts.SourceFile
+  ): ts.Statement[] {
+    if (this._hydratedFactoryRegistrationsPerFile[sourceFile.fileName]) {
+      return this._hydratedFactoryRegistrationsPerFile[sourceFile.fileName].map(
+        (reg: { key: ts.Declaration; factory: ts.Expression }) => {
+          // NOTE: this._hydratedFactoryRegistrationsPerFile and this._hydratedFactoryCache are
+          // populated in the same routine and if the former is defined the
+          // latter will be too!
+          // eslint-disable-next-line
+          const key: string = this._hydratedFactoryCache.get(reg.key)!;
 
           return this._createRegistration(
             sourceFile.fileName,

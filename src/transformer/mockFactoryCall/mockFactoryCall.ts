@@ -95,9 +95,9 @@ function getDeclarationMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
   scope: Scope
 ): ts.Expression {
-  const declarationKey:
-    | string
-    | undefined = MockDefiner.instance.getDeclarationKeyMap(declaration);
+  const declarationKey: string | undefined = scope.hydrated
+    ? MockDefiner.instance.getHydratedDeclarationKeyMap(declaration)
+    : MockDefiner.instance.getDeclarationKeyMap(declaration);
 
   if (!declarationKey) {
     throw new Error(
