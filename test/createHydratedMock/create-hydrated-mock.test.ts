@@ -157,4 +157,47 @@ describe('create-hydrated-mock', () => {
       expect(enumMock.B).toEqual('some');
     });
   });
+
+  describe('when mocking different interfaces with same name', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef
+    let mock0;
+    // eslint-disable-next-line @typescript-eslint/typedef
+    let mock1;
+    // eslint-disable-next-line @typescript-eslint/typedef
+    let mock2;
+    // eslint-disable-next-line @typescript-eslint/typedef
+    let mock3;
+    it('should create unique mocks', () => {
+      interface Interface {
+        prop?: string;
+      }
+
+      mock0 = createHydratedMock<Interface>();
+      mock1 = createMock<Interface>();
+
+      expect(mock0.prop).toEqual('');
+      expect(mock1.prop).toBeUndefined('');
+    });
+
+    it('should create unique mocks', () => {
+      interface Interface {
+        prop?: string;
+      }
+
+      mock2 = createHydratedMock<Interface>();
+      mock3 = createMock<Interface>();
+
+      expect(mock2.prop).toEqual('');
+      expect(mock3.prop).toBeUndefined('');
+    });
+
+    afterAll(() => {
+      expect(mock0).not.toBe(mock1);
+      expect(mock0).not.toBe(mock2);
+      expect(mock0).not.toBe(mock3);
+      expect(mock1).not.toBe(mock2);
+      expect(mock1).not.toBe(mock3);
+      expect(mock2).not.toBe(mock3);
+    });
+  });
 });
