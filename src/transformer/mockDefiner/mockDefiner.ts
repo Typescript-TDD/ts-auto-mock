@@ -115,10 +115,10 @@ export class MockDefiner {
       this._hydratedFactoryRegistrationsPerFile[thisFileName] =
         this._hydratedFactoryRegistrationsPerFile[thisFileName] || [];
 
-      const newScope: Scope = new Scope(key);
-      newScope.hydrated = scope.hydrated;
-
-      const descriptor: ts.Expression = GetDescriptor(declaration, newScope);
+      const descriptor: ts.Expression = GetDescriptor(
+        declaration,
+        Scope.fromScope(scope, key)
+      );
 
       const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
@@ -136,10 +136,10 @@ export class MockDefiner {
       this._factoryRegistrationsPerFile[thisFileName] =
         this._factoryRegistrationsPerFile[thisFileName] || [];
 
-      const newScope: Scope = new Scope(key);
-      newScope.hydrated = scope.hydrated;
-
-      const descriptor: ts.Expression = GetDescriptor(declaration, newScope);
+      const descriptor: ts.Expression = GetDescriptor(
+        declaration,
+        Scope.fromScope(scope, key)
+      );
 
       const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
@@ -356,12 +356,9 @@ export class MockDefiner {
     this._factoryIntersectionsRegistrationsPerFile[thisFileName] =
       this._factoryIntersectionsRegistrationsPerFile[thisFileName] || [];
 
-    const newScope: Scope = new Scope(key);
-    newScope.hydrated = scope.hydrated;
-
     const descriptor: ts.Expression = GetProperties(
       intersectionTypeNode,
-      newScope
+      Scope.fromScope(scope, key)
     );
 
     const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();

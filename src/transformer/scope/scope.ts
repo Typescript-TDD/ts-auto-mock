@@ -9,6 +9,12 @@ export class Scope {
     this._currentMockKey = currentMockKey;
   }
 
+  public static fromScope(scope: Scope, currentMockKey: string): Scope {
+    const newScope: Scope = new Scope(currentMockKey);
+    newScope.hydrated = scope.hydrated;
+    return newScope;
+  }
+
   private readonly _currentMockKey: string | undefined;
 
   public get currentMockKey(): string | undefined {
