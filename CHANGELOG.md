@@ -1,5 +1,18 @@
 # Semantic Versioning Changelog
 
+# [3.0.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.7.0...3.0.0) (2020-12-25)
+
+
+### chore
+
+* **typescript:** update to typescript 4 ([#611](https://github.com/Typescript-TDD/ts-auto-mock/issues/611)) ([8373ec5](https://github.com/Typescript-TDD/ts-auto-mock/commit/8373ec598277589d5639dd3415f5ffb4a64b4ab3))
+
+
+### BREAKING CHANGES
+
+* **typescript:** typescript >= 4.0.2 is required to use ts-auto-mock
+Update your typescript dependency to version >= 4.0.2
+
 # [2.7.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.5...2.7.0) (2020-12-08)
 
 
