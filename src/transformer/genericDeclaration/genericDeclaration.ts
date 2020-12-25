@@ -132,10 +132,15 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
               genericNode.typeName
             );
 
-            const isExtendingItself: boolean =
-              MockDefiner.instance.getDeclarationKeyMap(
-                typeParameterDeclaration
-              ) === declarationKey;
+            const dec: string | undefined = scope.hydrated
+              ? MockDefiner.instance.getHydratedDeclarationKeyMap(
+                  typeParameterDeclaration
+                )
+              : MockDefiner.instance.getDeclarationKeyMap(
+                  typeParameterDeclaration
+                );
+
+            const isExtendingItself: boolean = dec === declarationKey;
             if (isExtendingItself) {
               // FIXME: Currently, circular generics aren't supported. See
               // https://github.com/Typescript-TDD/ts-auto-mock/pull/312 for more

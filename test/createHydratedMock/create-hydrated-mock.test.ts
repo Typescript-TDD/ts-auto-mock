@@ -114,5 +114,18 @@ describe('create-hydrated-mock', () => {
       expect(mock.b).toBe(0);
       expect(mock.a).toBe('');
     });
+
+    it('should avoid infinite extension', () => {
+      class ClassWithGenerics<T> {
+        public a: T;
+      }
+
+      interface A extends ClassWithGenerics<A> {
+        b: number;
+      }
+      const properties: A = createHydratedMock<A>();
+      expect(properties.a).toBeDefined();
+      expect(properties.b).toBe(0);
+    });
   });
 });
