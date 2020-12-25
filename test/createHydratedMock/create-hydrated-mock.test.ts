@@ -143,4 +143,18 @@ describe('create-hydrated-mock', () => {
       expect(createMock<Interface>().notRequired).toBe('hello-world');
     });
   });
+
+  describe('for type of enum', () => {
+    it('should mock the properties as it was createMock', () => {
+      enum Enum {
+        A,
+        B = 'some',
+      }
+
+      const enumMock: typeof Enum = createHydratedMock<typeof Enum>();
+
+      expect(enumMock.A).toEqual(0);
+      expect(enumMock.B).toEqual('some');
+    });
+  });
 });

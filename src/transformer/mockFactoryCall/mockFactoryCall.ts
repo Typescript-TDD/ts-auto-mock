@@ -72,10 +72,12 @@ export function GetMockFactoryCallIntersection(
 }
 
 export function GetMockFactoryCallTypeofEnum(
-  declaration: ts.EnumDeclaration
+  declaration: ts.EnumDeclaration,
+  scope: Scope
 ): ts.Expression {
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(
-    declaration
+    declaration,
+    scope
   );
 
   return TypescriptCreator.createCall(mockFactoryCall, []);

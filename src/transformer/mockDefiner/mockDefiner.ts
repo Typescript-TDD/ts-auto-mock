@@ -156,9 +156,10 @@ export class MockDefiner {
   }
 
   public getMockFactoryTypeofEnum(
-    declaration: ts.EnumDeclaration
+    declaration: ts.EnumDeclaration,
+    scope: Scope
   ): ts.Expression {
-    const key: string = this._getMockFactoryIdForTypeofEnum(declaration);
+    const key: string = this._getMockFactoryIdForTypeofEnum(declaration, scope);
 
     return this.getMockFactoryByKey(key);
   }
@@ -289,7 +290,8 @@ export class MockDefiner {
     return this._moduleImportIdentifierPerFile.getModule(fileName, module);
   }
   private _getMockFactoryIdForTypeofEnum(
-    declaration: ts.EnumDeclaration
+    declaration: ts.EnumDeclaration,
+    scope: Scope
   ): string {
     const thisFileName: string = this._fileName;
 
@@ -300,7 +302,9 @@ export class MockDefiner {
       return cachedFactory;
     }
 
-    const key: string = this.getDeclarationKeyMap(declaration);
+    const key: string | undefined = scope.hydrated
+      ? MockDefiner.instance.getHydratedDeclarationKeyMap(declaration)
+      : MockDefiner.instance.getDeclarationKeyMap(declaration);
 
     this._factoryCache.set(declaration, key);
 
