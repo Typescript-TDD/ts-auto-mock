@@ -204,38 +204,26 @@ export class MockDefiner {
 
     this._registerMockFactoryCache.set(declaration, key);
 
-    return ts.createCall(
-      ts.createParen(
-        ts.createFunctionExpression(
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          [],
-          undefined,
-          ts.createBlock(
-            [
-              ts.createExpressionStatement(
-                this._getCallRegisterMock(
-                  this._fileName,
-                  hydratedKey,
-                  this._wrapRegisterMockFactory(factory)
-                )
-              ),
-              ts.createExpressionStatement(
-                this._getCallRegisterMock(
-                  this._fileName,
-                  key,
-                  this._wrapRegisterMockFactory(factory)
-                )
-              ),
-            ],
-            true
-          )
-        )
-      ),
-      undefined,
-      []
+    return TypescriptCreator.createIIFE(
+      ts.createBlock(
+        [
+          ts.createExpressionStatement(
+            this._getCallRegisterMock(
+              this._fileName,
+              hydratedKey,
+              this._wrapRegisterMockFactory(factory)
+            )
+          ),
+          ts.createExpressionStatement(
+            this._getCallRegisterMock(
+              this._fileName,
+              key,
+              this._wrapRegisterMockFactory(factory)
+            )
+          ),
+        ],
+        true
+      )
     );
   }
 
