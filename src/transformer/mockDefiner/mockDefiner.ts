@@ -110,7 +110,7 @@ export class MockDefiner {
     const thisFileName: string = this._fileName;
 
     if (scope.hydrated) {
-      const key: string = this.getHydratedDeclarationKeyMap(declaration);
+      const key: string = this._getHydratedDeclarationKeyMap(declaration);
       this._hydratedFactoryCache.set(declaration, key);
       this._hydratedFactoryRegistrationsPerFile[thisFileName] =
         this._hydratedFactoryRegistrationsPerFile[thisFileName] || [];
@@ -131,7 +131,7 @@ export class MockDefiner {
         factory,
       });
     } else {
-      const key: string = this.getDeclarationKeyMap(declaration);
+      const key: string = this._getDeclarationKeyMap(declaration);
       this._factoryCache.set(declaration, key);
       this._factoryRegistrationsPerFile[thisFileName] =
         this._factoryRegistrationsPerFile[thisFileName] || [];
@@ -184,40 +184,23 @@ export class MockDefiner {
     return this._getCallGetFactory(key);
   }
 
-  public getDeclarationKeyMap(declaration: ts.Declaration): string {
-    if (!this._declarationCache.has(declaration)) {
-      this._declarationCache.set(
-        declaration,
-        this._factoryUniqueName.createForDeclaration(
-          declaration as PossibleDeclaration
-        )
-      );
+  public getDeclarationKeyMapBasedOnScope(
+    declaration: ts.Declaration,
+    scope: Scope
+  ): string {
+    if (scope.hydrated) {
+      return this._getHydratedDeclarationKeyMap(declaration);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this._declarationCache.get(declaration)!;
-  }
-
-  public getHydratedDeclarationKeyMap(declaration: ts.Declaration): string {
-    if (!this._hydratedDeclarationCache.has(declaration)) {
-      this._hydratedDeclarationCache.set(
-        declaration,
-        this._factoryUniqueName.createForDeclaration(
-          declaration as PossibleDeclaration
-        )
-      );
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this._hydratedDeclarationCache.get(declaration)!;
+    return this._getDeclarationKeyMap(declaration);
   }
 
   public registerMockFor(
     declaration: ts.Declaration,
     factory: ts.FunctionExpression
   ): ts.Node {
-    const key: string = this.getDeclarationKeyMap(declaration);
-    const hydratedKey: string = this.getHydratedDeclarationKeyMap(declaration);
+    const key: string = this._getDeclarationKeyMap(declaration);
+    const hydratedKey: string = this._getHydratedDeclarationKeyMap(declaration);
 
     this._registerMockFactoryCache.set(declaration, key);
 
@@ -273,6 +256,34 @@ export class MockDefiner {
     );
   }
 
+  private _getDeclarationKeyMap(declaration: ts.Declaration): string {
+    if (!this._declarationCache.has(declaration)) {
+      this._declarationCache.set(
+        declaration,
+        this._factoryUniqueName.createForDeclaration(
+          declaration as PossibleDeclaration
+        )
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this._declarationCache.get(declaration)!;
+  }
+
+  private _getHydratedDeclarationKeyMap(declaration: ts.Declaration): string {
+    if (!this._hydratedDeclarationCache.has(declaration)) {
+      this._hydratedDeclarationCache.set(
+        declaration,
+        this._factoryUniqueName.createForDeclaration(
+          declaration as PossibleDeclaration
+        )
+      );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return this._hydratedDeclarationCache.get(declaration)!;
+  }
+
   private _mockRepositoryAccess(filename: string): ts.Expression {
     const repository: ts.Identifier = this._getModuleIdentifier(
       filename,
@@ -304,9 +315,10 @@ export class MockDefiner {
       return cachedFactory;
     }
 
-    const key: string | undefined = scope.hydrated
-      ? MockDefiner.instance.getHydratedDeclarationKeyMap(declaration)
-      : MockDefiner.instance.getDeclarationKeyMap(declaration);
+    const key: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+      declaration,
+      scope
+    );
 
     this._factoryCache.set(declaration, key);
 

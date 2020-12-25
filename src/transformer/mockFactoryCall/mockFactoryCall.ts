@@ -42,9 +42,10 @@ export function GetMockFactoryCallIntersection(
       const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
         type.typeName
       );
-      const declarationKey: string | undefined = scope.hydrated
-        ? MockDefiner.instance.getHydratedDeclarationKeyMap(declaration)
-        : MockDefiner.instance.getDeclarationKeyMap(declaration);
+      const declarationKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+        declaration,
+        scope
+      );
 
       genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
 
@@ -99,9 +100,10 @@ function getDeclarationMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
   scope: Scope
 ): ts.Expression {
-  const declarationKey: string | undefined = scope.hydrated
-    ? MockDefiner.instance.getHydratedDeclarationKeyMap(declaration)
-    : MockDefiner.instance.getDeclarationKeyMap(declaration);
+  const declarationKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+    declaration,
+    scope
+  );
 
   if (!declarationKey) {
     throw new Error(
@@ -149,17 +151,11 @@ function addFromDeclarationExtensions(
         const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
           extension.expression
         );
-        const extensionDeclarationKey: string | undefined = scope.hydrated
-          ? MockDefiner.instance.getHydratedDeclarationKeyMap(
-              extensionDeclaration
-            )
-          : MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
 
-        if (!extensionDeclarationKey) {
-          throw new Error(
-            `Failed to look up declaration key in MockDefiner for \`${extensionDeclaration.getText()}'.`
-          );
-        }
+        const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+          extensionDeclaration,
+          scope
+        );
 
         genericDeclaration.addFromDeclarationExtension(
           declarationKey,
