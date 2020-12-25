@@ -51,7 +51,8 @@ export function GetMockFactoryCallIntersection(
       addFromDeclarationExtensions(
         declaration as GenericDeclarationSupported,
         declarationKey,
-        genericDeclaration
+        genericDeclaration,
+        scope
       );
 
       return declaration;
@@ -118,7 +119,8 @@ function getDeclarationMockFactoryCall(
   addFromDeclarationExtensions(
     declaration as GenericDeclarationSupported,
     declarationKey,
-    genericDeclaration
+    genericDeclaration,
+    scope
   );
 
   const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
@@ -131,7 +133,8 @@ function getDeclarationMockFactoryCall(
 function addFromDeclarationExtensions(
   declaration: GenericDeclarationSupported,
   declarationKey: string,
-  genericDeclaration: IGenericDeclaration
+  genericDeclaration: IGenericDeclaration,
+  scope: Scope
 ): void {
   if (declaration.heritageClauses) {
     declaration.heritageClauses.forEach((clause: ts.HeritageClause) => {
@@ -143,12 +146,11 @@ function addFromDeclarationExtensions(
         const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
           extension.expression
         );
-
-        const extensionDeclarationKey:
-          | string
-          | undefined = MockDefiner.instance.getDeclarationKeyMap(
-          extensionDeclaration
-        );
+        const extensionDeclarationKey: string | undefined = scope.hydrated
+          ? MockDefiner.instance.getHydratedDeclarationKeyMap(
+              extensionDeclaration
+            )
+          : MockDefiner.instance.getDeclarationKeyMap(extensionDeclaration);
 
         if (!extensionDeclarationKey) {
           throw new Error(
@@ -166,7 +168,8 @@ function addFromDeclarationExtensions(
         addFromDeclarationExtensions(
           extensionDeclaration as GenericDeclarationSupported,
           extensionDeclarationKey,
-          genericDeclaration
+          genericDeclaration,
+          scope
         );
       });
     });
