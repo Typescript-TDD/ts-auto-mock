@@ -1,4 +1,4 @@
-import { createHydratedMock, createMock } from 'ts-auto-mock';
+import { createHydratedMock, createMock, registerMock } from 'ts-auto-mock';
 
 describe('create-hydrated-mock', () => {
   describe('for not optional properties', () => {
@@ -126,6 +126,21 @@ describe('create-hydrated-mock', () => {
       const properties: A = createHydratedMock<A>();
       expect(properties.a).toBeDefined();
       expect(properties.b).toBe(0);
+    });
+  });
+
+  describe('for registerMock', () => {
+    it('should return the registered mock when using createMock or createHydratedMock', () => {
+      interface Interface {
+        notRequired?: string;
+      }
+
+      registerMock<Interface>(() => ({
+        notRequired: 'hello-world',
+      }));
+      const mock: Interface = createHydratedMock<Interface>();
+      expect(mock.notRequired).toBe('hello-world');
+      expect(createMock<Interface>().notRequired).toBe('hello-world');
     });
   });
 });

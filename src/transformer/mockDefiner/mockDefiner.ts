@@ -214,13 +214,42 @@ export class MockDefiner {
     factory: ts.FunctionExpression
   ): ts.Node {
     const key: string = this.getDeclarationKeyMap(declaration);
+    const hydratedKey: string = this.getHydratedDeclarationKeyMap(declaration);
 
     this._registerMockFactoryCache.set(declaration, key);
 
-    return this._getCallRegisterMock(
-      this._fileName,
-      key,
-      this._wrapRegisterMockFactory(factory)
+    return ts.createCall(
+      ts.createParen(
+        ts.createFunctionExpression(
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          [],
+          undefined,
+          ts.createBlock(
+            [
+              ts.createExpressionStatement(
+                this._getCallRegisterMock(
+                  this._fileName,
+                  hydratedKey,
+                  this._wrapRegisterMockFactory(factory)
+                )
+              ),
+              ts.createExpressionStatement(
+                this._getCallRegisterMock(
+                  this._fileName,
+                  key,
+                  this._wrapRegisterMockFactory(factory)
+                )
+              ),
+            ],
+            true
+          )
+        )
+      ),
+      undefined,
+      []
     );
   }
 
@@ -229,7 +258,10 @@ export class MockDefiner {
     scope: Scope
   ): boolean {
     if (scope.hydrated) {
-      return this._hydratedFactoryCache.has(declaration);
+      return (
+        this._hydratedFactoryCache.has(declaration) ||
+        this._registerMockFactoryCache.has(declaration)
+      );
     }
 
     return (
