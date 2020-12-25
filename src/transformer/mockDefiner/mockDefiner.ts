@@ -166,11 +166,13 @@ export class MockDefiner {
 
   public getMockFactoryIntersection(
     declarations: ts.Declaration[],
-    type: ts.IntersectionTypeNode
+    type: ts.IntersectionTypeNode,
+    scope: Scope
   ): ts.Expression {
     const key: string = this._getMockFactoryIdForIntersections(
       declarations,
-      type
+      type,
+      scope
     );
 
     return this.getMockFactoryByKey(key);
@@ -323,7 +325,8 @@ export class MockDefiner {
 
   private _getMockFactoryIdForIntersections(
     declarations: ts.Declaration[],
-    intersectionTypeNode: ts.IntersectionTypeNode
+    intersectionTypeNode: ts.IntersectionTypeNode,
+    scope: Scope
   ): string {
     const thisFileName: string = this._fileName;
 
@@ -341,9 +344,12 @@ export class MockDefiner {
     this._factoryIntersectionsRegistrationsPerFile[thisFileName] =
       this._factoryIntersectionsRegistrationsPerFile[thisFileName] || [];
 
+    const newScope: Scope = new Scope(key);
+    newScope.hydrated = scope.hydrated;
+
     const descriptor: ts.Expression = GetProperties(
       intersectionTypeNode,
-      new Scope(key)
+      newScope
     );
 
     const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();

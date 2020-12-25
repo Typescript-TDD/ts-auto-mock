@@ -42,9 +42,9 @@ export function GetMockFactoryCallIntersection(
       const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
         type.typeName
       );
-      const declarationKey: string = MockDefiner.instance.getDeclarationKeyMap(
-        declaration
-      );
+      const declarationKey: string | undefined = scope.hydrated
+        ? MockDefiner.instance.getHydratedDeclarationKeyMap(declaration)
+        : MockDefiner.instance.getDeclarationKeyMap(declaration);
 
       genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
 
@@ -63,7 +63,8 @@ export function GetMockFactoryCallIntersection(
   const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
   const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(
     declarations,
-    intersection
+    intersection,
+    scope
   );
 
   return TypescriptCreator.createCall(mockFactoryCall, [
