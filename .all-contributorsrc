@@ -63,6 +63,16 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "wassy92x",
+      "name": "Fabian",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/12649037?v=4",
+      "profile": "https://github.com/wassy92x",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "skipCi": false,
