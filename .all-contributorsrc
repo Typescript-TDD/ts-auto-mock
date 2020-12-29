@@ -12,18 +12,6 @@
   "contributorsSortAlphabetically": true,
   "contributors": [
     {
-      "login": "C0ZEN",
-      "name": "Geoffrey 'C0ZEN' Testelin",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/10194542?v=4",
-      "profile": "http://www.geoffreytestelin.com/",
-      "contributions": [
-        "bug",
-        "code",
-        "ideas",
-        "tool"
-      ]
-    },
-    {
       "login": "uittorio",
       "name": "Vittorio Guerriero",
       "avatar_url": "https://avatars3.githubusercontent.com/u/17477623?v=4",
@@ -51,6 +39,18 @@
         "infra",
         "maintenance",
         "projectManagement"
+      ]
+    },
+    {
+      "login": "C0ZEN",
+      "name": "Geoffrey 'C0ZEN' Testelin",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10194542?v=4",
+      "profile": "http://www.geoffreytestelin.com/",
+      "contributions": [
+        "bug",
+        "code",
+        "ideas",
+        "tool"
       ]
     },
     {
