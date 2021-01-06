@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [3.1.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.0.0...3.1.0) (2021-01-06)
+
+
+### Features
+
+* **hydrate-mocks:** add create-hydrated-mock functionality ([aa2ebad](https://github.com/Typescript-TDD/ts-auto-mock/commit/aa2ebad2f8e92b7ad5cd6a60d98793b330d736a4))
+
 # [3.0.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.7.0...3.0.0) (2020-12-25)
 
 
