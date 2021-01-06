@@ -18,6 +18,12 @@ function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
   return GetDescriptor(nodeToMock, new Scope());
 }
 
+function getMockHydratedExpression(nodeToMock: ts.TypeNode): ts.Expression {
+  const scope: Scope = new Scope();
+  scope.hydrated = true;
+  return GetDescriptor(nodeToMock, scope);
+}
+
 function hasDefaultValues(node: ts.CallExpression): boolean {
   return !!node.arguments.length && !!node.arguments[0];
 }
@@ -33,6 +39,21 @@ export function getMock(
   SetCurrentCreateMock(node);
 
   const mockExpression: ts.Expression = getMockExpression(nodeToMock);
+
+  if (hasDefaultValues(node)) {
+    return getMockMergeExpression(mockExpression, node.arguments[0]);
+  }
+
+  return mockExpression;
+}
+
+export function getHydratedMock(
+  nodeToMock: ts.TypeNode,
+  node: ts.CallExpression
+): ts.Expression {
+  SetCurrentCreateMock(node);
+
+  const mockExpression: ts.Expression = getMockHydratedExpression(nodeToMock);
 
   if (hasDefaultValues(node)) {
     return getMockMergeExpression(mockExpression, node.arguments[0]);

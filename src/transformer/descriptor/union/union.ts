@@ -10,6 +10,18 @@ export function GetUnionDescriptor(
 ): ts.Expression {
   const findNodes: ts.Node[] = GetTypes(node.types, scope);
 
+  if (scope.hydrated) {
+    const removeUndefinedNodes: ts.Node[] = findNodes.filter(
+      (typeNode: ts.TypeNode) => !isNotDefinedType(typeNode)
+    );
+
+    if (removeUndefinedNodes.length) {
+      return GetDescriptor(removeUndefinedNodes[0], scope);
+    }
+
+    return GetUndefinedDescriptor();
+  }
+
   const notDefinedType: ts.Node[] = findNodes.filter((typeNode: ts.TypeNode) =>
     isNotDefinedType(typeNode)
   );

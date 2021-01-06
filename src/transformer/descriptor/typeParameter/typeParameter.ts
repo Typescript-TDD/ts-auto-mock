@@ -33,8 +33,9 @@ export function GetTypeParameterDescriptor(
     );
   }
 
-  const genericKey: string = MockDefiner.instance.getDeclarationKeyMap(
-    typeDeclaration
+  const genericKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+    typeDeclaration,
+    scope
   );
 
   return createFunctionToAccessToGenericValue(

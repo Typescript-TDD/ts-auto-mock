@@ -44,7 +44,7 @@ export function GetMockPropertiesFromDeclarations(
         return false;
       }
 
-      if (member.questionToken) {
+      if (member.questionToken && !scope.hydrated) {
         return false;
       }
 

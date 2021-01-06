@@ -1,7 +1,12 @@
 import * as ts from 'typescript';
 import { TsAutoMockOptions } from '../options/options';
 import { CustomFunction } from './matcher/matcher';
-import { getMock, getMockForList, storeRegisterMock } from './mock/mock';
+import {
+  getHydratedMock,
+  getMock,
+  getMockForList,
+  storeRegisterMock,
+} from './mock/mock';
 import { baseTransformer } from './base/base';
 
 const customFunctions: CustomFunction[] = [
@@ -16,6 +21,10 @@ const customFunctions: CustomFunction[] = [
   {
     sourceDts: 'register-mock.d.ts',
     sourceUrl: '../register-mock.d.ts',
+  },
+  {
+    sourceDts: 'create-hydrated-mock.d.ts',
+    sourceUrl: '../create-hydrated-mock.d.ts',
   },
 ];
 
@@ -39,6 +48,10 @@ function visitNode(
     return getMock(nodeToMock, node);
   }
 
+  if (isCreateHydratedMock(declaration)) {
+    return getHydratedMock(nodeToMock, node);
+  }
+
   if (isCreateMockList(declaration)) {
     return getMockForList(nodeToMock, node);
   }
@@ -52,6 +65,10 @@ function visitNode(
 
 function isCreateMock(declaration: ts.FunctionDeclaration): boolean {
   return declaration.name?.getText() === 'createMock';
+}
+
+function isCreateHydratedMock(declaration: ts.FunctionDeclaration): boolean {
+  return declaration.name?.getText() === 'createHydratedMock';
 }
 
 function isCreateMockList(declaration: ts.FunctionDeclaration): boolean {

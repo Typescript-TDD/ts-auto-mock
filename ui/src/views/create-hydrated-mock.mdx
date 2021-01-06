@@ -1,0 +1,65 @@
+---
+name: Create hydrated mock
+route: /create-hydrated-mock
+---
+
+# Create hydrated mock
+
+Do you need to mock **optional** properties or union types that may be undefined? <br/>
+Say hello to **createHydratedMock**, it will help you create mocks that will treat optional interfaces as they were not optional
+
+We currently support optional token (?) and union types that contains undefined.
+
+## Optional interfaces
+
+```ts
+import { createHydratedMock } from 'ts-auto-mock';
+
+interface Person {
+  id?: string;
+  details?: {
+      phone?: number
+  }
+}
+const mock = createHydratedMock<Person>();
+mock.id // ""
+mock.details // { phone: 0 }
+```
+
+## Union types
+
+```ts
+import { createHydratedMock } from 'ts-auto-mock';
+
+interface Person {
+  getName(): string | undefined;
+  getSurname(): undefined | string;
+}
+const mock = createHydratedMock<Person>();
+mock.getName() // ''
+mock.getSurname() // ''
+```
+
+---
+
+## Note from the team
+
+We completely understand the need of this functionality, but we would like the usage to be much simpler.  <br/>
+We would like to use the existing createMock in combination of typescript Required interface
+
+```ts
+import { createMock } from 'ts-auto-mock';
+
+interface Person {
+  id?: string;
+}
+type Required<T> = { // from typescript lib
+    [P in keyof T]-?: T[P];
+};
+const mock = createMock<Required<Person>>();
+mock.id // ""
+```
+
+Unfortunately this doesn't work because we don't fully support map types.
+
+
