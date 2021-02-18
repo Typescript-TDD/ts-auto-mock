@@ -1,7 +1,10 @@
 import * as ts from 'typescript';
 
+export const MockCallAnonymousText: string = '*';
+export const MockCallLiteralText: string = 'L';
+export const MockPrivatePrefix: string = 'ɵ';
 export const MockIdentifierGenericParameter: ts.Identifier = ts.createIdentifier(
-  't'
+  MockPrivatePrefix + 't'
 );
 export const MockIdentifierGenericParameterIds: ts.Identifier = ts.createIdentifier(
   'i'
@@ -18,10 +21,6 @@ export const MockIdentifierObjectReturnValue: ts.Identifier = ts.createIdentifie
 export const MockIdentifierSetParameterName: ts.Identifier = ts.createIdentifier(
   'v'
 );
-export const MockCallAnonymousText: string = '*';
-export const MockCallLiteralText: string = 'L';
-export const MockPrivatePrefix: string = 'ɵ';
-
 export const MockCreateMockListLoopStep: ts.Identifier = ts.createIdentifier(
   'k'
 );

@@ -85,6 +85,31 @@ export namespace TypescriptCreator {
     );
   }
 
+  export function createIIFEWithParameters(
+    block: ts.Block,
+    parameters: [ts.Identifier, ts.Expression][]
+  ): ts.CallExpression {
+    return ts.createCall(
+      ts.createParen(
+        ts.createFunctionExpression(
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          parameters.map(([identifier, _]: [ts.Identifier, ts.Expression]) =>
+            TypescriptCreator.createParameterIdentifier(identifier)
+          ),
+          undefined,
+          block
+        )
+      ),
+      undefined,
+      parameters.map(
+        ([_, expression]: [ts.Identifier, ts.Expression]) => expression
+      )
+    );
+  }
+
   export function createEmptyProperty(): ts.PropertyDeclaration {
     return createProperty('', undefined);
   }
@@ -124,6 +149,20 @@ export namespace TypescriptCreator {
       undefined,
       undefined,
       ts.createIdentifier(parameterName),
+      undefined,
+      undefined,
+      undefined
+    );
+  }
+
+  export function createParameterIdentifier(
+    parameterIdentifier: ts.Identifier
+  ): ts.ParameterDeclaration {
+    return ts.createParameter(
+      undefined,
+      undefined,
+      undefined,
+      parameterIdentifier,
       undefined,
       undefined,
       undefined

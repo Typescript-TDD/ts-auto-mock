@@ -27,6 +27,18 @@ describe('generic default', () => {
     expect(mock.prop2).toEqual(0);
   });
 
+  it('should work for default referencing previous generic arguments', () => {
+    interface A<P, S = P> {
+      prop: P;
+      prop2: S;
+    }
+
+    const mock: A<number> = createMock<A<number>>();
+
+    expect(mock.prop).toEqual(0);
+    expect(mock.prop2).toEqual(0);
+  });
+
   it('should assign the default value for extension with default value', () => {
     interface C<T> {
       cProp: T;

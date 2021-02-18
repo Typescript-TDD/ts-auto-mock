@@ -10,6 +10,7 @@ import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import { TypescriptCreator } from '../helper/creator';
+import { GetUndefinedDescriptor } from '../descriptor/undefined/undefined';
 
 export function GetMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
@@ -131,7 +132,37 @@ function getDeclarationMockFactoryCall(
   const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
 
   return TypescriptCreator.createCall(mockFactoryCall, [
-    ts.createArrayLiteral(genericsParametersExpression),
+    TypescriptCreator.createIIFEWithParameters(
+      ts.createBlock([
+        ts.createExpressionStatement(
+          ts.createAssignment(
+            MockIdentifierGenericParameter,
+            TypescriptCreator.createCall(
+              ts.createPropertyAccess(
+                ts.createArrayLiteral(genericsParametersExpression), // TODO: sometimes [...].concat(t), sometimes t.concat([...])  :'(
+                ts.createIdentifier('concat')
+              ),
+              [MockIdentifierGenericParameter]
+            )
+          )
+        ),
+        ts.createReturn(MockIdentifierGenericParameter),
+      ]),
+      [
+        [
+          MockIdentifierGenericParameter,
+          ts.createConditional(
+            ts.createBinary(
+              ts.createTypeOf(MockIdentifierGenericParameter),
+              ts.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+              ts.createTypeOf(GetUndefinedDescriptor())
+            ),
+            MockIdentifierGenericParameter,
+            ts.createArrayLiteral()
+          ),
+        ],
+      ]
+    ),
   ]);
 }
 

@@ -8,11 +8,41 @@ import { createMock } from 'ts-auto-mock';
 
  */
 
-it('should work', () => {
-  interface A {
-    a: string;
+// it('should work for default referencing previous generic arguments', () => {
+//   interface A<P, S = P> {
+//     prop: P;
+//     prop2: S;
+//   }
+//
+//   const mock: A<number> = createMock<A<number>>();
+//
+//   expect(mock.prop).toEqual(0);
+//   expect(mock.prop2).toEqual(0);
+// });
+
+it('should set the value for one generic with Generics', () => {
+  interface GenericOneValue<T1> {
+    a: T1;
   }
 
-  const type: A = createMock<A>();
-  expect(type).toBeDefined();
+  createMock<GenericOneValue<GenericOneValue<number>>>();
+  const properties: GenericOneValue<GenericOneValue<string>> = createMock<
+    GenericOneValue<GenericOneValue<string>>
+  >();
+
+  expect(properties.a.a).toBe('');
+});
+
+it('should set the value for same interface with generic', () => {
+  interface Generic<T1> {
+    a: Generic<T1>;
+    b: T1;
+  }
+
+  const propertiesWithGeneric: Generic<number> = createMock<
+    Generic<number>
+    >();
+
+  expect(propertiesWithGeneric.a.b).toBe(0);
+  expect(propertiesWithGeneric.a.a.a.b).toBe(0);
 });
