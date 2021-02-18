@@ -16,6 +16,8 @@ export interface TransformerLogger {
 
   typeOfPropertyNotFound(node: ts.Node): void;
 
+  missingTypeDefinition(node: ts.Node): void;
+
   indexedAccessTypeFailed(
     propertyName: string,
     nodeText: string,
@@ -108,6 +110,17 @@ ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
 
       logger.warning(
         `IndexedAccessType transformation failed: cannot find property ${propertyName} of - ${nodeText}
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+      );
+    },
+    missingTypeDefinition(node: ts.Node): void {
+      const createMockNode: ts.Node = GetCurrentCreateMock();
+
+      const createMockFileUrl: string = getNodeFileUrl(createMockNode);
+      const currentNodeFileUrl: string = getNodeFileUrl(node);
+
+      logger.warning(
+        `Type definition for type reference ${node.getText()} not found - it will convert to null
 ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
       );
     },
