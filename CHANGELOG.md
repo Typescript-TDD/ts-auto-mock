@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.1.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.0...3.1.1) (2021-02-18)
+
+
+### Bug Fixes
+
+* **typeReference:** log warning when type definition does not exists and cannot be located ([#618](https://github.com/Typescript-TDD/ts-auto-mock/issues/618)) ([5750def](https://github.com/Typescript-TDD/ts-auto-mock/commit/5750def79861553e9d0997e789b9ad00562c81d1))
+
 # [3.1.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.0.0...3.1.0) (2021-01-06)
 
 
