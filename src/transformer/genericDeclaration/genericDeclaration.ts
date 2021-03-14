@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
-import { TypescriptCreator } from '../helper/creator';
 import { TransformerLogger } from '../logger/transformerLogger';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import {
@@ -9,6 +8,7 @@ import {
   MockIdentifierGenericParameterValue,
 } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
+import { createFunctionExpression } from '../../typescriptFactory/typescriptFactory';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
 import { GenericParameter } from './genericParameter';
@@ -64,7 +64,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   ): GenericParameter {
     const uniqueName: string =
       ownerKey + nodeOwnerParameter.name.escapedText.toString();
-    const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(
+    const genericFunction: ts.FunctionExpression = createFunctionExpression(
       ts.factory.createBlock([
         ts.factory.createReturnStatement(genericDescriptor),
       ])
