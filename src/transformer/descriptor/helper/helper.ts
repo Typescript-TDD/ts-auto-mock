@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import { TypeChecker } from '../../typeChecker/typeChecker';
+import { createNodeArray } from '../../../typescriptFactory/typescriptFactory';
 
 type Declaration =
   | ts.InterfaceDeclaration
@@ -82,7 +83,7 @@ export namespace TypescriptHelper {
     const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
     const {
-      typeParameters = ts.createNodeArray([]),
+      typeParameters = createNodeArray([]),
     }: Declaration = declaration as Declaration;
 
     return typeParameters;

@@ -1,4 +1,4 @@
-const WebpackCopyPlugin = require('copy-webpack-plugin');
+const copy = require('copy-webpack-plugin');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const development = 'development';
@@ -13,7 +13,7 @@ exports.onCreateWebpackConfig = ({
 }) => {
   actions.setWebpackConfig({
     plugins: [
-      new WebpackCopyPlugin({
+      new copy({
         patterns: [
           { from: path.resolve('..', '..', 'data'), to: 'resources' },
           { from: path.resolve('..', '_config.yml'), to: '' },

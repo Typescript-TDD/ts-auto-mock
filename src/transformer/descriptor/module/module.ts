@@ -1,10 +1,15 @@
 import * as ts from 'typescript';
-import { TypescriptCreator } from '../../helper/creator';
 import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { GetTypeQueryDescriptorFromDeclaration } from '../typeQuery/typeQuery';
+import {
+  createIdentifier,
+  createPropertySignature,
+  createTypeLiteralNode,
+  createTypeQueryNode,
+} from '../../../typescriptFactory/typescriptFactory';
 
 type ExternalSource = ts.SourceFile | ts.ModuleDeclaration;
 
@@ -96,9 +101,9 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
     .map(
       (d: ModuleExportsDeclarations): ts.PropertySignature => {
         if (ts.isExportAssignment(d.declaration)) {
-          return TypescriptCreator.createPropertySignature(
+          return createPropertySignature(
             'default',
-            ts.createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
+            createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
           );
         }
 
@@ -123,20 +128,17 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
             exportSpecifierAliasSymbol,
             scope
           );
-          const propertyType: ts.TypeNode = ts.createTypeLiteralNode(
+          const propertyType: ts.TypeLiteralNode = createTypeLiteralNode(
             exportSpecifierProperties
           );
 
-          return TypescriptCreator.createPropertySignature(
-            d.declaration.name,
-            propertyType
-          );
+          return createPropertySignature(d.declaration.name, propertyType);
         }
 
-        return TypescriptCreator.createPropertySignature(
+        return createPropertySignature(
           (d.originalDeclaration.name as ts.Identifier) ||
-            ts.createIdentifier('default'),
-          ts.createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
+            createIdentifier('default'),
+          createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
         );
       }
     );

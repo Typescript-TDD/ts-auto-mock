@@ -31,7 +31,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       return node.typeArguments[index];
     }
 
-    return nodeDeclaration.default || ts.createNull();
+    return nodeDeclaration.default || ts.factory.createNull();
   }
 
   function addGenericParameterToExisting(
@@ -65,7 +65,9 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     const uniqueName: string =
       ownerKey + nodeOwnerParameter.name.escapedText.toString();
     const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(
-      ts.createBlock([ts.createReturn(genericDescriptor)])
+      ts.factory.createBlock([
+        ts.factory.createReturnStatement(genericDescriptor),
+      ])
     );
 
     return {
@@ -176,16 +178,16 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     },
     getExpressionForAllGenerics(): ts.ObjectLiteralExpression[] {
       return generics.map((s: GenericParameter) =>
-        ts.createObjectLiteral(
+        ts.factory.createObjectLiteralExpression(
           [
-            ts.createPropertyAssignment(
+            ts.factory.createPropertyAssignment(
               MockIdentifierGenericParameterIds,
-              ts.createArrayLiteral(
-                s.ids.map((arr: string) => ts.createStringLiteral(arr)),
+              ts.factory.createArrayLiteralExpression(
+                s.ids.map((arr: string) => ts.factory.createStringLiteral(arr)),
                 false
               )
             ),
-            ts.createPropertyAssignment(
+            ts.factory.createPropertyAssignment(
               MockIdentifierGenericParameterValue,
               s.value
             ),

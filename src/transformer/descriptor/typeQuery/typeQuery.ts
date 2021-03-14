@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import { TypescriptCreator } from '../../helper/creator';
 import { TransformerLogger } from '../../logger/transformerLogger';
 import { GetMockFactoryCallTypeofEnum } from '../../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../../scope/scope';
@@ -16,6 +15,10 @@ import { GetType } from '../type/type';
 import { GetTypeReferenceDescriptor } from '../typeReference/typeReference';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
+import {
+  createFunctionExpressionReturn,
+  createTypeReferenceNode,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetTypeQueryDescriptor(
   node: ts.TypeQueryNode,
@@ -42,22 +45,16 @@ export function GetTypeQueryDescriptorFromDeclaration(
 
   switch (declaration.kind) {
     case ts.SyntaxKind.ClassDeclaration:
-      return TypescriptCreator.createFunctionExpressionReturn(
+      return createFunctionExpressionReturn(
         GetTypeReferenceDescriptor(
-          ts.createTypeReferenceNode(
-            declaration.name as ts.Identifier,
-            undefined
-          ),
+          createTypeReferenceNode(declaration.name as ts.Identifier),
           scope
         )
       );
     case ts.SyntaxKind.TypeAliasDeclaration:
     case ts.SyntaxKind.InterfaceDeclaration:
       return GetTypeReferenceDescriptor(
-        ts.createTypeReferenceNode(
-          declaration.name as ts.Identifier,
-          undefined
-        ),
+        createTypeReferenceNode(declaration.name as ts.Identifier),
         scope
       );
     // NamespaceImport, ImportEqualsDeclaration and ModuleDeclaration cannot be used in a typeof

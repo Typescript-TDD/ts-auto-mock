@@ -1,6 +1,5 @@
 import * as ts from 'typescript';
 import { SyntaxKind } from 'typescript';
-import { TypescriptCreator } from '../../helper/creator';
 import {
   MockIdentifierInternalValues,
   MockIdentifierSetParameterName,
@@ -9,6 +8,22 @@ import { Scope } from '../../scope/scope';
 import { GetBooleanTrueDescriptor } from '../boolean/booleanTrue';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
+import {
+  createBinaryExpression,
+  createBlock,
+  createCall,
+  createConditional,
+  createElementAccess,
+  createExpressionStatement,
+  createIdentifier,
+  createMethod,
+  createObjectLiteral,
+  createPropertyAccess,
+  createPropertyAssignment,
+  createPunctuationToken,
+  createReturn,
+  createStringLiteral,
+} from '../../../typescriptFactory/typescriptFactory';
 import { PropertyLike } from './propertyLike';
 
 export interface PropertyAssignments {
@@ -44,10 +59,7 @@ function GetLiteralMockProperty(
     member.name
   );
 
-  return ts.createPropertyAssignment(
-    ts.createStringLiteral(propertyName),
-    descriptor
-  );
+  return createPropertyAssignment(propertyName, descriptor);
 }
 
 function GetLazyMockProperty(
@@ -58,68 +70,61 @@ function GetLazyMockProperty(
     member.name
   );
 
-  const stringPropertyName: ts.StringLiteral = ts.createStringLiteral(
+  const stringPropertyName: ts.StringLiteral = createStringLiteral(
     propertyName
   );
-  const variableDeclarationName: ts.ElementAccessExpression = ts.createElementAccess(
+  const variableDeclarationName: ts.ElementAccessExpression = createElementAccess(
     MockIdentifierInternalValues,
     stringPropertyName
   );
   const setVariableParameterName: ts.Identifier = MockIdentifierSetParameterName;
 
-  const expressionGetAssignment: ts.BinaryExpression = ts.createBinary(
+  const expressionGetAssignment: ts.BinaryExpression = createBinaryExpression(
     variableDeclarationName,
     ts.SyntaxKind.EqualsToken,
     descriptor
   );
 
-  const hasOwnProperty: ts.Expression = ts.createCall(
-    ts.createPropertyAccess(MockIdentifierInternalValues, 'hasOwnProperty'),
-    undefined,
+  const hasOwnProperty: ts.Expression = createCall(
+    createPropertyAccess(MockIdentifierInternalValues, 'hasOwnProperty'),
     [stringPropertyName]
   );
 
-  const getExpressionBody: ts.Expression = ts.createConditional(
+  const getExpressionBody: ts.Expression = createConditional(
     hasOwnProperty,
-    ts.createToken(SyntaxKind.QuestionToken),
+    createPunctuationToken(SyntaxKind.QuestionToken),
     variableDeclarationName,
-    ts.createToken(SyntaxKind.ColonToken),
+    createPunctuationToken(SyntaxKind.ColonToken),
     expressionGetAssignment
   );
-  const setExpressionBody: ts.BinaryExpression = ts.createBinary(
+  const setExpressionBody: ts.BinaryExpression = createBinaryExpression(
     variableDeclarationName,
     ts.SyntaxKind.EqualsToken,
     setVariableParameterName
   );
 
-  const returnGetStatement: ts.ReturnStatement = ts.createReturn(
+  const returnGetStatement: ts.ReturnStatement = createReturn(
     getExpressionBody
   );
-  const getBody: ts.Block = ts.createBlock([returnGetStatement]);
+  const getBody: ts.Block = createBlock([returnGetStatement]);
 
-  const returnSetStatement: ts.Statement = ts.createExpressionStatement(
+  const returnSetStatement: ts.Statement = createExpressionStatement(
     setExpressionBody
   );
-  const setBody: ts.Block = ts.createBlock([returnSetStatement]);
+  const setBody: ts.Block = createBlock([returnSetStatement]);
 
-  const get: ts.MethodDeclaration = TypescriptCreator.createMethod(
-    'get',
-    getBody,
-    []
-  );
-  const set: ts.MethodDeclaration = TypescriptCreator.createMethod(
-    'set',
-    setBody,
-    [setVariableParameterName]
-  );
-  const literal: ts.ObjectLiteralExpression = ts.createObjectLiteral([
+  const get: ts.MethodDeclaration = createMethod('get', getBody, []);
+  const set: ts.MethodDeclaration = createMethod('set', setBody, [
+    setVariableParameterName,
+  ]);
+  const literal: ts.ObjectLiteralExpression = createObjectLiteral([
     get,
     set,
-    ts.createPropertyAssignment(
-      ts.createIdentifier('enumerable'),
+    createPropertyAssignment(
+      createIdentifier('enumerable'),
       GetBooleanTrueDescriptor()
     ),
   ]);
 
-  return ts.createPropertyAssignment(stringPropertyName, literal);
+  return createPropertyAssignment(stringPropertyName, literal);
 }

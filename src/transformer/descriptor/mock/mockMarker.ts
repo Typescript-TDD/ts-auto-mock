@@ -3,6 +3,11 @@ import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import { ModuleName } from '../../mockDefiner/modules/moduleName';
 import { PrivateIdentifier } from '../../privateIdentifier/privateIdentifier';
 import { GetBooleanTrueDescriptor } from '../boolean/booleanTrue';
+import {
+  createCall,
+  createIdentifier,
+  createPropertyAccess,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export interface Property {
   name: ts.Expression;
@@ -10,20 +15,19 @@ export interface Property {
 }
 
 export function GetMockMarkerProperty(): Property {
-  const propertyAccessExpression: ts.PropertyAccessExpression = ts.createPropertyAccess(
-    ts.createPropertyAccess(
-      ts.createPropertyAccess(
+  const propertyAccessExpression: ts.PropertyAccessExpression = createPropertyAccess(
+    createPropertyAccess(
+      createPropertyAccess(
         MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
         PrivateIdentifier('Marker')
       ),
-      ts.createIdentifier('instance')
+      createIdentifier('instance')
     ),
-    ts.createIdentifier('get')
+    createIdentifier('get')
   );
 
-  const mockMarkerCall: ts.CallExpression = ts.createCall(
+  const mockMarkerCall: ts.CallExpression = createCall(
     propertyAccessExpression,
-    [],
     []
   );
 

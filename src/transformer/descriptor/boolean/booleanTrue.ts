@@ -1,5 +1,9 @@
 import * as ts from 'typescript';
+import {
+  createLogicalNot,
+  createNumericLiteral,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetBooleanTrueDescriptor(): ts.Expression {
-  return ts.createLogicalNot(ts.createLiteral(0));
+  return createLogicalNot(createNumericLiteral(0));
 }

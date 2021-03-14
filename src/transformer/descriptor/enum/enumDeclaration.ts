@@ -2,6 +2,11 @@ import * as ts from 'typescript';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { RandomPropertyAccessor } from '../random/random';
 import { IsTsAutoMockRandomEnabled } from '../../../options/random';
+import {
+  createCall,
+  createNumericLiteral,
+  createStringLiteral,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetEnumDeclarationDescriptor(
   node: ts.EnumDeclaration
@@ -14,11 +19,7 @@ export function GetEnumDeclarationDescriptor(
         getEnumMemberValue(typeChecker, member, index)
     );
 
-    return ts.createCall(
-      RandomPropertyAccessor('enumValue'),
-      [],
-      [...nodesList]
-    );
+    return createCall(RandomPropertyAccessor('enumValue'), nodesList);
   }
 
   return getEnumMemberValue(typeChecker, node.members[0]);
@@ -29,5 +30,12 @@ function getEnumMemberValue(
   member: ts.EnumMember,
   defaultValue: string | number = 0
 ): ts.Expression {
-  return ts.createLiteral(typeChecker.getConstantValue(member) || defaultValue);
+  const value: string | number =
+    typeChecker.getConstantValue(member) || defaultValue;
+
+  if (typeof value === 'number') {
+    return createNumericLiteral(value);
+  }
+
+  return createStringLiteral(value);
 }

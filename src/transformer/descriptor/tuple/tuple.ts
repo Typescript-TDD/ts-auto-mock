@@ -1,12 +1,13 @@
 import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
+import { createArrayLiteral } from '../../../typescriptFactory/typescriptFactory';
 
 export function GetTupleDescriptor(
   node: ts.TupleTypeNode,
   scope: Scope
 ): ts.Expression {
-  return ts.createArrayLiteral(
+  return createArrayLiteral(
     getDescriptorFromTypeNodes(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ((node as any).elementTypes as ts.NodeArray<ts.TypeNode>) ||

@@ -2,6 +2,11 @@ import * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
+import {
+  createLiteral,
+  createNumericLiteral,
+  createStringLiteral,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetLiteralDescriptor(
   node: ts.LiteralTypeNode,
@@ -12,7 +17,7 @@ export function GetLiteralDescriptor(
   const literalType: ts.LiteralType = type as ts.LiteralType;
 
   if (literalType.value) {
-    return ts.createLiteral(literalType.value);
+    return createLiteral(literalType);
   } else {
     if (!node.literal) {
       return GetLiteralTokenDescriptor(node);
@@ -28,8 +33,8 @@ function GetLiteralTokenDescriptor(
   const nodeToken: any = node as any;
 
   if (nodeToken.kind === ts.SyntaxKind.NumericLiteral) {
-    return ts.createLiteral(parseInt(nodeToken.text, 10));
+    return createNumericLiteral(parseInt(nodeToken.text, 10));
   }
 
-  return ts.createLiteral(nodeToken.text);
+  return createStringLiteral(nodeToken.text);
 }
