@@ -67,8 +67,7 @@ export function GetMockCall(
   statements.push(createReturn(mockObjectReturnValueName));
 
   const functionBlock: ts.Block = createBlock(statements);
-  const IFFEFunction: ts.CallExpression = createIIFE(functionBlock);
-  return createCall(IFFEFunction, []);
+  return createIIFE(functionBlock);
 }
 
 function AssignVariableTo(

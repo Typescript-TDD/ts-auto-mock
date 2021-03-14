@@ -59,7 +59,10 @@ function GetLiteralMockProperty(
     member.name
   );
 
-  return createPropertyAssignment(propertyName, descriptor);
+  return createPropertyAssignment(
+    createStringLiteral(propertyName),
+    descriptor
+  );
 }
 
 function GetLazyMockProperty(
@@ -126,5 +129,5 @@ function GetLazyMockProperty(
     ),
   ]);
 
-  return createPropertyAssignment(stringPropertyName, literal);
+  return createPropertyAssignment(createStringLiteral(propertyName), literal);
 }
