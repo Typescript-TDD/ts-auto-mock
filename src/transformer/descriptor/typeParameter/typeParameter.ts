@@ -65,7 +65,7 @@ function createFunctionToAccessToGenericValue(
   key: string,
   descriptor: ts.Expression
 ): ts.CallExpression {
-  const returnWhenGenericDoesNotExist: ts.ReturnStatement = ts.factory.createReturnStatement(
+  const returnWhenGenericDoesNotExist: ts.ReturnStatement = createReturnStatement(
     descriptor
   );
 
@@ -78,7 +78,7 @@ function createFunctionToAccessToGenericValue(
   );
 
   return createIIFE(
-    ts.factory.createBlock(
+    createBlock(
       [generic, expressionWhenGenericExist, returnWhenGenericDoesNotExist],
       true
     )
@@ -86,12 +86,11 @@ function createFunctionToAccessToGenericValue(
 }
 
 function createFindGeneric(genericKey: string): ts.CallExpression {
-  return ts.factory.createCallExpression(
-    ts.factory.createPropertyAccessExpression(
+  return createCall(
+    createPropertyAccess(
       MockIdentifierGenericParameter,
-      ts.factory.createIdentifier('find')
+      createIdentifier('find')
     ),
-    undefined,
     [
       createArrowFunction(
         createBlock(

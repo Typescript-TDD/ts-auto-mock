@@ -8,7 +8,15 @@ import {
   MockIdentifierGenericParameterValue,
 } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
-import { createFunctionExpression } from '../../typescriptFactory/typescriptFactory';
+import {
+  createArrayLiteral,
+  createBlock,
+  createFunctionExpression,
+  createObjectLiteral,
+  createPropertyAssignment,
+  createReturnStatement,
+  createStringLiteral,
+} from '../../typescriptFactory/typescriptFactory';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
 import { GenericParameter } from './genericParameter';
@@ -65,9 +73,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     const uniqueName: string =
       ownerKey + nodeOwnerParameter.name.escapedText.toString();
     const genericFunction: ts.FunctionExpression = createFunctionExpression(
-      ts.factory.createBlock([
-        ts.factory.createReturnStatement(genericDescriptor),
-      ])
+      createBlock([createReturnStatement(genericDescriptor)])
     );
 
     return {
@@ -178,16 +184,16 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     },
     getExpressionForAllGenerics(): ts.ObjectLiteralExpression[] {
       return generics.map((s: GenericParameter) =>
-        ts.factory.createObjectLiteralExpression(
+        createObjectLiteral(
           [
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
               MockIdentifierGenericParameterIds,
-              ts.factory.createArrayLiteralExpression(
-                s.ids.map((arr: string) => ts.factory.createStringLiteral(arr)),
+              createArrayLiteral(
+                s.ids.map((arr: string) => createStringLiteral(arr)),
                 false
               )
             ),
-            ts.factory.createPropertyAssignment(
+            createPropertyAssignment(
               MockIdentifierGenericParameterValue,
               s.value
             ),

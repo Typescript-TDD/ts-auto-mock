@@ -57,6 +57,7 @@ import ts, {
   VariableDeclaration,
   VariableDeclarationList,
   VariableStatement,
+  VoidExpression,
 } from 'typescript';
 import { Statement } from 'typescript/lib/tsserverlibrary';
 
@@ -492,4 +493,8 @@ export function createTypeLiteralNode(
   typeElements: readonly TypeElement[]
 ): TypeLiteralNode {
   return typescriptFactory.createTypeLiteralNode(typeElements);
+}
+
+export function createVoidZero(): VoidExpression {
+  return typescriptFactory.createVoidZero();
 }
