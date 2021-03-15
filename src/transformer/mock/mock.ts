@@ -12,6 +12,25 @@ import {
   MockCreateMockListLoopArray,
   MockCreateMockListLoopStep,
 } from '../mockIdentifier/mockIdentifier';
+import {
+  createArrayLiteral,
+  createBinaryExpression,
+  createBlock,
+  createCall,
+  createEmptyStatement,
+  createExpressionStatement,
+  createForStatement,
+  createIdentifier,
+  createIIFE,
+  createNumericLiteral,
+  createPostfix,
+  createPropertyAccess,
+  createPunctuationToken,
+  createReturn,
+  createVariableDeclaration,
+  createVariableDeclarationList,
+  createVariableStatement,
+} from '../../typescriptFactory/typescriptFactory';
 import { SetCurrentCreateMock } from './currentCreateMockNode';
 
 function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
@@ -72,17 +91,17 @@ export function getMockForList(
     .arguments[0] as ts.NumericLiteral;
 
   if (!lengthLiteral) {
-    return ts.createArrayLiteral([]);
+    return createArrayLiteral([]);
   }
 
   if (hasDefaultListValues(node)) {
     return getListCallMock(
       node.arguments[0],
-      ts.createCall(
-        mergePropertyAccessor('mergeIterator'),
-        [],
-        [mock, node.arguments[1], MockCreateMockListLoopStep]
-      )
+      createCall(mergePropertyAccessor('mergeIterator'), [
+        mock,
+        node.arguments[1],
+        MockCreateMockListLoopStep,
+      ])
     );
   }
 
@@ -93,74 +112,58 @@ function getListCallMock(
   expression: ts.Expression,
   mockExpr: ts.Expression
 ): ts.CallExpression {
-  return ts.createCall(
-    ts.createParen(
-      ts.createFunctionExpression(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        [],
-        undefined,
-        ts.createBlock(
-          [
-            ts.createVariableStatement(
-              undefined,
-              ts.createVariableDeclarationList(
-                [
-                  ts.createVariableDeclaration(
+  return createIIFE(
+    createBlock(
+      [
+        createVariableStatement(
+          createVariableDeclarationList(
+            [
+              createVariableDeclaration(
+                MockCreateMockListLoopArray,
+                createArrayLiteral([], false)
+              ),
+            ],
+            ts.NodeFlags.Const
+          )
+        ),
+        createForStatement(
+          createVariableDeclarationList(
+            [
+              createVariableDeclaration(
+                MockCreateMockListLoopStep,
+                createNumericLiteral('0')
+              ),
+            ],
+            ts.NodeFlags.Let
+          ),
+          createBinaryExpression(
+            MockCreateMockListLoopStep,
+            createPunctuationToken(ts.SyntaxKind.LessThanToken),
+            expression
+          ),
+          createPostfix(
+            MockCreateMockListLoopStep,
+            ts.SyntaxKind.PlusPlusToken
+          ),
+          createBlock(
+            [
+              createExpressionStatement(
+                createCall(
+                  createPropertyAccess(
                     MockCreateMockListLoopArray,
-                    undefined,
-                    ts.createArrayLiteral([], false)
+                    createIdentifier('push')
                   ),
-                ],
-                ts.NodeFlags.Const
-              )
-            ),
-            ts.createFor(
-              ts.createVariableDeclarationList(
-                [
-                  ts.createVariableDeclaration(
-                    MockCreateMockListLoopStep,
-                    undefined,
-                    ts.createNumericLiteral('0')
-                  ),
-                ],
-                ts.NodeFlags.Let
+                  [mockExpr]
+                )
               ),
-              ts.createBinary(
-                MockCreateMockListLoopStep,
-                ts.createToken(ts.SyntaxKind.LessThanToken),
-                expression
-              ),
-              ts.createPostfix(
-                MockCreateMockListLoopStep,
-                ts.SyntaxKind.PlusPlusToken
-              ),
-              ts.createBlock(
-                [
-                  ts.createExpressionStatement(
-                    ts.createCall(
-                      ts.createPropertyAccess(
-                        MockCreateMockListLoopArray,
-                        ts.createIdentifier('push')
-                      ),
-                      undefined,
-                      [mockExpr]
-                    )
-                  ),
-                ],
-                true
-              )
-            ),
-            ts.createReturn(MockCreateMockListLoopArray),
-          ],
-          true
-        )
-      )
-    ),
-    undefined,
-    []
+            ],
+            true
+          )
+        ),
+        createReturn(MockCreateMockListLoopArray),
+      ],
+      true
+    )
   );
 }
 
@@ -180,6 +183,6 @@ export function storeRegisterMock(
     Logger('RegisterMock').error(
       'registerMock can be used only to mock type references.'
     );
-    return ts.createEmptyStatement();
+    return createEmptyStatement();
   }
 }

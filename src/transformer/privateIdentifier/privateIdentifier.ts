@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import { MockPrivatePrefix } from '../mockIdentifier/mockIdentifier';
+import { createIdentifier } from '../../typescriptFactory/typescriptFactory';
 
 export function PrivateIdentifier(text: string): ts.Identifier {
-  return ts.createIdentifier(`${MockPrivatePrefix}${text}`);
+  return createIdentifier(`${MockPrivatePrefix}${text}`);
 }

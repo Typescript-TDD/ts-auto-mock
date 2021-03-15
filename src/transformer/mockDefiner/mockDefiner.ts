@@ -6,13 +6,26 @@ import {
 import { GetDescriptor } from '../descriptor/descriptor';
 import { GetProperties } from '../descriptor/properties/properties';
 import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
-import { TypescriptCreator } from '../helper/creator';
 import {
   MockIdentifierGenericParameter,
   MockIdentifierGenericParameterValue,
 } from '../mockIdentifier/mockIdentifier';
 import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 import { Scope } from '../scope/scope';
+import {
+  createArrowFunction,
+  createBlock,
+  createCall,
+  createExpressionStatement,
+  createFunctionExpressionReturn,
+  createIdentifier,
+  createIIFE,
+  createParameter,
+  createParameterFromIdentifier,
+  createPropertyAccess,
+  createSpread,
+  createStringLiteral,
+} from '../../typescriptFactory/typescriptFactory';
 import { DeclarationCache } from './cache/declarationCache';
 import { DeclarationListCache } from './cache/declarationListCache';
 import { FactoryUniqueName, PossibleDeclaration } from './factoryUniqueName';
@@ -122,7 +135,7 @@ export class MockDefiner {
 
       const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
-      const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
+      const factory: ts.FunctionExpression = createFunctionExpressionReturn(
         descriptor,
         [mockGenericParameter]
       );
@@ -143,7 +156,7 @@ export class MockDefiner {
 
       const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
-      const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
+      const factory: ts.FunctionExpression = createFunctionExpressionReturn(
         descriptor,
         [mockGenericParameter]
       );
@@ -204,17 +217,17 @@ export class MockDefiner {
 
     this._registerMockFactoryCache.set(declaration, key);
 
-    return TypescriptCreator.createIIFE(
-      ts.createBlock(
+    return createIIFE(
+      createBlock(
         [
-          ts.createExpressionStatement(
+          createExpressionStatement(
             this._getCallRegisterMock(
               this._fileName,
               hydratedKey,
               this._wrapRegisterMockFactory(factory)
             )
           ),
-          ts.createExpressionStatement(
+          createExpressionStatement(
             this._getCallRegisterMock(
               this._fileName,
               key,
@@ -278,9 +291,9 @@ export class MockDefiner {
       ModuleName.Repository
     );
 
-    return ts.createPropertyAccess(
-      ts.createPropertyAccess(repository, PrivateIdentifier('Repository')),
-      ts.createIdentifier('instance')
+    return createPropertyAccess(
+      createPropertyAccess(repository, PrivateIdentifier('Repository')),
+      createIdentifier('instance')
     );
   }
 
@@ -290,6 +303,7 @@ export class MockDefiner {
   ): ts.Identifier {
     return this._moduleImportIdentifierPerFile.getModule(fileName, module);
   }
+
   private _getMockFactoryIdForTypeofEnum(
     declaration: ts.EnumDeclaration,
     scope: Scope
@@ -351,7 +365,7 @@ export class MockDefiner {
 
     const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
 
-    const factory: ts.FunctionExpression = TypescriptCreator.createFunctionExpressionReturn(
+    const factory: ts.FunctionExpression = createFunctionExpressionReturn(
       descriptor,
       [mockGenericParameter]
     );
@@ -443,36 +457,36 @@ export class MockDefiner {
     key: string,
     factory: ts.Expression
   ): ts.Statement {
-    return ts.createExpressionStatement(
+    return createExpressionStatement(
       this._getCallRegisterMock(fileName, key, factory)
     );
   }
 
   private _wrapRegisterMockFactory(factory: ts.Expression): ts.Expression {
-    return TypescriptCreator.createArrowFunction(
-      TypescriptCreator.createCall(factory, [
-        ts.createSpread(
-          TypescriptCreator.createCall(
-            ts.createPropertyAccess(
-              ts.createIdentifier('generics'),
-              ts.createIdentifier('map')
+    return createArrowFunction(
+      createCall(factory, [
+        createSpread(
+          createCall(
+            createPropertyAccess(
+              createIdentifier('generics'),
+              createIdentifier('map')
             ),
             [
-              TypescriptCreator.createArrowFunction(
-                TypescriptCreator.createCall(
-                  ts.createPropertyAccess(
-                    ts.createIdentifier('g'),
+              createArrowFunction(
+                createCall(
+                  createPropertyAccess(
+                    createIdentifier('g'),
                     MockIdentifierGenericParameterValue
                   ),
                   []
                 ),
-                [TypescriptCreator.createParameter('g')]
+                [createParameter('g')]
               ),
             ]
           )
         ),
       ]),
-      [TypescriptCreator.createParameter('generics')]
+      [createParameter('generics')]
     );
   }
 
@@ -481,33 +495,26 @@ export class MockDefiner {
     key: string,
     factory: ts.Expression
   ): ts.CallExpression {
-    return ts.createCall(
-      ts.createPropertyAccess(
+    return createCall(
+      createPropertyAccess(
         this._mockRepositoryAccess(fileName),
-        ts.createIdentifier('registerFactory')
+        createIdentifier('registerFactory')
       ),
-      [],
-      [ts.createStringLiteral(key), factory]
+      [createStringLiteral(key), factory]
     );
   }
 
   private _getCallGetFactory(key: string): ts.CallExpression {
-    return ts.createCall(
-      ts.createPropertyAccess(
+    return createCall(
+      createPropertyAccess(
         this._mockRepositoryAccess(this._fileName),
-        ts.createIdentifier('getFactory')
+        createIdentifier('getFactory')
       ),
-      [],
-      [ts.createStringLiteral(key)]
+      [createStringLiteral(key)]
     );
   }
 
   private _getMockGenericParameter(): ts.ParameterDeclaration {
-    return ts.createParameter(
-      [],
-      [],
-      undefined,
-      MockIdentifierGenericParameter
-    );
+    return createParameterFromIdentifier(MockIdentifierGenericParameter);
   }
 }

@@ -6,6 +6,7 @@ import { SetProgram } from '../program/program';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { CustomFunction, isFunctionFromThisLibrary } from '../matcher/matcher';
 import { GetIsFilesExcludedFromOptions } from '../../options/files';
+import { updateSourceFileNode } from '../../typescriptFactory/typescriptFactory';
 
 export type Visitor = (
   node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> },
@@ -51,7 +52,7 @@ export function baseTransformer(
         customFunctions
       );
 
-      sourceFile = ts.updateSourceFileNode(sourceFile, [
+      sourceFile = updateSourceFileNode(sourceFile, [
         ...MockDefiner.instance.getTopStatementsForFile(sourceFile),
         ...sourceFile.statements,
       ]);

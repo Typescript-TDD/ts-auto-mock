@@ -1,7 +1,6 @@
 import * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
-import { TypescriptCreator } from '../helper/creator';
 import { TransformerLogger } from '../logger/transformerLogger';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import {
@@ -9,6 +8,15 @@ import {
   MockIdentifierGenericParameterValue,
 } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
+import {
+  createArrayLiteral,
+  createBlock,
+  createFunctionExpression,
+  createObjectLiteral,
+  createPropertyAssignment,
+  createReturnStatement,
+  createStringLiteral,
+} from '../../typescriptFactory/typescriptFactory';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
 import { GenericParameter } from './genericParameter';
@@ -31,7 +39,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       return node.typeArguments[index];
     }
 
-    return nodeDeclaration.default || ts.createNull();
+    return nodeDeclaration.default || ts.factory.createNull();
   }
 
   function addGenericParameterToExisting(
@@ -64,8 +72,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   ): GenericParameter {
     const uniqueName: string =
       ownerKey + nodeOwnerParameter.name.escapedText.toString();
-    const genericFunction: ts.FunctionExpression = TypescriptCreator.createFunctionExpression(
-      ts.createBlock([ts.createReturn(genericDescriptor)])
+    const genericFunction: ts.FunctionExpression = createFunctionExpression(
+      createBlock([createReturnStatement(genericDescriptor)])
     );
 
     return {
@@ -176,16 +184,16 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     },
     getExpressionForAllGenerics(): ts.ObjectLiteralExpression[] {
       return generics.map((s: GenericParameter) =>
-        ts.createObjectLiteral(
+        createObjectLiteral(
           [
-            ts.createPropertyAssignment(
+            createPropertyAssignment(
               MockIdentifierGenericParameterIds,
-              ts.createArrayLiteral(
-                s.ids.map((arr: string) => ts.createStringLiteral(arr)),
+              createArrayLiteral(
+                s.ids.map((arr: string) => createStringLiteral(arr)),
                 false
               )
             ),
-            ts.createPropertyAssignment(
+            createPropertyAssignment(
               MockIdentifierGenericParameterValue,
               s.value
             ),

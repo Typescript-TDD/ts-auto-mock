@@ -9,7 +9,10 @@ import {
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
-import { TypescriptCreator } from '../helper/creator';
+import {
+  createArrayLiteral,
+  createCall,
+} from '../../typescriptFactory/typescriptFactory';
 
 export function GetMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
@@ -68,8 +71,8 @@ export function GetMockFactoryCallIntersection(
     scope
   );
 
-  return TypescriptCreator.createCall(mockFactoryCall, [
-    ts.createArrayLiteral(genericsParametersExpression),
+  return createCall(mockFactoryCall, [
+    createArrayLiteral(genericsParametersExpression),
   ]);
 }
 
@@ -82,7 +85,7 @@ export function GetMockFactoryCallTypeofEnum(
     scope
   );
 
-  return TypescriptCreator.createCall(mockFactoryCall, []);
+  return createCall(mockFactoryCall, []);
 }
 
 export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
@@ -90,9 +93,7 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
     mockKey
   );
 
-  return TypescriptCreator.createCall(mockFactoryCall, [
-    MockIdentifierGenericParameter,
-  ]);
+  return createCall(mockFactoryCall, [MockIdentifierGenericParameter]);
 }
 
 function getDeclarationMockFactoryCall(
@@ -130,8 +131,8 @@ function getDeclarationMockFactoryCall(
 
   const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
 
-  return TypescriptCreator.createCall(mockFactoryCall, [
-    ts.createArrayLiteral(genericsParametersExpression),
+  return createCall(mockFactoryCall, [
+    createArrayLiteral(genericsParametersExpression),
   ]);
 }
 

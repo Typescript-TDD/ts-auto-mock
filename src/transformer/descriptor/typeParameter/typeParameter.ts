@@ -1,5 +1,4 @@
 import * as ts from 'typescript';
-import { TypescriptCreator } from '../../helper/creator';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import {
   MockIdentifierGenericParameter,
@@ -11,6 +10,24 @@ import { TypeChecker } from '../../typeChecker/typeChecker';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetNullDescriptor } from '../null/null';
+import {
+  createArrowFunction,
+  createBinaryExpression,
+  createBlock,
+  createCall,
+  createIdentifier,
+  createIfStatement,
+  createIIFE,
+  createNumericLiteral,
+  createParameter,
+  createPropertyAccess,
+  createPunctuationToken,
+  createReturnStatement,
+  createStringLiteral,
+  createVariableDeclaration,
+  createVariableDeclarationList,
+  createVariableStatement,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetTypeParameterDescriptor(
   node: ts.TypeParameterDeclaration,
@@ -48,7 +65,7 @@ function createFunctionToAccessToGenericValue(
   key: string,
   descriptor: ts.Expression
 ): ts.CallExpression {
-  const returnWhenGenericDoesNotExist: ts.ReturnStatement = ts.createReturn(
+  const returnWhenGenericDoesNotExist: ts.ReturnStatement = createReturnStatement(
     descriptor
   );
 
@@ -60,8 +77,8 @@ function createFunctionToAccessToGenericValue(
     findGenericCall
   );
 
-  return TypescriptCreator.createIIFE(
-    ts.createBlock(
+  return createIIFE(
+    createBlock(
       [generic, expressionWhenGenericExist, returnWhenGenericDoesNotExist],
       true
     )
@@ -69,37 +86,35 @@ function createFunctionToAccessToGenericValue(
 }
 
 function createFindGeneric(genericKey: string): ts.CallExpression {
-  return ts.createCall(
-    ts.createPropertyAccess(
+  return createCall(
+    createPropertyAccess(
       MockIdentifierGenericParameter,
-      ts.createIdentifier('find')
+      createIdentifier('find')
     ),
-    undefined,
     [
-      TypescriptCreator.createArrowFunction(
-        ts.createBlock(
+      createArrowFunction(
+        createBlock(
           [
-            ts.createReturn(
-              ts.createBinary(
-                ts.createCall(
-                  ts.createPropertyAccess(
-                    ts.createPropertyAccess(
-                      ts.createIdentifier('generic'),
+            createReturnStatement(
+              createBinaryExpression(
+                createCall(
+                  createPropertyAccess(
+                    createPropertyAccess(
+                      createIdentifier('generic'),
                       MockIdentifierGenericParameterIds
                     ),
-                    ts.createIdentifier('indexOf')
+                    createIdentifier('indexOf')
                   ),
-                  undefined,
-                  [ts.createStringLiteral(genericKey)]
+                  [createStringLiteral(genericKey)]
                 ),
-                ts.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-                ts.createNumericLiteral('0')
+                createPunctuationToken(ts.SyntaxKind.GreaterThanEqualsToken),
+                createNumericLiteral('0')
               )
             ),
           ],
           true
         ),
-        [TypescriptCreator.createParameter('generic')]
+        [createParameter('generic')]
       ),
     ]
   );
@@ -108,39 +123,30 @@ function createFindGeneric(genericKey: string): ts.CallExpression {
 function assignGenericConstToCall(
   call: ts.CallExpression
 ): ts.VariableStatement {
-  return ts.createVariableStatement(
-    undefined,
-    ts.createVariableDeclarationList(
-      [
-        ts.createVariableDeclaration(
-          ts.createIdentifier('generic'),
-          undefined,
-          call
-        ),
-      ],
+  return createVariableStatement(
+    createVariableDeclarationList(
+      [createVariableDeclaration(createIdentifier('generic'), call)],
       ts.NodeFlags.Const
     )
   );
 }
 
 function getValueFromGenericIfExist(): ts.IfStatement {
-  return ts.createIf(
-    ts.createIdentifier('generic'),
-    ts.createBlock(
+  return createIfStatement(
+    createIdentifier('generic'),
+    createBlock(
       [
-        ts.createReturn(
-          ts.createCall(
-            ts.createPropertyAccess(
-              ts.createIdentifier('generic'),
+        createReturnStatement(
+          createCall(
+            createPropertyAccess(
+              createIdentifier('generic'),
               MockIdentifierGenericParameterValue
             ),
-            undefined,
             []
           )
         ),
       ],
       true
-    ),
-    undefined
+    )
   );
 }
