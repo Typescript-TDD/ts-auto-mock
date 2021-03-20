@@ -18,6 +18,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: create environment variable date
+        run: |
+          echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
       - name: install ts auto mock
         run: |
           npm install
@@ -28,8 +31,6 @@ jobs:
           cd definitelyTypedTests
           npm install
           npm run start-chunk
-      - name: create environment variable date
-        run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
       - name: definitelyTyped push changes
         run: |
           git config --global user.name 'typescripttdd'
