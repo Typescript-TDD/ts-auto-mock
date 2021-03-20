@@ -26,7 +26,7 @@ jobs:
     - name: create environment variable date
       run: |
         echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
-        echo env.DATE
+        echo "${{ env.DATE }}"
     - name: install ts auto mock and run test
       run: |
         sudo apt-get update
