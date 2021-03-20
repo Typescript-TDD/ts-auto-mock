@@ -29,7 +29,7 @@ jobs:
         echo "${{ env.DATE }}"
     - name: Use the value
       run: |
-          echo "${{ env.DATE }}" # This will output 'yellow'
+        echo "${{ env.DATE }}" # This will output 'yellow'
     - name: install ts auto mock and run test
       run: |
         sudo apt-get update
