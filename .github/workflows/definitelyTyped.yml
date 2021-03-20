@@ -29,7 +29,9 @@ jobs:
           npm install
           npm run start-chunk
       - name: create environment variable date
-        run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
+        run: |
+            echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
+            echo env.DATE
       - name: definitelyTyped push changes
         run: |
           git config --global user.name 'typescripttdd'
