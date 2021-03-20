@@ -20,6 +20,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
+    - name: create environment variable date
+      run: |
+        echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
+        echo env.DATE
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -30,10 +34,6 @@ jobs:
         npm install
         npm run build
         npm test
-    - name: create environment variable date
-      run: |
-        echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
-        echo env.DATE
   check-type:
     runs-on: ubuntu-latest
 
