@@ -23,13 +23,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: create environment variable date
-      run: |
-        echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
-        echo "${{ env.DATE }}"
-    - name: Use the value
-      run: |
-        echo "${{ env.DATE }}" # This will output 'yellow'
     - name: install ts auto mock and run test
       run: |
         sudo apt-get update
