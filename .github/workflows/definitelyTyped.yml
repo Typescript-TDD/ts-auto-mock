@@ -20,7 +20,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: create environment variable date
         run: |
-          echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
+          echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV
       - name: install ts auto mock
         run: |
           npm install

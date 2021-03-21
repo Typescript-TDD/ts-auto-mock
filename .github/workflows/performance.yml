@@ -35,7 +35,7 @@ jobs:
         npm start
     - name: create environment variable date
       run: |
-        echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV |
+        echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV
     - name: performance push changes
       run: |
         git config --global user.name 'typescripttdd'
