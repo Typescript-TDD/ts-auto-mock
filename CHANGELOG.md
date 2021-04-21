@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.1.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.2...3.1.3) (2021-04-21)
+
+
+### Performance Improvements
+
+* **dependencies:** update dependencies ([#685](https://github.com/Typescript-TDD/ts-auto-mock/issues/685)) ([3c14989](https://github.com/Typescript-TDD/ts-auto-mock/commit/3c1498983f78c5ecd2a0ca43daf7083216b0967b))
+
 ## [3.1.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.1...3.1.2) (2021-03-15)
 
 
