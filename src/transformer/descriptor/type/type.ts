@@ -41,7 +41,20 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
       node.typeName
     );
 
-    return GetType(declaration, scope);
+    const type: ts.Node = GetType(declaration, scope);
+
+    // if the type is a reusable and finite (reusable types except for typeAlias)
+    // we can return the original node
+    // so it can be re used and we handle recursion
+
+    if (
+      type.kind === ts.SyntaxKind.InterfaceDeclaration ||
+      type.kind === ts.SyntaxKind.ClassDeclaration
+    ) {
+      return node;
+    }
+
+    return type;
   }
 
   if (ts.isThisTypeNode(node)) {
