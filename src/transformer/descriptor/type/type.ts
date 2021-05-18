@@ -49,7 +49,8 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
 
     if (
       type.kind === ts.SyntaxKind.InterfaceDeclaration ||
-      type.kind === ts.SyntaxKind.ClassDeclaration
+      type.kind === ts.SyntaxKind.ClassDeclaration ||
+      type.kind === ts.SyntaxKind.TypeLiteral
     ) {
       return node;
     }
