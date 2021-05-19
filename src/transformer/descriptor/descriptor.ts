@@ -12,6 +12,7 @@ import { GetClassDeclarationDescriptor } from './class/classDeclaration';
 import { GetConstructorTypeDescriptor } from './constructor/constructorType';
 import { GetEnumDeclarationDescriptor } from './enum/enumDeclaration';
 import { GetExpressionWithTypeArgumentsDescriptor } from './expression/expressionWithTypeArguments';
+import { GetGetAccessorDeclarationDescriptor } from './getAccessor/getAccessor';
 import { GetIdentifierDescriptor } from './identifier/identifier';
 import { GetImportDescriptor } from './import/import';
 import { GetImportEqualsDescriptor } from './import/importEquals';
@@ -89,6 +90,11 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
       return GetImportDescriptor(node as ts.ImportClause, scope);
     case ts.SyntaxKind.MethodSignature:
       return GetMethodSignatureDescriptor(node as ts.MethodSignature, scope);
+    case ts.SyntaxKind.GetAccessor:
+      return GetGetAccessorDeclarationDescriptor(
+        node as ts.GetAccessorDeclaration,
+        scope
+      );
     case ts.SyntaxKind.FunctionDeclaration:
       return GetMethodDeclarationDescriptor(
         node as ts.FunctionDeclaration,
