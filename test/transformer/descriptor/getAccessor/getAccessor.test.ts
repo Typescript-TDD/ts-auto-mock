@@ -31,4 +31,33 @@ describe('getAccessor', () => {
     const mock: AClass = createMock<AClass>();
     expect(mock.prop4).toBe(123);
   });
+
+  describe('when setter is defined', () => {
+    it('should ignore it', () => {
+      class AClassWithSetter {
+        private aValue: string;
+
+        public set a(value: string) {
+          this.aValue = value;
+        }
+
+        public get a(): string {
+          return '';
+        }
+
+        public get b(): string {
+          return '';
+        }
+
+        public set b(value: string) {
+          this.aValue = value;
+        }
+      }
+
+      const mock: AClassWithSetter = createMock<AClassWithSetter>();
+
+      expect(mock.a).toBe('');
+      expect(mock.b).toBe('');
+    });
+  });
 });
