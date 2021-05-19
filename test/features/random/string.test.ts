@@ -30,4 +30,16 @@ describe('Random string', () => {
 
     expect(mock.fnReturnsString()).toMatch(/fnReturnsString.*/);
   });
+
+  it('should include the getter name when the string is the result of the get', () => {
+    class WithGetterString {
+      public get getterString(): string {
+        return 'string';
+      }
+    }
+
+    const mock: WithGetterString = createMock<WithGetterString>();
+
+    expect(mock.getterString).toMatch(/getterString.*/);
+  });
 });

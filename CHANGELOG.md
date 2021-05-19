@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [3.2.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.3...3.2.0) (2021-05-19)
+
+
+### Features
+
+* **getAccessor:** correctly mock get accessors for mocked classes ([3530039](https://github.com/Typescript-TDD/ts-auto-mock/commit/35300395bf8e2b0d191940b4035a94634656f470))
+
 ## [3.1.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.2...3.1.3) (2021-04-21)
 
 
