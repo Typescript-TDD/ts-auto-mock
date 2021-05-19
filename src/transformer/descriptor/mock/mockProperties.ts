@@ -17,13 +17,13 @@ export function GetMockPropertiesFromSymbol(
 ): ts.Expression {
   const properties: PropertyLike[] = propertiesSymbol
     .filter((prop: ts.Symbol) => !!prop.declarations) // Dynamically generated properties (mapped types) do not have declarations
-    .map((prop: ts.Symbol) => prop.declarations)
     .map(
-      (declarations: ts.Declaration[]) =>
-        declarations.filter(
+      (prop: ts.Symbol) =>
+        prop.declarations.filter(
           (declaration: ts.Declaration) => !ts.isSetAccessor(declaration)
         )[0]
-    ) as PropertyLike[];
+    )
+    .filter(Boolean) as PropertyLike[];
 
   const signaturesDeclarations: SignatureLike[] = signatures.map(
     (signature: ts.Signature) => signature.declaration

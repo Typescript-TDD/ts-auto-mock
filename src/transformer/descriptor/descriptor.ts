@@ -95,8 +95,6 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         node as ts.GetAccessorDeclaration,
         scope
       );
-    case ts.SyntaxKind.SetAccessor:
-      return GetUndefinedDescriptor();
     case ts.SyntaxKind.FunctionDeclaration:
       return GetMethodDeclarationDescriptor(
         node as ts.FunctionDeclaration,
