@@ -229,4 +229,48 @@ describe('create-hydrated-mock', () => {
       });
     });
   });
+
+  describe('for recursive types', () => {
+    describe('for interfaces', () => {
+      type B = A;
+
+      interface A {
+        recursiveProp: B | null;
+        aProp: string | null;
+      }
+
+      it('should use the define type', () => {
+        const type: A = createHydratedMock<A>();
+        expect(type.recursiveProp?.aProp).toBe('');
+      });
+    });
+
+    describe('for classes', () => {
+      type B = A;
+
+      class A {
+        public recursiveProp: B | null;
+        public aProp: string | null;
+      }
+
+      it('should use the define type', () => {
+        const type: A = createHydratedMock<A>();
+        expect(type.recursiveProp?.aProp).toBe('');
+      });
+    });
+
+    describe('for type literal', () => {
+      type B = A;
+
+      type A = {
+        recursiveProp: B | null;
+        aProp: string | null;
+      };
+
+      it('should use the define type', () => {
+        const type: A = createHydratedMock<A>();
+        expect(type.recursiveProp?.aProp).toBe('');
+      });
+    });
+  });
 });
