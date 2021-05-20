@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.2.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.0...3.2.1) (2021-05-20)
+
+
+### Bug Fixes
+
+* **hydratedMocks:** fix recursion ([#736](https://github.com/Typescript-TDD/ts-auto-mock/issues/736)) ([8567273](https://github.com/Typescript-TDD/ts-auto-mock/commit/8567273f9c0e5417f5344345e1dac4d349650a11))
+
 # [3.2.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.3...3.2.0) (2021-05-19)
 
 
