@@ -38,4 +38,26 @@ describe('create-mock-values', () => {
 
     expect().nothing();
   });
+
+  it('should replace values when providing undefined', () => {
+    interface InterfaceWithValues {
+      property: {
+        a: 123;
+        c: () => void;
+      };
+      method(): void;
+    }
+
+    const properties: InterfaceWithValues = createMock<InterfaceWithValues>({
+      property: {
+        a: undefined,
+      },
+    });
+
+    properties.method();
+    properties.property.c();
+    expect(properties.method).toHaveBeenCalled();
+    expect(properties.property.a).toBeUndefined();
+    expect(properties.property.c).toHaveBeenCalled();
+  });
 });
