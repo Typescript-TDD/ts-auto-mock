@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.2.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.1...3.2.2) (2021-05-22)
+
+
+### Bug Fixes
+
+* **merge:** ensure undefined is assigned when merging partial mock ([#748](https://github.com/Typescript-TDD/ts-auto-mock/issues/748)) ([31c5ff5](https://github.com/Typescript-TDD/ts-auto-mock/commit/31c5ff5f09d59b11ada77e238ab70137da31c9cd))
+
 ## [3.2.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.0...3.2.1) (2021-05-20)
 
 
