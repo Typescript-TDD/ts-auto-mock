@@ -33,79 +33,84 @@ import {
 } from '../../typescriptFactory/typescriptFactory';
 import { SetCurrentCreateMock } from './currentCreateMockNode';
 
-function getMockExpression(nodeToMock: ts.TypeNode): ts.Expression {
-  return GetDescriptor(nodeToMock, new Scope());
-}
-
-function getMockHydratedExpression(nodeToMock: ts.TypeNode): ts.Expression {
-  const scope: Scope = new Scope();
-  scope.hydrated = true;
-  return GetDescriptor(nodeToMock, scope);
-}
-
-function hasDefaultValues(node: ts.CallExpression): boolean {
-  return !!node.arguments.length && !!node.arguments[0];
-}
-
-function hasDefaultListValues(node: ts.CallExpression): boolean {
-  return !!node.arguments[1];
+export interface CreateMockOptions {
+  nodeToMock: ts.TypeNode;
+  hydrated?: boolean;
+  defaultValues?: ts.Expression;
+  amount?: ts.Expression;
 }
 
 export function getMock(
-  nodeToMock: ts.TypeNode,
-  node: ts.CallExpression
+  node: ts.CallExpression,
+  options: CreateMockOptions
 ): ts.Expression {
   SetCurrentCreateMock(node);
+  const mockExpression: ts.Expression = getMockExpression(options);
 
-  const mockExpression: ts.Expression = getMockExpression(nodeToMock);
+  if (!!options.amount) {
+    return getListOfMocks(
+      mockExpression,
+      options as CreateMockOptions & { amount: ts.Expression }
+    );
+  }
 
-  if (hasDefaultValues(node)) {
-    return getMockMergeExpression(mockExpression, node.arguments[0]);
+  return getSingleMock(options, mockExpression);
+}
+
+export function storeRegisterMock(
+  typeToMock: ts.TypeNode,
+  node: ts.CallExpression
+): ts.Node {
+  SetCurrentCreateMock(node);
+  if (ts.isTypeReferenceNode(typeToMock)) {
+    const factory: ts.FunctionExpression = node
+      .arguments[0] as ts.FunctionExpression;
+    return MockDefiner.instance.registerMockFor(
+      TypescriptHelper.GetDeclarationFromNode(typeToMock.typeName),
+      factory
+    );
+  } else {
+    Logger('RegisterMock').error(
+      'registerMock can be used only to mock type references.'
+    );
+    return createEmptyStatement();
+  }
+}
+
+function getSingleMock(
+  options: CreateMockOptions,
+  mockExpression: ts.Expression
+): ts.Expression {
+  if (!!options.defaultValues) {
+    return getMockMergeExpression(mockExpression, options.defaultValues);
   }
 
   return mockExpression;
 }
 
-export function getHydratedMock(
-  nodeToMock: ts.TypeNode,
-  node: ts.CallExpression
-): ts.Expression {
-  SetCurrentCreateMock(node);
+function getMockExpression(options: CreateMockOptions): ts.Expression {
+  const scope: Scope = new Scope();
+  scope.hydrated = !!options.hydrated;
 
-  const mockExpression: ts.Expression = getMockHydratedExpression(nodeToMock);
-
-  if (hasDefaultValues(node)) {
-    return getMockMergeExpression(mockExpression, node.arguments[0]);
-  }
-
-  return mockExpression;
+  return GetDescriptor(options.nodeToMock, scope);
 }
 
-export function getMockForList(
-  nodeToMock: ts.TypeNode,
-  node: ts.CallExpression
+function getListOfMocks(
+  mock: ts.Expression,
+  options: CreateMockOptions & { amount: ts.Expression }
 ): ts.Expression {
-  SetCurrentCreateMock(node);
-  const mock: ts.Expression = getMockExpression(nodeToMock);
-  const lengthLiteral: ts.NumericLiteral = node
-    .arguments[0] as ts.NumericLiteral;
-
-  if (!lengthLiteral) {
-    return createArrayLiteral([]);
-  }
-
-  if (hasDefaultListValues(node)) {
+  if (!!options.defaultValues) {
     return getListCallMock(
-      node.arguments[0],
+      options.amount,
       createCall(mergePropertyAccessor('mergeIterator'), [
         mock,
-        node.arguments[1],
+        options.defaultValues,
         MockCreateMockListLoopStep,
       ])
     );
   }
 
-  return getListCallMock(node.arguments[0], mock);
+  return getListCallMock(options.amount, mock);
 }
 
 function getListCallMock(
@@ -165,24 +170,4 @@ function getListCallMock(
       true
     )
   );
-}
-
-export function storeRegisterMock(
-  typeToMock: ts.TypeNode,
-  node: ts.CallExpression
-): ts.Node {
-  SetCurrentCreateMock(node);
-  if (ts.isTypeReferenceNode(typeToMock)) {
-    const factory: ts.FunctionExpression = node
-      .arguments[0] as ts.FunctionExpression;
-    return MockDefiner.instance.registerMockFor(
-      TypescriptHelper.GetDeclarationFromNode(typeToMock.typeName),
-      factory
-    );
-  } else {
-    Logger('RegisterMock').error(
-      'registerMock can be used only to mock type references.'
-    );
-    return createEmptyStatement();
-  }
 }
