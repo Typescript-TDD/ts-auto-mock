@@ -155,7 +155,8 @@ export namespace TypescriptHelper {
       declarations.find(
         (declaration: ts.Declaration) =>
           !ts.isVariableDeclaration(declaration) &&
-          !ts.isFunctionDeclaration(declaration)
+          !ts.isFunctionDeclaration(declaration) &&
+          !ts.isModuleDeclaration(declaration)
       ) || declarations[0]
     );
   }
