@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.2.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.2...3.2.3) (2021-06-17)
+
+
+### Bug Fixes
+
+* **transformer:** ignore namespace when resolving a declaration ([#793](https://github.com/Typescript-TDD/ts-auto-mock/issues/793)) ([c356caa](https://github.com/Typescript-TDD/ts-auto-mock/commit/c356caa0d5d412ee1ef91d171559af2d89f39a6c))
+
 ## [3.2.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.1...3.2.2) (2021-05-22)
 
 
