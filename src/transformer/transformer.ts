@@ -1,80 +1,22 @@
 import * as ts from 'typescript';
 import { TsAutoMockOptions } from '../options/options';
+import { createHydratedMockCustomFunction } from './customFunctions/create-hydrated-mock';
+import { createMockCustomFunction } from './customFunctions/create-mock';
+import { createMockListCustomFunction } from './customFunctions/create-mock-list';
+import { registerMockCustomFunction } from './customFunctions/register-mock';
 import { CustomFunction } from './matcher/matcher';
-import {
-  getHydratedMock,
-  getMock,
-  getMockForList,
-  storeRegisterMock,
-} from './mock/mock';
 import { baseTransformer } from './base/base';
 
 const customFunctions: CustomFunction[] = [
-  {
-    sourceDts: 'create-mock.d.ts',
-    sourceUrl: '../create-mock.d.ts',
-  },
-  {
-    sourceDts: 'create-mock-list.d.ts',
-    sourceUrl: '../create-mock-list.d.ts',
-  },
-  {
-    sourceDts: 'register-mock.d.ts',
-    sourceUrl: '../register-mock.d.ts',
-  },
-  {
-    sourceDts: 'create-hydrated-mock.d.ts',
-    sourceUrl: '../create-hydrated-mock.d.ts',
-  },
+  createMockCustomFunction,
+  createMockListCustomFunction,
+  registerMockCustomFunction,
+  createHydratedMockCustomFunction,
 ];
 
 const transformer: (
   program: ts.Program,
   options?: TsAutoMockOptions
-) => ts.TransformerFactory<ts.SourceFile> = baseTransformer(
-  visitNode,
-  customFunctions
-);
+) => ts.TransformerFactory<ts.SourceFile> = baseTransformer(customFunctions);
 
 export { transformer };
-
-function visitNode(
-  node: ts.CallExpression & { typeArguments: ts.NodeArray<ts.TypeNode> },
-  declaration: ts.FunctionDeclaration
-): ts.Node {
-  const [nodeToMock]: ts.NodeArray<ts.TypeNode> = node.typeArguments;
-
-  if (isCreateMock(declaration)) {
-    return getMock(nodeToMock, node);
-  }
-
-  if (isCreateHydratedMock(declaration)) {
-    return getHydratedMock(nodeToMock, node);
-  }
-
-  if (isCreateMockList(declaration)) {
-    return getMockForList(nodeToMock, node);
-  }
-
-  if (isRegisterMock(declaration)) {
-    return storeRegisterMock(nodeToMock, node);
-  }
-
-  return node;
-}
-
-function isCreateMock(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name?.getText() === 'createMock';
-}
-
-function isCreateHydratedMock(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name?.getText() === 'createHydratedMock';
-}
-
-function isCreateMockList(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name?.getText() === 'createMockList';
-}
-
-function isRegisterMock(declaration: ts.FunctionDeclaration): boolean {
-  return declaration.name?.getText() === 'registerMock';
-}

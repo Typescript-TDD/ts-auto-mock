@@ -142,6 +142,12 @@ export namespace TypescriptHelper {
     return typeChecker.getResolvedSignature(node);
   }
 
+  export function hasTypeArguments(node: ts.CallExpression): boolean {
+    return (
+      typeof node.typeArguments !== 'undefined' && !!node.typeArguments.length
+    );
+  }
+
   function GetFirstValidDeclaration(
     declarations: ts.Declaration[]
   ): ts.Declaration {
