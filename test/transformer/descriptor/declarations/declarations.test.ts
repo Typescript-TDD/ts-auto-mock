@@ -127,6 +127,23 @@ describe('declarations', () => {
       });
     });
 
+    describe('interface and namespace', () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      namespace InterfaceNamespaceTest {}
+
+      interface InterfaceNamespaceTest {
+        value: boolean;
+        value2: string;
+      }
+
+      it('should ignore the namespace', () => {
+        const properties: InterfaceNamespaceTest = createMock<InterfaceNamespaceTest>();
+        expect(properties.value).toBe(false);
+        expect(properties.value2).toBe('');
+      });
+    });
+
     describe('type', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
