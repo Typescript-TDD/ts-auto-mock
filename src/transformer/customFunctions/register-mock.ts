@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { CustomFunction } from '../matcher/matcher';
 import { storeRegisterMock } from '../mock/mock';
 import { customFunctionWithTypeArgument } from './helpers/custom-function-with-type-argument';

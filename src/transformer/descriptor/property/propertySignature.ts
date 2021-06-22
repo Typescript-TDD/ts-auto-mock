@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { TransformerLogger } from '../../logger/transformerLogger';

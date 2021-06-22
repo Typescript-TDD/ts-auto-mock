@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Logger } from '../../logger/logger';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
@@ -8,10 +8,7 @@ import {
 } from '../mergeExpression/mergeExpression';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { Scope } from '../scope/scope';
-import {
-  MockCreateMockListLoopArray,
-  MockCreateMockListLoopStep,
-} from '../mockIdentifier/mockIdentifier';
+import { Identifiers } from '../mockIdentifier/mockIdentifier';
 import {
   createArrayLiteral,
   createBinaryExpression,
@@ -31,6 +28,7 @@ import {
   createVariableDeclarationList,
   createVariableStatement,
 } from '../../typescriptFactory/typescriptFactory';
+import { core } from '../core/core';
 import { SetCurrentCreateMock } from './currentCreateMockNode';
 
 export interface CreateMockOptions {
@@ -62,7 +60,7 @@ export function storeRegisterMock(
   node: ts.CallExpression
 ): ts.Node {
   SetCurrentCreateMock(node);
-  if (ts.isTypeReferenceNode(typeToMock)) {
+  if (core.ts.isTypeReferenceNode(typeToMock)) {
     const factory: ts.FunctionExpression = node
       .arguments[0] as ts.FunctionExpression;
     return MockDefiner.instance.registerMockFor(
@@ -105,7 +103,7 @@ function getListOfMocks(
       createCall(mergePropertyAccessor('mergeIterator'), [
         mock,
         options.defaultValues,
-        MockCreateMockListLoopStep,
+        Identifiers.MockCreateMockListLoopStep,
       ])
     );
   }
@@ -124,38 +122,38 @@ function getListCallMock(
           createVariableDeclarationList(
             [
               createVariableDeclaration(
-                MockCreateMockListLoopArray,
+                Identifiers.MockCreateMockListLoopArray,
                 createArrayLiteral([], false)
               ),
             ],
-            ts.NodeFlags.Const
+            core.ts.NodeFlags.Const
           )
         ),
         createForStatement(
           createVariableDeclarationList(
             [
               createVariableDeclaration(
-                MockCreateMockListLoopStep,
+                Identifiers.MockCreateMockListLoopStep,
                 createNumericLiteral('0')
               ),
             ],
-            ts.NodeFlags.Let
+            core.ts.NodeFlags.Let
           ),
           createBinaryExpression(
-            MockCreateMockListLoopStep,
-            createPunctuationToken(ts.SyntaxKind.LessThanToken),
+            Identifiers.MockCreateMockListLoopStep,
+            createPunctuationToken(core.ts.SyntaxKind.LessThanToken),
             expression
           ),
           createPostfix(
-            MockCreateMockListLoopStep,
-            ts.SyntaxKind.PlusPlusToken
+            Identifiers.MockCreateMockListLoopStep,
+            core.ts.SyntaxKind.PlusPlusToken
           ),
           createBlock(
             [
               createExpressionStatement(
                 createCall(
                   createPropertyAccess(
-                    MockCreateMockListLoopArray,
+                    Identifiers.MockCreateMockListLoopArray,
                     createIdentifier('push')
                   ),
                   [mockExpr]
@@ -165,7 +163,7 @@ function getListCallMock(
             true
           )
         ),
-        createReturn(MockCreateMockListLoopArray),
+        createReturn(Identifiers.MockCreateMockListLoopArray),
       ],
       true
     )

@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetMockCall } from './mockCall';
@@ -20,7 +21,7 @@ export function GetMockPropertiesFromSymbol(
     .map(
       (prop: ts.Symbol) =>
         prop.declarations.filter(
-          (declaration: ts.Declaration) => !ts.isSetAccessor(declaration)
+          (declaration: ts.Declaration) => !core.ts.isSetAccessor(declaration)
         )[0]
     )
     .filter(Boolean) as PropertyLike[];
@@ -61,7 +62,7 @@ export function GetMockPropertiesFromDeclarations(
       return (
         modifiers.filter(
           (modifier: ts.Modifier) =>
-            modifier.kind === ts.SyntaxKind.PrivateKeyword
+            modifier.kind === core.ts.SyntaxKind.PrivateKeyword
         ).length === 0
       );
     }

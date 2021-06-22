@@ -1,6 +1,7 @@
 import * as path from 'path';
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { TransformerLogger } from '../logger/transformerLogger';
+import { core } from '../core/core';
 
 export interface CustomFunction {
   sourceUrl: string;
@@ -18,7 +19,8 @@ function isHandledDeclarationType(
 ): declaration is ts.FunctionDeclaration | ts.MethodSignature {
   return (
     declaration &&
-    (ts.isFunctionDeclaration(declaration) || ts.isMethodSignature(declaration))
+    (core.ts.isFunctionDeclaration(declaration) ||
+      core.ts.isMethodSignature(declaration))
   );
 }
 

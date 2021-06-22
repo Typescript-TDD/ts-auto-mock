@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { GetNullDescriptor } from '../null/null';
 
@@ -21,7 +22,7 @@ export function GetReturnNodeFromBody(
 
   const functionBody: ts.ConciseBody | undefined = node.body;
 
-  if (functionBody && ts.isBlock(functionBody)) {
+  if (functionBody && core.ts.isBlock(functionBody)) {
     const returnStatement: ts.ReturnStatement = GetReturnStatement(
       functionBody
     );
@@ -47,6 +48,6 @@ export function GetReturnNodeFromBody(
 function GetReturnStatement(body: ts.FunctionBody): ts.ReturnStatement {
   return body.statements.find(
     (statement: ts.Statement) =>
-      statement.kind === ts.SyntaxKind.ReturnStatement
+      statement.kind === core.ts.SyntaxKind.ReturnStatement
   ) as ts.ReturnStatement;
 }

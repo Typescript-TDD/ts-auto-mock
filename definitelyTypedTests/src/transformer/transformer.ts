@@ -1,3 +1,4 @@
+import * as ts from 'typescript';
 import {
     CustomFunction
 } from "../../../src/transformer/matcher/matcher";
@@ -6,5 +7,5 @@ import { createDefinitelyTypedMockCustomFunction } from './customFunctions/creat
 
 const customFunctions: CustomFunction[] = [createDefinitelyTypedMockCustomFunction];
 
-const transformer = baseTransformer(customFunctions);
+const transformer = baseTransformer(customFunctions, ts);
 export { transformer };

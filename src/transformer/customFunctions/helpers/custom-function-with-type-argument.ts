@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { CustomFunction } from '../../matcher/matcher';
 import { assertTypeArgumentPresence } from './assert-type-argument-presence';
 

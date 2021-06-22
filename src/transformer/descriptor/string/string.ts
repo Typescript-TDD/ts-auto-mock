@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { IsTsAutoMockRandomEnabled } from '../../../options/random';
 import { PropertySignatureCache } from '../property/cache';
 import { RandomPropertyAccessor } from '../random/random';

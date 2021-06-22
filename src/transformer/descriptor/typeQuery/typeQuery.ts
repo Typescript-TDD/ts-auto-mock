@@ -1,8 +1,8 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { TransformerLogger } from '../../logger/transformerLogger';
 import { GetMockFactoryCallTypeofEnum } from '../../mockFactoryCall/mockFactoryCall';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMethodDeclarationDescriptor } from '../method/methodDeclaration';
@@ -41,18 +41,18 @@ export function GetTypeQueryDescriptorFromDeclaration(
   declaration: ts.NamedDeclaration,
   scope: Scope
 ): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
 
   switch (declaration.kind) {
-    case ts.SyntaxKind.ClassDeclaration:
+    case core.ts.SyntaxKind.ClassDeclaration:
       return createFunctionExpressionReturn(
         GetTypeReferenceDescriptor(
           createTypeReferenceNode(declaration.name as ts.Identifier),
           scope
         )
       );
-    case ts.SyntaxKind.TypeAliasDeclaration:
-    case ts.SyntaxKind.InterfaceDeclaration:
+    case core.ts.SyntaxKind.TypeAliasDeclaration:
+    case core.ts.SyntaxKind.InterfaceDeclaration:
       return GetTypeReferenceDescriptor(
         createTypeReferenceNode(declaration.name as ts.Identifier),
         scope
@@ -60,10 +60,10 @@ export function GetTypeQueryDescriptorFromDeclaration(
     // NamespaceImport, ImportEqualsDeclaration and ModuleDeclaration cannot be used in a typeof
     // but to test definitely typed this is the only way, eventually we should move this code in the definitely typed folder
     // and use it using an eventual extensibility opening of this transformer
-    case ts.SyntaxKind.NamespaceImport:
-    case ts.SyntaxKind.ImportEqualsDeclaration:
+    case core.ts.SyntaxKind.NamespaceImport:
+    case core.ts.SyntaxKind.ImportEqualsDeclaration:
       return GetModuleDescriptor(declaration, scope);
-    case ts.SyntaxKind.ModuleDeclaration:
+    case core.ts.SyntaxKind.ModuleDeclaration:
       return GetMockPropertiesFromDeclarations(
         GetPropertiesFromSourceFileOrModuleDeclaration(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,7 +73,7 @@ export function GetTypeQueryDescriptorFromDeclaration(
         [],
         scope
       );
-    case ts.SyntaxKind.EnumDeclaration:
+    case core.ts.SyntaxKind.EnumDeclaration:
       // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
       // TheNewEmitResolver.ensureEmitOf(GetImportDeclarationOf(node.eprName as ts.Identifier);
       // return node.exprName as ts.Identifier;
@@ -81,13 +81,13 @@ export function GetTypeQueryDescriptorFromDeclaration(
         declaration as ts.EnumDeclaration,
         scope
       );
-    case ts.SyntaxKind.FunctionDeclaration:
-    case ts.SyntaxKind.MethodSignature:
+    case core.ts.SyntaxKind.FunctionDeclaration:
+    case core.ts.SyntaxKind.MethodSignature:
       return GetMethodDeclarationDescriptor(
         declaration as ts.FunctionDeclaration,
         scope
       );
-    case ts.SyntaxKind.VariableDeclaration:
+    case core.ts.SyntaxKind.VariableDeclaration:
       const variable: ts.VariableDeclaration = declaration as ts.VariableDeclaration;
 
       if (variable.type) {
@@ -119,7 +119,7 @@ export function GetTypeQueryDescriptorFromDeclaration(
       }
     default:
       TransformerLogger().typeNotSupported(
-        `TypeQuery of ${ts.SyntaxKind[declaration.kind]}`,
+        `TypeQuery of ${core.ts.SyntaxKind[declaration.kind]}`,
         declaration
       );
       return GetNullDescriptor();
@@ -127,7 +127,7 @@ export function GetTypeQueryDescriptorFromDeclaration(
 }
 
 function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol | undefined {
-  return TypeChecker().getSymbolAtLocation(node.exprName);
+  return core.typeChecker.getSymbolAtLocation(node.exprName);
 }
 
 function getTypeQueryDeclarationFromSymbol(
@@ -135,7 +135,7 @@ function getTypeQueryDeclarationFromSymbol(
 ): ts.NamedDeclaration {
   const declaration: ts.Declaration = symbol.declarations[0];
 
-  if (ts.isImportEqualsDeclaration(declaration)) {
+  if (core.ts.isImportEqualsDeclaration(declaration)) {
     return declaration;
   }
 

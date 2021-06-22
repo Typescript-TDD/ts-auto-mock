@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
 import { PropertySignatureCache } from '../property/cache';
 import { GetReturnTypeFromBodyDescriptor } from './bodyReturnType';

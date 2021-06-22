@@ -1,4 +1,5 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
+import { core } from '../../core/core';
 
 export type PropertyLike =
   | ts.PropertyDeclaration
@@ -7,8 +8,8 @@ export type PropertyLike =
 
 export function isPropertyLike(prop: ts.Node): prop is PropertyLike {
   return (
-    prop.kind === ts.SyntaxKind.PropertyDeclaration ||
-    prop.kind === ts.SyntaxKind.PropertySignature ||
-    prop.kind === ts.SyntaxKind.MethodSignature
+    prop.kind === core.ts.SyntaxKind.PropertyDeclaration ||
+    prop.kind === core.ts.SyntaxKind.PropertySignature ||
+    prop.kind === core.ts.SyntaxKind.MethodSignature
   );
 }

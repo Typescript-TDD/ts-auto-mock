@@ -1,8 +1,5 @@
-import * as ts from 'typescript';
-import {
-  MockIdentifierInternalValues,
-  MockIdentifierObjectReturnValue,
-} from '../../mockIdentifier/mockIdentifier';
+import type * as ts from 'typescript';
+import { Identifiers } from '../../mockIdentifier/mockIdentifier';
 import {
   createBinaryExpression,
   createBlock,
@@ -18,6 +15,7 @@ import {
   createVariableDeclaration,
   createVariableStatement,
 } from '../../../typescriptFactory/typescriptFactory';
+import { core } from '../../core/core';
 import { GetMockMarkerProperty, Property } from './mockMarker';
 import { PropertyAssignments } from './mockPropertiesAssignments';
 
@@ -25,11 +23,12 @@ export function GetMockCall(
   properties: PropertyAssignments,
   signature: ts.Expression | null
 ): ts.CallExpression {
-  const mockObjectReturnValueName: ts.Identifier = MockIdentifierObjectReturnValue;
+  const mockObjectReturnValueName: ts.Identifier =
+    Identifiers.MockIdentifierObjectReturnValue;
   const statements: ts.Statement[] = [
     createVariableStatement([
       createVariableDeclaration(
-        MockIdentifierInternalValues,
+        Identifiers.MockIdentifierInternalValues,
         createObjectLiteral()
       ),
       createVariableDeclaration(
@@ -76,7 +75,7 @@ function AssignVariableTo(
 ): ts.ExpressionStatement {
   const binaryExpression: ts.BinaryExpression = createBinaryExpression(
     variable,
-    ts.SyntaxKind.EqualsToken,
+    core.ts.SyntaxKind.EqualsToken,
     expression
   );
   return createExpressionStatement(binaryExpression);

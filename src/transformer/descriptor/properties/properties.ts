@@ -1,7 +1,6 @@
-import { SignatureKind } from 'typescript';
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import {
   GetMockPropertiesFromDeclarations,
   GetMockPropertiesFromSymbol,
@@ -10,22 +9,22 @@ import { isPropertyLike, PropertyLike } from '../mock/propertyLike';
 import { isSignatureLike, SignatureLike } from '../mock/signatureLike';
 
 export function GetProperties(node: ts.Node, scope: Scope): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
   const type: ts.Type = typeChecker.getTypeAtLocation(node);
   const symbols: ts.Symbol[] = typeChecker.getPropertiesOfType(type);
 
-  if (!symbols.length && ts.isTypeLiteralNode(node)) {
+  if (!symbols.length && core.ts.isTypeLiteralNode(node)) {
     return GetPropertiesFromMembers(node, scope);
   } else {
     const signatures: Array<ts.Signature> = [];
 
     Array.prototype.push.apply(
       signatures,
-      typeChecker.getSignaturesOfType(type, SignatureKind.Call)
+      typeChecker.getSignaturesOfType(type, core.ts.SignatureKind.Call)
     );
     Array.prototype.push.apply(
       signatures,
-      typeChecker.getSignaturesOfType(type, SignatureKind.Construct)
+      typeChecker.getSignaturesOfType(type, core.ts.SignatureKind.Construct)
     );
 
     return GetMockPropertiesFromSymbol(symbols, signatures, scope);

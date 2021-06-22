@@ -1,6 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import {
   createLiteral,
@@ -12,8 +12,7 @@ export function GetLiteralDescriptor(
   node: ts.LiteralTypeNode,
   scope: Scope
 ): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
-  const type: ts.Type = typeChecker.getTypeAtLocation(node);
+  const type: ts.Type = core.typeChecker.getTypeAtLocation(node);
   const literalType: ts.LiteralType = type as ts.LiteralType;
 
   if (literalType.value) {
@@ -32,7 +31,7 @@ function GetLiteralTokenDescriptor(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const nodeToken: any = node as any;
 
-  if (nodeToken.kind === ts.SyntaxKind.NumericLiteral) {
+  if (nodeToken.kind === core.ts.SyntaxKind.NumericLiteral) {
     return createNumericLiteral(parseInt(nodeToken.text, 10));
   }
 
