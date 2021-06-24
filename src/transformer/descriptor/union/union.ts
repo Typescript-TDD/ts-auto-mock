@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { GetTypes } from '../type/type';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
@@ -35,7 +36,7 @@ export function GetUnionDescriptor(
 
 function isNotDefinedType(typeNode: ts.Node): boolean {
   return (
-    typeNode.kind === ts.SyntaxKind.VoidKeyword ||
-    typeNode.kind === ts.SyntaxKind.UndefinedKeyword
+    typeNode.kind === core.ts.SyntaxKind.VoidKeyword ||
+    typeNode.kind === core.ts.SyntaxKind.UndefinedKeyword
   );
 }

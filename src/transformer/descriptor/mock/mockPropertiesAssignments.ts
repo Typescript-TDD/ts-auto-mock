@@ -1,10 +1,7 @@
-import * as ts from 'typescript';
-import { SyntaxKind } from 'typescript';
-import {
-  MockIdentifierInternalValues,
-  MockIdentifierSetParameterName,
-} from '../../mockIdentifier/mockIdentifier';
+import type * as ts from 'typescript';
+import { Identifiers } from '../../mockIdentifier/mockIdentifier';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetBooleanTrueDescriptor } from '../boolean/booleanTrue';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
@@ -39,7 +36,7 @@ export function GetMockPropertiesAssignments(
     (acc: PropertyAssignments, member: PropertyLike): PropertyAssignments => {
       const descriptor: ts.Expression = GetDescriptor(member, scope);
 
-      if (ts.isCallLikeExpression(descriptor)) {
+      if (core.ts.isCallLikeExpression(descriptor)) {
         acc.lazy.push(GetLazyMockProperty(descriptor, member));
       } else {
         acc.literals.push(GetLiteralMockProperty(descriptor, member));
@@ -77,32 +74,36 @@ function GetLazyMockProperty(
     propertyName
   );
   const variableDeclarationName: ts.ElementAccessExpression = createElementAccess(
-    MockIdentifierInternalValues,
+    Identifiers.MockIdentifierInternalValues,
     stringPropertyName
   );
-  const setVariableParameterName: ts.Identifier = MockIdentifierSetParameterName;
+  const setVariableParameterName: ts.Identifier =
+    Identifiers.MockIdentifierSetParameterName;
 
   const expressionGetAssignment: ts.BinaryExpression = createBinaryExpression(
     variableDeclarationName,
-    ts.SyntaxKind.EqualsToken,
+    core.ts.SyntaxKind.EqualsToken,
     descriptor
   );
 
   const hasOwnProperty: ts.Expression = createCall(
-    createPropertyAccess(MockIdentifierInternalValues, 'hasOwnProperty'),
+    createPropertyAccess(
+      Identifiers.MockIdentifierInternalValues,
+      'hasOwnProperty'
+    ),
     [stringPropertyName]
   );
 
   const getExpressionBody: ts.Expression = createConditional(
     hasOwnProperty,
-    createPunctuationToken(SyntaxKind.QuestionToken),
+    createPunctuationToken(core.ts.SyntaxKind.QuestionToken),
     variableDeclarationName,
-    createPunctuationToken(SyntaxKind.ColonToken),
+    createPunctuationToken(core.ts.SyntaxKind.ColonToken),
     expressionGetAssignment
   );
   const setExpressionBody: ts.BinaryExpression = createBinaryExpression(
     variableDeclarationName,
-    ts.SyntaxKind.EqualsToken,
+    core.ts.SyntaxKind.EqualsToken,
     setVariableParameterName
   );
 

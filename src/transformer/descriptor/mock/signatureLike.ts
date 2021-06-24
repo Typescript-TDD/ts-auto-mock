@@ -1,4 +1,5 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
+import { core } from '../../core/core';
 
 export type SignatureLike =
   | ts.CallSignatureDeclaration
@@ -6,7 +7,7 @@ export type SignatureLike =
 
 export function isSignatureLike(prop: ts.Node): prop is SignatureLike {
   return (
-    prop.kind === ts.SyntaxKind.CallSignature ||
-    prop.kind === ts.SyntaxKind.ConstructSignature
+    prop.kind === core.ts.SyntaxKind.CallSignature ||
+    prop.kind === core.ts.SyntaxKind.ConstructSignature
   );
 }

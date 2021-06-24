@@ -1,6 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import { TypescriptHelper } from '../helper/helper';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { GetTypeQueryDescriptorFromDeclaration } from '../typeQuery/typeQuery';
@@ -23,7 +23,7 @@ export function GetModuleDescriptor(
     );
   }
 
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
   const symbolAlias: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
     node.name
   );
@@ -52,7 +52,10 @@ export function GetModuleDescriptor(
 }
 
 function isExternalSource(declaration: ts.Node): declaration is ExternalSource {
-  return ts.isSourceFile(declaration) || ts.isModuleDeclaration(declaration);
+  return (
+    core.ts.isSourceFile(declaration) ||
+    core.ts.isModuleDeclaration(declaration)
+  );
 }
 
 function GetPropertiesFromSourceFileOrModuleDeclarationDescriptor(
@@ -76,7 +79,7 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
   symbol: ts.Symbol,
   scope: Scope
 ): ts.PropertySignature[] {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
   const moduleExports: ts.Symbol[] = typeChecker.getExportsOfModule(symbol);
 
   return moduleExports
@@ -100,7 +103,7 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
     )
     .map(
       (d: ModuleExportsDeclarations): ts.PropertySignature => {
-        if (ts.isExportAssignment(d.declaration)) {
+        if (core.ts.isExportAssignment(d.declaration)) {
           return createPropertySignature(
             'default',
             createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
@@ -108,8 +111,8 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
         }
 
         if (
-          ts.isExportSpecifier(d.declaration) &&
-          ts.isSourceFile(d.originalDeclaration)
+          core.ts.isExportSpecifier(d.declaration) &&
+          core.ts.isSourceFile(d.originalDeclaration)
         ) {
           const exportSpecifierSymbol:
             | ts.Symbol

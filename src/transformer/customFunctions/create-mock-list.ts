@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { createArrayLiteral } from '../../typescriptFactory/typescriptFactory';
 import { CustomFunction } from '../matcher/matcher';
 import { getMock } from '../mock/mock';

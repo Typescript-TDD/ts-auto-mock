@@ -1,4 +1,4 @@
-import ts from 'typescript';
+import type ts from 'typescript';
 import { Logger } from '../../logger/logger';
 import { ILogger } from '../../logger/logger.interface';
 import { GetCurrentCreateMock } from '../mock/currentCreateMockNode';

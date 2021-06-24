@@ -1,12 +1,9 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { GetDescriptor } from '../descriptor/descriptor';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { TransformerLogger } from '../logger/transformerLogger';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
-import {
-  MockIdentifierGenericParameterIds,
-  MockIdentifierGenericParameterValue,
-} from '../mockIdentifier/mockIdentifier';
+import { Identifiers } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import {
   createArrayLiteral,
@@ -17,6 +14,7 @@ import {
   createReturnStatement,
   createStringLiteral,
 } from '../../typescriptFactory/typescriptFactory';
+import { core } from '../core/core';
 import { IGenericDeclaration } from './genericDeclaration.interface';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
 import { GenericParameter } from './genericParameter';
@@ -39,7 +37,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       return node.typeArguments[index];
     }
 
-    return nodeDeclaration.default || ts.factory.createNull();
+    return nodeDeclaration.default || core.ts.factory.createNull();
   }
 
   function addGenericParameterToExisting(
@@ -135,7 +133,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
             index
           );
 
-          if (ts.isTypeReferenceNode(genericNode)) {
+          if (core.ts.isTypeReferenceNode(genericNode)) {
             const typeParameterDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
               genericNode.typeName
             );
@@ -157,7 +155,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
               return acc;
             }
 
-            if (ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
+            if (core.ts.isTypeParameterDeclaration(typeParameterDeclaration)) {
               addGenericParameterToExisting(
                 extensionDeclarationTypeParameters[index],
                 typeParameterDeclaration,
@@ -187,14 +185,14 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
         createObjectLiteral(
           [
             createPropertyAssignment(
-              MockIdentifierGenericParameterIds,
+              Identifiers.MockIdentifierGenericParameterIds,
               createArrayLiteral(
                 s.ids.map((arr: string) => createStringLiteral(arr)),
                 false
               )
             ),
             createPropertyAssignment(
-              MockIdentifierGenericParameterValue,
+              Identifiers.MockIdentifierGenericParameterValue,
               s.value
             ),
           ],

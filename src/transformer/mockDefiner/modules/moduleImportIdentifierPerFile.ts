@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { createImportOnIdentifier } from '../../helper/import';
 import { PrivateIdentifier } from '../../privateIdentifier/privateIdentifier';
 import { ModuleNameIdentifier } from './moduleNameIdentifier';

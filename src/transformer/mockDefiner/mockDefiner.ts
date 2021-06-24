@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import {
   GetTsAutoMockCacheOptions,
   TsAutoMockCacheOptions,
@@ -6,10 +6,7 @@ import {
 import { GetDescriptor } from '../descriptor/descriptor';
 import { GetProperties } from '../descriptor/properties/properties';
 import { GetTypeofEnumDescriptor } from '../descriptor/typeQuery/enumTypeQuery';
-import {
-  MockIdentifierGenericParameter,
-  MockIdentifierGenericParameterValue,
-} from '../mockIdentifier/mockIdentifier';
+import { Identifiers } from '../mockIdentifier/mockIdentifier';
 import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
 import { Scope } from '../scope/scope';
 import {
@@ -82,7 +79,7 @@ export class MockDefiner {
 
   public setFileNameFromNode(node: ts.Node): void {
     const thisFile: ts.SourceFile = node.getSourceFile();
-    this._fileName = thisFile.fileName;
+    this._fileName = thisFile?.fileName;
   }
 
   public setTsAutoMockImportIdentifier(): void {
@@ -476,7 +473,7 @@ export class MockDefiner {
                 createCall(
                   createPropertyAccess(
                     createIdentifier('g'),
-                    MockIdentifierGenericParameterValue
+                    Identifiers.MockIdentifierGenericParameterValue
                   ),
                   []
                 ),
@@ -515,6 +512,8 @@ export class MockDefiner {
   }
 
   private _getMockGenericParameter(): ts.ParameterDeclaration {
-    return createParameterFromIdentifier(MockIdentifierGenericParameter);
+    return createParameterFromIdentifier(
+      Identifiers.MockIdentifierGenericParameter
+    );
   }
 }

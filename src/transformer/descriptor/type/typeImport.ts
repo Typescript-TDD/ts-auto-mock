@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { TypescriptHelper } from '../helper/helper';
 
 export type ImportNode = ts.ImportClause | ts.ImportSpecifier;

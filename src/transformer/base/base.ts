@@ -1,29 +1,30 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { SetTsAutoMockOptions, TsAutoMockOptions } from '../../options/options';
-import { SetTypeChecker } from '../typeChecker/typeChecker';
+import { InitIdentifiers } from '../mockIdentifier/mockIdentifier';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
-import { SetProgram } from '../program/program';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { CustomFunction, getMatchingCustomFunction } from '../matcher/matcher';
 import { GetIsFilesExcludedFromOptions } from '../../options/files';
 import { updateSourceFileNode } from '../../typescriptFactory/typescriptFactory';
+import { InitCore, core } from '../core/core';
 
 export function baseTransformer(
-  customFunctions: CustomFunction[]
+  customFunctions: CustomFunction[],
+  typescript: typeof ts
 ): (
   program: ts.Program,
-  options?: TsAutoMockOptions
+  options?: Partial<TsAutoMockOptions>
 ) => ts.TransformerFactory<ts.SourceFile> {
   return (
     program: ts.Program,
-    options?: TsAutoMockOptions
+    options?: Partial<TsAutoMockOptions>
   ): ts.TransformerFactory<ts.SourceFile> => {
     if (options) {
       SetTsAutoMockOptions(options);
     }
 
-    SetTypeChecker(program.getTypeChecker());
-    SetProgram(program);
+    InitCore(typescript, program);
+    InitIdentifiers();
 
     const isFileExcluded: (
       _sf: ts.SourceFile
@@ -70,7 +71,7 @@ function visitNodeAndChildren(
   context: ts.TransformationContext,
   customFunctions: CustomFunction[]
 ): ts.Node {
-  return ts.visitEachChild(
+  return core.ts.visitEachChild(
     visitNode(node, customFunctions),
     (childNode: ts.Node) =>
       visitNodeAndChildren(childNode, context, customFunctions),
@@ -79,7 +80,7 @@ function visitNodeAndChildren(
 }
 
 function visitNode(node: ts.Node, customFunctions: CustomFunction[]): ts.Node {
-  if (!ts.isCallExpression(node)) {
+  if (!core.ts.isCallExpression(node)) {
     return node;
   }
 

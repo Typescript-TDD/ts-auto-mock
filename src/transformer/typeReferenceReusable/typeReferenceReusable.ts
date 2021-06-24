@@ -1,11 +1,10 @@
-import * as ts from 'typescript';
-
-const reusableTypes: ts.SyntaxKind[] = [
-  ts.SyntaxKind.ClassDeclaration,
-  ts.SyntaxKind.InterfaceDeclaration,
-  ts.SyntaxKind.TypeAliasDeclaration,
-];
+import type * as ts from 'typescript';
+import { core } from '../core/core';
 
 export function isTypeReferenceReusable(declaration: ts.Declaration): boolean {
-  return reusableTypes.includes(declaration.kind);
+  return [
+    core.ts.SyntaxKind.ClassDeclaration,
+    core.ts.SyntaxKind.InterfaceDeclaration,
+    core.ts.SyntaxKind.TypeAliasDeclaration,
+  ].includes(declaration.kind);
 }

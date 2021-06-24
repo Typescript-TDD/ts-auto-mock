@@ -1,8 +1,6 @@
-import * as ts from 'typescript';
-import {
-  MockCallAnonymousText,
-  MockCallLiteralText,
-} from '../mockIdentifier/mockIdentifier';
+import type * as ts from 'typescript';
+import { Strings } from '../mockIdentifier/mockIdentifier';
+import { core } from '../core/core';
 import { KeyCounter } from './keyCounter';
 
 export type PossibleDeclaration =
@@ -29,14 +27,14 @@ export class FactoryUniqueName {
   public createForIntersection(nodes: ts.Node[]): string {
     const nameOfDeclarations: string = nodes.reduce(
       (acc: string, declaration: ts.Node) => {
-        if (ts.isTypeLiteralNode(declaration)) {
-          acc += MockCallLiteralText;
+        if (core.ts.isTypeLiteralNode(declaration)) {
+          acc += Strings.MockCallLiteralText;
         }
 
         if (
-          ts.isInterfaceDeclaration(declaration) ||
-          ts.isTypeAliasDeclaration(declaration) ||
-          ts.isClassDeclaration(declaration)
+          core.ts.isInterfaceDeclaration(declaration) ||
+          core.ts.isTypeAliasDeclaration(declaration) ||
+          core.ts.isClassDeclaration(declaration)
         ) {
           acc += declaration.name?.text || '';
         }
@@ -50,7 +48,8 @@ export class FactoryUniqueName {
   }
 
   private _createUniqueName(name?: string): string {
-    const declarationNameSanitized: string = name || MockCallAnonymousText;
+    const declarationNameSanitized: string =
+      name || Strings.MockCallAnonymousText;
     const baseFactoryName: string = `@${declarationNameSanitized}`;
     const count: number = this._keyCounter.getFor(baseFactoryName);
 

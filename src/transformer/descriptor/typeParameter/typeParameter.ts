@@ -1,12 +1,8 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
-import {
-  MockIdentifierGenericParameter,
-  MockIdentifierGenericParameterIds,
-  MockIdentifierGenericParameterValue,
-} from '../../mockIdentifier/mockIdentifier';
+import { Identifiers } from '../../mockIdentifier/mockIdentifier';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetNullDescriptor } from '../null/null';
@@ -33,7 +29,7 @@ export function GetTypeParameterDescriptor(
   node: ts.TypeParameterDeclaration,
   scope: Scope
 ): ts.Expression {
-  const type: ts.TypeParameter = TypeChecker().getTypeAtLocation(node);
+  const type: ts.TypeParameter = core.typeChecker.getTypeAtLocation(node);
 
   const descriptor: ts.Expression = node.default
     ? GetDescriptor(node.default, scope)
@@ -88,7 +84,7 @@ function createFunctionToAccessToGenericValue(
 function createFindGeneric(genericKey: string): ts.CallExpression {
   return createCall(
     createPropertyAccess(
-      MockIdentifierGenericParameter,
+      Identifiers.MockIdentifierGenericParameter,
       createIdentifier('find')
     ),
     [
@@ -101,13 +97,15 @@ function createFindGeneric(genericKey: string): ts.CallExpression {
                   createPropertyAccess(
                     createPropertyAccess(
                       createIdentifier('generic'),
-                      MockIdentifierGenericParameterIds
+                      Identifiers.MockIdentifierGenericParameterIds
                     ),
                     createIdentifier('indexOf')
                   ),
                   [createStringLiteral(genericKey)]
                 ),
-                createPunctuationToken(ts.SyntaxKind.GreaterThanEqualsToken),
+                createPunctuationToken(
+                  core.ts.SyntaxKind.GreaterThanEqualsToken
+                ),
                 createNumericLiteral('0')
               )
             ),
@@ -126,7 +124,7 @@ function assignGenericConstToCall(
   return createVariableStatement(
     createVariableDeclarationList(
       [createVariableDeclaration(createIdentifier('generic'), call)],
-      ts.NodeFlags.Const
+      core.ts.NodeFlags.Const
     )
   );
 }
@@ -140,7 +138,7 @@ function getValueFromGenericIfExist(): ts.IfStatement {
           createCall(
             createPropertyAccess(
               createIdentifier('generic'),
-              MockIdentifierGenericParameterValue
+              Identifiers.MockIdentifierGenericParameterValue
             ),
             []
           )

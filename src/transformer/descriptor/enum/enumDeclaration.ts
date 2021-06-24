@@ -1,5 +1,5 @@
-import * as ts from 'typescript';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import type * as ts from 'typescript';
+import { core } from '../../core/core';
 import { RandomPropertyAccessor } from '../random/random';
 import { IsTsAutoMockRandomEnabled } from '../../../options/random';
 import {
@@ -11,7 +11,7 @@ import {
 export function GetEnumDeclarationDescriptor(
   node: ts.EnumDeclaration
 ): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
 
   if (IsTsAutoMockRandomEnabled()) {
     const nodesList: ts.Expression[] = node.members.map(

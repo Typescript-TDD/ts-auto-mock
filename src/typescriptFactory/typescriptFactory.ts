@@ -1,4 +1,5 @@
-import ts, {
+import type ts from 'typescript';
+import type {
   ArrayLiteralExpression,
   BigIntLiteral,
   BinaryExpression,
@@ -24,7 +25,6 @@ import ts, {
   MethodDeclaration,
   Node,
   NodeArray,
-  NodeFactory,
   NodeFlags,
   NullLiteral,
   NumericLiteral,
@@ -47,7 +47,6 @@ import ts, {
   SourceFile,
   SpreadElement,
   StringLiteral,
-  SyntaxKind,
   TokenFlags,
   TypeElement,
   TypeLiteralNode,
@@ -60,50 +59,49 @@ import ts, {
   VoidExpression,
 } from 'typescript';
 import { Statement } from 'typescript/lib/tsserverlibrary';
-
-const typescriptFactory: NodeFactory = ts.factory;
+import { core } from '../transformer/core/core';
 
 export function createArrayLiteral(
   elements?: readonly Expression[],
   multiLine?: boolean
 ): ArrayLiteralExpression {
-  return typescriptFactory.createArrayLiteralExpression(elements, multiLine);
+  return core.ts.factory.createArrayLiteralExpression(elements, multiLine);
 }
 
 export function createVariableStatement(
   declarationList: VariableDeclarationList | readonly VariableDeclaration[]
 ): VariableStatement {
-  return typescriptFactory.createVariableStatement(undefined, declarationList);
+  return core.ts.factory.createVariableStatement(undefined, declarationList);
 }
 
 export function createVariableDeclarationList(
   declarations: readonly VariableDeclaration[],
   flags?: NodeFlags
 ): VariableDeclarationList {
-  return typescriptFactory.createVariableDeclarationList(declarations, flags);
+  return core.ts.factory.createVariableDeclarationList(declarations, flags);
 }
 
 export function createIdentifier(text: string): Identifier {
-  return typescriptFactory.createIdentifier(text);
+  return core.ts.factory.createIdentifier(text);
 }
 
 export function createNumericLiteral(
   value: string | number,
   numericLiteralFlags?: TokenFlags
 ): NumericLiteral {
-  return typescriptFactory.createNumericLiteral(value, numericLiteralFlags);
+  return core.ts.factory.createNumericLiteral(value, numericLiteralFlags);
 }
 
 export function createArrowFunction(
   block: ts.ConciseBody,
   parameter: ReadonlyArray<ts.ParameterDeclaration> = []
 ): ts.ArrowFunction {
-  return typescriptFactory.createArrowFunction(
+  return core.ts.factory.createArrowFunction(
     undefined,
     undefined,
     parameter,
     undefined,
-    typescriptFactory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+    core.ts.factory.createToken(core.ts.SyntaxKind.EqualsGreaterThanToken),
     block
   );
 }
@@ -112,7 +110,7 @@ export function createFunctionExpression(
   block: Block,
   parameter: ReadonlyArray<ParameterDeclaration> = []
 ): FunctionExpression {
-  return typescriptFactory.createFunctionExpression(
+  return core.ts.factory.createFunctionExpression(
     undefined,
     undefined,
     undefined,
@@ -127,11 +125,11 @@ export function createFunctionExpressionReturn(
   descriptorToReturn: Expression,
   parameter: ReadonlyArray<ParameterDeclaration> = []
 ): FunctionExpression {
-  const block: Block = typescriptFactory.createBlock([
-    typescriptFactory.createReturnStatement(descriptorToReturn),
+  const block: Block = core.ts.factory.createBlock([
+    core.ts.factory.createReturnStatement(descriptorToReturn),
   ]);
 
-  return typescriptFactory.createFunctionExpression(
+  return core.ts.factory.createFunctionExpression(
     undefined,
     undefined,
     undefined,
@@ -146,20 +144,20 @@ export function createBlock(
   statements: readonly Statement[],
   multiLine?: boolean | undefined
 ): Block {
-  return typescriptFactory.createBlock(statements, multiLine);
+  return core.ts.factory.createBlock(statements, multiLine);
 }
 
 export function createReturnStatement(
   expression?: Expression
 ): ReturnStatement {
-  return typescriptFactory.createReturnStatement(expression);
+  return core.ts.factory.createReturnStatement(expression);
 }
 
 export function createCall(
   expression: Expression,
   argumentExpressions: Expression[]
 ): CallExpression {
-  return typescriptFactory.createCallExpression(
+  return core.ts.factory.createCallExpression(
     expression,
     undefined,
     argumentExpressions
@@ -168,8 +166,8 @@ export function createCall(
 
 export function createIIFE(block: Block): CallExpression {
   return createCall(
-    typescriptFactory.createParenthesizedExpression(
-      typescriptFactory.createFunctionExpression(
+    core.ts.factory.createParenthesizedExpression(
+      core.ts.factory.createFunctionExpression(
         undefined,
         undefined,
         undefined,
@@ -191,7 +189,7 @@ export function createProperty(
   propertyName: string | PropertyName,
   type: TypeNode | undefined
 ): PropertyDeclaration {
-  return typescriptFactory.createPropertyDeclaration(
+  return core.ts.factory.createPropertyDeclaration(
     undefined,
     undefined,
     propertyName,
@@ -205,7 +203,7 @@ export function createPropertySignature(
   propertyName: string | PropertyName,
   type: TypeNode
 ): PropertySignature {
-  return typescriptFactory.createPropertySignature(
+  return core.ts.factory.createPropertySignature(
     [],
     propertyName,
     undefined,
@@ -214,7 +212,7 @@ export function createPropertySignature(
 }
 
 export function createParameter(parameterName: string): ParameterDeclaration {
-  return typescriptFactory.createParameterDeclaration(
+  return core.ts.factory.createParameterDeclaration(
     undefined,
     undefined,
     undefined,
@@ -228,7 +226,7 @@ export function createParameter(parameterName: string): ParameterDeclaration {
 export function createParameterFromIdentifier(
   identifier: Identifier
 ): ParameterDeclaration {
-  return typescriptFactory.createParameterDeclaration(
+  return core.ts.factory.createParameterDeclaration(
     undefined,
     undefined,
     undefined,
@@ -246,7 +244,7 @@ export function createMethod(
 ): MethodDeclaration {
   const parameters: ParameterDeclaration[] = parameterNames.map(
     (parameterName: Identifier) =>
-      typescriptFactory.createParameterDeclaration(
+      core.ts.factory.createParameterDeclaration(
         undefined,
         undefined,
         undefined,
@@ -256,7 +254,7 @@ export function createMethod(
         undefined
       )
   );
-  return typescriptFactory.createMethodDeclaration(
+  return core.ts.factory.createMethodDeclaration(
     undefined,
     undefined,
     undefined,
@@ -273,7 +271,7 @@ export function createVariableDeclaration(
   variableIdentifier: Identifier,
   initializer: Expression
 ): VariableDeclaration {
-  return typescriptFactory.createVariableDeclaration(
+  return core.ts.factory.createVariableDeclaration(
     variableIdentifier,
     undefined,
     undefined,
@@ -285,19 +283,19 @@ export function createPropertyAccess(
   expression: Expression,
   name: string | Identifier | PrivateIdentifier
 ): PropertyAccessExpression {
-  return typescriptFactory.createPropertyAccessExpression(expression, name);
+  return core.ts.factory.createPropertyAccessExpression(expression, name);
 }
 
 export function createSpread(expression: Expression): SpreadElement {
-  return typescriptFactory.createSpreadElement(expression);
+  return core.ts.factory.createSpreadElement(expression);
 }
 
 export function createStringLiteral(text: string): StringLiteral {
-  return typescriptFactory.createStringLiteral(text);
+  return core.ts.factory.createStringLiteral(text);
 }
 
 export function createLogicalNot(operand: Expression): PrefixUnaryExpression {
-  return typescriptFactory.createLogicalNot(operand);
+  return core.ts.factory.createLogicalNot(operand);
 }
 
 export function createLiteral(
@@ -311,41 +309,43 @@ export function createLiteral(
     return createNumericLiteral(type.value);
   }
 
-  return typescriptFactory.createBigIntLiteral(type.value);
+  return core.ts.factory.createBigIntLiteral(type.value);
 }
 
 export function createNodeArray<T extends Node>(
   elements?: readonly T[],
   hasTrailingComma?: boolean
 ): NodeArray<T> {
-  return typescriptFactory.createNodeArray(elements, hasTrailingComma);
+  return core.ts.factory.createNodeArray(elements, hasTrailingComma);
 }
 
 export function createArrayTypeNode(): Node {
-  return typescriptFactory.createArrayTypeNode(
-    typescriptFactory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+  return core.ts.factory.createArrayTypeNode(
+    core.ts.factory.createKeywordTypeNode(core.ts.SyntaxKind.AnyKeyword)
   );
 }
 
 export function createTypeNode<TKind extends KeywordTypeSyntaxKind>(
   kind: TKind
 ): KeywordTypeNode<TKind> {
-  return typescriptFactory.createKeywordTypeNode(kind);
+  return core.ts.factory.createKeywordTypeNode(kind);
 }
 
 export function createFunctionTypeNode(typeNode: TypeNode): FunctionTypeNode {
-  return typescriptFactory.createFunctionTypeNode([], [], typeNode);
+  return core.ts.factory.createFunctionTypeNode([], [], typeNode);
 }
 
 export function createNode(): Node {
-  return typescriptFactory.createKeywordTypeNode(SyntaxKind.NumberKeyword);
+  return core.ts.factory.createKeywordTypeNode(
+    core.ts.SyntaxKind.NumberKeyword
+  );
 }
 
 export function createObjectLiteral(
   properties?: readonly ObjectLiteralElementLike[],
   multiLine?: boolean
 ): ObjectLiteralExpression {
-  return typescriptFactory.createObjectLiteralExpression(properties, multiLine);
+  return core.ts.factory.createObjectLiteralExpression(properties, multiLine);
 }
 
 export function createBinaryExpression(
@@ -353,37 +353,37 @@ export function createBinaryExpression(
   operator: BinaryOperator | BinaryOperatorToken,
   right: Expression
 ): BinaryExpression {
-  return typescriptFactory.createBinaryExpression(left, operator, right);
+  return core.ts.factory.createBinaryExpression(left, operator, right);
 }
 
 export function createPunctuationToken<TKind extends PunctuationSyntaxKind>(
   token: TKind
 ): PunctuationToken<TKind> {
-  return typescriptFactory.createToken(token);
+  return core.ts.factory.createToken(token);
 }
 
 export function createIfStatement(
   expression: Expression,
   block: Block
 ): IfStatement {
-  return typescriptFactory.createIfStatement(expression, block, undefined);
+  return core.ts.factory.createIfStatement(expression, block, undefined);
 }
 
 export function createReturn(expression: Expression): ReturnStatement {
-  return typescriptFactory.createReturnStatement(expression);
+  return core.ts.factory.createReturnStatement(expression);
 }
 
 export function createExpressionStatement(
   binaryExpression: Expression
 ): ExpressionStatement {
-  return typescriptFactory.createExpressionStatement(binaryExpression);
+  return core.ts.factory.createExpressionStatement(binaryExpression);
 }
 
 export function createElementAccessExpression(
   identifier: Identifier,
   literalProperty: StringLiteral
 ): ElementAccessExpression {
-  return typescriptFactory.createElementAccessExpression(
+  return core.ts.factory.createElementAccessExpression(
     identifier,
     literalProperty
   );
@@ -393,14 +393,14 @@ export function createPropertyAssignment(
   name: string | PropertyName,
   expression: ts.Expression
 ): PropertyAssignment {
-  return typescriptFactory.createPropertyAssignment(name, expression);
+  return core.ts.factory.createPropertyAssignment(name, expression);
 }
 
 export function createElementAccess(
   expression: Expression,
   index: number | Expression
 ): ElementAccessExpression {
-  return typescriptFactory.createElementAccessExpression(expression, index);
+  return core.ts.factory.createElementAccessExpression(expression, index);
 }
 
 export function createConditional(
@@ -410,7 +410,7 @@ export function createConditional(
   colonToken: ColonToken | undefined,
   whenFalse: Expression
 ): ConditionalExpression {
-  return typescriptFactory.createConditionalExpression(
+  return core.ts.factory.createConditionalExpression(
     condition,
     questionToken,
     whenTrue,
@@ -423,22 +423,22 @@ export function updateSourceFileNode(
   node: SourceFile,
   statements: readonly Statement[]
 ): SourceFile {
-  return typescriptFactory.updateSourceFile(node, statements);
+  return core.ts.factory.updateSourceFile(node, statements);
 }
 
 export function createImportAllAs(
   moduleName,
   filenameToImportFrom
 ): ImportDeclaration {
-  return typescriptFactory.createImportDeclaration(
+  return core.ts.factory.createImportDeclaration(
     [],
     [],
-    typescriptFactory.createImportClause(
+    core.ts.factory.createImportClause(
       false,
       undefined,
-      typescriptFactory.createNamespaceImport(moduleName)
+      core.ts.factory.createNamespaceImport(moduleName)
     ),
-    typescriptFactory.createStringLiteral(filenameToImportFrom)
+    core.ts.factory.createStringLiteral(filenameToImportFrom)
   );
 }
 
@@ -448,7 +448,7 @@ export function createForStatement(
   incrementor: Expression | undefined,
   statement: Statement
 ): ForStatement {
-  return typescriptFactory.createForStatement(
+  return core.ts.factory.createForStatement(
     initializer,
     condition,
     incrementor,
@@ -460,41 +460,37 @@ export function createPostfix(
   operand: Expression,
   operator: PostfixUnaryOperator
 ): PostfixUnaryExpression {
-  return typescriptFactory.createPostfixUnaryExpression(operand, operator);
+  return core.ts.factory.createPostfixUnaryExpression(operand, operator);
 }
 
 export function createEmptyStatement(): EmptyStatement {
-  return typescriptFactory.createEmptyStatement();
+  return core.ts.factory.createEmptyStatement();
 }
 
 export function createTypeReferenceNode(
   identifier: Identifier
 ): TypeReferenceNode {
-  return typescriptFactory.createTypeReferenceNode(identifier, undefined);
+  return core.ts.factory.createTypeReferenceNode(identifier, undefined);
 }
 
 export function createNew(expression: Expression): Expression {
-  return typescriptFactory.createNewExpression(
-    expression,
-    undefined,
-    undefined
-  );
+  return core.ts.factory.createNewExpression(expression, undefined, undefined);
 }
 
 export function createNull(): NullLiteral {
-  return typescriptFactory.createNull();
+  return core.ts.factory.createNull();
 }
 
 export function createTypeQueryNode(identifier: Identifier): TypeQueryNode {
-  return typescriptFactory.createTypeQueryNode(identifier);
+  return core.ts.factory.createTypeQueryNode(identifier);
 }
 
 export function createTypeLiteralNode(
   typeElements: readonly TypeElement[]
 ): TypeLiteralNode {
-  return typescriptFactory.createTypeLiteralNode(typeElements);
+  return core.ts.factory.createTypeLiteralNode(typeElements);
 }
 
 export function createVoidZero(): VoidExpression {
-  return typescriptFactory.createVoidZero();
+  return core.ts.factory.createVoidZero();
 }

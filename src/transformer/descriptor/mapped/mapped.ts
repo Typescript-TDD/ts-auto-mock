@@ -1,6 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import { GetMockPropertiesFromDeclarations } from '../mock/mockProperties';
 import { GetTypes } from '../type/type';
 import {
@@ -13,7 +13,6 @@ export function GetMappedDescriptor(
   scope: Scope
 ): ts.Expression {
   const typeParameter: ts.TypeNode | undefined = node.typeParameter.constraint;
-  const typeChecker: ts.TypeChecker = TypeChecker();
 
   const parameters: ts.TypeNode[] = [];
   if (typeParameter) {
@@ -24,7 +23,7 @@ export function GetMappedDescriptor(
 
   const properties: ts.PropertyDeclaration[] = types.reduce(
     (acc: ts.PropertyDeclaration[], possibleType: ts.Node) => {
-      if (ts.isLiteralTypeNode(possibleType)) {
+      if (core.ts.isLiteralTypeNode(possibleType)) {
         const property: ts.PropertyDeclaration = createProperty(
           (possibleType.literal as ts.StringLiteral).text,
           node.type
@@ -33,8 +32,8 @@ export function GetMappedDescriptor(
         return acc;
       }
 
-      const type: ts.Type = typeChecker.getTypeAtLocation(possibleType);
-      const propertiesDeclaration: ts.PropertyDeclaration[] = typeChecker
+      const type: ts.Type = core.typeChecker.getTypeAtLocation(possibleType);
+      const propertiesDeclaration: ts.PropertyDeclaration[] = core.typeChecker
         .getPropertiesOfType(type)
         .map((symbol: ts.Symbol) => createProperty(symbol.name, node.type));
 

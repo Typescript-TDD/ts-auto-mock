@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { TypescriptHelper } from '../descriptor/helper/helper';
 import { GenericDeclaration } from '../genericDeclaration/genericDeclaration';
 import { IGenericDeclaration } from '../genericDeclaration/genericDeclaration.interface';
@@ -7,12 +7,13 @@ import {
   GenericDeclarationSupported,
 } from '../genericDeclaration/genericDeclarationSupported';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
-import { MockIdentifierGenericParameter } from '../mockIdentifier/mockIdentifier';
+import { Identifiers } from '../mockIdentifier/mockIdentifier';
 import { Scope } from '../scope/scope';
 import {
   createArrayLiteral,
   createCall,
 } from '../../typescriptFactory/typescriptFactory';
+import { core } from '../core/core';
 
 export function GetMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
@@ -41,7 +42,7 @@ export function GetMockFactoryCallIntersection(
   const declarations:
     | ts.Declaration[]
     | ts.TypeLiteralNode[] = intersection.types.map((type: ts.TypeNode) => {
-    if (ts.isTypeReferenceNode(type)) {
+    if (core.ts.isTypeReferenceNode(type)) {
       const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
         type.typeName
       );
@@ -93,7 +94,9 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
     mockKey
   );
 
-  return createCall(mockFactoryCall, [MockIdentifierGenericParameter]);
+  return createCall(mockFactoryCall, [
+    Identifiers.MockIdentifierGenericParameter,
+  ]);
 }
 
 function getDeclarationMockFactoryCall(

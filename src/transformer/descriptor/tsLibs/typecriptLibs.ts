@@ -1,6 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
 import {
@@ -32,7 +32,7 @@ export function GetTypescriptTypeDescriptor(
   node: ts.TypeReferenceNode,
   scope: Scope
 ): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
   const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
     node.typeName
   );
@@ -44,16 +44,28 @@ export function GetTypescriptTypeDescriptor(
     case TypescriptLibsTypes.ReadonlyArray:
       return GetDescriptor(createArrayTypeNode(), scope);
     case TypescriptLibsTypes.Number:
-      return GetDescriptor(createTypeNode(ts.SyntaxKind.NumberKeyword), scope);
+      return GetDescriptor(
+        createTypeNode(core.ts.SyntaxKind.NumberKeyword),
+        scope
+      );
     case TypescriptLibsTypes.String:
-      return GetDescriptor(createTypeNode(ts.SyntaxKind.StringKeyword), scope);
+      return GetDescriptor(
+        createTypeNode(core.ts.SyntaxKind.StringKeyword),
+        scope
+      );
     case TypescriptLibsTypes.Boolean:
-      return GetDescriptor(createTypeNode(ts.SyntaxKind.BooleanKeyword), scope);
+      return GetDescriptor(
+        createTypeNode(core.ts.SyntaxKind.BooleanKeyword),
+        scope
+      );
     case TypescriptLibsTypes.Object:
-      return GetDescriptor(createTypeNode(ts.SyntaxKind.ObjectKeyword), scope);
+      return GetDescriptor(
+        createTypeNode(core.ts.SyntaxKind.ObjectKeyword),
+        scope
+      );
     case TypescriptLibsTypes.Function:
       const functionNode: ts.KeywordTypeNode<ts.SyntaxKind.VoidKeyword> = createTypeNode(
-        ts.SyntaxKind.VoidKeyword
+        core.ts.SyntaxKind.VoidKeyword
       );
       return GetDescriptor(createFunctionTypeNode(functionNode), scope);
     case TypescriptLibsTypes.Promise:
@@ -76,7 +88,7 @@ export function GetTypescriptTypeDescriptor(
       return createNew(createIdentifier('Set'));
     default:
       return GetDescriptor(
-        createTypeNode(ts.SyntaxKind.UndefinedKeyword),
+        createTypeNode(core.ts.SyntaxKind.UndefinedKeyword),
         scope
       );
   }

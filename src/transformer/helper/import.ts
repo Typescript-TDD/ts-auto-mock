@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { createImportAllAs } from '../../typescriptFactory/typescriptFactory';
 
 export function createImportOnIdentifier(

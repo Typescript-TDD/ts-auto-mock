@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 
 export class DeclarationCache {
   private _declarationKeyMap: WeakMap<ts.Declaration, string>;
