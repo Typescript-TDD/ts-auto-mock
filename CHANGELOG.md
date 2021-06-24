@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [3.3.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.3...3.3.0) (2021-06-24)
+
+
+### Features
+
+* export alternative transformer function to allow providing customized typescript ([#802](https://github.com/Typescript-TDD/ts-auto-mock/issues/802)) ([9f1dce4](https://github.com/Typescript-TDD/ts-auto-mock/commit/9f1dce42c841ccb75e0c4ffc000da634f7234388))
+
 ## [3.2.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.2...3.2.3) (2021-06-17)
 
 
