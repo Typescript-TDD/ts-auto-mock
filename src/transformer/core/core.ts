@@ -1,9 +1,11 @@
 import type * as ts from 'typescript';
 
 export function InitCore(typescript: typeof ts, program: ts.Program): void {
-  core.ts = typescript;
-  core.typeChecker = program.getTypeChecker();
-  core.program = program;
+  Object.defineProperty(_core, 'ts', { value: typescript });
+  Object.defineProperty(_core, 'typeChecker', {
+    value: program.getTypeChecker(),
+  });
+  Object.defineProperty(_core, 'program', { value: program });
 }
 
 interface ITsAutoMockCore {
@@ -12,4 +14,17 @@ interface ITsAutoMockCore {
   typeChecker: ts.TypeChecker;
 }
 
-export const core: ITsAutoMockCore = {} as ITsAutoMockCore;
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const _core: ITsAutoMockCore = {
+  get ts(): typeof ts {
+    throw new Error('Core was not initialized');
+  },
+  get program(): ts.Program {
+    throw new Error('Core was not initialized');
+  },
+  get typeChecker(): ts.TypeChecker {
+    throw new Error('Core was not initialized');
+  },
+};
+
+export const core: Readonly<ITsAutoMockCore> = _core;
