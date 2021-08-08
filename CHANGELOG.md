@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.3.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.2...3.3.3) (2021-08-08)
+
+
+### Performance Improvements
+
+* **dependencies:** run husky installation only when installing not when publishing the package ([#871](https://github.com/Typescript-TDD/ts-auto-mock/issues/871)) ([9fea5d4](https://github.com/Typescript-TDD/ts-auto-mock/commit/9fea5d4f9eeff3f7239457023bdf2e89320ee382))
+
 ## [3.3.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.1...3.3.2) (2021-08-08)
 
 
