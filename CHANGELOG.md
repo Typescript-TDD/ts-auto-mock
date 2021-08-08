@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.3.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.3...3.3.4) (2021-08-08)
+
+
+### Bug Fixes
+
+* **husky:** remove husky from post install because it will be required for consumers of the packages ([83498e2](https://github.com/Typescript-TDD/ts-auto-mock/commit/83498e26f715da7dc7af8bd63ed1082ec5825f62))
+
 ## [3.3.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.2...3.3.3) (2021-08-08)
 
 
