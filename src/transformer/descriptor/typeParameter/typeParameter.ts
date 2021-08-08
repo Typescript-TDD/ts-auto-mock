@@ -36,9 +36,8 @@ export function GetTypeParameterDescriptor(
     : GetNullDescriptor();
 
   const declaration: ts.Declaration = type.symbol.declarations[0];
-  const typeDeclaration:
-    | ts.Declaration
-    | undefined = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
+  const typeDeclaration: ts.Declaration | undefined =
+    TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
   if (!typeDeclaration) {
     throw new Error(
@@ -46,10 +45,11 @@ export function GetTypeParameterDescriptor(
     );
   }
 
-  const genericKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
-    typeDeclaration,
-    scope
-  );
+  const genericKey: string =
+    MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+      typeDeclaration,
+      scope
+    );
 
   return createFunctionToAccessToGenericValue(
     genericKey + node.name.escapedText.toString(),
@@ -61,17 +61,16 @@ function createFunctionToAccessToGenericValue(
   key: string,
   descriptor: ts.Expression
 ): ts.CallExpression {
-  const returnWhenGenericDoesNotExist: ts.ReturnStatement = createReturnStatement(
-    descriptor
-  );
+  const returnWhenGenericDoesNotExist: ts.ReturnStatement =
+    createReturnStatement(descriptor);
 
-  const expressionWhenGenericExist: ts.IfStatement = getValueFromGenericIfExist();
+  const expressionWhenGenericExist: ts.IfStatement =
+    getValueFromGenericIfExist();
 
   const findGenericCall: ts.CallExpression = createFindGeneric(key);
 
-  const generic: ts.VariableStatement = assignGenericConstToCall(
-    findGenericCall
-  );
+  const generic: ts.VariableStatement =
+    assignGenericConstToCall(findGenericCall);
 
   return createIIFE(
     createBlock(

@@ -47,7 +47,8 @@ export class MockDefiner {
   private _moduleImportIdentifierPerFile: ModuleImportIdentifierPerFile;
   private _factoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
   private _hydratedFactoryRegistrationsPerFile: FactoryRegistrationPerFile = {};
-  private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile = {};
+  private _factoryIntersectionsRegistrationsPerFile: FactoryIntersectionRegistrationPerFile =
+    {};
   private _factoryCache: DeclarationCache;
   private _hydratedFactoryCache: DeclarationCache;
   private _registerMockFactoryCache: DeclarationCache;
@@ -130,7 +131,8 @@ export class MockDefiner {
         Scope.fromScope(scope, key)
       );
 
-      const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+      const mockGenericParameter: ts.ParameterDeclaration =
+        this._getMockGenericParameter();
 
       const factory: ts.FunctionExpression = createFunctionExpressionReturn(
         descriptor,
@@ -151,7 +153,8 @@ export class MockDefiner {
         Scope.fromScope(scope, key)
       );
 
-      const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+      const mockGenericParameter: ts.ParameterDeclaration =
+        this._getMockGenericParameter();
 
       const factory: ts.FunctionExpression = createFunctionExpressionReturn(
         descriptor,
@@ -307,9 +310,8 @@ export class MockDefiner {
   ): string {
     const thisFileName: string = this._fileName;
 
-    const cachedFactory: string | undefined = this._factoryCache.get(
-      declaration
-    );
+    const cachedFactory: string | undefined =
+      this._factoryCache.get(declaration);
     if (cachedFactory) {
       return cachedFactory;
     }
@@ -346,9 +348,8 @@ export class MockDefiner {
       return this._factoryIntersectionCache.get(declarations)!;
     }
 
-    const key: string = this._factoryUniqueName.createForIntersection(
-      declarations
-    );
+    const key: string =
+      this._factoryUniqueName.createForIntersection(declarations);
 
     this._factoryIntersectionCache.set(declarations, key);
 
@@ -360,7 +361,8 @@ export class MockDefiner {
       Scope.fromScope(scope, key)
     );
 
-    const mockGenericParameter: ts.ParameterDeclaration = this._getMockGenericParameter();
+    const mockGenericParameter: ts.ParameterDeclaration =
+      this._getMockGenericParameter();
 
     const factory: ts.FunctionExpression = createFunctionExpressionReturn(
       descriptor,

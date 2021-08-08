@@ -47,12 +47,8 @@ used by ${currentNodeFileUrl}`;
 
 export const getNodeFileUrl: (node: ts.Node) => string = (node: ts.Node) => {
   const sourceFile: ts.SourceFile = node.getSourceFile();
-  const {
-    line,
-    character,
-  }: ts.LineAndCharacter = sourceFile.getLineAndCharacterOfPosition(
-    node.getStart()
-  );
+  const { line, character }: ts.LineAndCharacter =
+    sourceFile.getLineAndCharacterOfPosition(node.getStart());
 
   return `file://${sourceFile.fileName}:${line + 1}:${character + 1}`;
 };

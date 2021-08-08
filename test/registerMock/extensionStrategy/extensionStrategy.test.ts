@@ -7,7 +7,7 @@ function asFakePromise<
   TProp extends Promise<T>,
   TFake extends FakePromise<T>
 >(prop: Promise<T>): FakePromise<T> {
-  return (prop as unknown) as FakePromise<T>;
+  return prop as unknown as FakePromise<T>;
 }
 
 describe('extension strategy for fake promise', () => {

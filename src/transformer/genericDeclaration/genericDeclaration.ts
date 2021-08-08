@@ -52,10 +52,9 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       extensionDeclarationKey +
       ownerParameterDeclaration.name.escapedText.toString();
 
-    const parameterToAdd:
-      | GenericParameter
-      | undefined = generics.find((genericParameter: GenericParameter) =>
-      genericParameter.ids.includes(existingUniqueName)
+    const parameterToAdd: GenericParameter | undefined = generics.find(
+      (genericParameter: GenericParameter) =>
+        genericParameter.ids.includes(existingUniqueName)
     );
 
     if (parameterToAdd?.ids) {
@@ -85,9 +84,8 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
       node: ts.TypeReferenceNode,
       declarationKey: string
     ): void {
-      const typeParameterDeclarations: ts.NodeArray<ts.TypeParameterDeclaration> = TypescriptHelper.GetParameterOfNode(
-        node.typeName
-      );
+      const typeParameterDeclarations: ts.NodeArray<ts.TypeParameterDeclaration> =
+        TypescriptHelper.GetParameterOfNode(node.typeName);
 
       if (!typeParameterDeclarations) {
         return;
@@ -134,14 +132,14 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           );
 
           if (core.ts.isTypeReferenceNode(genericNode)) {
-            const typeParameterDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-              genericNode.typeName
-            );
+            const typeParameterDeclaration: ts.Declaration =
+              TypescriptHelper.GetDeclarationFromNode(genericNode.typeName);
 
-            const typeParameterDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
-              typeParameterDeclaration,
-              scope
-            );
+            const typeParameterDeclarationKey: string =
+              MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+                typeParameterDeclaration,
+                scope
+              );
 
             const isExtendingItself: boolean =
               typeParameterDeclarationKey === declarationKey;

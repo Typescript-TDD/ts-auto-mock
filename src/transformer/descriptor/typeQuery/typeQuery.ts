@@ -30,9 +30,8 @@ export function GetTypeQueryDescriptor(
     return GetUndefinedDescriptor();
   }
 
-  const declaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(
-    symbol
-  );
+  const declaration: ts.NamedDeclaration =
+    getTypeQueryDeclarationFromSymbol(symbol);
 
   return GetTypeQueryDescriptorFromDeclaration(declaration, scope);
 }
@@ -88,7 +87,8 @@ export function GetTypeQueryDescriptorFromDeclaration(
         scope
       );
     case core.ts.SyntaxKind.VariableDeclaration:
-      const variable: ts.VariableDeclaration = declaration as ts.VariableDeclaration;
+      const variable: ts.VariableDeclaration =
+        declaration as ts.VariableDeclaration;
 
       if (variable.type) {
         return GetDescriptor(variable.type, scope);
@@ -101,14 +101,12 @@ export function GetTypeQueryDescriptorFromDeclaration(
       }
 
       const inferredType: ts.Node = GetType(variable.initializer, scope);
-      const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
-        inferredType
-      );
+      const symbol: ts.Symbol | undefined =
+        typeChecker.getSymbolAtLocation(inferredType);
 
       if (symbol) {
-        const inferredTypeDeclaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(
-          symbol
-        );
+        const inferredTypeDeclaration: ts.NamedDeclaration =
+          getTypeQueryDeclarationFromSymbol(symbol);
 
         return GetTypeQueryDescriptorFromDeclaration(
           inferredTypeDeclaration,

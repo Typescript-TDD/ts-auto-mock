@@ -70,13 +70,13 @@ function GetLazyMockProperty(
     member.name
   );
 
-  const stringPropertyName: ts.StringLiteral = createStringLiteral(
-    propertyName
-  );
-  const variableDeclarationName: ts.ElementAccessExpression = createElementAccess(
-    Identifiers.MockIdentifierInternalValues,
-    stringPropertyName
-  );
+  const stringPropertyName: ts.StringLiteral =
+    createStringLiteral(propertyName);
+  const variableDeclarationName: ts.ElementAccessExpression =
+    createElementAccess(
+      Identifiers.MockIdentifierInternalValues,
+      stringPropertyName
+    );
   const setVariableParameterName: ts.Identifier =
     Identifiers.MockIdentifierSetParameterName;
 
@@ -107,14 +107,12 @@ function GetLazyMockProperty(
     setVariableParameterName
   );
 
-  const returnGetStatement: ts.ReturnStatement = createReturn(
-    getExpressionBody
-  );
+  const returnGetStatement: ts.ReturnStatement =
+    createReturn(getExpressionBody);
   const getBody: ts.Block = createBlock([returnGetStatement]);
 
-  const returnSetStatement: ts.Statement = createExpressionStatement(
-    setExpressionBody
-  );
+  const returnSetStatement: ts.Statement =
+    createExpressionStatement(setExpressionBody);
   const setBody: ts.Block = createBlock([returnSetStatement]);
 
   const get: ts.MethodDeclaration = createMethod('get', getBody, []);

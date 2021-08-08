@@ -39,38 +39,39 @@ export function GetMockFactoryCallIntersection(
 ): ts.Expression {
   const genericDeclaration: IGenericDeclaration = GenericDeclaration(scope);
 
-  const declarations:
-    | ts.Declaration[]
-    | ts.TypeLiteralNode[] = intersection.types.map((type: ts.TypeNode) => {
-    if (core.ts.isTypeReferenceNode(type)) {
-      const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-        type.typeName
-      );
-      const declarationKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
-        declaration,
-        scope
-      );
+  const declarations: ts.Declaration[] | ts.TypeLiteralNode[] =
+    intersection.types.map((type: ts.TypeNode) => {
+      if (core.ts.isTypeReferenceNode(type)) {
+        const declaration: ts.Declaration =
+          TypescriptHelper.GetDeclarationFromNode(type.typeName);
+        const declarationKey: string =
+          MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+            declaration,
+            scope
+          );
 
-      genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
+        genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
 
-      addFromDeclarationExtensions(
-        declaration as GenericDeclarationSupported,
-        declarationKey,
-        genericDeclaration,
-        scope
-      );
+        addFromDeclarationExtensions(
+          declaration as GenericDeclarationSupported,
+          declarationKey,
+          genericDeclaration,
+          scope
+        );
 
-      return declaration;
-    }
+        return declaration;
+      }
 
-    return type as ts.TypeLiteralNode;
-  });
-  const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
-  const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryIntersection(
-    declarations,
-    intersection,
-    scope
-  );
+      return type as ts.TypeLiteralNode;
+    });
+  const genericsParametersExpression: ts.ObjectLiteralExpression[] =
+    genericDeclaration.getExpressionForAllGenerics();
+  const mockFactoryCall: ts.Expression =
+    MockDefiner.instance.getMockFactoryIntersection(
+      declarations,
+      intersection,
+      scope
+    );
 
   return createCall(mockFactoryCall, [
     createArrayLiteral(genericsParametersExpression),
@@ -81,18 +82,15 @@ export function GetMockFactoryCallTypeofEnum(
   declaration: ts.EnumDeclaration,
   scope: Scope
 ): ts.Expression {
-  const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(
-    declaration,
-    scope
-  );
+  const mockFactoryCall: ts.Expression =
+    MockDefiner.instance.getMockFactoryTypeofEnum(declaration, scope);
 
   return createCall(mockFactoryCall, []);
 }
 
 export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
-  const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(
-    mockKey
-  );
+  const mockFactoryCall: ts.Expression =
+    MockDefiner.instance.getMockFactoryByKey(mockKey);
 
   return createCall(mockFactoryCall, [
     Identifiers.MockIdentifierGenericParameter,
@@ -104,10 +102,8 @@ function getDeclarationMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
   scope: Scope
 ): ts.Expression {
-  const declarationKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
-    declaration,
-    scope
-  );
+  const declarationKey: string =
+    MockDefiner.instance.getDeclarationKeyMapBasedOnScope(declaration, scope);
 
   if (!declarationKey) {
     throw new Error(
@@ -115,9 +111,8 @@ function getDeclarationMockFactoryCall(
     );
   }
 
-  const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryByKey(
-    declarationKey
-  );
+  const mockFactoryCall: ts.Expression =
+    MockDefiner.instance.getMockFactoryByKey(declarationKey);
   const genericDeclaration: IGenericDeclaration = GenericDeclaration(scope);
 
   genericDeclaration.addFromTypeReferenceNode(
@@ -132,7 +127,8 @@ function getDeclarationMockFactoryCall(
     scope
   );
 
-  const genericsParametersExpression: ts.ObjectLiteralExpression[] = genericDeclaration.getExpressionForAllGenerics();
+  const genericsParametersExpression: ts.ObjectLiteralExpression[] =
+    genericDeclaration.getExpressionForAllGenerics();
 
   return createCall(mockFactoryCall, [
     createArrayLiteral(genericsParametersExpression),
@@ -152,14 +148,14 @@ function addFromDeclarationExtensions(
           return;
         }
 
-        const extensionDeclaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-          extension.expression
-        );
+        const extensionDeclaration: ts.Declaration =
+          TypescriptHelper.GetDeclarationFromNode(extension.expression);
 
-        const extensionDeclarationKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
-          extensionDeclaration,
-          scope
-        );
+        const extensionDeclarationKey: string =
+          MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+            extensionDeclaration,
+            scope
+          );
 
         genericDeclaration.addFromDeclarationExtension(
           declarationKey,
