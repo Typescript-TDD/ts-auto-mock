@@ -32,7 +32,6 @@
         "ts-check:src": "tsc --noEmit",
         "eslint": "eslint ./src/**/*.ts ./test/**/*.ts",
         "eslint:fix": "eslint --fix ./src/**/*.ts ./test/**/*.ts",
-        "postinstall": "husky install",
         "prettier": "node node_modules/prettier/bin-prettier.js --check **/*.{ts,json}",
         "prettier:fix": "npm run prettier -- --write",
         "release": "npm run dist:collect && semantic-release",
