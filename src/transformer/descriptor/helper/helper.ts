@@ -38,9 +38,15 @@ export namespace TypescriptHelper {
   }
 
   export function GetDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
-    const declaration: ts.Declaration = GetFirstValidDeclaration(
-      symbol.declarations
-    );
+    const declarations: ts.Declaration[] | undefined = symbol.declarations;
+
+    if (!declarations) {
+      throw new Error(
+        `Failed to look up declarations for \`${symbol.getName()}'.`
+      );
+    }
+
+    const declaration: ts.Declaration = GetFirstValidDeclaration(declarations);
 
     if (isImportExportDeclaration(declaration)) {
       return GetDeclarationForImport(declaration);
@@ -52,7 +58,15 @@ export namespace TypescriptHelper {
   export function GetConcreteDeclarationFromSymbol(
     symbol: ts.Symbol
   ): ts.Declaration {
-    const declaration: ts.Declaration = symbol.declarations[0];
+    const declarations: ts.Declaration[] | undefined = symbol.declarations;
+
+    if (!declarations) {
+      throw new Error(
+        `Failed to look up declarations for \`${symbol.getName()}'.`
+      );
+    }
+
+    const declaration: ts.Declaration = declarations[0];
 
     if (isImportExportDeclaration(declaration)) {
       return GetConcreteDeclarationForImport(declaration);

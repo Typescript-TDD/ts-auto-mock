@@ -26,7 +26,7 @@ export function GetTypeQueryDescriptor(
 ): ts.Expression {
   const symbol: ts.Symbol | undefined = getTypeQuerySymbol(node);
 
-  if (!symbol?.declarations.length) {
+  if (!symbol?.declarations?.length) {
     return GetUndefinedDescriptor();
   }
 
@@ -131,7 +131,13 @@ function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol | undefined {
 function getTypeQueryDeclarationFromSymbol(
   symbol: ts.Symbol
 ): ts.NamedDeclaration {
-  const declaration: ts.Declaration = symbol.declarations[0];
+  const declaration: ts.Declaration | undefined = symbol.declarations?.[0];
+
+  if (!declaration) {
+    throw new Error(
+      `Failed to look up declaration for \`${symbol.getName()}'.`
+    );
+  }
 
   if (core.ts.isImportEqualsDeclaration(declaration)) {
     return declaration;

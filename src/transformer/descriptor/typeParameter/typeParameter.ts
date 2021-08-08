@@ -24,6 +24,7 @@ import {
   createVariableDeclarationList,
   createVariableStatement,
 } from '../../../typescriptFactory/typescriptFactory';
+import GetDeclarationFromSymbol = TypescriptHelper.GetDeclarationFromSymbol;
 
 export function GetTypeParameterDescriptor(
   node: ts.TypeParameterDeclaration,
@@ -35,7 +36,7 @@ export function GetTypeParameterDescriptor(
     ? GetDescriptor(node.default, scope)
     : GetNullDescriptor();
 
-  const declaration: ts.Declaration = type.symbol.declarations[0];
+  const declaration: ts.Declaration = GetDeclarationFromSymbol(type.symbol);
   const typeDeclaration: ts.Declaration | undefined =
     TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 

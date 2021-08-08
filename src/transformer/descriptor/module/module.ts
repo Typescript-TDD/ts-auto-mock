@@ -10,6 +10,7 @@ import {
   createTypeLiteralNode,
   createTypeQueryNode,
 } from '../../../typescriptFactory/typescriptFactory';
+import GetDeclarationFromSymbol = TypescriptHelper.GetDeclarationFromSymbol;
 
 type ExternalSource = ts.SourceFile | ts.ModuleDeclaration;
 
@@ -35,7 +36,8 @@ export function GetModuleDescriptor(
   }
 
   const symbol: ts.Symbol = typeChecker.getAliasedSymbol(symbolAlias);
-  const externalModuleDeclaration: ts.NamedDeclaration = symbol.declarations[0];
+  const externalModuleDeclaration: ts.NamedDeclaration =
+    GetDeclarationFromSymbol(symbol);
 
   if (isExternalSource(externalModuleDeclaration)) {
     return GetPropertiesFromSourceFileOrModuleDeclarationDescriptor(
@@ -83,12 +85,12 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
   const moduleExports: ts.Symbol[] = typeChecker.getExportsOfModule(symbol);
 
   return moduleExports
-    .map((prop: ts.Symbol): ModuleExportsDeclarations => {
+    .map((prop: ts.Symbol): Partial<ModuleExportsDeclarations> => {
       const originalSymbol: ts.Symbol =
         TypescriptHelper.GetAliasedSymbolSafe(prop);
-      const originalDeclaration: ts.NamedDeclaration =
+      const originalDeclaration: ts.NamedDeclaration | undefined =
         originalSymbol?.declarations?.[0];
-      const declaration: ts.Declaration = prop?.declarations?.[0];
+      const declaration: ts.Declaration | undefined = prop?.declarations?.[0];
 
       return {
         declaration,

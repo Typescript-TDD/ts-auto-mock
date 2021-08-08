@@ -10,7 +10,7 @@ import type {
   ColonToken,
   ConditionalExpression,
   ElementAccessExpression,
-  EmptyStatement,
+  OmittedExpression,
   Expression,
   ExpressionStatement,
   ForStatement,
@@ -463,8 +463,8 @@ export function createPostfix(
   return core.ts.factory.createPostfixUnaryExpression(operand, operator);
 }
 
-export function createEmptyStatement(): EmptyStatement {
-  return core.ts.factory.createEmptyStatement();
+export function createOmittedExpression(): OmittedExpression {
+  return core.ts.factory.createOmittedExpression();
 }
 
 export function createTypeReferenceNode(
