@@ -23,9 +23,8 @@ export function GetReturnNodeFromBody(
   const functionBody: ts.ConciseBody | undefined = node.body;
 
   if (functionBody && core.ts.isBlock(functionBody)) {
-    const returnStatement: ts.ReturnStatement = GetReturnStatement(
-      functionBody
-    );
+    const returnStatement: ts.ReturnStatement =
+      GetReturnStatement(functionBody);
 
     if (returnStatement) {
       returnValue = returnStatement.expression;

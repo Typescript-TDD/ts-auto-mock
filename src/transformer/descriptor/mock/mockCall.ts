@@ -51,16 +51,13 @@ export function GetMockCall(
   }
 
   if (properties.lazy.length) {
-    const addPropertiesToUniqueVariable: ts.ExpressionStatement = AssignPropertiesTo(
-      properties.lazy,
-      mockObjectReturnValueName
-    );
+    const addPropertiesToUniqueVariable: ts.ExpressionStatement =
+      AssignPropertiesTo(properties.lazy, mockObjectReturnValueName);
     statements.push(addPropertiesToUniqueVariable);
   }
 
-  const addMockMarkerToUniqueVariable: ts.ExpressionStatement = AssignMockMarkerPropertyTo(
-    mockObjectReturnValueName
-  );
+  const addMockMarkerToUniqueVariable: ts.ExpressionStatement =
+    AssignMockMarkerPropertyTo(mockObjectReturnValueName);
   statements.push(addMockMarkerToUniqueVariable);
 
   statements.push(createReturn(mockObjectReturnValueName));
@@ -85,10 +82,11 @@ function AssignLiteralPropertyTo(
   mockObjectReturnValueName: ts.Identifier,
   literalProperty: ts.PropertyAssignment
 ): ts.ExpressionStatement {
-  const propertyAccess: ts.ElementAccessExpression = createElementAccessExpression(
-    mockObjectReturnValueName,
-    literalProperty.name as ts.StringLiteral
-  );
+  const propertyAccess: ts.ElementAccessExpression =
+    createElementAccessExpression(
+      mockObjectReturnValueName,
+      literalProperty.name as ts.StringLiteral
+    );
   return AssignVariableTo(propertyAccess, literalProperty.initializer);
 }
 
@@ -105,10 +103,11 @@ function AssignMockMarkerPropertyTo(
     ]),
   ];
 
-  const objectDefineProperty: ts.PropertyAccessExpression = createPropertyAccess(
-    createIdentifier('Object'),
-    createIdentifier('defineProperty')
-  );
+  const objectDefineProperty: ts.PropertyAccessExpression =
+    createPropertyAccess(
+      createIdentifier('Object'),
+      createIdentifier('defineProperty')
+    );
   const objectDefinePropertyCall: ts.CallExpression = createCall(
     objectDefineProperty,
     argumentsDefineProperty
@@ -125,10 +124,11 @@ function AssignPropertiesTo(
     true
   );
 
-  const propertyAccessExpression: ts.PropertyAccessExpression = createPropertyAccess(
-    createIdentifier('Object'),
-    createIdentifier('defineProperties')
-  );
+  const propertyAccessExpression: ts.PropertyAccessExpression =
+    createPropertyAccess(
+      createIdentifier('Object'),
+      createIdentifier('defineProperties')
+    );
 
   const callToObjectDefineProperties: ts.CallExpression = createCall(
     propertyAccessExpression,

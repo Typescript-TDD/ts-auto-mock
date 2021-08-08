@@ -82,9 +82,8 @@ export namespace TypescriptHelper {
   ): ts.NodeArray<ts.TypeParameterDeclaration> {
     const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
-    const {
-      typeParameters = createNodeArray([]),
-    }: Declaration = declaration as Declaration;
+    const { typeParameters = createNodeArray([]) }: Declaration =
+      declaration as Declaration;
 
     return typeParameters;
   }
@@ -92,9 +91,8 @@ export namespace TypescriptHelper {
   export function GetTypeParameterOwnerMock(
     declaration: ts.Declaration
   ): ts.Declaration | undefined {
-    const typeDeclaration:
-      | ts.Declaration
-      | undefined = core.ts.getTypeParameterOwner(declaration);
+    const typeDeclaration: ts.Declaration | undefined =
+      core.ts.getTypeParameterOwner(declaration);
 
     // THIS IS TO FIX A MISSING IMPLEMENTATION IN TYPESCRIPT https://github.com/microsoft/TypeScript/blob/ba5e86f1406f39e89d56d4b32fd6ff8de09a0bf3/src/compiler/utilities.ts#L5138
     if (typeDeclaration && (typeDeclaration as Declaration).typeParameters) {
@@ -117,9 +115,8 @@ export namespace TypescriptHelper {
       return propertyName.text;
     }
 
-    const symbol: ts.Symbol | undefined = core.typeChecker.getSymbolAtLocation(
-      propertyName
-    );
+    const symbol: ts.Symbol | undefined =
+      core.typeChecker.getSymbolAtLocation(propertyName);
 
     if (!symbol) {
       throw new Error(

@@ -39,9 +39,8 @@ describe('build', () => {
         );
       }
 
-      const modulesImportingTypescript: StatsModuleReason[] = getModulesImportingTypescript(
-        statsAsJson
-      );
+      const modulesImportingTypescript: StatsModuleReason[] =
+        getModulesImportingTypescript(statsAsJson);
 
       expect(modulesImportingTypescript.length).toBe(
         1,

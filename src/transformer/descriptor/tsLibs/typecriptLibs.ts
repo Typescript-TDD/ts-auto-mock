@@ -64,9 +64,8 @@ export function GetTypescriptTypeDescriptor(
         scope
       );
     case TypescriptLibsTypes.Function:
-      const functionNode: ts.KeywordTypeNode<ts.SyntaxKind.VoidKeyword> = createTypeNode(
-        core.ts.SyntaxKind.VoidKeyword
-      );
+      const functionNode: ts.KeywordTypeNode<ts.SyntaxKind.VoidKeyword> =
+        createTypeNode(core.ts.SyntaxKind.VoidKeyword);
       return GetDescriptor(createFunctionTypeNode(functionNode), scope);
     case TypescriptLibsTypes.Promise:
       const dataResolved: ts.Expression =

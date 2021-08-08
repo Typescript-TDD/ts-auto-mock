@@ -54,9 +54,8 @@ describe('intersection', () => {
     }
 
     it('should assign the correct values', () => {
-      const properties: Interface<string, number> = createMock<
-        Interface<string, number>
-      >();
+      const properties: Interface<string, number> =
+        createMock<Interface<string, number>>();
       expect(properties.a.test).toBe(0);
       expect(properties.a.c).toBe('');
     });
@@ -76,9 +75,8 @@ describe('intersection', () => {
     }
 
     it('should assign the correct values', () => {
-      const properties: Interface<string, number> = createMock<
-        Interface<string, number>
-      >();
+      const properties: Interface<string, number> =
+        createMock<Interface<string, number>>();
       expect(properties.a.property).toBe(0);
       expect(properties.a.c).toBe('');
     });

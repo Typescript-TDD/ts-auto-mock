@@ -15,20 +15,26 @@ export function GetIndexedAccessTypeDescriptor(
 
   switch (node.indexType.kind) {
     case core.ts.SyntaxKind.TypeReference:
-      const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-        (node.indexType as ts.TypeReferenceNode).typeName
-      );
+      const declaration: ts.Declaration =
+        TypescriptHelper.GetDeclarationFromNode(
+          (node.indexType as ts.TypeReferenceNode).typeName
+        );
 
       switch (declaration.kind) {
         case core.ts.SyntaxKind.TypeParameter:
-          const propertyNameIdentifier: ts.PropertyName = PropertySignatureCache.instance.get();
+          const propertyNameIdentifier: ts.PropertyName =
+            PropertySignatureCache.instance.get();
           propertyName = TypescriptHelper.GetStringPropertyName(
             propertyNameIdentifier
           );
           break;
         case core.ts.SyntaxKind.TypeAliasDeclaration:
-          propertyName = (((declaration as ts.TypeAliasDeclaration)
-            .type as ts.LiteralTypeNode).literal as ts.StringLiteral).text;
+          propertyName = (
+            (
+              (declaration as ts.TypeAliasDeclaration)
+                .type as ts.LiteralTypeNode
+            ).literal as ts.StringLiteral
+          ).text;
           break;
         default:
           TransformerLogger().typeNotSupported(
@@ -41,8 +47,9 @@ export function GetIndexedAccessTypeDescriptor(
       }
       break;
     case core.ts.SyntaxKind.LiteralType:
-      propertyName = ((node.indexType as ts.LiteralTypeNode)
-        .literal as ts.StringLiteral).text;
+      propertyName = (
+        (node.indexType as ts.LiteralTypeNode).literal as ts.StringLiteral
+      ).text;
       break;
     default:
       TransformerLogger().typeNotSupported(
@@ -53,12 +60,11 @@ export function GetIndexedAccessTypeDescriptor(
   }
 
   if (propertyName !== null) {
-    const propertySymbol:
-      | ts.Symbol
-      | undefined = core.typeChecker.getPropertyOfType(
-      core.typeChecker.getTypeFromTypeNode(node.objectType),
-      propertyName
-    );
+    const propertySymbol: ts.Symbol | undefined =
+      core.typeChecker.getPropertyOfType(
+        core.typeChecker.getTypeFromTypeNode(node.objectType),
+        propertyName
+      );
 
     if (!propertySymbol) {
       // FIXME: Currently not all IndexedAccessType transformation are supported.
