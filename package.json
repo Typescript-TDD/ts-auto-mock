@@ -32,12 +32,14 @@
         "ts-check:src": "tsc --noEmit",
         "eslint": "eslint ./src/**/*.ts ./test/**/*.ts",
         "eslint:fix": "eslint --fix ./src/**/*.ts ./test/**/*.ts",
+        "prepare": "husky install",
         "prettier": "node node_modules/prettier/bin-prettier.js --check **/*.{ts,json}",
         "prettier:fix": "npm run prettier -- --write",
         "release": "npm run dist:collect && semantic-release",
         "postversion": "cp -r package.json ../ && cp -r package-lock.json ../",
         "cz": "git-cz",
         "commit": "npm run cz",
+        "commitlint": "commitlint -E $1",
         "contributors:add": "all-contributors add",
         "contributors:generate": "all-contributors generate"
     },
@@ -79,7 +81,7 @@
         "eslint-plugin-import": "^2.23.4",
         "eslint-plugin-prettier": "^3.4.0",
         "git-branch-is": "^4.0.0",
-        "husky": "^6.0.0",
+        "husky": "^7.0.1",
         "jasmine": "^3.8.0",
         "jasmine-spec-reporter": "^7.0.0",
         "no-emit-webpack-plugin": "^4.0.1",
@@ -104,11 +106,6 @@
     },
     "peerDependencies": {
         "typescript": "^4.X.X"
-    },
-    "husky": {
-        "hooks": {
-            "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi"
-        }
     },
     "config": {
         "commitizen": {
