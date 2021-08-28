@@ -152,6 +152,142 @@ In the tsconfig.json you can add the config options next to the transformer name
 ]
 ```
 
+## `jest` + `ts-jest` + `ts-patch`
+
+### Steps
+
+1. Install the dependencies
+
+```
+npm install jest ts-jest typescript ts-patch jest-ts-auto-mock ts-auto-mock
+```
+
+you need to have `ts-patch` installed to patch and enable the TypeScript-runtime to apply the transformer.
+
+2. Add the transformer to your `tsconfig.json`
+
+```json
+  ...
+  "compilerOptions": {
+    ...
+    "plugins": [0
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
+    ...
+  }
+  ...
+```
+
+- Remember to set `cacheBetweenTests` to `false` because Jest runs tests in parallel and ts-auto-mock doesn't yet support caching across parallel tests
+
+- You can find a JSON example [here](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ttypescript/tsconfig.json)
+
+3. Add `ts-jest` to the transformation pattern in the Jest config
+
+#### **`package.json` / `jest.config.js` (without the `jest` scope)**
+```json
+...
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    }
+  }
+...
+```
+
+- You can find a JSON example [here](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ttypescript/package.json)
+
+4. Add `ts-patch install` to your prepare script in the package json
+
+#### **`package.json`**
+```json
+...
+  "scripts": {
+    ...,
+    "prepare": "ts-patch install -s",
+    ...
+  }
+...
+```
+- You can find a JSON example [here](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ts-patch/package.json#L9)
+
+5. Add `jest-ts-auto-mock` config file as your setup file
+
+#### **`package.json` / `jest.config.js` (without the `jest` scope)**
+```json
+...
+  "jest": {
+    "setupFiles": [
+      "<rootDir>config.ts"
+    ]
+  }
+...
+```
+
+#### **`config.ts`**
+```ts
+import 'jest-ts-auto-mock';
+```
+
+[Example](https://github.com/Typescript-TDD/jest-ts-auto-mock/blob/master/examples/ts-jest-ttypescript/config.ts)
+
+6. Create your first test
+
+```ts
+import { createMock } from 'ts-auto-mock';
+
+interface Interface {
+  a: string;
+  b: number;
+}
+
+describe('reuse', () => {
+  let mock: Interface;
+
+  beforeEach(() => {
+    mock = createMock<Interface>();
+  });
+
+  it('should work', () => {
+    expect(mock.a).toBe('');
+  });
+});
+
+```
+
+7. Run your test
+
+#### **`package.json`**
+```json
+...
+  "scripts": {
+    ...
+    "test": "jest"
+    ...
+  }
+...
+```
+```
+npm run test
+```
+
+... and you are all done!
+
+### Config options
+In the tsconfig.json you can add the config options next to the transformer name:
+```json
+"plugins": [
+  {
+    "transform": "ts-auto-mock/transformer",
+    "cacheBetweenTests": false,
+    "features": ["random"]
+  }
+]
+```
+
 ## Webpack
 
 With Webpack, You can use any TypeScript-related loader that supports custom transformers, e.g. `awesome-typescript-loader` or `ts-loader`:
