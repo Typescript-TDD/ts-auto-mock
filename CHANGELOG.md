@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.3.6](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.5...3.3.6) (2021-08-28)
+
+
+### Bug Fixes
+
+* **vulnerability:** fix some vulnerabilities ([53a13e5](https://github.com/Typescript-TDD/ts-auto-mock/commit/53a13e552053e5e449b32525560e621c4cbb19e6))
+
 ## [3.3.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.4...3.3.5) (2021-08-08)
 
 
