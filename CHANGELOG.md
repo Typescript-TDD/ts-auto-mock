@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [3.4.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.6...3.4.0) (2021-09-02)
+
+
+### Features
+
+* **functionliteraltypes:** add some compatibility for functions without type definitions! ([#889](https://github.com/Typescript-TDD/ts-auto-mock/issues/889)) ([a21e012](https://github.com/Typescript-TDD/ts-auto-mock/commit/a21e01295e7a658c1917543da40e12840b58f029))
+
 ## [3.3.6](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.5...3.3.6) (2021-08-28)
 
 
