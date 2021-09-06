@@ -190,3 +190,93 @@ describe('functions without types defined', () => {
     });
   });
 });
+
+describe('arrow functions without types defined', () => {
+  it('should infer basic number binary expression types', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: number, b: number) => a + b,
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum(1, 2)).toBe(0);
+  });
+
+  it('should infer basic string binary expression types', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, b: string) => a + b,
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('s', 's2')).toBe('');
+  });
+
+  it('should infer basic string template literal expression types', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, b: string) => `${a + b}`,
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')).toBe('');
+  });
+
+  it('should infer basic boolean types', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, _b: string) => !!a,
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')).toBe(false);
+  });
+
+  it('should infer basic array type', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, _b: string) => [],
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')).toEqual([]);
+  });
+
+  it('should infer function types', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, _b: string) => () => [],
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')()).toEqual([]);
+  });
+
+  it('should infer identifiers', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, _b: string) => a,
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')).toBe('');
+  });
+
+  it('should infer undefined', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, _b: string) => undefined,
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')).toBeUndefined();
+  });
+});

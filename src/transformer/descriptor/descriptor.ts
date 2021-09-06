@@ -46,6 +46,12 @@ import { GetShorthandPropertyAssignmentDescriptor } from './shorthandPropertyAss
 import { GetParameterDescriptor } from './parameter/parameter';
 import { GetVariableDeclarationDescriptor } from './variable/variable';
 
+const GetParenthesizedExpressionDescriptor: (
+  node: ts.ParenthesizedExpression,
+  scope: Scope
+) => ts.Expression = (node: ts.ParenthesizedExpression, scope: Scope) =>
+  GetDescriptor(node.expression, scope);
+
 export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
   switch (node.kind) {
     case core.ts.SyntaxKind.ShorthandPropertyAssignment:
@@ -59,8 +65,13 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         node as ts.VariableDeclaration,
         scope
       );
-    case core.ts.SyntaxKind?.Parameter:
+    case core.ts.SyntaxKind.Parameter:
       return GetParameterDescriptor(node as ts.ParameterDeclaration, scope);
+    case core.ts.SyntaxKind.ParenthesizedExpression:
+      return GetParenthesizedExpressionDescriptor(
+        node as ts.ParenthesizedExpression,
+        scope
+      );
     case core.ts.SyntaxKind.TypeAliasDeclaration:
       return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration, scope);
     case core.ts.SyntaxKind.TypeReference:
