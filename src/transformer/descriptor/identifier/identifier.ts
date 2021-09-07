@@ -1,9 +1,9 @@
 import type * as ts from 'typescript';
-import { SyntaxKind } from 'typescript';
 import { Scope } from '../../scope/scope';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
+import { core } from '../../core/core';
 
 export function GetIdentifierDescriptor(
   node: ts.Identifier,
@@ -11,7 +11,7 @@ export function GetIdentifierDescriptor(
 ): ts.Expression {
   if (
     node.originalKeywordKind &&
-    node.originalKeywordKind === SyntaxKind.UndefinedKeyword
+    node.originalKeywordKind === core.ts.SyntaxKind.UndefinedKeyword
   ) {
     return GetUndefinedDescriptor();
   }
