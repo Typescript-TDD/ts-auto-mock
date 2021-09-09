@@ -279,4 +279,30 @@ describe('arrow functions without types defined', () => {
     const type: typeof functionToMock = createMock<typeof functionToMock>();
     expect(type().sum('test1', 'test2')).toBeUndefined();
   });
+
+  it('should infer objects', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, _b: string) => ({
+        a: 'hello',
+      }),
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')).toEqual({
+      a: 'hello',
+    });
+  });
+
+  it('should infer function calls', () => {
+    // eslint-disable-next-line @typescript-eslint/typedef,@typescript-eslint/explicit-function-return-type
+    const functionToMock = () => ({
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      sum: (a: string, _b: string) => Object.is({}, {}),
+    });
+
+    const type: typeof functionToMock = createMock<typeof functionToMock>();
+    expect(type().sum('test1', 'test2')).toBe(false);
+  });
 });

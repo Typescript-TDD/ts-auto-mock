@@ -23,7 +23,7 @@ export function convertNodeToTypeNode(
 
   if (!canTypeBeChecked(typeNode)) {
     TransformerLogger().typeCannotBeChecked(node);
-    return typeNode;
+    return GetNullDescriptor();
   }
 
   return typeNode;
