@@ -45,12 +45,7 @@ import { GetTupleDescriptor } from './tuple/tuple';
 import { GetShorthandPropertyAssignmentDescriptor } from './shorthandPropertyAssignment/shorthandPropertyAssignment';
 import { GetParameterDescriptor } from './parameter/parameter';
 import { GetVariableDeclarationDescriptor } from './variable/variable';
-
-const GetParenthesizedExpressionDescriptor: (
-  node: ts.ParenthesizedExpression,
-  scope: Scope
-) => ts.Expression = (node: ts.ParenthesizedExpression, scope: Scope) =>
-  GetDescriptor(node.expression, scope);
+import { GetParenthesizedExpressionDescriptor } from './parenthesizedExpression/getParenthesizedExpressionDescriptor';
 
 export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
   switch (node.kind) {
