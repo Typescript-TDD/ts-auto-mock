@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [3.5.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.4.0...3.5.0) (2021-09-12)
+
+
+### Features
+
+* **arrowfunctionliteraltypes:** add some compatibility for arrow functions without type definitions ([b2fb8de](https://github.com/Typescript-TDD/ts-auto-mock/commit/b2fb8dee55fc7addbbd63425fae953b6ca05d1b7))
+
 # [3.4.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.6...3.4.0) (2021-09-02)
 
 
