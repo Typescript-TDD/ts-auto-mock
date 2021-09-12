@@ -17,6 +17,8 @@ export interface TransformerLogger {
   typeOfPropertyNotFound(node: ts.Node): void;
 
   missingTypeDefinition(node: ts.Node): void;
+  missingReturnFromFunctionLike(node: ts.Node): void;
+  typeCannotBeChecked(node: ts.Node): void;
 
   indexedAccessTypeFailed(
     propertyName: string,
@@ -117,6 +119,28 @@ ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
 
       logger.warning(
         `Type definition for type reference ${node.getText()} not found - it will convert to null
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+      );
+    },
+    missingReturnFromFunctionLike(node: ts.Node): void {
+      const createMockNode: ts.Node = GetCurrentCreateMock();
+
+      const createMockFileUrl: string = getNodeFileUrl(createMockNode);
+      const currentNodeFileUrl: string = getNodeFileUrl(node);
+
+      logger.warning(
+        `Node body or return type for type reference ${node.getText()} not found - it will convert to null
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+      );
+    },
+    typeCannotBeChecked(node: ts.Node): void {
+      const createMockNode: ts.Node = GetCurrentCreateMock();
+
+      const createMockFileUrl: string = getNodeFileUrl(createMockNode);
+      const currentNodeFileUrl: string = getNodeFileUrl(node);
+
+      logger.warning(
+        `the type to type node conversion returned a type that will fail to convert because it cannot be analyzed ${node.getText()} not found - it will convert to null
 ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
       );
     },

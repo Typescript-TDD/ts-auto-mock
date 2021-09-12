@@ -48,5 +48,6 @@ export const GetVariableDeclarationDescriptor: (
   if (coreTs.isLiteralTypeNode(typeToNode)) {
     return GetDescriptor(typeToNode.literal, scope);
   }
+
   return GetNullDescriptor();
 };

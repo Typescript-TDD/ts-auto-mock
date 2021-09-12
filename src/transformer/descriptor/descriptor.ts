@@ -45,6 +45,7 @@ import { GetTupleDescriptor } from './tuple/tuple';
 import { GetShorthandPropertyAssignmentDescriptor } from './shorthandPropertyAssignment/shorthandPropertyAssignment';
 import { GetParameterDescriptor } from './parameter/parameter';
 import { GetVariableDeclarationDescriptor } from './variable/variable';
+import { GetParenthesizedExpressionDescriptor } from './parenthesizedExpression/getParenthesizedExpressionDescriptor';
 
 export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
   switch (node.kind) {
@@ -59,8 +60,13 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
         node as ts.VariableDeclaration,
         scope
       );
-    case core.ts.SyntaxKind?.Parameter:
+    case core.ts.SyntaxKind.Parameter:
       return GetParameterDescriptor(node as ts.ParameterDeclaration, scope);
+    case core.ts.SyntaxKind.ParenthesizedExpression:
+      return GetParenthesizedExpressionDescriptor(
+        node as ts.ParenthesizedExpression,
+        scope
+      );
     case core.ts.SyntaxKind.TypeAliasDeclaration:
       return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration, scope);
     case core.ts.SyntaxKind.TypeReference:
