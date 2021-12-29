@@ -1,8 +1,9 @@
-import { FunctionLikeDeclaration } from 'typescript';
-import * as ts from 'typescript';
+import type { FunctionLikeDeclaration } from 'typescript';
+import type * as ts from 'typescript';
 import { TransformerLogger } from '../../logger/transformerLogger';
 import { NodeToString } from '../../printNode';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
 import { GetFunctionReturnType } from '../method/functionReturnType';
@@ -27,11 +28,11 @@ function GetFinalFunctionTypeFromDeclaration(
   initialNode: ts.Node,
   node: ts.Node
 ): ts.Node {
-  if (ts.isFunctionLike(node)) {
+  if (core.ts.isFunctionLike(node)) {
     return GetFunctionReturnType(node as FunctionLikeDeclaration);
-  } else if (ts.isVariableDeclaration(node)) {
+  } else if (core.ts.isVariableDeclaration(node)) {
     if (node.type) {
-      if (ts.isFunctionTypeNode(node.type)) {
+      if (core.ts.isFunctionTypeNode(node.type)) {
         return node.type.type;
       }
     } else if (node.initializer) {

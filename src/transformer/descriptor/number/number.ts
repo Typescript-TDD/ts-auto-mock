@@ -1,10 +1,14 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { IsTsAutoMockRandomEnabled } from '../../../options/random';
 import { RandomPropertyAccessor } from '../random/random';
+import {
+  createCall,
+  createNumericLiteral,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetNumberDescriptor(): ts.Expression {
   if (IsTsAutoMockRandomEnabled()) {
-    return ts.createCall(RandomPropertyAccessor('number'), [], []);
+    return createCall(RandomPropertyAccessor('number'), []);
   }
-  return ts.createLiteral(0);
+  return createNumericLiteral(0);
 }

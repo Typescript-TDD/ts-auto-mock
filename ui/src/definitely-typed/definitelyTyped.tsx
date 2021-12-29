@@ -33,7 +33,7 @@ export interface HeaderData {
 const dataReader: DataReader<HeaderData, TypeRunData> = dataFileSystemReader<
   HeaderData,
   TypeRunData // @ts-ignore
->(process.env.DEFINITELY_TYPED_DATA_URL, browserFileReader());
+>(process.env.BASE_URL + 'resources/definitelyTyped', browserFileReader());
 
 export function DefinitelyTyped(): JSX.Element {
   const [data, setData] = useState([] as DefinitelyTypedTypeRun[]);
@@ -155,9 +155,11 @@ export function DefinitelyTyped(): JSX.Element {
 
       <DefinitelyTypedFilters
         filter={(options) => setFilterOptions(options)}
+        data={data}
         runInfo={runInfo}
       />
 
+      <div className="DefinitelyTyped-typesViewCount">Showing list of <b>{types.length}</b> types.</div>
       <div className="DefinitelyTyped-typesContainer">{types}</div>
     </div>
   );

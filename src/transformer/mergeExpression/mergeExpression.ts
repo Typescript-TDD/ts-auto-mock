@@ -1,17 +1,22 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { MockDefiner } from '../mockDefiner/mockDefiner';
 import { ModuleName } from '../mockDefiner/modules/moduleName';
 import { PrivateIdentifier } from '../privateIdentifier/privateIdentifier';
+import {
+  createCall,
+  createIdentifier,
+  createPropertyAccess,
+} from '../../typescriptFactory/typescriptFactory';
 
-function mergePropertyAccessor(
+export function mergePropertyAccessor(
   methodName: string
 ): ts.PropertyAccessExpression {
-  return ts.createPropertyAccess(
-    ts.createPropertyAccess(
+  return createPropertyAccess(
+    createPropertyAccess(
       MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Merge),
       PrivateIdentifier('Merge')
     ),
-    ts.createIdentifier(methodName)
+    createIdentifier(methodName)
   );
 }
 
@@ -19,21 +24,8 @@ export function getMockMergeExpression(
   nodeMocked: ts.Expression,
   defaultValues: ts.Expression
 ): ts.Expression {
-  return ts.createCall(
-    mergePropertyAccessor('merge'),
-    [],
-    [nodeMocked, defaultValues]
-  );
-}
-
-export function getMockMergeIteratorExpression(
-  nodeMocked: ts.Expression,
-  defaultValuesFunction: ts.Expression,
-  index: ts.NumericLiteral
-): ts.Expression {
-  return ts.createCall(
-    mergePropertyAccessor('mergeIterator'),
-    [],
-    [nodeMocked, defaultValuesFunction, index]
-  );
+  return createCall(mergePropertyAccessor('merge'), [
+    nodeMocked,
+    defaultValues,
+  ]);
 }

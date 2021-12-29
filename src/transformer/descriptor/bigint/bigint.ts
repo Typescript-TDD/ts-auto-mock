@@ -1,8 +1,10 @@
-import * as ts from 'typescript';
-import { TypescriptCreator } from '../../helper/creator';
+import type * as ts from 'typescript';
+import {
+  createCall,
+  createIdentifier,
+  createNumericLiteral,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetBigIntDescriptor(): ts.CallExpression {
-  return TypescriptCreator.createCall(ts.createIdentifier('BigInt'), [
-    ts.createNumericLiteral('0'),
-  ]);
+  return createCall(createIdentifier('BigInt'), [createNumericLiteral('0')]);
 }

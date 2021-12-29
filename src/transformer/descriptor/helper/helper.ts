@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import type * as ts from 'typescript';
+import { createNodeArray } from '../../../typescriptFactory/typescriptFactory';
+import { core } from '../../core/core';
 
 type Declaration =
   | ts.InterfaceDeclaration
@@ -14,16 +15,16 @@ type ImportDeclaration =
 export namespace TypescriptHelper {
   export function IsLiteralOrPrimitive(typeNode: ts.Node): boolean {
     return (
-      ts.isLiteralTypeNode(typeNode) ||
-      typeNode.kind === ts.SyntaxKind.StringKeyword ||
-      typeNode.kind === ts.SyntaxKind.BooleanKeyword ||
-      typeNode.kind === ts.SyntaxKind.NumberKeyword ||
-      typeNode.kind === ts.SyntaxKind.ArrayType
+      core.ts.isLiteralTypeNode(typeNode) ||
+      typeNode.kind === core.ts.SyntaxKind.StringKeyword ||
+      typeNode.kind === core.ts.SyntaxKind.BooleanKeyword ||
+      typeNode.kind === core.ts.SyntaxKind.NumberKeyword ||
+      typeNode.kind === core.ts.SyntaxKind.ArrayType
     );
   }
 
   export function GetDeclarationFromNode(node: ts.Node): ts.Declaration {
-    const typeChecker: ts.TypeChecker = TypeChecker();
+    const typeChecker: ts.TypeChecker = core.typeChecker;
     const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(node);
 
     if (!symbol) {
@@ -37,9 +38,15 @@ export namespace TypescriptHelper {
   }
 
   export function GetDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
-    const declaration: ts.Declaration = GetFirstValidDeclaration(
-      symbol.declarations
-    );
+    const declarations: ts.Declaration[] | undefined = symbol.declarations;
+
+    if (!declarations) {
+      throw new Error(
+        `Failed to look up declarations for \`${symbol.getName()}'.`
+      );
+    }
+
+    const declaration: ts.Declaration = GetFirstValidDeclaration(declarations);
 
     if (isImportExportDeclaration(declaration)) {
       return GetDeclarationForImport(declaration);
@@ -51,7 +58,15 @@ export namespace TypescriptHelper {
   export function GetConcreteDeclarationFromSymbol(
     symbol: ts.Symbol
   ): ts.Declaration {
-    const declaration: ts.Declaration = symbol.declarations[0];
+    const declarations: ts.Declaration[] | undefined = symbol.declarations;
+
+    if (!declarations) {
+      throw new Error(
+        `Failed to look up declarations for \`${symbol.getName()}'.`
+      );
+    }
+
+    const declaration: ts.Declaration = declarations[0];
 
     if (isImportExportDeclaration(declaration)) {
       return GetConcreteDeclarationForImport(declaration);
@@ -81,9 +96,8 @@ export namespace TypescriptHelper {
   ): ts.NodeArray<ts.TypeParameterDeclaration> {
     const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
-    const {
-      typeParameters = ts.createNodeArray([]),
-    }: Declaration = declaration as Declaration;
+    const { typeParameters = createNodeArray([]) }: Declaration =
+      declaration as Declaration;
 
     return typeParameters;
   }
@@ -91,9 +105,8 @@ export namespace TypescriptHelper {
   export function GetTypeParameterOwnerMock(
     declaration: ts.Declaration
   ): ts.Declaration | undefined {
-    const typeDeclaration:
-      | ts.Declaration
-      | undefined = ts.getTypeParameterOwner(declaration);
+    const typeDeclaration: ts.Declaration | undefined =
+      core.ts.getTypeParameterOwner(declaration);
 
     // THIS IS TO FIX A MISSING IMPLEMENTATION IN TYPESCRIPT https://github.com/microsoft/TypeScript/blob/ba5e86f1406f39e89d56d4b32fd6ff8de09a0bf3/src/compiler/utilities.ts#L5138
     if (typeDeclaration && (typeDeclaration as Declaration).typeParameters) {
@@ -105,20 +118,19 @@ export namespace TypescriptHelper {
       current;
       current = current.parent
     ) {
-      if (current.kind === ts.SyntaxKind.TypeAliasDeclaration) {
+      if (current.kind === core.ts.SyntaxKind.TypeAliasDeclaration) {
         return current as ts.Declaration;
       }
     }
   }
 
   export function GetStringPropertyName(propertyName: ts.PropertyName): string {
-    if (!ts.isComputedPropertyName(propertyName)) {
+    if (!core.ts.isComputedPropertyName(propertyName)) {
       return propertyName.text;
     }
 
-    const symbol: ts.Symbol | undefined = TypeChecker().getSymbolAtLocation(
-      propertyName
-    );
+    const symbol: ts.Symbol | undefined =
+      core.typeChecker.getSymbolAtLocation(propertyName);
 
     if (!symbol) {
       throw new Error(
@@ -130,15 +142,19 @@ export namespace TypescriptHelper {
   }
 
   export function GetAliasedSymbolSafe(alias: ts.Symbol): ts.Symbol {
-    return isAlias(alias) ? TypeChecker().getAliasedSymbol(alias) : alias;
+    return isAlias(alias) ? core.typeChecker.getAliasedSymbol(alias) : alias;
   }
 
   export function getSignatureOfCallExpression(
     node: ts.CallExpression
   ): ts.Signature | undefined {
-    const typeChecker: ts.TypeChecker = TypeChecker();
+    return core.typeChecker.getResolvedSignature(node);
+  }
 
-    return typeChecker.getResolvedSignature(node);
+  export function hasTypeArguments(node: ts.CallExpression): boolean {
+    return (
+      typeof node.typeArguments !== 'undefined' && !!node.typeArguments.length
+    );
   }
 
   function GetFirstValidDeclaration(
@@ -147,16 +163,17 @@ export namespace TypescriptHelper {
     return (
       declarations.find(
         (declaration: ts.Declaration) =>
-          !ts.isVariableDeclaration(declaration) &&
-          !ts.isFunctionDeclaration(declaration)
+          !core.ts.isVariableDeclaration(declaration) &&
+          !core.ts.isFunctionDeclaration(declaration) &&
+          !core.ts.isModuleDeclaration(declaration)
       ) || declarations[0]
     );
   }
 
   function isAlias(symbol: ts.Symbol): boolean {
     return !!(
-      symbol.flags & ts.SymbolFlags.Alias ||
-      symbol.flags & ts.SymbolFlags.AliasExcludes
+      symbol.flags & core.ts.SymbolFlags.Alias ||
+      symbol.flags & core.ts.SymbolFlags.AliasExcludes
     );
   }
 
@@ -164,14 +181,14 @@ export namespace TypescriptHelper {
     declaration: ts.Declaration
   ): declaration is ImportDeclaration {
     return (
-      ts.isImportEqualsDeclaration(declaration) ||
-      ts.isImportOrExportSpecifier(declaration) ||
-      ts.isImportClause(declaration)
+      core.ts.isImportEqualsDeclaration(declaration) ||
+      core.ts.isImportOrExportSpecifier(declaration) ||
+      core.ts.isImportClause(declaration)
     );
   }
 
   function GetDeclarationsForImport(node: ImportDeclaration): ts.Declaration[] {
-    const typeChecker: ts.TypeChecker = TypeChecker();
+    const typeChecker: ts.TypeChecker = core.typeChecker;
     const symbol: ts.Symbol | undefined =
       node.name && typeChecker.getSymbolAtLocation(node.name);
     const originalSymbol: ts.Symbol | undefined =

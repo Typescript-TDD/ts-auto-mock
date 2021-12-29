@@ -5,8 +5,7 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "prettier/@typescript-eslint"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -118,6 +117,7 @@
     "@typescript-eslint/no-parameter-properties": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/prefer-function-type": "error",
     "@typescript-eslint/prefer-namespace-keyword": "error",
@@ -127,6 +127,7 @@
     "@typescript-eslint/type-annotation-spacing": "error",
     "@typescript-eslint/unified-signatures": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "_" }],
     "arrow-body-style": "error",
     "arrow-parens": ["error", "as-needed"],
     "camelcase": "off",
@@ -160,12 +161,7 @@
     "no-invalid-this": "off",
     "no-multiple-empty-lines": "error",
     "no-new-wrappers": "error",
-    "no-shadow": [
-      "error",
-      {
-        "hoist": "all"
-      }
-    ],
+    "no-shadow": "off",
     "no-throw-literal": "error",
     "no-trailing-spaces": "error",
     "no-undef-init": "error",

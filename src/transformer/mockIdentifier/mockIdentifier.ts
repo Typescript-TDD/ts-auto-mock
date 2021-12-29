@@ -1,23 +1,52 @@
-import * as ts from 'typescript';
+import type ts from 'typescript';
+import { createIdentifier } from '../../typescriptFactory/typescriptFactory';
 
-export const MockIdentifierGenericParameter: ts.Identifier = ts.createIdentifier(
-  't'
-);
-export const MockIdentifierGenericParameterIds: ts.Identifier = ts.createIdentifier(
-  'i'
-);
-export const MockIdentifierGenericParameterValue: ts.Identifier = ts.createIdentifier(
-  'w'
-);
-export const MockIdentifierInternalValues: ts.Identifier = ts.createIdentifier(
-  'd'
-);
-export const MockIdentifierObjectReturnValue: ts.Identifier = ts.createIdentifier(
-  'm'
-);
-export const MockIdentifierSetParameterName: ts.Identifier = ts.createIdentifier(
-  'v'
-);
-export const MockCallAnonymousText: string = '*';
-export const MockCallLiteralText: string = 'L';
-export const MockPrivatePrefix: string = 'ɵ';
+export const Identifiers: {
+  MockIdentifierGenericParameter: ts.Identifier;
+  MockIdentifierGenericParameterIds: ts.Identifier;
+  MockIdentifierGenericParameterValue: ts.Identifier;
+  MockIdentifierInternalValues: ts.Identifier;
+  MockIdentifierObjectReturnValue: ts.Identifier;
+  MockIdentifierSetParameterName: ts.Identifier;
+  MockCreateMockListLoopStep: ts.Identifier;
+  MockCreateMockListLoopArray: ts.Identifier;
+} = {
+  MockIdentifierGenericParameter: undefined,
+  MockIdentifierGenericParameterIds: undefined,
+  MockIdentifierGenericParameterValue: undefined,
+  MockIdentifierInternalValues: undefined,
+  MockIdentifierObjectReturnValue: undefined,
+  MockIdentifierSetParameterName: undefined,
+  MockCreateMockListLoopStep: undefined,
+  MockCreateMockListLoopArray: undefined,
+} as unknown as {
+  MockIdentifierGenericParameter: ts.Identifier;
+  MockIdentifierGenericParameterIds: ts.Identifier;
+  MockIdentifierGenericParameterValue: ts.Identifier;
+  MockIdentifierInternalValues: ts.Identifier;
+  MockIdentifierObjectReturnValue: ts.Identifier;
+  MockIdentifierSetParameterName: ts.Identifier;
+  MockCreateMockListLoopStep: ts.Identifier;
+  MockCreateMockListLoopArray: ts.Identifier;
+};
+
+export const Strings: {
+  MockCallAnonymousText: string;
+  MockCallLiteralText: string;
+  MockPrivatePrefix: string;
+} = {
+  MockCallAnonymousText: '*',
+  MockCallLiteralText: 'L',
+  MockPrivatePrefix: 'ɵ',
+};
+
+export function InitIdentifiers(): void {
+  Identifiers.MockIdentifierGenericParameter = createIdentifier('t');
+  Identifiers.MockIdentifierGenericParameterIds = createIdentifier('i');
+  Identifiers.MockIdentifierGenericParameterValue = createIdentifier('w');
+  Identifiers.MockIdentifierInternalValues = createIdentifier('d');
+  Identifiers.MockIdentifierObjectReturnValue = createIdentifier('m');
+  Identifiers.MockIdentifierSetParameterName = createIdentifier('v');
+  Identifiers.MockCreateMockListLoopStep = createIdentifier('k');
+  Identifiers.MockCreateMockListLoopArray = createIdentifier('s');
+}

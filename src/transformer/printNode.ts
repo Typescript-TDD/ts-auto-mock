@@ -1,20 +1,21 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Logger } from '../logger/logger';
 import { ILogger } from '../logger/logger.interface';
+import { core } from './core/core';
 
 export function NodeToString(node: ts.Node): string {
-  const resultFile: ts.SourceFile = ts.createSourceFile(
+  const resultFile: ts.SourceFile = core.ts.createSourceFile(
     'someFileName.ts',
     '',
-    ts.ScriptTarget.Latest,
+    core.ts.ScriptTarget.Latest,
     /* setParentNodes*/ false,
-    ts.ScriptKind.TS
+    core.ts.ScriptKind.TS
   );
-  const printer: ts.Printer = ts.createPrinter({
-    newLine: ts.NewLineKind.LineFeed,
+  const printer: ts.Printer = core.ts.createPrinter({
+    newLine: core.ts.NewLineKind.LineFeed,
   });
 
-  return printer.printNode(ts.EmitHint.Unspecified, node, resultFile);
+  return printer.printNode(core.ts.EmitHint.Unspecified, node, resultFile);
 }
 
 export function PrintNode(node: ts.Node): void {

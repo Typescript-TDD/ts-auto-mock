@@ -1,12 +1,17 @@
-import * as ts from 'typescript';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import type * as ts from 'typescript';
+import { core } from '../../core/core';
 import { RandomPropertyAccessor } from '../random/random';
 import { IsTsAutoMockRandomEnabled } from '../../../options/random';
+import {
+  createCall,
+  createNumericLiteral,
+  createStringLiteral,
+} from '../../../typescriptFactory/typescriptFactory';
 
 export function GetEnumDeclarationDescriptor(
   node: ts.EnumDeclaration
 ): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
 
   if (IsTsAutoMockRandomEnabled()) {
     const nodesList: ts.Expression[] = node.members.map(
@@ -14,11 +19,7 @@ export function GetEnumDeclarationDescriptor(
         getEnumMemberValue(typeChecker, member, index)
     );
 
-    return ts.createCall(
-      RandomPropertyAccessor('enumValue'),
-      [],
-      [...nodesList]
-    );
+    return createCall(RandomPropertyAccessor('enumValue'), nodesList);
   }
 
   return getEnumMemberValue(typeChecker, node.members[0]);
@@ -29,5 +30,12 @@ function getEnumMemberValue(
   member: ts.EnumMember,
   defaultValue: string | number = 0
 ): ts.Expression {
-  return ts.createLiteral(typeChecker.getConstantValue(member) || defaultValue);
+  const value: string | number =
+    typeChecker.getConstantValue(member) || defaultValue;
+
+  if (typeof value === 'number') {
+    return createNumericLiteral(value);
+  }
+
+  return createStringLiteral(value);
 }

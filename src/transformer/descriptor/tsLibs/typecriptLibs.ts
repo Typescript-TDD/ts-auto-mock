@@ -1,8 +1,17 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
-import { TypeChecker } from '../../typeChecker/typeChecker';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
+import {
+  createArrayTypeNode,
+  createCall,
+  createFunctionTypeNode,
+  createIdentifier,
+  createNew,
+  createPropertyAccess,
+  createTypeNode,
+} from '../../../typescriptFactory/typescriptFactory';
 import {
   TypescriptLibsTypes,
   TypescriptLibsTypesFolder,
@@ -23,7 +32,7 @@ export function GetTypescriptTypeDescriptor(
   node: ts.TypeReferenceNode,
   scope: Scope
 ): ts.Expression {
-  const typeChecker: ts.TypeChecker = TypeChecker();
+  const typeChecker: ts.TypeChecker = core.typeChecker;
   const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
     node.typeName
   );
@@ -33,42 +42,52 @@ export function GetTypescriptTypeDescriptor(
   switch (typeScriptType) {
     case TypescriptLibsTypes.Array:
     case TypescriptLibsTypes.ReadonlyArray:
-      return GetDescriptor(ts.createNode(ts.SyntaxKind.ArrayType), scope);
+      return GetDescriptor(createArrayTypeNode(), scope);
     case TypescriptLibsTypes.Number:
-      return GetDescriptor(ts.createNode(ts.SyntaxKind.NumberKeyword), scope);
-    case TypescriptLibsTypes.String:
-      return GetDescriptor(ts.createNode(ts.SyntaxKind.StringKeyword), scope);
-    case TypescriptLibsTypes.Boolean:
-      return GetDescriptor(ts.createNode(ts.SyntaxKind.BooleanKeyword), scope);
-    case TypescriptLibsTypes.Object:
-      return GetDescriptor(ts.createNode(ts.SyntaxKind.ObjectKeyword), scope);
-    case TypescriptLibsTypes.Function:
-      const functionNode: ts.Node = ts.createNode(ts.SyntaxKind.VoidKeyword);
       return GetDescriptor(
-        ts.createFunctionTypeNode([], [], functionNode as ts.TypeNode),
+        createTypeNode(core.ts.SyntaxKind.NumberKeyword),
         scope
       );
+    case TypescriptLibsTypes.String:
+      return GetDescriptor(
+        createTypeNode(core.ts.SyntaxKind.StringKeyword),
+        scope
+      );
+    case TypescriptLibsTypes.Boolean:
+      return GetDescriptor(
+        createTypeNode(core.ts.SyntaxKind.BooleanKeyword),
+        scope
+      );
+    case TypescriptLibsTypes.Object:
+      return GetDescriptor(
+        createTypeNode(core.ts.SyntaxKind.ObjectKeyword),
+        scope
+      );
+    case TypescriptLibsTypes.Function:
+      const functionNode: ts.KeywordTypeNode<ts.SyntaxKind.VoidKeyword> =
+        createTypeNode(core.ts.SyntaxKind.VoidKeyword);
+      return GetDescriptor(createFunctionTypeNode(functionNode), scope);
     case TypescriptLibsTypes.Promise:
       const dataResolved: ts.Expression =
         node.typeArguments && node.typeArguments[0]
           ? GetDescriptor(node.typeArguments[0], scope)
           : GetUndefinedDescriptor();
 
-      const promiseAccess: ts.PropertyAccessExpression = ts.createPropertyAccess(
-        ts.createIdentifier('Promise'),
-        ts.createIdentifier('resolve')
+      const promiseAccess: ts.PropertyAccessExpression = createPropertyAccess(
+        createIdentifier('Promise'),
+        createIdentifier('resolve')
       );
 
-      return ts.createCall(promiseAccess, [], [dataResolved]);
+      return createCall(promiseAccess, [dataResolved]);
     case TypescriptLibsTypes.Date:
-      return ts.createNew(ts.createIdentifier('Date'), undefined, undefined);
+      return createNew(createIdentifier('Date'));
     case TypescriptLibsTypes.Map:
-      return ts.createNew(ts.createIdentifier('Map'), undefined, undefined);
+      return createNew(createIdentifier('Map'));
     case TypescriptLibsTypes.Set:
-      return ts.createNew(ts.createIdentifier('Set'), undefined, undefined);
+      return createNew(createIdentifier('Set'));
     default:
       return GetDescriptor(
-        ts.createNode(ts.SyntaxKind.UndefinedKeyword),
+        createTypeNode(core.ts.SyntaxKind.UndefinedKeyword),
         scope
       );
   }

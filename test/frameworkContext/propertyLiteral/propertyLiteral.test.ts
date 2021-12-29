@@ -7,9 +7,8 @@ describe('property literal test', () => {
       '&methodSpecialCharacters': () => number;
     }
 
-    const mock: WithStringLiteralProperties = createMock<
-      WithStringLiteralProperties
-    >();
+    const mock: WithStringLiteralProperties =
+      createMock<WithStringLiteralProperties>();
     const spyA: jasmine.Spy = On(mock).get(method('&methodSpecialCharacters'));
 
     expect(spyA.and.identity).toBe('&methodSpecialCharacters');

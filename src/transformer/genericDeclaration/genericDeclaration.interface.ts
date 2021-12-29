@@ -1,4 +1,4 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { GenericDeclarationSupported } from './genericDeclarationSupported';
 
 export interface IGenericDeclaration {

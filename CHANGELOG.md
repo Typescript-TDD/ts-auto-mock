@@ -1,5 +1,194 @@
 # Semantic Versioning Changelog
 
+# [3.5.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.4.0...3.5.0) (2021-09-12)
+
+
+### Features
+
+* **arrowfunctionliteraltypes:** add some compatibility for arrow functions without type definitions ([b2fb8de](https://github.com/Typescript-TDD/ts-auto-mock/commit/b2fb8dee55fc7addbbd63425fae953b6ca05d1b7))
+
+# [3.4.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.6...3.4.0) (2021-09-02)
+
+
+### Features
+
+* **functionliteraltypes:** add some compatibility for functions without type definitions! ([#889](https://github.com/Typescript-TDD/ts-auto-mock/issues/889)) ([a21e012](https://github.com/Typescript-TDD/ts-auto-mock/commit/a21e01295e7a658c1917543da40e12840b58f029))
+
+## [3.3.6](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.5...3.3.6) (2021-08-28)
+
+
+### Bug Fixes
+
+* **vulnerability:** fix some vulnerabilities ([53a13e5](https://github.com/Typescript-TDD/ts-auto-mock/commit/53a13e552053e5e449b32525560e621c4cbb19e6))
+
+## [3.3.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.4...3.3.5) (2021-08-08)
+
+
+### Performance Improvements
+
+* **typescript:** upgrade to latest version of typescript ([69e52e1](https://github.com/Typescript-TDD/ts-auto-mock/commit/69e52e1a80074492ba8cd17ca3b9108511622fd9))
+
+## [3.3.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.3...3.3.4) (2021-08-08)
+
+
+### Bug Fixes
+
+* **husky:** remove husky from post install because it will be required for consumers of the packages ([83498e2](https://github.com/Typescript-TDD/ts-auto-mock/commit/83498e26f715da7dc7af8bd63ed1082ec5825f62))
+
+## [3.3.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.2...3.3.3) (2021-08-08)
+
+
+### Performance Improvements
+
+* **dependencies:** run husky installation only when installing not when publishing the package ([#871](https://github.com/Typescript-TDD/ts-auto-mock/issues/871)) ([9fea5d4](https://github.com/Typescript-TDD/ts-auto-mock/commit/9fea5d4f9eeff3f7239457023bdf2e89320ee382))
+
+## [3.3.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.1...3.3.2) (2021-08-08)
+
+
+### Performance Improvements
+
+* **dependencies:** upgrade performance dependencies ([#870](https://github.com/Typescript-TDD/ts-auto-mock/issues/870)) ([ab99348](https://github.com/Typescript-TDD/ts-auto-mock/commit/ab9934875f140a8fac63a66160d4befbd8769265))
+
+## [3.3.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.0...3.3.1) (2021-08-08)
+
+
+### Performance Improvements
+
+* **dependencies:** update ts-auto-mock dependencies to the latest version ([46fbacf](https://github.com/Typescript-TDD/ts-auto-mock/commit/46fbacfd515eed10fce91af7042c76519c790124))
+
+# [3.3.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.3...3.3.0) (2021-06-24)
+
+
+### Features
+
+* export alternative transformer function to allow providing customized typescript ([#802](https://github.com/Typescript-TDD/ts-auto-mock/issues/802)) ([9f1dce4](https://github.com/Typescript-TDD/ts-auto-mock/commit/9f1dce42c841ccb75e0c4ffc000da634f7234388))
+
+## [3.2.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.2...3.2.3) (2021-06-17)
+
+
+### Bug Fixes
+
+* **transformer:** ignore namespace when resolving a declaration ([#793](https://github.com/Typescript-TDD/ts-auto-mock/issues/793)) ([c356caa](https://github.com/Typescript-TDD/ts-auto-mock/commit/c356caa0d5d412ee1ef91d171559af2d89f39a6c))
+
+## [3.2.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.1...3.2.2) (2021-05-22)
+
+
+### Bug Fixes
+
+* **merge:** ensure undefined is assigned when merging partial mock ([#748](https://github.com/Typescript-TDD/ts-auto-mock/issues/748)) ([31c5ff5](https://github.com/Typescript-TDD/ts-auto-mock/commit/31c5ff5f09d59b11ada77e238ab70137da31c9cd))
+
+## [3.2.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.0...3.2.1) (2021-05-20)
+
+
+### Bug Fixes
+
+* **hydratedMocks:** fix recursion ([#736](https://github.com/Typescript-TDD/ts-auto-mock/issues/736)) ([8567273](https://github.com/Typescript-TDD/ts-auto-mock/commit/8567273f9c0e5417f5344345e1dac4d349650a11))
+
+# [3.2.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.3...3.2.0) (2021-05-19)
+
+
+### Features
+
+* **getAccessor:** correctly mock get accessors for mocked classes ([3530039](https://github.com/Typescript-TDD/ts-auto-mock/commit/35300395bf8e2b0d191940b4035a94634656f470))
+
+## [3.1.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.2...3.1.3) (2021-04-21)
+
+
+### Performance Improvements
+
+* **dependencies:** update dependencies ([#685](https://github.com/Typescript-TDD/ts-auto-mock/issues/685)) ([3c14989](https://github.com/Typescript-TDD/ts-auto-mock/commit/3c1498983f78c5ecd2a0ca43daf7083216b0967b))
+
+## [3.1.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.1...3.1.2) (2021-03-15)
+
+
+### Performance Improvements
+
+* **dependencies:** update dependencies ([#620](https://github.com/Typescript-TDD/ts-auto-mock/issues/620)) ([57cf063](https://github.com/Typescript-TDD/ts-auto-mock/commit/57cf0630bd3c2f8e65f77302a2b9cc591df9c7cb))
+
+## [3.1.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.1.0...3.1.1) (2021-02-18)
+
+
+### Bug Fixes
+
+* **typeReference:** log warning when type definition does not exists and cannot be located ([#618](https://github.com/Typescript-TDD/ts-auto-mock/issues/618)) ([5750def](https://github.com/Typescript-TDD/ts-auto-mock/commit/5750def79861553e9d0997e789b9ad00562c81d1))
+
+# [3.1.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.0.0...3.1.0) (2021-01-06)
+
+
+### Features
+
+* **hydrate-mocks:** add create-hydrated-mock functionality ([aa2ebad](https://github.com/Typescript-TDD/ts-auto-mock/commit/aa2ebad2f8e92b7ad5cd6a60d98793b330d736a4))
+
+# [3.0.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.7.0...3.0.0) (2020-12-25)
+
+
+### chore
+
+* **typescript:** update to typescript 4 ([#611](https://github.com/Typescript-TDD/ts-auto-mock/issues/611)) ([8373ec5](https://github.com/Typescript-TDD/ts-auto-mock/commit/8373ec598277589d5639dd3415f5ffb4a64b4ab3))
+
+
+### BREAKING CHANGES
+
+* **typescript:** typescript >= 4.0.2 is required to use ts-auto-mock
+Update your typescript dependency to version >= 4.0.2
+
+# [2.7.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.5...2.7.0) (2020-12-08)
+
+
+### Features
+
+* **registerMock:** allow use of mocked generics in register mock factory ([512e150](https://github.com/Typescript-TDD/ts-auto-mock/commit/512e150436572e59c1070b2540d0b2310d655137))
+
+## [2.6.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.4...2.6.5) (2020-10-08)
+
+
+### Bug Fixes
+
+* **createMockList:** count the number of create mock list on runtime instead of relying on a numeric literal ([eec45dd](https://github.com/Typescript-TDD/ts-auto-mock/commit/eec45dd741b7c7b6ba889ce4a79dd2fd968720b4)), closes [#595](https://github.com/Typescript-TDD/ts-auto-mock/issues/595)
+
+## [2.6.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.3...2.6.4) (2020-09-18)
+
+
+### Bug Fixes
+
+* **transformer:** apply null and warning when property type cannot be identified ([7cc1ec0](https://github.com/Typescript-TDD/ts-auto-mock/commit/7cc1ec0deb9e1832d68732d7dbb40bd6bf87ad43))
+* **typescript:** restore support for typescript 3 ([825cc01](https://github.com/Typescript-TDD/ts-auto-mock/commit/825cc01f3bf136322b814152ede8fe0d4a322019))
+
+## [2.6.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.2...2.6.3) (2020-09-17)
+
+
+### Bug Fixes
+
+* **transformer:** do not fail when accessing index of extended this for a computed property ([02e7b12](https://github.com/Typescript-TDD/ts-auto-mock/commit/02e7b12a466959f853168289189f4e62c2e03c14))
+
+## [2.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.1...2.6.2) (2020-09-15)
+
+
+### Bug Fixes
+
+* **definitelyTyped:** do not fail on mocking module declarations ([4660f58](https://github.com/Typescript-TDD/ts-auto-mock/commit/4660f587d2c268000a79ef9c6bee6045125377a2))
+
+## [2.6.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.6.0...2.6.1) (2020-09-15)
+
+
+### Bug Fixes
+
+* **transformer:** fix interface call signature with undeclared return type ([#533](https://github.com/Typescript-TDD/ts-auto-mock/issues/533)) ([55da89f](https://github.com/Typescript-TDD/ts-auto-mock/commit/55da89fb8fcf96960267dad4a1ebec57bbf545d8))
+
+# [2.6.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.3...2.6.0) (2020-09-15)
+
+
+### Features
+
+* **fileFilter:** add config option to specify files with mocks ([526d677](https://github.com/Typescript-TDD/ts-auto-mock/commit/526d677955b812871bbddb640eb674a60f835b32))
+
+## [2.5.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.2...2.5.3) (2020-09-15)
+
+
+### Bug Fixes
+
+* **properties:** create property when undefined/void, do not emit property only when optional ([70d65ed](https://github.com/Typescript-TDD/ts-auto-mock/commit/70d65ed4518271d2298358e44823ce7dd841a4f8))
+
 ## [2.5.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/2.5.1...2.5.2) (2020-09-13)
 
 

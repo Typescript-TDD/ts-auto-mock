@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
+import { createArrayLiteral } from '../../../typescriptFactory/typescriptFactory';
 
 export function GetArrayDescriptor(): ts.Expression {
-  return ts.createArrayLiteral();
+  return createArrayLiteral();
 }

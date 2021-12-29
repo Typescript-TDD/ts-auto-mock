@@ -28,9 +28,8 @@ describe('for methods', () => {
     }
 
     it('should set the functions', () => {
-      const properties: InterfaceWithDeclaration = createMock<
-        InterfaceWithDeclaration
-      >();
+      const properties: InterfaceWithDeclaration =
+        createMock<InterfaceWithDeclaration>();
       expect(properties.method()).toBe(0);
     });
   });
@@ -47,17 +46,15 @@ describe('for methods', () => {
     }
 
     it('should set the function and properties', () => {
-      const properties: InterfaceWithCallSignature = createMock<
-        InterfaceWithCallSignature
-      >();
+      const properties: InterfaceWithCallSignature =
+        createMock<InterfaceWithCallSignature>();
       expect(properties(2)).toBe(0);
       expect(properties.b).toBe('');
     });
 
     it('should set the function with return value function', () => {
-      const properties: InterfaceWithCallSignatureReturn = createMock<
-        InterfaceWithCallSignatureReturn
-      >();
+      const properties: InterfaceWithCallSignatureReturn =
+        createMock<InterfaceWithCallSignatureReturn>();
       expect(properties(2)(2)).toBe(0);
       expect(properties(2).b).toBe('');
       expect(properties.b).toBe('');
@@ -72,9 +69,8 @@ describe('for methods', () => {
     }
 
     it('should only consider the first signature declaration', () => {
-      const properties: InterfaceWithCallSignature = createMock<
-        InterfaceWithCallSignature
-      >();
+      const properties: InterfaceWithCallSignature =
+        createMock<InterfaceWithCallSignature>();
 
       expect(properties(2)).toBe(0);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -93,10 +89,21 @@ describe('for methods', () => {
     }
 
     it('should set the value for same interface with generic', () => {
-      const propertiesWithGeneric: InterfaceWithCallSignature<number> = createMock<
-        InterfaceWithCallSignature<number>
-      >();
+      const propertiesWithGeneric: InterfaceWithCallSignature<number> =
+        createMock<InterfaceWithCallSignature<number>>();
       expect(propertiesWithGeneric(2)(2)(2).b.b.b.d).toBe(0);
+    });
+  });
+
+  describe('for interface call signature with undeclared return value', () => {
+    interface InterfaceWithCallSignature {
+      (a: number);
+    }
+
+    it('should set the function with undefined return value', () => {
+      const properties: InterfaceWithCallSignature =
+        createMock<InterfaceWithCallSignature>();
+      expect(properties(1)).toBeUndefined();
     });
   });
 
@@ -118,26 +125,23 @@ describe('for methods', () => {
     }
 
     it('should set the constructor and properties', () => {
-      const properties: InterfaceWithConstructSignature = createMock<
-        InterfaceWithConstructSignature
-      >();
+      const properties: InterfaceWithConstructSignature =
+        createMock<InterfaceWithConstructSignature>();
       expect(new properties(2).a).toBe(0);
       expect(properties.b).toBe('');
     });
 
     it('should set the constructor with return value constructor', () => {
-      const properties: InterfaceWithConstructSignatureReturn = createMock<
-        InterfaceWithConstructSignatureReturn
-      >();
+      const properties: InterfaceWithConstructSignatureReturn =
+        createMock<InterfaceWithConstructSignatureReturn>();
       expect(new new properties(2)(2).a).toBe(0);
       expect(new properties(2).b).toBe('');
       expect(properties.b).toBe('');
     });
 
     it('should use the first overload if any', () => {
-      const properties: InterfaceWithConstructSignatureOverload = createMock<
-        InterfaceWithConstructSignatureOverload
-      >();
+      const properties: InterfaceWithConstructSignatureOverload =
+        createMock<InterfaceWithConstructSignatureOverload>();
       // eslint-disable-next-line
       expect((new properties() as any).a).toBe(0);
     });
@@ -155,17 +159,15 @@ describe('for methods', () => {
     }
 
     it('should set the constructor and properties', () => {
-      const properties: InterfaceWithCallSignature = createMock<
-        InterfaceWithCallSignature
-      >();
+      const properties: InterfaceWithCallSignature =
+        createMock<InterfaceWithCallSignature>();
       expect(new properties(2).a).toBe(0);
       expect(properties.b).toBe('');
     });
 
     it('should set the constructor with return value constructor', () => {
-      const properties: InterfaceWithCallSignatureReturn = createMock<
-        InterfaceWithCallSignatureReturn
-      >();
+      const properties: InterfaceWithCallSignatureReturn =
+        createMock<InterfaceWithCallSignatureReturn>();
       expect(new new properties(2)(2).a).toBe(0);
       expect(new properties(2).b).toBe('');
       expect(properties.b).toBe('');
@@ -213,9 +215,8 @@ describe('for methods', () => {
     }
 
     it('should return null', () => {
-      const a: InterfaceWithoutReturnValue = createMock<
-        InterfaceWithoutReturnValue
-      >();
+      const a: InterfaceWithoutReturnValue =
+        createMock<InterfaceWithoutReturnValue>();
 
       expect(a.method()).toBeNull();
     });

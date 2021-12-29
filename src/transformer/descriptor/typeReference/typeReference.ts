@@ -1,4 +1,5 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
+import { TransformerLogger } from '../../logger/transformerLogger';
 import { MockDefiner } from '../../mockDefiner/mockDefiner';
 import {
   CreateMockFactory,
@@ -8,6 +9,7 @@ import { Scope } from '../../scope/scope';
 import { isTypeReferenceReusable } from '../../typeReferenceReusable/typeReferenceReusable';
 import { GetDescriptor } from '../descriptor';
 import { TypescriptHelper } from '../helper/helper';
+import { GetNullDescriptor } from '../null/null';
 import {
   GetTypescriptTypeDescriptor,
   IsTypescriptType,
@@ -21,8 +23,13 @@ export function GetTypeReferenceDescriptor(
     node.typeName
   );
 
-  if (MockDefiner.instance.hasMockForDeclaration(declaration)) {
-    return GetMockFactoryCall(node, scope);
+  if (!declaration) {
+    TransformerLogger().missingTypeDefinition(node);
+    return GetNullDescriptor();
+  }
+
+  if (MockDefiner.instance.hasMockForDeclaration(declaration, scope)) {
+    return GetMockFactoryCall(node, declaration, scope);
   }
 
   if (IsTypescriptType(declaration)) {
@@ -30,7 +37,7 @@ export function GetTypeReferenceDescriptor(
   }
 
   if (isTypeReferenceReusable(declaration)) {
-    return CreateMockFactory(node, scope);
+    return CreateMockFactory(node, declaration, scope);
   }
 
   return GetDescriptor(declaration, scope);

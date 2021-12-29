@@ -2,7 +2,7 @@ name: DefinitelyTyped Tests
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+  - cron: '0 0 * * *'
 
 jobs:
   definitely-typed:
@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [12.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -18,6 +18,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: create environment variable date
+        run: |
+          echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV
       - name: install ts auto mock
         run: |
           npm install
@@ -28,8 +31,6 @@ jobs:
           cd definitelyTypedTests
           npm install
           npm run start-chunk
-      - name: create environment variable date
-        run: echo "::set-env name=DATE::$(date +%Y-%m-%dT%H-%M-%S)"
       - name: definitelyTyped push changes
         run: |
           git config --global user.name 'typescripttdd'
@@ -39,7 +40,7 @@ jobs:
           git add data/*
           git checkout .
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v2
+        uses: peter-evans/create-pull-request@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
         with:

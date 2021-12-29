@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
 import { GetMockCall } from './mockCall';
@@ -17,7 +18,13 @@ export function GetMockPropertiesFromSymbol(
 ): ts.Expression {
   const properties: PropertyLike[] = propertiesSymbol
     .filter((prop: ts.Symbol) => !!prop.declarations) // Dynamically generated properties (mapped types) do not have declarations
-    .map((prop: ts.Symbol) => prop.declarations[0]) as PropertyLike[];
+    .map(
+      (prop: ts.Symbol) =>
+        prop.declarations?.filter(
+          (declaration: ts.Declaration) => !core.ts.isSetAccessor(declaration)
+        )[0]
+    )
+    .filter(Boolean) as PropertyLike[];
 
   const signaturesDeclarations: SignatureLike[] = signatures.map(
     (signature: ts.Signature) => signature.declaration
@@ -44,6 +51,10 @@ export function GetMockPropertiesFromDeclarations(
         return false;
       }
 
+      if (member.questionToken && !scope.hydrated) {
+        return false;
+      }
+
       if (!modifiers) {
         return true;
       }
@@ -51,7 +62,7 @@ export function GetMockPropertiesFromDeclarations(
       return (
         modifiers.filter(
           (modifier: ts.Modifier) =>
-            modifier.kind === ts.SyntaxKind.PrivateKeyword
+            modifier.kind === core.ts.SyntaxKind.PrivateKeyword
         ).length === 0
       );
     }

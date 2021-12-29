@@ -1,7 +1,10 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { GetNullDescriptor } from '../null/null';
+import { TransformerLogger } from '../../logger/transformerLogger';
+import { convertNodeToTypeNode } from '../typeNode/convertNodeToTypeNode';
 
 export function GetReturnTypeFromBodyDescriptor(
   node:
@@ -17,36 +20,47 @@ export function GetReturnTypeFromBodyDescriptor(
 export function GetReturnNodeFromBody(
   node: ts.FunctionLikeDeclaration
 ): ts.Node {
-  let returnValue: ts.Node | undefined;
-
   const functionBody: ts.ConciseBody | undefined = node.body;
 
-  if (functionBody && ts.isBlock(functionBody)) {
-    const returnStatement: ts.ReturnStatement = GetReturnStatement(
-      functionBody
-    );
+  if (!functionBody) {
+    TransformerLogger().missingReturnFromFunctionLike(node);
+    return GetNullDescriptor();
+  }
 
-    if (returnStatement) {
-      returnValue = returnStatement.expression;
-    } else {
-      returnValue = GetNullDescriptor();
+  if (core.ts.isBlock(functionBody)) {
+    const returnStatement: ts.ReturnStatement =
+      GetReturnStatement(functionBody);
+
+    if (!returnStatement || !returnStatement.expression) {
+      TransformerLogger().missingReturnFromFunctionLike(node);
+      return GetNullDescriptor();
     }
-  } else {
-    returnValue = node.body;
+
+    return returnStatement.expression;
   }
 
-  if (!returnValue) {
-    throw new Error(
-      `Failed to determine the return value of ${node.getText()}.`
-    );
+  if (core.ts.isBinaryExpression(functionBody)) {
+    return convertNodeToTypeNode(functionBody);
   }
 
-  return returnValue;
+  if (core.ts.isTemplateExpression(functionBody)) {
+    return convertNodeToTypeNode(functionBody);
+  }
+
+  if (core.ts.isPrefixUnaryExpression(functionBody)) {
+    return convertNodeToTypeNode(functionBody);
+  }
+
+  if (core.ts.isArrayLiteralExpression(functionBody)) {
+    return convertNodeToTypeNode(functionBody);
+  }
+
+  return functionBody;
 }
 
 function GetReturnStatement(body: ts.FunctionBody): ts.ReturnStatement {
   return body.statements.find(
     (statement: ts.Statement) =>
-      statement.kind === ts.SyntaxKind.ReturnStatement
+      statement.kind === core.ts.SyntaxKind.ReturnStatement
   ) as ts.ReturnStatement;
 }

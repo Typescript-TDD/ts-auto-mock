@@ -1,16 +1,9 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
+import { createImportAllAs } from '../../typescriptFactory/typescriptFactory';
 
 export function createImportOnIdentifier(
   filenameToImportFrom: string,
   importIdentifier: ts.Identifier
 ): ts.ImportDeclaration {
-  return ts.createImportDeclaration(
-    [],
-    [],
-    ts.createImportClause(
-      undefined,
-      ts.createNamespaceImport(importIdentifier) // this is to do `* as namespace_import_identifier`
-    ),
-    ts.createStringLiteral(filenameToImportFrom)
-  );
+  return createImportAllAs(importIdentifier, filenameToImportFrom);
 }

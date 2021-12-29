@@ -1,6 +1,11 @@
 .DefinitelyTyped-container {
-  .DefinitelyTyped-typesContainer {
+  .DefinitelyTyped-typesViewCount {
     margin-top: 20px;
+    text-align: center;
+  }
+
+  .DefinitelyTyped-typesContainer {
+    margin-top: 10px;
 
     details {
       border: 1px solid #aaa;
@@ -48,6 +53,7 @@
       }
 
       pre {
+        white-space: pre-wrap;
         font-size: 18px;
       }
 

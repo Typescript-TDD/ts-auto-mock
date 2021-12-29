@@ -15,37 +15,32 @@ describe('with import', () => {
     });
 
     it('should set the default property for import with sub imports', () => {
-      const properties: ImportInterfaceWithNestedInterface = createMock<
-        ImportInterfaceWithNestedInterface
-      >();
+      const properties: ImportInterfaceWithNestedInterface =
+        createMock<ImportInterfaceWithNestedInterface>();
       expect(properties.a.test).toBe(false);
     });
 
     it('should set the default property for default', () => {
-      const properties: ImportDefaultInterface = createMock<
-        ImportDefaultInterface
-      >();
+      const properties: ImportDefaultInterface =
+        createMock<ImportDefaultInterface>();
       expect(properties.a).toBe('');
     });
 
     it('should set the default property for namespace', () => {
-      const properties: ImportNamespace.Interface = createMock<
-        ImportNamespace.Interface
-      >();
+      const properties: ImportNamespace.Interface =
+        createMock<ImportNamespace.Interface>();
       expect(properties.a).toBe('');
     });
 
     it('should set the default property for namespace', () => {
-      const properties: ImportNamespace.Interface2 = createMock<
-        ImportNamespace.Interface2
-      >();
+      const properties: ImportNamespace.Interface2 =
+        createMock<ImportNamespace.Interface2>();
       expect(properties.b).toBe(0);
     });
 
     it('should be possible to change the value', () => {
-      const properties: ImportNamespace.Interface2 = createMock<
-        ImportNamespace.Interface2
-      >();
+      const properties: ImportNamespace.Interface2 =
+        createMock<ImportNamespace.Interface2>();
       expect(properties.b).toBe(0);
       properties.b = 2;
       expect(properties.b).toBe(2);

@@ -20,9 +20,8 @@ declare function functionDeclaration(): number;
 describe('typeQuery', () => {
   describe('for function', () => {
     it('should assign the function mock for a function declaration', () => {
-      const functionMock: typeof functionDeclaration = createMock<
-        typeof functionDeclaration
-      >();
+      const functionMock: typeof functionDeclaration =
+        createMock<typeof functionDeclaration>();
 
       expect(functionMock()).toEqual(0);
     });
@@ -38,17 +37,15 @@ describe('typeQuery', () => {
     });
 
     it('should assign the function mock for an imported function declaration', () => {
-      const functionMock: typeof exportedDeclaredFunction = createMock<
-        typeof exportedDeclaredFunction
-      >();
+      const functionMock: typeof exportedDeclaredFunction =
+        createMock<typeof exportedDeclaredFunction>();
 
       expect(functionMock()).toEqual('');
     });
 
     it('should assign the function mock for an imported function declaration with body', () => {
-      const functionMock: typeof exportedFunction = createMock<
-        typeof exportedFunction
-      >();
+      const functionMock: typeof exportedFunction =
+        createMock<typeof exportedFunction>();
 
       expect(functionMock()).toEqual(0);
     });
@@ -76,9 +73,8 @@ describe('typeQuery', () => {
         b: string;
       }
 
-      const functionMock: typeof MultipleDeclaration = createMock<
-        typeof MultipleDeclaration
-      >();
+      const functionMock: typeof MultipleDeclaration =
+        createMock<typeof MultipleDeclaration>();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -100,17 +96,15 @@ describe('typeQuery', () => {
     });
 
     it('should create a newable class for an imported class declaration', () => {
-      const classMock: typeof ExportedDeclaredClass = createMock<
-        typeof ExportedDeclaredClass
-      >();
+      const classMock: typeof ExportedDeclaredClass =
+        createMock<typeof ExportedDeclaredClass>();
 
       expect(new classMock().prop).toEqual('');
     });
 
     it('should create a newable class for an imported class', () => {
-      const classMock: typeof ExportedClass = createMock<
-        typeof ExportedClass
-      >();
+      const classMock: typeof ExportedClass =
+        createMock<typeof ExportedClass>();
 
       expect(new classMock().prop).toEqual(0);
     });
@@ -249,9 +243,8 @@ describe('typeQuery', () => {
       });
 
       it('should mock the default', () => {
-        const mock: typeof REQUIRE_DEFAULT = createMock<
-          typeof REQUIRE_DEFAULT
-        >();
+        const mock: typeof REQUIRE_DEFAULT =
+          createMock<typeof REQUIRE_DEFAULT>();
 
         expect(mock.functionDefault('input')).toBe(false);
         expect(mock.default('input')).toBe(false);

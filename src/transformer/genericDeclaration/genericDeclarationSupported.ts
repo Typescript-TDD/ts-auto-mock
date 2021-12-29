@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { InterfaceOrClassDeclaration } from '../scope/scope';
+import { core } from '../core/core';
 
 export type GenericDeclarationSupported = InterfaceOrClassDeclaration;
 
@@ -11,5 +12,5 @@ export function extensionExpressionSupported(
   // - You can only use extends with a function that return a constructor (new (...args: unknown[]) => unknown)
   // - You cannot pass generics to extends function
   // the test is in transformer/descriptor/extends/callExpression.test.ts
-  return !ts.isCallExpression(expression);
+  return !core.ts.isCallExpression(expression);
 }

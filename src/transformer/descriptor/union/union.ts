@@ -1,5 +1,6 @@
-import * as ts from 'typescript';
+import type * as ts from 'typescript';
 import { Scope } from '../../scope/scope';
+import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { GetTypes } from '../type/type';
 import { GetUndefinedDescriptor } from '../undefined/undefined';
@@ -9,6 +10,18 @@ export function GetUnionDescriptor(
   scope: Scope
 ): ts.Expression {
   const findNodes: ts.Node[] = GetTypes(node.types, scope);
+
+  if (scope.hydrated) {
+    const removeUndefinedNodes: ts.Node[] = findNodes.filter(
+      (typeNode: ts.TypeNode) => !isNotDefinedType(typeNode)
+    );
+
+    if (removeUndefinedNodes.length) {
+      return GetDescriptor(removeUndefinedNodes[0], scope);
+    }
+
+    return GetUndefinedDescriptor();
+  }
 
   const notDefinedType: ts.Node[] = findNodes.filter((typeNode: ts.TypeNode) =>
     isNotDefinedType(typeNode)
@@ -23,7 +36,7 @@ export function GetUnionDescriptor(
 
 function isNotDefinedType(typeNode: ts.Node): boolean {
   return (
-    typeNode.kind === ts.SyntaxKind.VoidKeyword ||
-    typeNode.kind === ts.SyntaxKind.UndefinedKeyword
+    typeNode.kind === core.ts.SyntaxKind.VoidKeyword ||
+    typeNode.kind === core.ts.SyntaxKind.UndefinedKeyword
   );
 }

@@ -1,0 +1,100 @@
+{
+  "projectName": "ts-auto-mock",
+  "projectOwner": "typescripttdd",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "commitConvention": "angular",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 60,
+  "commit": true,
+  "contributorsSortAlphabetically": true,
+  "contributors": [
+    {
+      "login": "uittorio",
+      "name": "Vittorio Guerriero",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17477623?v=4",
+      "profile": "https://uittorio.github.io/",
+      "contributions": [
+        "question",
+        "code",
+        "ideas",
+        "infra",
+        "maintenance",
+        "projectManagement",
+        "tool"
+      ]
+    },
+    {
+      "login": "Pmyl",
+      "name": "Giulio Caprino",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16228209?v=4",
+      "profile": "https://github.com/Pmyl",
+      "contributions": [
+        "question",
+        "code",
+        "doc",
+        "ideas",
+        "infra",
+        "maintenance",
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "C0ZEN",
+      "name": "Geoffrey 'C0ZEN' Testelin",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10194542?v=4",
+      "profile": "http://www.geoffreytestelin.com/",
+      "contributions": [
+        "bug",
+        "code",
+        "ideas",
+        "tool"
+      ]
+    },
+    {
+      "login": "martinjlowm",
+      "name": "Martin Jesper Low Madsen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/110860?v=4",
+      "profile": "http://www.martinjlowm.dk/",
+      "contributions": [
+        "bug",
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "wassy92x",
+      "name": "Fabian",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/12649037?v=4",
+      "profile": "https://github.com/wassy92x",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "artem1458",
+      "name": "Artem Kornev",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/33227963?v=4",
+      "profile": "https://github.com/artem1458",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "marcmrf",
+      "name": "Marc",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/9928519?v=4",
+      "profile": "https://github.com/marcmrf",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    }
+  ],
+  "skipCi": false,
+  "contributorsPerLine": 7
+}
