@@ -4,3 +4,4 @@ definitelyTypedTests/build
 .idea
 DefinitelyTyped
 test/playground/playground.test.js
+*.tsAutoMock.log
