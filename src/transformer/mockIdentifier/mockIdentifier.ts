@@ -10,7 +10,7 @@ export const Identifiers: {
   MockIdentifierSetParameterName: ts.Identifier;
   MockCreateMockListLoopStep: ts.Identifier;
   MockCreateMockListLoopArray: ts.Identifier;
-} = ({
+} = {
   MockIdentifierGenericParameter: undefined,
   MockIdentifierGenericParameterIds: undefined,
   MockIdentifierGenericParameterValue: undefined,
@@ -19,7 +19,7 @@ export const Identifiers: {
   MockIdentifierSetParameterName: undefined,
   MockCreateMockListLoopStep: undefined,
   MockCreateMockListLoopArray: undefined,
-} as unknown) as {
+} as unknown as {
   MockIdentifierGenericParameter: ts.Identifier;
   MockIdentifierGenericParameterIds: ts.Identifier;
   MockIdentifierGenericParameterValue: ts.Identifier;

@@ -16,16 +16,16 @@ export type TsAutoMockFeaturesOption = 'random';
 ```
 options:
 
-| Name                 |  Value             |  Description                                 | Default
-| -------------------- |  ----------------- | -------------------------------------------- | --------
-| `debug`              |  `false`           | it will NOT log to the console               | false
-|                      |  `true`            | it will log to the console                   |
-|                      |  `file`            | it will log to a file (tsAutoMock.log)       |
-|                      |  `console`         | alias for `true`                             |
-| `cacheBetweenTests`  |  `true`            | it will reuse mocks between different tests  | true
-|                      |  `false`           | it create new mocks for each different tests |
-| `features`           |  `feature[]`       | it will enable a specific feature            | []
-| `files`              |  `string|string[]` | it will include only the files matched       | "**/*"
+| Name                | Value                | Description                                  | Default |
+|---------------------|----------------------|----------------------------------------------|---------|
+| `debug`             | `false`              | it will NOT log to the console               | false   |
+|                     | `true`               | it will log to the console                   |         |
+|                     | `file`               | it will log to a file (tsAutoMock.log)       |         |
+|                     | `console`            | alias for `true`                             |         |
+| `cacheBetweenTests` | `true`               | it will reuse mocks between different tests  | true    |
+|                     | `false`              | it create new mocks for each different tests |         |
+| `features`          | `feature[]`          | it will enable a specific feature            | []      |
+| `files`             | `string or string[]` | it will include only the files matched       | "**/*"  | 
 
 ---
 

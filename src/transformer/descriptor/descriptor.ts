@@ -42,9 +42,31 @@ import { GetUndefinedDescriptor } from './undefined/undefined';
 import { GetUnionDescriptor } from './union/union';
 import { GetTypeOperatorDescriptor } from './typeOperator/typeOperator';
 import { GetTupleDescriptor } from './tuple/tuple';
+import { GetShorthandPropertyAssignmentDescriptor } from './shorthandPropertyAssignment/shorthandPropertyAssignment';
+import { GetParameterDescriptor } from './parameter/parameter';
+import { GetVariableDeclarationDescriptor } from './variable/variable';
+import { GetParenthesizedExpressionDescriptor } from './parenthesizedExpression/getParenthesizedExpressionDescriptor';
 
 export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
   switch (node.kind) {
+    case core.ts.SyntaxKind.ShorthandPropertyAssignment:
+      return GetShorthandPropertyAssignmentDescriptor(
+        node as ts.ShorthandPropertyAssignment,
+        scope
+      );
+
+    case core.ts.SyntaxKind.VariableDeclaration:
+      return GetVariableDeclarationDescriptor(
+        node as ts.VariableDeclaration,
+        scope
+      );
+    case core.ts.SyntaxKind.Parameter:
+      return GetParameterDescriptor(node as ts.ParameterDeclaration, scope);
+    case core.ts.SyntaxKind.ParenthesizedExpression:
+      return GetParenthesizedExpressionDescriptor(
+        node as ts.ParenthesizedExpression,
+        scope
+      );
     case core.ts.SyntaxKind.TypeAliasDeclaration:
       return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration, scope);
     case core.ts.SyntaxKind.TypeReference:

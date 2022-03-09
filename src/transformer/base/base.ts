@@ -26,33 +26,31 @@ export function baseTransformer(
     InitCore(typescript, program);
     InitIdentifiers();
 
-    const isFileExcluded: (
-      _sf: ts.SourceFile
-    ) => boolean = GetIsFilesExcludedFromOptions();
+    const isFileExcluded: (_sf: ts.SourceFile) => boolean =
+      GetIsFilesExcludedFromOptions();
 
     return (
-      context: ts.TransformationContext
-    ): ((file: ts.SourceFile) => ts.SourceFile) => (
-      file: ts.SourceFile
-    ): ts.SourceFile => {
-      if (isFileExcluded(file)) {
-        return file;
-      }
+        context: ts.TransformationContext
+      ): ((file: ts.SourceFile) => ts.SourceFile) =>
+      (file: ts.SourceFile): ts.SourceFile => {
+        if (isFileExcluded(file)) {
+          return file;
+        }
 
-      MockDefiner.instance.initFile(file);
-      let sourceFile: ts.SourceFile = visitNodeAndChildren(
-        file,
-        context,
-        customFunctions
-      );
+        MockDefiner.instance.initFile(file);
+        let sourceFile: ts.SourceFile = visitNodeAndChildren(
+          file,
+          context,
+          customFunctions
+        );
 
-      sourceFile = updateSourceFileNode(sourceFile, [
-        ...MockDefiner.instance.getTopStatementsForFile(sourceFile),
-        ...sourceFile.statements,
-      ]);
+        sourceFile = updateSourceFileNode(sourceFile, [
+          ...MockDefiner.instance.getTopStatementsForFile(sourceFile),
+          ...sourceFile.statements,
+        ]);
 
-      return sourceFile;
-    };
+        return sourceFile;
+      };
   };
 }
 
@@ -84,19 +82,15 @@ function visitNode(node: ts.Node, customFunctions: CustomFunction[]): ts.Node {
     return node;
   }
 
-  const signature:
-    | ts.Signature
-    | undefined = TypescriptHelper.getSignatureOfCallExpression(node);
+  const signature: ts.Signature | undefined =
+    TypescriptHelper.getSignatureOfCallExpression(node);
 
   if (!signature || !signature.declaration) {
     return node;
   }
 
-  const matchingCustomFunction: CustomFunction | void = getMatchingCustomFunction(
-    node,
-    signature.declaration,
-    customFunctions
-  );
+  const matchingCustomFunction: CustomFunction | void =
+    getMatchingCustomFunction(node, signature.declaration, customFunctions);
 
   if (!matchingCustomFunction) {
     return node;

@@ -82,7 +82,7 @@ describe('typescript lib', () => {
 
     const properties: Interface = createMock<Interface>();
 
-    const interfaceCast: Interface = (properties as unknown) as Interface;
+    const interfaceCast: Interface = properties as unknown as Interface;
 
     const result: string = await interfaceCast.a();
     expect(result).toBe('');
@@ -95,7 +95,7 @@ describe('typescript lib', () => {
 
     const properties: Interface = createMock<Interface>();
 
-    const interfaceCast: Interface = (properties as unknown) as Interface;
+    const interfaceCast: Interface = properties as unknown as Interface;
 
     const result: Array<string> = await interfaceCast.a();
     expect(result).toEqual([]);
@@ -111,7 +111,7 @@ describe('typescript lib', () => {
 
     const properties: Interface = createMock<Interface>();
 
-    const interfaceCast: Interface = (properties as unknown) as Interface;
+    const interfaceCast: Interface = properties as unknown as Interface;
 
     const result: WithGenerics<string> = await interfaceCast.a();
     expect(result).toEqual({
@@ -129,7 +129,7 @@ describe('typescript lib', () => {
     }
 
     const properties: Interface = createMock<Interface>();
-    const interfaceCast: Interface = (properties as unknown) as Interface;
+    const interfaceCast: Interface = properties as unknown as Interface;
     const result: WithGenerics = await interfaceCast.a();
     const secondPromise: number = await result.generic();
 
@@ -147,7 +147,7 @@ describe('typescript lib', () => {
     }
 
     const properties: Interface = createMock<Interface>();
-    const interfaceCast: Interface = (properties as unknown) as Interface;
+    const interfaceCast: Interface = properties as unknown as Interface;
     const result: WithGenerics<string> = await interfaceCast.a();
     const secondPromise: string = await result.generic();
     const secondPromise2: number = await result.generic2();
@@ -174,9 +174,8 @@ describe('typescript lib', () => {
       method(): Promise<Interface<T, T2>>;
     }
 
-    const properties: Interface<string, number> = createMock<
-      Interface<string, number>
-    >();
+    const properties: Interface<string, number> =
+      createMock<Interface<string, number>>();
     const result: Interface<string, number> = await properties.method();
     expect(result.a).toBe(0);
   });
@@ -255,7 +254,8 @@ describe('typescript lib', () => {
       prop: InsertPosition;
     }
 
-    const mock: WithLiteralTypescriptType = createMock<WithLiteralTypescriptType>();
+    const mock: WithLiteralTypescriptType =
+      createMock<WithLiteralTypescriptType>();
 
     expect(mock.prop).toBeUndefined();
   });

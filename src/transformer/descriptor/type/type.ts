@@ -60,9 +60,8 @@ export function GetType(node: ts.Node, scope: Scope): ts.Node {
   }
 
   if (core.ts.isThisTypeNode(node)) {
-    const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-      node
-    );
+    const declaration: ts.Declaration =
+      TypescriptHelper.GetDeclarationFromNode(node);
     return GetType(declaration, scope);
   }
 

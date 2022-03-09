@@ -26,13 +26,12 @@ export function GetTypeQueryDescriptor(
 ): ts.Expression {
   const symbol: ts.Symbol | undefined = getTypeQuerySymbol(node);
 
-  if (!symbol?.declarations.length) {
+  if (!symbol?.declarations?.length) {
     return GetUndefinedDescriptor();
   }
 
-  const declaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(
-    symbol
-  );
+  const declaration: ts.NamedDeclaration =
+    getTypeQueryDeclarationFromSymbol(symbol);
 
   return GetTypeQueryDescriptorFromDeclaration(declaration, scope);
 }
@@ -88,7 +87,8 @@ export function GetTypeQueryDescriptorFromDeclaration(
         scope
       );
     case core.ts.SyntaxKind.VariableDeclaration:
-      const variable: ts.VariableDeclaration = declaration as ts.VariableDeclaration;
+      const variable: ts.VariableDeclaration =
+        declaration as ts.VariableDeclaration;
 
       if (variable.type) {
         return GetDescriptor(variable.type, scope);
@@ -101,14 +101,12 @@ export function GetTypeQueryDescriptorFromDeclaration(
       }
 
       const inferredType: ts.Node = GetType(variable.initializer, scope);
-      const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
-        inferredType
-      );
+      const symbol: ts.Symbol | undefined =
+        typeChecker.getSymbolAtLocation(inferredType);
 
       if (symbol) {
-        const inferredTypeDeclaration: ts.NamedDeclaration = getTypeQueryDeclarationFromSymbol(
-          symbol
-        );
+        const inferredTypeDeclaration: ts.NamedDeclaration =
+          getTypeQueryDeclarationFromSymbol(symbol);
 
         return GetTypeQueryDescriptorFromDeclaration(
           inferredTypeDeclaration,
@@ -133,7 +131,13 @@ function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol | undefined {
 function getTypeQueryDeclarationFromSymbol(
   symbol: ts.Symbol
 ): ts.NamedDeclaration {
-  const declaration: ts.Declaration = symbol.declarations[0];
+  const declaration: ts.Declaration | undefined = symbol.declarations?.[0];
+
+  if (!declaration) {
+    throw new Error(
+      `Failed to look up declaration for \`${symbol.getName()}'.`
+    );
+  }
 
   if (core.ts.isImportEqualsDeclaration(declaration)) {
     return declaration;

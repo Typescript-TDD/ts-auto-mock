@@ -24,6 +24,7 @@ import {
   createVariableDeclarationList,
   createVariableStatement,
 } from '../../../typescriptFactory/typescriptFactory';
+import GetDeclarationFromSymbol = TypescriptHelper.GetDeclarationFromSymbol;
 
 export function GetTypeParameterDescriptor(
   node: ts.TypeParameterDeclaration,
@@ -35,10 +36,9 @@ export function GetTypeParameterDescriptor(
     ? GetDescriptor(node.default, scope)
     : GetNullDescriptor();
 
-  const declaration: ts.Declaration = type.symbol.declarations[0];
-  const typeDeclaration:
-    | ts.Declaration
-    | undefined = TypescriptHelper.GetTypeParameterOwnerMock(declaration);
+  const declaration: ts.Declaration = GetDeclarationFromSymbol(type.symbol);
+  const typeDeclaration: ts.Declaration | undefined =
+    TypescriptHelper.GetTypeParameterOwnerMock(declaration);
 
   if (!typeDeclaration) {
     throw new Error(
@@ -46,10 +46,11 @@ export function GetTypeParameterDescriptor(
     );
   }
 
-  const genericKey: string = MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
-    typeDeclaration,
-    scope
-  );
+  const genericKey: string =
+    MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
+      typeDeclaration,
+      scope
+    );
 
   return createFunctionToAccessToGenericValue(
     genericKey + node.name.escapedText.toString(),
@@ -61,17 +62,16 @@ function createFunctionToAccessToGenericValue(
   key: string,
   descriptor: ts.Expression
 ): ts.CallExpression {
-  const returnWhenGenericDoesNotExist: ts.ReturnStatement = createReturnStatement(
-    descriptor
-  );
+  const returnWhenGenericDoesNotExist: ts.ReturnStatement =
+    createReturnStatement(descriptor);
 
-  const expressionWhenGenericExist: ts.IfStatement = getValueFromGenericIfExist();
+  const expressionWhenGenericExist: ts.IfStatement =
+    getValueFromGenericIfExist();
 
   const findGenericCall: ts.CallExpression = createFindGeneric(key);
 
-  const generic: ts.VariableStatement = assignGenericConstToCall(
-    findGenericCall
-  );
+  const generic: ts.VariableStatement =
+    assignGenericConstToCall(findGenericCall);
 
   return createIIFE(
     createBlock(

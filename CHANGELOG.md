@@ -1,5 +1,61 @@
 # Semantic Versioning Changelog
 
+# [3.5.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.4.0...3.5.0) (2021-09-12)
+
+
+### Features
+
+* **arrowfunctionliteraltypes:** add some compatibility for arrow functions without type definitions ([b2fb8de](https://github.com/Typescript-TDD/ts-auto-mock/commit/b2fb8dee55fc7addbbd63425fae953b6ca05d1b7))
+
+# [3.4.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.6...3.4.0) (2021-09-02)
+
+
+### Features
+
+* **functionliteraltypes:** add some compatibility for functions without type definitions! ([#889](https://github.com/Typescript-TDD/ts-auto-mock/issues/889)) ([a21e012](https://github.com/Typescript-TDD/ts-auto-mock/commit/a21e01295e7a658c1917543da40e12840b58f029))
+
+## [3.3.6](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.5...3.3.6) (2021-08-28)
+
+
+### Bug Fixes
+
+* **vulnerability:** fix some vulnerabilities ([53a13e5](https://github.com/Typescript-TDD/ts-auto-mock/commit/53a13e552053e5e449b32525560e621c4cbb19e6))
+
+## [3.3.5](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.4...3.3.5) (2021-08-08)
+
+
+### Performance Improvements
+
+* **typescript:** upgrade to latest version of typescript ([69e52e1](https://github.com/Typescript-TDD/ts-auto-mock/commit/69e52e1a80074492ba8cd17ca3b9108511622fd9))
+
+## [3.3.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.3...3.3.4) (2021-08-08)
+
+
+### Bug Fixes
+
+* **husky:** remove husky from post install because it will be required for consumers of the packages ([83498e2](https://github.com/Typescript-TDD/ts-auto-mock/commit/83498e26f715da7dc7af8bd63ed1082ec5825f62))
+
+## [3.3.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.2...3.3.3) (2021-08-08)
+
+
+### Performance Improvements
+
+* **dependencies:** run husky installation only when installing not when publishing the package ([#871](https://github.com/Typescript-TDD/ts-auto-mock/issues/871)) ([9fea5d4](https://github.com/Typescript-TDD/ts-auto-mock/commit/9fea5d4f9eeff3f7239457023bdf2e89320ee382))
+
+## [3.3.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.1...3.3.2) (2021-08-08)
+
+
+### Performance Improvements
+
+* **dependencies:** upgrade performance dependencies ([#870](https://github.com/Typescript-TDD/ts-auto-mock/issues/870)) ([ab99348](https://github.com/Typescript-TDD/ts-auto-mock/commit/ab9934875f140a8fac63a66160d4befbd8769265))
+
+## [3.3.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.3.0...3.3.1) (2021-08-08)
+
+
+### Performance Improvements
+
+* **dependencies:** update ts-auto-mock dependencies to the latest version ([46fbacf](https://github.com/Typescript-TDD/ts-auto-mock/commit/46fbacfd515eed10fce91af7042c76519c790124))
+
 # [3.3.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.2.3...3.3.0) (2021-06-24)
 
 

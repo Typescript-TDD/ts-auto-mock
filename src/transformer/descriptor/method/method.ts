@@ -16,14 +16,13 @@ export function GetMethodDescriptor(
   propertyName: ts.PropertyName,
   returnValue: ts.Expression
 ): ts.Expression {
-  const providerGetMethod: ts.PropertyAccessExpression = CreateProviderGetMethod();
+  const providerGetMethod: ts.PropertyAccessExpression =
+    CreateProviderGetMethod();
 
-  const propertyNameString: string = TypescriptHelper.GetStringPropertyName(
-    propertyName
-  );
-  const propertyNameStringLiteral: ts.StringLiteral = createStringLiteral(
-    propertyNameString
-  );
+  const propertyNameString: string =
+    TypescriptHelper.GetStringPropertyName(propertyName);
+  const propertyNameStringLiteral: ts.StringLiteral =
+    createStringLiteral(propertyNameString);
 
   const propertyValueFunction: ts.ArrowFunction = createArrowFunction(
     createBlock([createReturnStatement(returnValue)], true)

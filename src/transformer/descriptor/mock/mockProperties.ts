@@ -20,7 +20,7 @@ export function GetMockPropertiesFromSymbol(
     .filter((prop: ts.Symbol) => !!prop.declarations) // Dynamically generated properties (mapped types) do not have declarations
     .map(
       (prop: ts.Symbol) =>
-        prop.declarations.filter(
+        prop.declarations?.filter(
           (declaration: ts.Declaration) => !core.ts.isSetAccessor(declaration)
         )[0]
     )

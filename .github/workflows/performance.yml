@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -41,7 +41,9 @@ jobs:
         git config --global user.name 'typescripttdd'
         git config --global user.email 'typescripttdd@gmail.com'
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v2
+      uses: peter-evans/create-pull-request@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
       with:
         commit-message: "chore(performance): add performance data"
         committer: typescripttdd <typescripttdd@gmail.com>

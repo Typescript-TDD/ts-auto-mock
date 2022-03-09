@@ -20,6 +20,6 @@ export function method<TFunctionReturn, TMock>(
     return (mock: TMock): Method<TFunctionReturn> =>
       mock[cbOrTarget] as Method<TFunctionReturn>;
   } else {
-    return (cbOrTarget as unknown) as (mock: TMock) => Method<TFunctionReturn>;
+    return cbOrTarget as unknown as (mock: TMock) => Method<TFunctionReturn>;
   }
 }

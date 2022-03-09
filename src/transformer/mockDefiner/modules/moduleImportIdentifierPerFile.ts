@@ -39,13 +39,12 @@ export class ModuleImportIdentifierPerFile {
   }
 
   public get(fileName: string): ts.Statement[] {
-    return this._modules[
-      fileName
-    ].map((moduleIdentifier: ModuleNameIdentifier) =>
-      createImportOnIdentifier(
-        moduleIdentifier.moduleUrl,
-        moduleIdentifier.identifier
-      )
+    return this._modules[fileName].map(
+      (moduleIdentifier: ModuleNameIdentifier) =>
+        createImportOnIdentifier(
+          moduleIdentifier.moduleUrl,
+          moduleIdentifier.identifier
+        )
     );
   }
 }

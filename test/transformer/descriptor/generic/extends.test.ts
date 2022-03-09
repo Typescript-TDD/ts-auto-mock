@@ -20,18 +20,16 @@ describe('for generic', () => {
     }
 
     it('should set the generic value', () => {
-      const properties: WithExtends<ItWillExtend> = createMock<
-        WithExtends<ItWillExtend>
-      >();
+      const properties: WithExtends<ItWillExtend> =
+        createMock<WithExtends<ItWillExtend>>();
       expect(properties.iAmGeneric.b).toBe(false);
       expect(properties.iAmGeneric.a).toBe('');
     });
 
     it('should return the value as null', () => {
       // we do not know the type at runtime of the invoke function
-      const properties: WithExtendsMethod<ToBeExtended> = createMock<
-        WithExtendsMethod<ToBeExtended>
-      >();
+      const properties: WithExtendsMethod<ToBeExtended> =
+        createMock<WithExtendsMethod<ToBeExtended>>();
       expect(properties.method()).toBeNull();
     });
   });
@@ -196,9 +194,8 @@ describe('for generic', () => {
     }
 
     it('should assign the correct values to generics', () => {
-      const properties: B<number, string, boolean> = createMock<
-        B<number, string, boolean>
-      >();
+      const properties: B<number, string, boolean> =
+        createMock<B<number, string, boolean>>();
       expect(properties.c).toBe('');
       expect(properties.a).toBe(0);
       expect(properties.b).toBe(false);

@@ -95,9 +95,8 @@ describe('create-hydrated-mock', () => {
       }
 
       createMock<AnotherInterface>();
-      const mock: Interface<AnotherInterface> = createHydratedMock<
-        Interface<AnotherInterface>
-      >();
+      const mock: Interface<AnotherInterface> =
+        createHydratedMock<Interface<AnotherInterface>>();
       expect(mock.notRequired?.prop).toBe(false);
     });
 

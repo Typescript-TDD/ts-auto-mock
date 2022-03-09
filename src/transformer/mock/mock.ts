@@ -14,7 +14,7 @@ import {
   createBinaryExpression,
   createBlock,
   createCall,
-  createEmptyStatement,
+  createOmittedExpression,
   createExpressionStatement,
   createForStatement,
   createIdentifier,
@@ -71,7 +71,7 @@ export function storeRegisterMock(
     Logger('RegisterMock').error(
       'registerMock can be used only to mock type references.'
     );
-    return createEmptyStatement();
+    return createOmittedExpression();
   }
 }
 

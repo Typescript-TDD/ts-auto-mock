@@ -38,9 +38,15 @@ export namespace TypescriptHelper {
   }
 
   export function GetDeclarationFromSymbol(symbol: ts.Symbol): ts.Declaration {
-    const declaration: ts.Declaration = GetFirstValidDeclaration(
-      symbol.declarations
-    );
+    const declarations: ts.Declaration[] | undefined = symbol.declarations;
+
+    if (!declarations) {
+      throw new Error(
+        `Failed to look up declarations for \`${symbol.getName()}'.`
+      );
+    }
+
+    const declaration: ts.Declaration = GetFirstValidDeclaration(declarations);
 
     if (isImportExportDeclaration(declaration)) {
       return GetDeclarationForImport(declaration);
@@ -52,7 +58,15 @@ export namespace TypescriptHelper {
   export function GetConcreteDeclarationFromSymbol(
     symbol: ts.Symbol
   ): ts.Declaration {
-    const declaration: ts.Declaration = symbol.declarations[0];
+    const declarations: ts.Declaration[] | undefined = symbol.declarations;
+
+    if (!declarations) {
+      throw new Error(
+        `Failed to look up declarations for \`${symbol.getName()}'.`
+      );
+    }
+
+    const declaration: ts.Declaration = declarations[0];
 
     if (isImportExportDeclaration(declaration)) {
       return GetConcreteDeclarationForImport(declaration);
@@ -82,9 +96,8 @@ export namespace TypescriptHelper {
   ): ts.NodeArray<ts.TypeParameterDeclaration> {
     const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
-    const {
-      typeParameters = createNodeArray([]),
-    }: Declaration = declaration as Declaration;
+    const { typeParameters = createNodeArray([]) }: Declaration =
+      declaration as Declaration;
 
     return typeParameters;
   }
@@ -92,9 +105,8 @@ export namespace TypescriptHelper {
   export function GetTypeParameterOwnerMock(
     declaration: ts.Declaration
   ): ts.Declaration | undefined {
-    const typeDeclaration:
-      | ts.Declaration
-      | undefined = core.ts.getTypeParameterOwner(declaration);
+    const typeDeclaration: ts.Declaration | undefined =
+      core.ts.getTypeParameterOwner(declaration);
 
     // THIS IS TO FIX A MISSING IMPLEMENTATION IN TYPESCRIPT https://github.com/microsoft/TypeScript/blob/ba5e86f1406f39e89d56d4b32fd6ff8de09a0bf3/src/compiler/utilities.ts#L5138
     if (typeDeclaration && (typeDeclaration as Declaration).typeParameters) {
@@ -117,9 +129,8 @@ export namespace TypescriptHelper {
       return propertyName.text;
     }
 
-    const symbol: ts.Symbol | undefined = core.typeChecker.getSymbolAtLocation(
-      propertyName
-    );
+    const symbol: ts.Symbol | undefined =
+      core.typeChecker.getSymbolAtLocation(propertyName);
 
     if (!symbol) {
       throw new Error(
