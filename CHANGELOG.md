@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.5.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.5.0...3.5.1) (2022-04-26)
+
+
+### Performance Improvements
+
+* update typescrpt to 4.6.3 ([365d851](https://github.com/Typescript-TDD/ts-auto-mock/commit/365d85151afeaaf7f29c198b6d2044165154ac5a))
+
 # [3.5.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.4.0...3.5.0) (2021-09-12)
 
 
