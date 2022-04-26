@@ -28,7 +28,7 @@
     "dotenv-webpack": "^2.0.0",
     "gatsby-plugin-offline": "^3.2.23",
     "gatsby-plugin-sass": "^2.3.12",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet-async": "^1.0.6",
