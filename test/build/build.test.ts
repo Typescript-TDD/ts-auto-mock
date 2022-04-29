@@ -60,7 +60,7 @@ describe('build', () => {
   ): StatsModuleReason[] {
     return flatMap(
       statsAsJson.modules?.filter(
-        (x: StatsModule) => x.identifier === 'external "typescript"'
+        (x: StatsModule) => x.identifier === 'external commonjs "typescript"'
       ) || [],
       (x: StatsModule) => x.reasons || []
     );
