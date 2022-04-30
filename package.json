@@ -86,7 +86,7 @@
         "prettier": "^2.6.2",
         "regenerator-runtime": "^0.13.9",
         "semantic-release": "^17.4.4",
-        "semantic-release-slack-bot": "^2.1.1",
+        "semantic-release-slack-bot": "^3.5.2",
         "ts-loader": "^9.3.0",
         "ts-node": "^10.7.0",
         "tsconfig-paths": "^3.14.1",
