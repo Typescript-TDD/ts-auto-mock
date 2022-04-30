@@ -2,7 +2,7 @@ allowMergeCommits: true
 allowRevertCommits: true
 commitsOnly: true
 
-# Any changes should also me made on the commitizen.js
+# Any changes should also be made on the commitizen.js
 types:
   - feat
   - fix
