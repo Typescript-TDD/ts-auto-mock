@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [3.6.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.5.1...3.6.0) (2022-04-30)
+
+
+### Features
+
+* **(dependencies:** update typescript to version 4.6.4 ([1a83487](https://github.com/Typescript-TDD/ts-auto-mock/commit/1a83487af1d2b9cb45849b2e37ec8e6f831281fa))
+* **dependencies:** update winston to version 3.7.2 ([9286731](https://github.com/Typescript-TDD/ts-auto-mock/commit/9286731f980b8f0a71b0bf6168ed85f08c381943))
+
 ## [3.5.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.5.0...3.5.1) (2022-04-26)
 
 
