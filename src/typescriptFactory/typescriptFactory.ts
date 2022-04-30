@@ -427,8 +427,8 @@ export function updateSourceFileNode(
 }
 
 export function createImportAllAs(
-  moduleName,
-  filenameToImportFrom
+  moduleName: ts.Identifier,
+  filenameToImportFrom: string
 ): ImportDeclaration {
   return core.ts.factory.createImportDeclaration(
     [],

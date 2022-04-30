@@ -28,6 +28,7 @@ export class FakePromise<T> {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public catch<T2>(t: any): Promise<T | T2> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return this._promise.catch(t);
   }
 
