@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DetermineDevToolFromEnvironmentDebugMode = require("../../utils/devtool");
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = (options) => {
   const tsConfigFile = options.tsConfigFile;
@@ -16,11 +17,6 @@ module.exports = (options) => {
       rules: [
         {
           test: /\.ts$/,
-          enforce: 'pre',
-          loader: 'eslint-loader'
-        },
-        {
-          test: /\.ts$/,
           loader: 'ts-loader',
           options: {
             configFile: tsConfigFile,
@@ -35,7 +31,8 @@ module.exports = (options) => {
       filename: "[name].js"
     },
     plugins: [
-      new CleanWebpackPlugin()
+      new CleanWebpackPlugin(),
+      new ESLintPlugin(),
     ]
   }
 };
