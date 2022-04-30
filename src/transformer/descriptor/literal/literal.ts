@@ -32,8 +32,10 @@ function GetLiteralTokenDescriptor(
   const nodeToken: any = node as any;
 
   if (nodeToken.kind === core.ts.SyntaxKind.NumericLiteral) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return createNumericLiteral(parseInt(nodeToken.text, 10));
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return createStringLiteral(nodeToken.text);
 }
