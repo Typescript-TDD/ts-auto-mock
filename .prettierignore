@@ -10,8 +10,6 @@
 /commitlint.config.js
 /config
 /definitelyTypedTests
-/dist
-/node_modules
 /performance
 /ui
 /utils
