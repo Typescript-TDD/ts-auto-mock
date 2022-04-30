@@ -52,6 +52,10 @@ module.exports = {
       value: `ci`
     },
     {
+      name: `docs:    Changes to the documentation`,
+      value: `docs`
+    },
+    {
       name: `chore:    Anything else`,
       value: `chore`
     }
