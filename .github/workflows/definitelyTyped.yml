@@ -23,13 +23,13 @@ jobs:
           echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV
       - name: install ts auto mock
         run: |
-          npm install
+          npm ci
           npm run build
           npm run build:transformer:definitelyTyped
       - name: definitelyTyped
         run: |
           cd definitelyTypedTests
-          npm install
+          npm ci
           npm run start-chunk
       - name: definitelyTyped push changes
         run: |
