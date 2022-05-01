@@ -7,3 +7,8 @@ updates:
   directory: "/"
   schedule:
       interval: "daily"
+  ignore:
+  - dependency-name: "ttypescript"
+    # the version does not have release not or documentation
+    # https://github.com/cevek/ttypescript/issues/131
+    versions: ["1.5.13"]
