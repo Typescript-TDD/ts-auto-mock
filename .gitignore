@@ -1,6 +1,6 @@
 node_modules
 dist
-definitelyTypedTests/build
+definitelyTypedTests/dist
 .idea
 DefinitelyTyped
 test/playground/playground.test.js
