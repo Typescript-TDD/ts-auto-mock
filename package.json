@@ -112,5 +112,9 @@
         "cz-customizable": {
             "config": "./commitizen.js"
         }
+    },
+    "engines" : {
+        "npm" : ">=8.5.5",
+        "node" : ">=16.15.0"
     }
 }
