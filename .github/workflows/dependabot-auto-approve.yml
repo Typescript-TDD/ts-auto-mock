@@ -13,7 +13,7 @@ jobs:
       id: metadata
       uses: dependabot/fetch-metadata@v1.1.1
       with:
-        github-token: "${{ secrets.GITHUBTYPESCRIPTTDD }}"
+        github-token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
     - name: Approve a PR
       if: |
         ${{
