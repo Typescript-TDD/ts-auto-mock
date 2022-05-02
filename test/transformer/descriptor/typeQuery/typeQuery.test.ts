@@ -14,6 +14,7 @@ import {
 import REQUIRE_DEFAULT = require('../utils/interfaces/exportDefaultDeclaration');
 import REQUIRE_EQUAL = require('../utils/interfaces/exportEqualObject');
 import REQUIRE = require('../utils/typeQuery/typeQueryUtils');
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 declare function functionDeclaration(): number;
 
@@ -78,7 +79,7 @@ describe('typeQuery', () => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(functionMock()).toEqual({
+      expect(getObjectKeyValues(functionMock())).toEqual({
         b: '',
       });
     });

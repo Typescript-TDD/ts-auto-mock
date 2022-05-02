@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../utilities/getObjectKeyValues';
 import { AbstractClass } from './utils/classes/AbstractClass';
 import { Class } from './utils/classes/class';
 import { EmptyClass } from './utils/classes/EmptyClass';
@@ -26,7 +27,7 @@ describe('for classes', () => {
 
   it('should set an empty object for empty class', () => {
     const properties: EmptyClass = createMock<EmptyClass>();
-    expect(properties).toEqual({});
+    expect(getObjectKeyValues(properties)).toEqual({});
   });
 
   it('should set the correct properties for an abstract class', () => {

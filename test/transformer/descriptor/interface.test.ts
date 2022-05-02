@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../utilities/getObjectKeyValues';
 
 describe('for interfaces', () => {
   describe('with multiple properties', () => {
@@ -21,7 +22,7 @@ describe('for interfaces', () => {
 
     it('should not fail', () => {
       const properties: Interface = createMock<Interface>();
-      expect(properties).toEqual({});
+      expect(getObjectKeyValues(properties)).toEqual({});
     });
   });
 

@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 describe('for generic', () => {
   describe('interface', () => {
@@ -149,12 +150,12 @@ describe('for generic', () => {
       const properties: GenericTwoValuesAndChildren<{
         a: string;
       }> = createMock<GenericTwoValuesAndChildren<{ a: string }>>();
-      expect(properties.generic1).toEqual({
+      expect(getObjectKeyValues(properties.generic1)).toEqual({
         a: '',
       });
       properties.generic1.a = 'change it';
       expect(properties.generic1.a).toBe('change it');
-      expect(properties.generic2.generic1).toEqual({
+      expect(getObjectKeyValues(properties.generic2.generic1)).toEqual({
         a: '',
       });
     });

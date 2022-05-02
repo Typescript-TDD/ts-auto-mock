@@ -1,4 +1,5 @@
 import { createHydratedMock, createMock, registerMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../transformer/utilities/getObjectKeyValues';
 
 describe('create-hydrated-mock', () => {
   describe('for not optional properties', () => {
@@ -217,12 +218,12 @@ describe('create-hydrated-mock', () => {
 
     it('should merge all the values', () => {
       const properties: Interface = createHydratedMock<Interface>();
-      expect(properties.intersection).toEqual({
+      expect(getObjectKeyValues(properties.intersection)).toEqual({
         a: '',
         b: 0,
       });
 
-      expect(properties.anotherIntersection).toEqual({
+      expect(getObjectKeyValues(properties.anotherIntersection)).toEqual({
         a: '',
         c: false,
       });
