@@ -3,6 +3,7 @@ import { Scope } from '../../scope/scope';
 import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
+import { IsNodeType } from '../nodeTypes/nodeTypes';
 import { GetMockCall } from './mockCall';
 import {
   GetMockPropertiesAssignments,
@@ -47,7 +48,12 @@ export function GetMockPropertiesFromDeclarations(
       const modifiers: ts.ModifiersArray | undefined = member.modifiers;
 
       if (IsTypescriptType(member)) {
-        // This is a current workaround to safe fail extends of TypescriptLibs
+        // Workaround to remove any properties coming from typescript/lib
+        return false;
+      }
+
+      if (IsNodeType(member)) {
+        // Workaround to remove any properties coming from @types/node globals
         return false;
       }
 
