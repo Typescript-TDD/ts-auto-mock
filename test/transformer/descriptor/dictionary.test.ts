@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../utilities/getObjectKeyValues';
 
 describe('for dictionary', () => {
   interface Test {
@@ -10,7 +11,7 @@ describe('for dictionary', () => {
 
   it('should set an empty object', () => {
     const properties: Dictionary<Test> = createMock<Dictionary<Test>>();
-    expect(properties).toEqual({});
+    expect(getObjectKeyValues(properties)).toEqual({});
   });
 
   describe('in a deep interface', () => {
@@ -23,7 +24,7 @@ describe('for dictionary', () => {
       const properties: InterfaceWithDictionary<Test> =
         createMock<InterfaceWithDictionary<Test>>();
       expect(properties.a).toBe('');
-      expect(properties.dictionary).toEqual({});
+      expect(getObjectKeyValues(properties.dictionary)).toEqual({});
     });
   });
 });

@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 describe('typescript lib', () => {
   it('should set an empty array', () => {
@@ -39,7 +40,7 @@ describe('typescript lib', () => {
       a: object;
     }
     const properties: Interface = createMock<Interface>();
-    expect(properties.a).toEqual({});
+    expect(getObjectKeyValues(properties.a)).toEqual({});
   });
 
   it('should set the default value for an Object', () => {
@@ -47,7 +48,7 @@ describe('typescript lib', () => {
       a: Object;
     }
     const properties: Interface = createMock<Interface>();
-    expect(properties.a).toEqual({});
+    expect(getObjectKeyValues(properties.a)).toEqual({});
   });
 
   it('should set an empty function for a function', () => {
@@ -114,7 +115,7 @@ describe('typescript lib', () => {
     const interfaceCast: Interface = properties as unknown as Interface;
 
     const result: WithGenerics<string> = await interfaceCast.a();
-    expect(result).toEqual({
+    expect(getObjectKeyValues(result)).toEqual({
       generic: '',
     });
   });

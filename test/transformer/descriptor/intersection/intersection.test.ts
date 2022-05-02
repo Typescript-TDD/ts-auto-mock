@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 describe('for intersection', () => {
   describe('different interfaces', () => {
@@ -18,12 +19,13 @@ describe('for intersection', () => {
 
     it('should merge all the values', () => {
       const properties: Interface = createMock<Interface>();
-      expect(properties.intersection).toEqual({
+
+      expect(getObjectKeyValues(properties.intersection)).toEqual({
         a: '',
         b: 0,
       });
 
-      expect(properties.anotherIntersection).toEqual({
+      expect(getObjectKeyValues(properties.anotherIntersection)).toEqual({
         a: '',
         c: false,
       });

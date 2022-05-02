@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 describe('for keyin', () => {
   describe('with an union', () => {
@@ -18,7 +19,7 @@ describe('for keyin', () => {
 
     it('should set an empty object', () => {
       const properties: MyType = createMock<MyType>();
-      expect(properties).toEqual({});
+      expect(getObjectKeyValues(properties)).toEqual({});
     });
   });
 

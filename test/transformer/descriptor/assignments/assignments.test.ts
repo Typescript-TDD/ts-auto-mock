@@ -1,4 +1,5 @@
 import { createMock } from 'ts-auto-mock';
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 describe('when assigned directly', () => {
   describe('return number', () => {
@@ -53,7 +54,7 @@ describe('when assigned directly', () => {
 
     it('should set the value', () => {
       const properties: MyClass = createMock<MyClass>();
-      expect(properties.value).toEqual({});
+      expect(getObjectKeyValues(properties.value)).toEqual({});
     });
   });
 
@@ -69,7 +70,7 @@ describe('when assigned directly', () => {
 
     it('should set the value', () => {
       const properties: MyClass = createMock<MyClass>();
-      expect(properties.value).toEqual({
+      expect(getObjectKeyValues(properties.value)).toEqual({
         a: 2,
         b: false,
         c: 'test',

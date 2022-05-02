@@ -60,7 +60,7 @@
         "@semantic-release/changelog": "^6.0.1",
         "@semantic-release/git": "^10.0.1",
         "@semantic-release/github": "^8.0.4",
-        "@types/jasmine": "^3.8.2",
+        "@types/jasmine": "^4.0.3",
         "@types/lodash-es": "^4.17.6",
         "@types/micromatch": "^4.0.2",
         "@types/node": "^16.4.13",
@@ -80,7 +80,7 @@
         "eslint-webpack-plugin": "^3.1.1",
         "git-branch-is": "^4.0.0",
         "husky": "^7.0.4",
-        "jasmine": "^3.8.0",
+        "jasmine": "^4.1.0",
         "jasmine-spec-reporter": "^7.0.0",
         "no-emit-webpack-plugin": "^4.0.1",
         "prettier": "^2.6.2",
@@ -113,8 +113,8 @@
             "config": "./commitizen.js"
         }
     },
-    "engines" : {
-        "npm" : ">=8.x.x",
-        "node" : ">=16.x.x"
+    "engines": {
+        "npm": ">=8.x.x",
+        "node": ">=16.x.x"
     }
 }

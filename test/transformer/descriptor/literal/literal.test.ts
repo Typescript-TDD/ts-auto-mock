@@ -9,6 +9,7 @@ import {
   TypeUnionTokenNumber,
   TypeUnionTokenSameBoolean,
 } from '../utils/types/typeUnion';
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 describe('for literal', () => {
   describe('with a specific string', () => {
@@ -95,7 +96,7 @@ describe('for literal', () => {
 
     it('should set the first one', () => {
       const properties: Interface = createMock<Interface>();
-      expect(properties.literal).toEqual({
+      expect(getObjectKeyValues(properties.literal)).toEqual({
         a: '',
       });
     });
@@ -119,7 +120,7 @@ describe('for literal', () => {
 
     it('should set the first one', () => {
       const properties: Interface = createMock<Interface>();
-      expect(properties.literal).toEqual({});
+      expect(getObjectKeyValues(properties.literal)).toEqual({});
     });
   });
 });

@@ -1,5 +1,6 @@
 import { createMock } from 'ts-auto-mock';
 import { anImportedObject } from '../utils/object/object';
+import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
 describe('functions without types defined', () => {
   it('should infer basic boolean object literal types', () => {
@@ -46,7 +47,7 @@ describe('functions without types defined', () => {
     }
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
-    expect(type().primitiveValue).toEqual({
+    expect(getObjectKeyValues(type().primitiveValue)).toEqual({
       test: 'hello',
     });
   });
@@ -109,7 +110,7 @@ describe('functions without types defined', () => {
     }
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
-    expect(type()).toEqual({
+    expect(getObjectKeyValues(type())).toEqual({
       a: 'hello world',
       b: 123,
     });
@@ -124,7 +125,7 @@ describe('functions without types defined', () => {
     }
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
-    expect(type()).toEqual({
+    expect(getObjectKeyValues(type())).toEqual({
       a: 'hello world',
       b: 123,
     });
@@ -137,7 +138,7 @@ describe('functions without types defined', () => {
     }
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
-    expect(type()).toEqual({
+    expect(getObjectKeyValues(type())).toEqual({
       a: 'hello world',
       b: 123,
     });
@@ -152,7 +153,7 @@ describe('functions without types defined', () => {
     }
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
-    expect(type()).toEqual({
+    expect(getObjectKeyValues(type())).toEqual({
       a: 'hello world',
       b: 123,
     });
@@ -168,9 +169,11 @@ describe('functions without types defined', () => {
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
     expect(
-      type({
-        test: 'hello',
-      })
+      getObjectKeyValues(
+        type({
+          test: 'hello',
+        })
+      )
     ).toEqual({
       param: null,
     });
@@ -185,7 +188,7 @@ describe('functions without types defined', () => {
     }
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
-    expect(type('hello')).toEqual({
+    expect(getObjectKeyValues(type('hello'))).toEqual({
       param: '',
     });
   });
@@ -290,7 +293,7 @@ describe('arrow functions without types defined', () => {
     });
 
     const type: typeof functionToMock = createMock<typeof functionToMock>();
-    expect(type().sum('test1', 'test2')).toEqual({
+    expect(getObjectKeyValues(type().sum('test1', 'test2'))).toEqual({
       a: 'hello',
     });
   });
