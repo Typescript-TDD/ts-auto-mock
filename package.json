@@ -60,7 +60,7 @@
         "@semantic-release/changelog": "^6.0.1",
         "@semantic-release/git": "^10.0.1",
         "@semantic-release/github": "^8.0.4",
-        "@types/jasmine": "^3.8.2",
+        "@types/jasmine": "^4.0.3",
         "@types/lodash-es": "^4.17.6",
         "@types/micromatch": "^4.0.2",
         "@types/node": "^16.4.13",
