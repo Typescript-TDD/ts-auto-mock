@@ -3,7 +3,7 @@ import { Scope } from '../../scope/scope';
 import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import { IsTypescriptType } from '../tsLibs/typecriptLibs';
-import { IsNodeType } from '../nodeTypes/nodeTypes';
+import { IsNodeJsType } from '../nodeJsTypes/nodeJsTypes';
 import { GetMockCall } from './mockCall';
 import {
   GetMockPropertiesAssignments,
@@ -52,7 +52,7 @@ export function GetMockPropertiesFromDeclarations(
         return false;
       }
 
-      if (IsNodeType(member)) {
+      if (IsNodeJsType(member)) {
         // Workaround to remove any properties coming from @types/node globals
         return false;
       }
