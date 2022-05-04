@@ -89,7 +89,7 @@
         "semantic-release-slack-bot": "^3.5.2",
         "ts-loader": "^9.3.0",
         "ts-node": "^10.7.0",
-        "tsconfig-paths": "^3.14.1",
+        "tsconfig-paths": "^4.0.0",
         "ttypescript": "1.5.12",
         "typescript": "^4.6.4",
         "webpack": "^5.72.0",
