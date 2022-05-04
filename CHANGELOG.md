@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.6.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.0...3.6.1) (2022-05-04)
+
+
+### Bug Fixes
+
+* **nodejstypes:** node globals types are now excluded when analyzing type properties ([2f025b7](https://github.com/Typescript-TDD/ts-auto-mock/commit/2f025b76031cfe7d6e90a79a6ca3954c525ce4de)), closes [/github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md#2021-07-29-version-1660](https://github.com//github.com/nodejs/node/blob/master/doc/changelogs/CHANGELOG_V16.md/issues/2021-07-29-version-1660) [/github.com/DefinitelyTyped/DefinitelyTyped/commit/dca7357e90ef804954aaf042ed158220bcd09079#diff-2696281f8832b1227bb41483a7525a8ccd9399bb4b1704f69c8c54bb1346d8edR80](https://github.com//github.com/DefinitelyTyped/DefinitelyTyped/commit/dca7357e90ef804954aaf042ed158220bcd09079/issues/diff-2696281f8832b1227bb41483a7525a8ccd9399bb4b1704f69c8c54bb1346d8edR80)
+
 # [3.6.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.5.1...3.6.0) (2022-04-30)
 
 
