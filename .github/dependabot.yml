@@ -12,5 +12,5 @@ updates:
     # the latest version does not have release notes or documentation
     # https://github.com/cevek/ttypescript/issues/131
   - dependency-name: "@types/node"
-    # @types/node versions follow node versions. this project currently supports node lts/gallium ~ 16.x.x.
+    # @types/node versions follow node versions. this project currently supports node lts/gallium and lts/fermium
     versions: ['>=17.0.0']

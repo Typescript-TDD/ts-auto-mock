@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/gallium]
+        node-version: [lts/gallium, lts/fermium]
 
     steps:
     - uses: actions/checkout@v2
