@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.1...3.6.2) (2022-05-06)
+
+
+### Bug Fixes
+
+* **node:** downgrade the engine strict version to 14 because is still supported by node js in maintenance ([263e870](https://github.com/Typescript-TDD/ts-auto-mock/commit/263e870d735193dba3cf859d3297072b3252afab))
+
 ## [3.6.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.0...3.6.1) (2022-05-04)
 
 
