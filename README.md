@@ -4,6 +4,7 @@
 [![Downloads](https://img.shields.io/npm/dw/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+![GitHub Sponsor](https://img.shields.io/github/sponsors/uittorio?label=sponsor&logo=GitHub)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -78,6 +79,21 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
+## Sponsor ✨
+Thanks to these people
+
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://github.com/muk-ai">
+            <img src="https://avatars.githubusercontent.com/u/3153823?v=4" width="60px;" alt=""/><br />
+        <sub>
+            <b>Kenta Mukai</b>
+        </sub>
+        </a>
+    </td>
+  </tr>
+</table>
 
 ## License
 This project is licensed under the [MIT License](LICENSE.md)
