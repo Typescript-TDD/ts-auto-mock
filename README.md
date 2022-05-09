@@ -80,5 +80,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 
 ## License
-
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE.md)
