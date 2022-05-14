@@ -1,0 +1,8 @@
+{
+  "label": "Api",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "To make this library work you need to apply the ts-auto-mock transformer at compile time. Unfortunately, TypeScript itself does not currently provide any easy way to use custom transformers out of the box."
+  }
+}
