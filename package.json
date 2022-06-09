@@ -85,7 +85,7 @@
         "no-emit-webpack-plugin": "4.0.1",
         "prettier": "2.6.2",
         "regenerator-runtime": "0.13.9",
-        "semantic-release": "19.0.2",
+        "semantic-release": "19.0.3",
         "semantic-release-slack-bot": "3.5.3",
         "ts-loader": "9.3.0",
         "ts-node": "10.8.1",
