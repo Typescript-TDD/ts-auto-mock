@@ -65,7 +65,7 @@
         "@types/micromatch": "4.0.2",
         "@types/node": "16.11.43",
         "@typescript-eslint/eslint-plugin": "5.30.5",
-        "@typescript-eslint/parser": "5.30.4",
+        "@typescript-eslint/parser": "5.30.5",
         "all-contributors-cli": "6.20.0",
         "clean-webpack-plugin": "4.0.0",
         "commitizen": "4.2.4",
