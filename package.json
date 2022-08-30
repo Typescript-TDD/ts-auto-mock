@@ -72,7 +72,7 @@
         "conventional-changelog-angular": "5.0.13",
         "cross-env": "7.0.3",
         "cross-var": "1.1.0",
-        "cz-customizable": "6.9.1",
+        "cz-customizable": "6.9.2",
         "eslint": "8.22.0",
         "eslint-config-prettier": "8.5.0",
         "eslint-plugin-import": "2.26.0",
