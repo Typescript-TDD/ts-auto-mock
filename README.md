@@ -1,4 +1,5 @@
 # TS auto mock
+
 ![Test](https://github.com/Typescript-TDD/ts-auto-mock/workflows/Test/badge.svg)
 [![npm version](https://badge.fury.io/js/ts-auto-mock.svg)](https://badge.fury.io/js/ts-auto-mock)
 [![Downloads](https://img.shields.io/npm/dw/ts-auto-mock.svg)](https://www.npmjs.com/package/ts-auto-mock)
@@ -8,34 +9,66 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-![Slack](docs/slack_small.png) Need help? Join us on [Slack](https://join.slack.com/t/typescripttdd/shared_invite/enQtODk3MjQwNzUwNTk2LTMzNjdlZTNmMmY3Nzg2NDNiZDA1YzJmZjk2NjcwZjQwODQ3YzE5NGZjM2Q4MzZjYWNiMWE4MGU0NjEzM2E5YzE)
+![Slack](docs/slack_small.png) Need help? Join us
+on [Slack](https://join.slack.com/t/typescripttdd/shared_invite/enQtODk3MjQwNzUwNTk2LTMzNjdlZTNmMmY3Nzg2NDNiZDA1YzJmZjk2NjcwZjQwODQ3YzE5NGZjM2Q4MzZjYWNiMWE4MGU0NjEzM2E5YzE)
 
-A TypeScript transformer that will allow you to create mocks for any types (interfaces, classes, etc.) without the need to create manual fakes/mocks.
+# :warning: This repository is now archived and no longer maintained for new features development :warning:
+
+A few years ago we've created this project with the idea in mind that typescript transformers would be easier
+to
+configure.
+
+Unfortunately the typescript team has no intention to improve the developer experience. You can see more information at
+this [link](https://github.com/Microsoft/TypeScript/issues/14419).
+
+We believe that archiving the repository is the best decision to inform who is currently using it and who
+find it for the first time.
+
+We will keep fixing bugs and vulnerability.
+
+Other reasons why this library might not be for you:
+
+- Typescript transformers works only when using the tsc typescript compiler. If you are using esbuild or swc you will
+  not
+  be able to use this library.
+- Test double are a double-edge sword. They have to be used carefully and at the right time. Increasing the number of
+  test doubles could decrease the value of your tests. The amount of configuration required by this library might not
+  justify the amount of test doubles that your application requires.
+
+A TypeScript transformer that will allow you to create mocks for any types (interfaces, classes, etc.) without the need
+to create manual fakes/mocks.
 
 ## [API Documentation](https://typescript-tdd.github.io/ts-auto-mock)
 
 #### [Installation](https://typescript-tdd.github.io/ts-auto-mock/installation)
+
 #### [Usage](https://typescript-tdd.github.io/ts-auto-mock/create-mock)
 
 #### Quick overview
+
 ```ts
 import { createMock } from 'ts-auto-mock';
 
 interface Person {
-  id: string;
-  getName(): string;
-  details: {
-      phone: number
-  }
+    id: string;
+
+    getName(): string;
+
+    details: {
+        phone: number
+    }
 }
+
 const mock = createMock<Person>();
 mock.id // ""
 mock.getName() // ""
 mock.details // "{ phone: 0 }"
 ```
 
-* If you are interested to use it with jasmine please go to [jasmine-ts-auto-mock](https://github.com/Typescript-TDD/jasmine-ts-auto-mock)
-* If you are interested to use it with jest please go to [jest-ts-auto-mock](https://github.com/Typescript-TDD/jest-ts-auto-mock)
+* If you are interested to use it with jasmine please go
+  to [jasmine-ts-auto-mock](https://github.com/Typescript-TDD/jasmine-ts-auto-mock)
+* If you are interested to use it with jest please go
+  to [jest-ts-auto-mock](https://github.com/Typescript-TDD/jest-ts-auto-mock)
 
 ## Changelog
 
@@ -43,9 +76,11 @@ Find the changelog here: [Changelog](CHANGELOG.md).
 
 ## Roadmap
 
-You can find the roadmap of this project on the Wiki page: [Roadmap](https://github.com/Typescript-TDD/ts-auto-mock/wiki/Roadmap).
+You can find the roadmap of this project on the Wiki
+page: [Roadmap](https://github.com/Typescript-TDD/ts-auto-mock/wiki/Roadmap).
 
 ## Do you want to contribute?
+
 * [Check how to make changes to the code base](https://typescript-tdd.github.io/ts-auto-mock/local-development)
 
 ## Authors
@@ -77,9 +112,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+Contributions of any kind welcome!
 
 ## Sponsor ✨
+
 Thanks to these people
 
 <table>
@@ -96,4 +133,5 @@ Thanks to these people
 </table>
 
 ## License
+
 This project is licensed under the [MIT License](LICENSE.md)
