@@ -1,8 +1,8 @@
 name: DefinitelyTyped Tests
 
-on:
-  schedule:
-  - cron: '0 0 * * *'
+#on:
+#  schedule:
+#  - cron: '0 0 * * *'
 
 jobs:
   definitely-typed:
@@ -10,44 +10,44 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/gallium]
+        node-version: [ lts/gallium ]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: create environment variable date
-        run: |
-          echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV
-      - name: install ts auto mock
-        run: |
-          npm ci
-          npm run build
-          npm run build:transformer:definitelyTyped
-      - name: definitelyTyped
-        run: |
-          cd definitelyTypedTests
-          npm ci
-          npm run start-chunk
-      - name: definitelyTyped push changes
-        run: |
-          git config --global user.name 'typescripttdd'
-          git config --global user.email 'typescripttdd@gmail.com'
-      - name: Create commits
-        run: |
-          git add data/*
-          git checkout .
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
-        with:
-          commit-message: "chore(definitelyTyped): add definitelyTyped tests data"
-          committer: typescripttdd <typescripttdd@gmail.com>
-          author: typescripttdd <typescripttdd@gmail.com>
-          title: DefinitelyTyped Tests Data on ${{ env.DATE }}
-          labels: ts-auto-mock-automerge
-          branch: definitely-typed-tests
-          token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: create environment variable date
+      run: |
+        echo "DATE=$(date +%Y-%m-%dT%H-%M-%S)" >> $GITHUB_ENV
+    - name: install ts auto mock
+      run: |
+        npm ci
+        npm run build
+        npm run build:transformer:definitelyTyped
+    - name: definitelyTyped
+      run: |
+        cd definitelyTypedTests
+        npm ci
+        npm run start-chunk
+    - name: definitelyTyped push changes
+      run: |
+        git config --global user.name 'typescripttdd'
+        git config --global user.email 'typescripttdd@gmail.com'
+    - name: Create commits
+      run: |
+        git add data/*
+        git checkout .
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUBTYPESCRIPTTDD }}
+      with:
+        commit-message: "chore(definitelyTyped): add definitelyTyped tests data"
+        committer: typescripttdd <typescripttdd@gmail.com>
+        author: typescripttdd <typescripttdd@gmail.com>
+        title: DefinitelyTyped Tests Data on ${{ env.DATE }}
+        labels: ts-auto-mock-automerge
+        branch: definitely-typed-tests
+        token: ${{ secrets.GITHUBTYPESCRIPTTDD }}
