@@ -12,7 +12,7 @@
 ![Slack](docs/slack_small.png) Need help? Join us
 on [Slack](https://join.slack.com/t/typescripttdd/shared_invite/enQtODk3MjQwNzUwNTk2LTMzNjdlZTNmMmY3Nzg2NDNiZDA1YzJmZjk2NjcwZjQwODQ3YzE5NGZjM2Q4MzZjYWNiMWE4MGU0NjEzM2E5YzE)
 
-# :warning: This repository is now archived and no longer maintained for new features development :warning:
+# :warning: This repository is now no longer maintained for new features development :warning:
 
 A few years ago we've created this project with the idea in mind that typescript transformers would be easier
 to
@@ -21,7 +21,7 @@ configure.
 Unfortunately the typescript team has no intention to improve the developer experience. You can see more information at
 this [link](https://github.com/Microsoft/TypeScript/issues/14419).
 
-We believe that archiving the repository is the best decision to inform who is currently using it and who
+We believe that stop developing new features is the best decision to inform who is currently using it and who
 find it for the first time.
 
 We will keep fixing bugs and vulnerability.
