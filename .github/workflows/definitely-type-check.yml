@@ -1,13 +1,13 @@
-name: Definitely Type build
+name: "Definitely Type build"
 
 on:
   push:
     branches:
-      - master
+    - master
   pull_request:
     paths-ignore:
-      - 'data/**'
-      - 'ui/**'
+    - 'data/**'
+    - 'ui/**'
 
 jobs:
   test:
@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/gallium, lts/fermium]
+        node-version: [ lts/gallium, lts/fermium ]
 
     steps:
     - uses: actions/checkout@v2

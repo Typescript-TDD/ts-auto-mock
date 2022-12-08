@@ -1,22 +1,22 @@
-name: automerge
+name: "Automerge"
 on:
   pull_request:
     paths:
-      - "data/**"
+    - "data/**"
     types:
-      - labeled
-      - opened
+    - labeled
+    - opened
   check_suite:
     types:
-      - completed
+    - completed
 jobs:
   automerge:
     runs-on: ubuntu-latest
     steps:
-      - name: automerge
-        uses: "pascalgn/automerge-action@7ab42e888a333bf77ce865bc84fedc6a365a3548"
-        env:
-          MERGE_METHOD: "rebase"
-          MERGE_LABELS: "ts-auto-mock-automerge"
-          UPDATE_METHOD: "rebase"
-          GITHUB_TOKEN: "${{ secrets.GITHUBTYPESCRIPTTDD }}"
+    - name: automerge
+      uses: "pascalgn/automerge-action@7ab42e888a333bf77ce865bc84fedc6a365a3548"
+      env:
+        MERGE_METHOD: "rebase"
+        MERGE_LABELS: "ts-auto-mock-automerge"
+        UPDATE_METHOD: "rebase"
+        GITHUB_TOKEN: "${{ secrets.GITHUBTYPESCRIPTTDD }}"
