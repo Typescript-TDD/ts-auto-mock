@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.6.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.3...3.6.4) (2022-12-08)
+
+
+### Bug Fixes
+
+* **ci:** update names on ci and fix workflow ([a1a09d7](https://github.com/Typescript-TDD/ts-auto-mock/commit/a1a09d77607e4cacfd6c5433c1c236f64be0ae7e))
+
 ## [3.6.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.2...3.6.3) (2022-12-08)
 
 
