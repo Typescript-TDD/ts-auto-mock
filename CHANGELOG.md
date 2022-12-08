@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.6.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.2...3.6.3) (2022-12-08)
+
+
+### Bug Fixes
+
+* **typescript:** add support to typescript 4.9.3 ([77bfaba](https://github.com/Typescript-TDD/ts-auto-mock/commit/77bfaba2bb05cd97b61fba3eea9466d1e6c1fb47))
+
 ## [3.6.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.1...3.6.2) (2022-05-06)
 
 
