@@ -45,7 +45,10 @@ export function GetMockPropertiesFromDeclarations(
 ): ts.CallExpression {
   const propertiesFilter: PropertyLike[] = list.filter(
     (member: PropertyLike) => {
-      const modifiers: ts.ModifiersArray | undefined = member.modifiers;
+      const modifiers:
+        | ts.NodeArray<ts.Modifier>
+        | ts.NodeArray<ts.ModifierLike>
+        | undefined = member.modifiers;
 
       if (IsTypescriptType(member)) {
         // Workaround to remove any properties coming from typescript/lib

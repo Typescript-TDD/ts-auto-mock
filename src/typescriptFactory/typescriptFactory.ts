@@ -212,28 +212,24 @@ export function createPropertySignature(
 }
 
 export function createParameter(parameterName: string): ParameterDeclaration {
+  const modifiers: undefined = undefined;
+  const dotDotDotToken: undefined = undefined;
   return core.ts.factory.createParameterDeclaration(
-    undefined,
-    undefined,
-    undefined,
-    createIdentifier(parameterName),
-    undefined,
-    undefined,
-    undefined
+    modifiers,
+    dotDotDotToken,
+    createIdentifier(parameterName)
   );
 }
 
 export function createParameterFromIdentifier(
   identifier: Identifier
 ): ParameterDeclaration {
+  const modifiers: undefined = undefined;
+  const dotDotDotToken: undefined = undefined;
   return core.ts.factory.createParameterDeclaration(
-    undefined,
-    undefined,
-    undefined,
-    identifier,
-    undefined,
-    undefined,
-    undefined
+    modifiers,
+    dotDotDotToken,
+    identifier
   );
 }
 
@@ -247,22 +243,25 @@ export function createMethod(
       core.ts.factory.createParameterDeclaration(
         undefined,
         undefined,
-        undefined,
         parameterName,
         undefined,
         undefined,
         undefined
       )
   );
+  const modifiers: undefined = undefined;
+  const asteriskToken: undefined = undefined;
+  const questionToken: undefined = undefined;
+  const typeParameters: undefined = undefined;
+  const type: undefined = undefined;
   return core.ts.factory.createMethodDeclaration(
-    undefined,
-    undefined,
-    undefined,
+    modifiers,
+    asteriskToken,
     createIdentifier(methodName),
-    undefined,
-    undefined,
+    questionToken,
+    typeParameters,
     parameters,
-    undefined,
+    type,
     body
   );
 }
@@ -333,12 +332,6 @@ export function createTypeNode<TKind extends KeywordTypeSyntaxKind>(
 
 export function createFunctionTypeNode(typeNode: TypeNode): FunctionTypeNode {
   return core.ts.factory.createFunctionTypeNode([], [], typeNode);
-}
-
-export function createNode(): Node {
-  return core.ts.factory.createKeywordTypeNode(
-    core.ts.SyntaxKind.NumberKeyword
-  );
 }
 
 export function createObjectLiteral(
@@ -431,7 +424,6 @@ export function createImportAllAs(
   filenameToImportFrom: string
 ): ImportDeclaration {
   return core.ts.factory.createImportDeclaration(
-    [],
     [],
     core.ts.factory.createImportClause(
       false,
