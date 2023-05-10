@@ -11,7 +11,7 @@
         "build:modules:debug": "cross-env DEBUG=true webpack --config config/modules/webpack.js",
         "build:transformer:definitelyTyped": "webpack --config config/modules/definitelyTypedTransformer/webpack.functions.js && webpack --config config/modules/definitelyTypedTransformer/webpack.js",
         "build:transformer:definitelyTyped:debug": "cross-env DEBUG=true webpack --config config/modules/definitelyTypedTransformer/webpack.functions.js && cross-env DEBUG=true webpack --config config/modules/definitelyTypedTransformer/webpack.js",
-        "build:playground": "ttsc --project ./test/playground/tsconfig.build.json",
+        "build:playground": "tspc --project ./test/playground/tsconfig.build.json",
         "test": "npm run test:transformer && npm run test:noTransformer && npm run test:framework:context && npm run test:framework && npm run test:frameworkDeprecated && npm run test:registerMock && npm run test:createHydratedMock && npm run test:features && npm run test:filesFilter && npm run test:logs && npm run test:unit && npm run test:build",
         "test:unit": "cross-env JASMINE_CONFIG=./test/unit/jasmine.json TSCONFIG=./test/tsconfig.json npm run test:common",
         "test:transformer": "cross-env JASMINE_CONFIG=./test/transformer/jasmine.json TSCONFIG=./test/transformer/tsconfig.json npm run test:common",
@@ -27,7 +27,7 @@
         "test:logs": "cross-env JASMINE_CONFIG=./test/logs/jasmine.json TSCONFIG=./test/logs/tsconfig.json npm run test:common",
         "test:playground": "cross-env JASMINE_CONFIG=./test/playground/jasmine.json TSCONFIG=./test/playground/tsconfig.json npm run test:common",
         "test:playground:build": "cross-env JASMINE_CONFIG=./test/playground/jasmine.build.json TSCONFIG=./test/playground/tsconfig.json npm run test:common",
-        "test:common": "cross-var ts-node --files -r tsconfig-paths/register --compiler ttypescript --project $TSCONFIG node_modules/jasmine/bin/jasmine --config=$JASMINE_CONFIG",
+        "test:common": "cross-var ts-node --files -r tsconfig-paths/register --project $TSCONFIG node_modules/jasmine/bin/jasmine --config=$JASMINE_CONFIG",
         "dist:collect": "cp -r package.json package-lock.json README.md LICENSE.md dist",
         "ts-check:src": "tsc --noEmit",
         "eslint": "eslint ./src/**/*.ts ./test/**/*.ts",
@@ -89,9 +89,9 @@
         "semantic-release-slack-bot": "3.5.3",
         "ts-loader": "9.3.1",
         "ts-node": "10.9.1",
+        "ts-patch": "^3.0.0-beta3",
         "tsconfig-paths": "4.1.0",
-        "ttypescript": "^1.5.13",
-        "typescript": "^4.9.3",
+        "typescript": "^5.0.4",
         "webpack": "5.76.1",
         "webpack-cli": "4.10.0",
         "webpack-merge": "5.8.0",
@@ -103,7 +103,7 @@
         "winston": "3.7.2"
     },
     "peerDependencies": {
-        "typescript": "^4.X.X"
+        "typescript": "^5.0.4"
     },
     "config": {
         "commitizen": {

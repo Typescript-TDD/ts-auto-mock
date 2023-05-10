@@ -4,6 +4,7 @@ import { GetDescriptor } from '../descriptor';
 import { TransformerLogger } from '../../logger/transformerLogger';
 import { GetNullDescriptor } from '../null/null';
 import { PropertySignatureCache } from './cache';
+import { core } from "../../core/core";
 
 type PropertyNode = ts.PropertySignature | ts.PropertyDeclaration;
 
@@ -12,12 +13,11 @@ export function GetPropertyDescriptor(
   scope: Scope
 ): ts.Expression {
   PropertySignatureCache.instance.set(node.name);
-
   if (node.type) {
     return GetDescriptor(node.type, scope);
   }
 
-  if (!node.initializer) {
+  if (core.ts.isPropertySignature(node) || !node.initializer) {
     TransformerLogger().typeOfPropertyNotFound(node);
     return GetNullDescriptor();
   }

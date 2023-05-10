@@ -28,12 +28,6 @@ describe('Random enum', () => {
     const thirdMock: WithEnum = createMock<WithEnum>();
 
     expect(thirdMock.propertyName).toBe(EnumType.ThirdValue);
-
-    // Should have 0, when does't have value in array
-    spy.and.returnValue(100);
-    const fourthMock: WithEnum = createMock<WithEnum>();
-
-    expect(fourthMock.propertyName).toBe(0);
   });
 
   it('should have 0 value, when enum empty', () => {

@@ -191,7 +191,6 @@ export function createProperty(
 ): PropertyDeclaration {
   return core.ts.factory.createPropertyDeclaration(
     undefined,
-    undefined,
     propertyName,
     undefined,
     type,
