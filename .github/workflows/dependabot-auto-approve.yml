@@ -19,9 +19,24 @@ jobs:
         echo Update type ${{ steps.metadata.outputs.update-type }}
         echo Dependency type ${{ steps.metadata.outputs.dependency-type }}
     - name: Approve a PR
+
+      # What are we automatically merging?
+      # MINOR and PATCH updates
+      # Development dependencies
+      # Indirect dependencies
+
+      # ----------------------
+      # ------ IMPORTANT ------
+      # Unfortunately dependabot core does not support knowing if an indirect dependency is from production or development
+      # [https://github.com/dependabot/fetch-metadata/issues/43#issuecomment-878173130]
+      # I am taking the risk to automatically update indirect dependencies of production dependencies.
+      # Ts-auto-mock will not be published automatically because of this.
+      # Before releasing a new version of ts-auto-mock the production dependencies need to be reviewed.
+      # ----------------------
+
       if: |
         (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') 
-          && steps.metadata.outputs.dependency-type == 'direct:development'
+          && (steps.metadata.outputs.dependency-type == 'indirect' || steps.metadata.outputs.dependency-type == 'direct:development')
       run: |
         gh pr review --approve "$PR_URL"
         gh pr merge --auto --rebase "$PR_URL"
