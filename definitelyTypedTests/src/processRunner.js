@@ -100,7 +100,7 @@ createDefinitelyTypedMock<typeof pak>();
 `
   );
 
-  return execPromise(`npx ttsc --project tsconfig.types.${processId}.json`)
+  return execPromise(`npx tspc --project tsconfig.types.${processId}.json`)
     .then((response) => {
       if (response) {
         process.stdout.write(`TYPE: ${dir} P${processId} `);

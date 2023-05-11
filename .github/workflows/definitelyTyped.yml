@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ lts/gallium ]
+        node-version: [ lts/hydrogen ]
 
     steps:
     - uses: actions/checkout@v3
@@ -22,6 +22,7 @@ jobs:
     - name: install ts auto mock
       run: |
         npm ci
+        npm ts-patch:install
         npm run build
         npm run build:transformer:definitelyTyped
     - name: definitelyTyped

@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ lts/gallium ]
+        node-version: [ lts/hydrogen ]
 
     steps:
     - uses: actions/checkout@v2
@@ -26,6 +26,7 @@ jobs:
     - name: run definitely typed build
       run: |
         npm ci
+        npm ts-patch:install
         npm run build
         npm run build:transformer:definitelyTyped
       env:

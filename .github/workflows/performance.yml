@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ lts/gallium ]
+        node-version: [ lts/hydrogen ]
 
     steps:
     - uses: actions/checkout@v2
@@ -25,6 +25,7 @@ jobs:
     - name: install ts auto mock
       run: |
         npm ci
+        npm ts-patch:install
         npm run build
       env:
         CI: true

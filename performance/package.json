@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "description": "ts auto mock performance",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "prepare": "ts-patch install -s"
   },
   "author": "Vittorio Guerriero & Giulio Caprino",
   "license": "MIT",
   "devDependencies": {
     "del": "^6.0.0",
     "ncp": "^2.0.0",
-    "ttypescript": "1.5.12",
-    "typescript": "^4.3.5"
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "ts-patch": "^3.0.0-beta3"
   }
 }
