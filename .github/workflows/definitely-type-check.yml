@@ -26,7 +26,7 @@ jobs:
     - name: run definitely typed build
       run: |
         npm ci
-        npm ts-patch:install
+        npm run ts-patch:install
         npm run build
         npm run build:transformer:definitelyTyped
       env:

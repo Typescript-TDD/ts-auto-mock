@@ -25,7 +25,7 @@ jobs:
     - name: install ts auto mock
       run: |
         npm ci
-        npm ts-patch:install
+        npm run ts-patch:install
         npm run build
       env:
         CI: true
