@@ -69,6 +69,8 @@ describe('create-mock-values', () => {
     }
 
     const parentMock: ParentType = createMock<ParentType>({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       propArray: [mock1, mock2],
       prop: mock1,
     });

@@ -15,10 +15,10 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ lts/gallium, lts/fermium ]
+        node-version: [ lts/hydrogen ]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -26,6 +26,7 @@ jobs:
     - name: run definitely typed build
       run: |
         npm ci
+        npm run ts-patch:install
         npm run build
         npm run build:transformer:definitelyTyped
       env:

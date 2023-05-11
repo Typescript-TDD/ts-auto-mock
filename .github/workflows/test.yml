@@ -15,10 +15,10 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ lts/gallium, lts/fermium, lts/hydrogen ]
+        node-version: [ lts/gallium, lts/hydrogen ]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -28,13 +28,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y libgbm-dev
         npm ci
+        npm run ts-patch:install
         npm run build
         npm test
   check-type:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:

@@ -41,7 +41,7 @@ function convertTime(time) {
 function typescriptRunner() {
     return {
         run(tsConfig) {
-            return execPromise(`ttsc --project ${tsConfig}`).then((result) => {
+            return execPromise(`tspc --project ${tsConfig}`).then((result) => {
                 return parseTypescriptDiagnostic(result);
             }).catch((error) => {
                 console.error(error);

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "plugins": [
       {
-        "transform": "./dist/transformer",
+        "transform": "../../dist/transformer",
         "features": [],
         "debug": false,
         "cacheBetweenTests": true,

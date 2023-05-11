@@ -252,7 +252,7 @@ describe('typescript lib', () => {
 
   it('should set undefined for a not recognized type alias declaration', () => {
     interface WithLiteralTypescriptType {
-      prop: InsertPosition;
+      prop: FlatArray<string, number>;
     }
 
     const mock: WithLiteralTypescriptType =

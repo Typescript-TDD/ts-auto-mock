@@ -11,6 +11,7 @@
     "process-all-types": "node index.js TYPES_COUNT=all PROCESS_COUNT=20 OUTPUT=true",
     "process-types": "node index.js",
     "ts-check:src": "tsc --noEmit",
+    "prepare": "ts-patch install -s",
     "post-process-types": "node src/postProcessTypes.js",
     "dry-process-specific-types": "cross-var npm run process-types TYPES=$TYPES_SPECIFIED"
   },
@@ -19,10 +20,10 @@
   "dependencies": {
     "cross-var": "^1.1.0",
     "dotenv": "^8.2.0",
-    "ttypescript": "^1.5.12",
+    "ts-patch": "^3.0.0-beta3",
     "upath": "^2.0.1"
   },
   "devDependencies": {
-    "typescript": "^4.3.5"
+    "typescript": "^5.0.4"
   }
 }

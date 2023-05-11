@@ -1,15 +1,15 @@
 import { createMock } from 'ts-auto-mock';
-import { WithStringLiteralProperties } from '../../utilities/withStringLiteralPropertis';
+import { WithStringLiteralProperties } from '../../utilities/withStringLiteralProperties';
 
 describe('properties with literal', () => {
   interface Literal {
-    test: number;
+    test: 3;
   }
 
   it('should assign the correct values', () => {
     const mock: Literal = createMock<Literal>();
 
-    expect(mock.test).toBe(0);
+    expect(mock.test).toBe(3);
   });
 });
 
@@ -18,8 +18,8 @@ describe('properties with imported interface literal', () => {
     const mock: WithStringLiteralProperties =
       createMock<WithStringLiteralProperties>();
 
-    expect(mock['!']).toBe(0);
+    expect(mock['!']).toBe(12);
     expect(mock['literal-special-characters-property']).toBeUndefined();
-    expect(mock['&methodSpecialCharacters']()).toBe(0);
+    expect(mock['&methodSpecialCharacters']()).toBe(13);
   });
 });

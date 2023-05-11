@@ -69,7 +69,7 @@ export const createDefinitelyTypedMockCustomFunction: CustomFunction =
             );
 
           if (compatibleStatements.length > 0) {
-            return core.ts.createArrayLiteral(
+            return core.ts.factory.createArrayLiteralExpression(
               compatibleStatements.map(
                 (workingStatement: CompatibleStatement) => {
                   const name: ts.Identifier =
@@ -88,7 +88,7 @@ export const createDefinitelyTypedMockCustomFunction: CustomFunction =
                   }
 
                   const nodeToMock: ts.TypeReferenceNode =
-                    core.ts.createTypeReferenceNode(name, undefined);
+                    core.ts.factory.createTypeReferenceNode(name, undefined);
                   return getMock(node, { nodeToMock });
                 },
                 []
