@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [3.7.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.4...3.7.0) (2023-05-11)
+
+
+### Features
+
+* **typescript5:** Add compatibility to typescript 5 ([7378ad7](https://github.com/Typescript-TDD/ts-auto-mock/commit/7378ad7489d85c9616e0c5c53560888d9546157e))
+
+
+### BREAKING CHANGES
+
+* **typescript5:** Typescript 4 is not longer supported
+
 ## [3.6.4](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.3...3.6.4) (2022-12-08)
 
 
