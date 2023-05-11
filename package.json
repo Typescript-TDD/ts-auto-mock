@@ -4,6 +4,7 @@
     "description": "Typescript transformer to unlock automatic mock creation for interfaces and classes",
     "scripts": {
         "build": "npm run build:modules && npm run build:transformer",
+        "ts-patch:install": "ts-patch install",
         "build:debug": "npm run build:modules:debug && npm run build:transformer:debug",
         "build:transformer": "webpack --config config/modules/transformer/webpack.js",
         "build:transformer:debug": "cross-env DEBUG=true webpack --config config/modules/transformer/webpack.js",
