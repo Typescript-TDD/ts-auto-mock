@@ -4,7 +4,7 @@ import { GetDescriptor } from '../descriptor';
 import { TransformerLogger } from '../../logger/transformerLogger';
 import { GetNullDescriptor } from '../null/null';
 import { PropertySignatureCache } from './cache';
-import { core } from "../../core/core";
+import { core } from '../../core/core';
 
 type PropertyNode = ts.PropertySignature | ts.PropertyDeclaration;
 
