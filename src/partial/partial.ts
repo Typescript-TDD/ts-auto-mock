@@ -1,7 +1,7 @@
-type Primitive = null | undefined | string | number | boolean | symbol | bigint;
+import type { BuiltIns } from './internal';
 
-export type PartialDeep<T> = T extends Primitive
-  ? Partial<T>
+export type PartialDeep<T> = T extends BuiltIns
+  ? T
   : T extends Map<infer KeyType, infer ValueType>
   ? PartialMapDeep<KeyType, ValueType>
   : T extends Set<infer ItemType>
@@ -13,34 +13,29 @@ export type PartialDeep<T> = T extends Primitive
   : T extends (...args: any[]) => unknown // eslint-disable-line @typescript-eslint/no-explicit-any
   ? T | undefined
   : T extends object
-  ? PartialObjectDeep<T>
+  ? T extends ReadonlyArray<infer ItemType> // Test for arrays/tuples, per https://github.com/microsoft/TypeScript/issues/35156
+    ? ItemType[] extends T // Test for arrays (non-tuples) specifically
+      ? readonly ItemType[] extends T // Differentiate readonly and mutable arrays
+        ? ReadonlyArray<PartialDeep<ItemType | undefined>>
+        : Array<PartialDeep<ItemType | undefined>>
+      : PartialObjectDeep<T>
+    : PartialObjectDeep<T>
   : unknown;
 
-/**
- Same as `PartialDeep`, but accepts only `Map`s and  as inputs. Internal helper for `PartialDeep`.
- */
-interface PartialMapDeep<KeyType, ValueType>
-  extends Map<PartialDeep<KeyType>, PartialDeep<ValueType>> {}
+type PartialMapDeep<KeyType, ValueType> = {} & Map<
+  PartialDeep<KeyType>,
+  PartialDeep<ValueType>
+>;
 
-/**
- Same as `PartialDeep`, but accepts only `Set`s as inputs. Internal helper for `PartialDeep`.
- */
-interface PartialSetDeep<T> extends Set<PartialDeep<T>> {}
+type PartialSetDeep<T> = {} & Set<PartialDeep<T>>;
 
-/**
- Same as `PartialDeep`, but accepts only `ReadonlyMap`s as inputs. Internal helper for `PartialDeep`.
- */
-interface PartialReadonlyMapDeep<KeyType, ValueType>
-  extends ReadonlyMap<PartialDeep<KeyType>, PartialDeep<ValueType>> {}
+type PartialReadonlyMapDeep<KeyType, ValueType> = {} & ReadonlyMap<
+  PartialDeep<KeyType>,
+  PartialDeep<ValueType>
+>;
 
-/**
- Same as `PartialDeep`, but accepts only `ReadonlySet`s as inputs. Internal helper for `PartialDeep`.
- */
-interface PartialReadonlySetDeep<T> extends ReadonlySet<PartialDeep<T>> {}
+type PartialReadonlySetDeep<T> = {} & ReadonlySet<PartialDeep<T>>;
 
-/**
- Same as `PartialDeep`, but accepts only `object`s as inputs. Internal helper for `PartialDeep`.
- */
 type PartialObjectDeep<ObjectType extends object> = {
   [KeyType in keyof SuppressObjectPrototypeOverrides<ObjectType>]?: PartialDeep<
     SuppressObjectPrototypeOverrides<ObjectType>[KeyType]
