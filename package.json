@@ -101,7 +101,7 @@
     "dependencies": {
         "lodash-es": "4.17.21",
         "micromatch": "4.0.5",
-        "winston": "3.7.2"
+        "winston": "3.9.0"
     },
     "peerDependencies": {
         "typescript": "^5.0.4"
