@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.7.1](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.7.0...3.7.1) (2023-06-19)
+
+
+### Bug Fixes
+
+* **typescript:** improve typings for partials ([28ad22a](https://github.com/Typescript-TDD/ts-auto-mock/commit/28ad22a176f8b8cd126b577c3fd5d35ff4d52773))
+
 # [3.7.0](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.6.4...3.7.0) (2023-05-11)
 
 
