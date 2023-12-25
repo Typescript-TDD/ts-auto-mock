@@ -5,7 +5,7 @@ import { createArrayLiteral } from '../../../typescriptFactory/typescriptFactory
 
 export function GetTupleDescriptor(
   node: ts.TupleTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return createArrayLiteral(
     getDescriptorFromTypeNodes(
@@ -15,14 +15,14 @@ export function GetTupleDescriptor(
         // this casting is needed.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ((node as any).elements as ts.NodeArray<ts.TypeNode>),
-      scope
-    )
+      scope,
+    ),
   );
 }
 
 function getDescriptorFromTypeNodes(
   nodes: ts.NodeArray<ts.TypeNode>,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression[] {
   return nodes.map((e: ts.TypeNode) => GetDescriptor(e, scope));
 }

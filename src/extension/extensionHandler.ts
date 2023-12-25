@@ -4,11 +4,11 @@ import { isFunction } from './method/function';
 type AsMockedPropertyHandler<
   TMockedPropertyHandler,
   TMock,
-  TPropName extends keyof TMock
+  TPropName extends keyof TMock,
 > = (
   prop: TMock[TPropName],
   mock: TMock,
-  propName: TPropName
+  propName: TPropName,
 ) => TMockedPropertyHandler;
 
 export class ExtensionHandler<TMock> {
@@ -24,10 +24,10 @@ export class ExtensionHandler<TMock> {
       TMockedPropertyHandler,
       TMock,
       TPropName
-    >
+    >,
   ): TMockedPropertyHandler;
   public get<TMockedPropertyHandler>(
-    extension: Extension<TMock, TMockedPropertyHandler>
+    extension: Extension<TMock, TMockedPropertyHandler>,
   ): TMockedPropertyHandler;
   public get<TPropName extends keyof TMock, TMockedPropertyHandler>(
     extensionOrPropertyName:
@@ -37,7 +37,7 @@ export class ExtensionHandler<TMock> {
       TMockedPropertyHandler,
       TMock,
       TPropName
-    >
+    >,
   ): TMockedPropertyHandler {
     if (isFunction(extensionOrPropertyName)) {
       return extensionOrPropertyName(this._mock);
@@ -47,14 +47,14 @@ export class ExtensionHandler<TMock> {
       throw new Error(
         `It looks like you are trying to get an extension for ${
           extensionOrPropertyName as string
-        } without specifying the handler.`
+        } without specifying the handler.`,
       );
     }
 
     return maybePropertyHandler(
       this._mock[extensionOrPropertyName],
       this._mock,
-      extensionOrPropertyName
+      extensionOrPropertyName,
     );
   }
 }

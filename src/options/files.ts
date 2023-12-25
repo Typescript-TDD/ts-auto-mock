@@ -5,7 +5,7 @@ import { GetOptionByKey } from './options';
 export type TsAutoMockFilesOption = string | string[] | undefined;
 
 export function GetIsFilesExcludedFromOptions(): (
-  sourceFile: ts.SourceFile
+  sourceFile: ts.SourceFile,
 ) => boolean {
   const filesOption: string | string[] | undefined = GetOptionByKey('files');
 

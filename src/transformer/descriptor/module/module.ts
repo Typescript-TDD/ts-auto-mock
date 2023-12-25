@@ -16,22 +16,22 @@ type ExternalSource = ts.SourceFile | ts.ModuleDeclaration;
 
 export function GetModuleDescriptor(
   node: ts.NamedDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   if (!node.name) {
     throw new Error(
-      `Cannot look up symbol for a node without a name: ${node.getText()}.`
+      `Cannot look up symbol for a node without a name: ${node.getText()}.`,
     );
   }
 
   const typeChecker: ts.TypeChecker = core.typeChecker;
   const symbolAlias: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
-    node.name
+    node.name,
   );
 
   if (!symbolAlias) {
     throw new Error(
-      `The type checker failed to look up symbol for \`${node.name.getText()}'.`
+      `The type checker failed to look up symbol for \`${node.name.getText()}'.`,
     );
   }
 
@@ -43,13 +43,13 @@ export function GetModuleDescriptor(
     return GetPropertiesFromSourceFileOrModuleDeclarationDescriptor(
       externalModuleDeclaration,
       symbol,
-      scope
+      scope,
     );
   }
 
   return GetTypeQueryDescriptorFromDeclaration(
     externalModuleDeclaration,
-    scope
+    scope,
   );
 }
 
@@ -63,12 +63,12 @@ function isExternalSource(declaration: ts.Node): declaration is ExternalSource {
 function GetPropertiesFromSourceFileOrModuleDeclarationDescriptor(
   sourceFile: ExternalSource,
   symbol: ts.Symbol,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetMockPropertiesFromDeclarations(
     GetPropertiesFromSourceFileOrModuleDeclaration(symbol, scope),
     [],
-    scope
+    scope,
   );
 }
 
@@ -79,7 +79,7 @@ interface ModuleExportsDeclarations {
 
 export function GetPropertiesFromSourceFileOrModuleDeclaration(
   symbol: ts.Symbol,
-  scope: Scope
+  scope: Scope,
 ): ts.PropertySignature[] {
   const typeChecker: ts.TypeChecker = core.typeChecker;
   const moduleExports: ts.Symbol[] = typeChecker.getExportsOfModule(symbol);
@@ -98,13 +98,14 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
       };
     })
     .filter(
-      (d: ModuleExportsDeclarations) => !!d.originalDeclaration && d.declaration
+      (d: ModuleExportsDeclarations) =>
+        !!d.originalDeclaration && d.declaration,
     )
     .map((d: ModuleExportsDeclarations): ts.PropertySignature => {
       if (core.ts.isExportAssignment(d.declaration)) {
         return createPropertySignature(
           'default',
-          createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
+          createTypeQueryNode(d.originalDeclaration.name as ts.Identifier),
         );
       }
 
@@ -117,7 +118,7 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
 
         if (!exportSpecifierSymbol) {
           throw new Error(
-            `The type checker failed to look up symbol for \`${d.declaration.name.getText()}'.`
+            `The type checker failed to look up symbol for \`${d.declaration.name.getText()}'.`,
           );
         }
 
@@ -126,10 +127,10 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
         const exportSpecifierProperties: ts.PropertySignature[] =
           GetPropertiesFromSourceFileOrModuleDeclaration(
             exportSpecifierAliasSymbol,
-            scope
+            scope,
           );
         const propertyType: ts.TypeLiteralNode = createTypeLiteralNode(
-          exportSpecifierProperties
+          exportSpecifierProperties,
         );
 
         return createPropertySignature(d.declaration.name, propertyType);
@@ -138,7 +139,7 @@ export function GetPropertiesFromSourceFileOrModuleDeclaration(
       return createPropertySignature(
         (d.originalDeclaration.name as ts.Identifier) ||
           createIdentifier('default'),
-        createTypeQueryNode(d.originalDeclaration.name as ts.Identifier)
+        createTypeQueryNode(d.originalDeclaration.name as ts.Identifier),
       );
     });
 }

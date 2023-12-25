@@ -9,18 +9,18 @@ describe('IndexedAccess Warning', () => {
     expect(mock.prop<'[]'>()).toBeNull();
 
     const logs: UnsupportedTypeLog[] = await getLogsByCreateMockFileName(
-      'indexedAccess.warning.test.ts'
+      'indexedAccess.warning.test.ts',
     );
     expect(logs.length).toBe(1);
 
     expect(logs[0].header).toContain(
-      'WARNING: Transformer - IndexedAccessType transformation failed: cannot find property [] of - this[K]'
+      'WARNING: Transformer - IndexedAccessType transformation failed: cannot find property [] of - this[K]',
     );
     expect(logs[0].created).toMatch(
-      /created file:\/\/.*indexedAccess\.warning\.test\.ts:[0-9]*:[0-9]*/
+      /created file:\/\/.*indexedAccess\.warning\.test\.ts:[0-9]*:[0-9]*/,
     );
     expect(logs[0].usedBy).toMatch(
-      /used by file:\/\/.*indexedAccess\.warning\.type\.ts:[0-9]*:[0-9]*/
+      /used by file:\/\/.*indexedAccess\.warning\.type\.ts:[0-9]*:[0-9]*/,
     );
   });
 });

@@ -281,7 +281,7 @@ describe('typeQuery', () => {
       it('should work for function call of a variable with no explicit return type of function', () => {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/typedef
         const testExplicitType: (value: boolean) => { prop: string } = (
-          value: boolean
+          value: boolean,
         ) => {
           if (value) {
             return { prop: 'asd' };

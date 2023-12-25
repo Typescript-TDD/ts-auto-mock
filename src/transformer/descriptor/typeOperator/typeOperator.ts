@@ -7,7 +7,7 @@ import { TransformerLogger } from '../../logger/transformerLogger';
 
 export function GetTypeOperatorDescriptor(
   node: ts.TypeOperatorNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   switch (node.operator) {
     case core.ts.SyntaxKind.ReadonlyKeyword:
@@ -17,7 +17,7 @@ export function GetTypeOperatorDescriptor(
     default:
       TransformerLogger().typeNotSupported(
         `TypeOperator of ${core.ts.SyntaxKind[node.operator]}`,
-        node
+        node,
       );
       return GetNullDescriptor();
   }

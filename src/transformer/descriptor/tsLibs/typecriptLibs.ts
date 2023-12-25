@@ -30,11 +30,11 @@ export function IsTypescriptType(node: ts.Node): boolean {
 
 export function GetTypescriptTypeDescriptor(
   node: ts.TypeReferenceNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const typeChecker: ts.TypeChecker = core.typeChecker;
   const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
-    node.typeName
+    node.typeName,
   );
   const typeScriptType: TypescriptLibsTypes =
     symbol?.name && TypescriptLibsTypes[symbol.name];
@@ -46,22 +46,22 @@ export function GetTypescriptTypeDescriptor(
     case TypescriptLibsTypes.Number:
       return GetDescriptor(
         createTypeNode(core.ts.SyntaxKind.NumberKeyword),
-        scope
+        scope,
       );
     case TypescriptLibsTypes.String:
       return GetDescriptor(
         createTypeNode(core.ts.SyntaxKind.StringKeyword),
-        scope
+        scope,
       );
     case TypescriptLibsTypes.Boolean:
       return GetDescriptor(
         createTypeNode(core.ts.SyntaxKind.BooleanKeyword),
-        scope
+        scope,
       );
     case TypescriptLibsTypes.Object:
       return GetDescriptor(
         createTypeNode(core.ts.SyntaxKind.ObjectKeyword),
-        scope
+        scope,
       );
     case TypescriptLibsTypes.Function:
       const functionNode: ts.KeywordTypeNode<ts.SyntaxKind.VoidKeyword> =
@@ -75,7 +75,7 @@ export function GetTypescriptTypeDescriptor(
 
       const promiseAccess: ts.PropertyAccessExpression = createPropertyAccess(
         createIdentifier('Promise'),
-        createIdentifier('resolve')
+        createIdentifier('resolve'),
       );
 
       return createCall(promiseAccess, [dataResolved]);
@@ -88,7 +88,7 @@ export function GetTypescriptTypeDescriptor(
     default:
       return GetDescriptor(
         createTypeNode(core.ts.SyntaxKind.UndefinedKeyword),
-        scope
+        scope,
       );
   }
 }

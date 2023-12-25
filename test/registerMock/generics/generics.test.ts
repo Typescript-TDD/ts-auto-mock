@@ -30,7 +30,7 @@ describe('registerMock of type with generics', () => {
       (genericNumber: unknown, genericString: unknown) => ({
         internalProp: (genericNumber as number) + 5,
         internalProp2: (genericString as object).toString() + '-mocked',
-      })
+      }),
     );
 
     registerMock<GenericsInterface2<unknown, unknown>>(
@@ -40,7 +40,7 @@ describe('registerMock of type with generics', () => {
           internalProp: (genericString as object).toString() + '-mocked',
           internalProp2: genericObject,
         };
-      }
+      },
     );
     const mock: AParentInterface = createMock<AParentInterface>();
 

@@ -30,7 +30,7 @@ export interface PropertyAssignments {
 
 export function GetMockPropertiesAssignments(
   properties: PropertyLike[],
-  scope: Scope
+  scope: Scope,
 ): PropertyAssignments {
   return properties.reduce(
     (acc: PropertyAssignments, member: PropertyLike): PropertyAssignments => {
@@ -44,30 +44,30 @@ export function GetMockPropertiesAssignments(
 
       return acc;
     },
-    { lazy: [], literals: [] }
+    { lazy: [], literals: [] },
   );
 }
 
 function GetLiteralMockProperty(
   descriptor: ts.Expression,
-  member: PropertyLike
+  member: PropertyLike,
 ): ts.PropertyAssignment {
   const propertyName: string = TypescriptHelper.GetStringPropertyName(
-    member.name
+    member.name,
   );
 
   return createPropertyAssignment(
     createStringLiteral(propertyName),
-    descriptor
+    descriptor,
   );
 }
 
 function GetLazyMockProperty(
   descriptor: ts.Expression,
-  member: PropertyLike
+  member: PropertyLike,
 ): ts.PropertyAssignment {
   const propertyName: string = TypescriptHelper.GetStringPropertyName(
-    member.name
+    member.name,
   );
 
   const stringPropertyName: ts.StringLiteral =
@@ -75,7 +75,7 @@ function GetLazyMockProperty(
   const variableDeclarationName: ts.ElementAccessExpression =
     createElementAccess(
       Identifiers.MockIdentifierInternalValues,
-      stringPropertyName
+      stringPropertyName,
     );
   const setVariableParameterName: ts.Identifier =
     Identifiers.MockIdentifierSetParameterName;
@@ -83,15 +83,15 @@ function GetLazyMockProperty(
   const expressionGetAssignment: ts.BinaryExpression = createBinaryExpression(
     variableDeclarationName,
     core.ts.SyntaxKind.EqualsToken,
-    descriptor
+    descriptor,
   );
 
   const hasOwnProperty: ts.Expression = createCall(
     createPropertyAccess(
       Identifiers.MockIdentifierInternalValues,
-      'hasOwnProperty'
+      'hasOwnProperty',
     ),
-    [stringPropertyName]
+    [stringPropertyName],
   );
 
   const getExpressionBody: ts.Expression = createConditional(
@@ -99,12 +99,12 @@ function GetLazyMockProperty(
     createPunctuationToken(core.ts.SyntaxKind.QuestionToken),
     variableDeclarationName,
     createPunctuationToken(core.ts.SyntaxKind.ColonToken),
-    expressionGetAssignment
+    expressionGetAssignment,
   );
   const setExpressionBody: ts.BinaryExpression = createBinaryExpression(
     variableDeclarationName,
     core.ts.SyntaxKind.EqualsToken,
-    setVariableParameterName
+    setVariableParameterName,
   );
 
   const returnGetStatement: ts.ReturnStatement =
@@ -124,7 +124,7 @@ function GetLazyMockProperty(
     set,
     createPropertyAssignment(
       createIdentifier('enumerable'),
-      GetBooleanTrueDescriptor()
+      GetBooleanTrueDescriptor(),
     ),
   ]);
 

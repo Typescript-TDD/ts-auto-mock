@@ -12,7 +12,7 @@ export const createHydratedMockCustomFunction: CustomFunction =
         nodeToMock,
         hydrated: true,
         defaultValues: getDefaultValues(node),
-      })
+      }),
   );
 
 function getDefaultValues(node: ts.CallExpression): ts.Expression | undefined {

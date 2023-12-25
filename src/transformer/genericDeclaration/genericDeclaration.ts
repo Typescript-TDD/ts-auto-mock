@@ -23,7 +23,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   const generics: GenericParameter[] = [];
 
   function isGenericProvided<
-    T extends ts.TypeReferenceNode | ts.ExpressionWithTypeArguments
+    T extends ts.TypeReferenceNode | ts.ExpressionWithTypeArguments,
   >(node: T, index: number): node is T & Required<ts.NodeWithTypeArguments> {
     return !!node.typeArguments && !!node.typeArguments[index];
   }
@@ -31,7 +31,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   function getGenericNode(
     node: ts.TypeReferenceNode | ts.ExpressionWithTypeArguments,
     nodeDeclaration: ts.TypeParameterDeclaration,
-    index: number
+    index: number,
   ): ts.Node {
     if (isGenericProvided(node, index)) {
       return node.typeArguments[index];
@@ -44,7 +44,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
     ownerParameterDeclaration: ts.TypeParameterDeclaration,
     typeParameterDeclaration: ts.TypeParameterDeclaration,
     declarationKey: string,
-    extensionDeclarationKey: string
+    extensionDeclarationKey: string,
   ): void {
     const existingUniqueName: string =
       declarationKey + typeParameterDeclaration.name.escapedText.toString();
@@ -54,7 +54,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
 
     const parameterToAdd: GenericParameter | undefined = generics.find(
       (genericParameter: GenericParameter) =>
-        genericParameter.ids.includes(existingUniqueName)
+        genericParameter.ids.includes(existingUniqueName),
     );
 
     if (parameterToAdd?.ids) {
@@ -65,12 +65,12 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   function createGenericParameter(
     ownerKey: string,
     nodeOwnerParameter: ts.TypeParameterDeclaration,
-    genericDescriptor: ts.Expression
+    genericDescriptor: ts.Expression,
   ): GenericParameter {
     const uniqueName: string =
       ownerKey + nodeOwnerParameter.name.escapedText.toString();
     const genericFunction: ts.FunctionExpression = createFunctionExpression(
-      createBlock([createReturnStatement(genericDescriptor)])
+      createBlock([createReturnStatement(genericDescriptor)]),
     );
 
     return {
@@ -82,7 +82,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
   return {
     addFromTypeReferenceNode(
       node: ts.TypeReferenceNode,
-      declarationKey: string
+      declarationKey: string,
     ): void {
       const typeParameterDeclarations: ts.NodeArray<ts.TypeParameterDeclaration> =
         TypescriptHelper.GetParameterOfNode(node.typeName);
@@ -98,18 +98,18 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           const genericParameter: GenericParameter = createGenericParameter(
             declarationKey,
             typeParameterDeclarations[index],
-            GetDescriptor(genericNode, scope)
+            GetDescriptor(genericNode, scope),
           );
 
           generics.push(genericParameter);
-        }
+        },
       );
     },
     addFromDeclarationExtension(
       declarationKey: string,
       extensionDeclaration: GenericDeclarationSupported,
       extensionDeclarationKey: string,
-      extension: ts.ExpressionWithTypeArguments
+      extension: ts.ExpressionWithTypeArguments,
     ): void {
       const extensionDeclarationTypeParameters:
         | ts.NodeArray<ts.TypeParameterDeclaration>
@@ -123,12 +123,12 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
         (
           acc: GenericParameter[],
           declaration: ts.TypeParameterDeclaration,
-          index: number
+          index: number,
         ) => {
           const genericNode: ts.Node = getGenericNode(
             extension,
             declaration,
-            index
+            index,
           );
 
           if (core.ts.isTypeReferenceNode(genericNode)) {
@@ -138,7 +138,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
             const typeParameterDeclarationKey: string =
               MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
                 typeParameterDeclaration,
-                scope
+                scope,
               );
 
             const isExtendingItself: boolean =
@@ -148,7 +148,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
               // https://github.com/Typescript-TDD/ts-auto-mock/pull/312 for more
               // details.
               TransformerLogger().circularGenericNotSupported(
-                genericNode.getText()
+                genericNode.getText(),
               );
               return acc;
             }
@@ -158,7 +158,7 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
                 extensionDeclarationTypeParameters[index],
                 typeParameterDeclaration,
                 declarationKey,
-                extensionDeclarationKey
+                extensionDeclarationKey,
               );
 
               return acc;
@@ -168,14 +168,14 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
           const genericParameter: GenericParameter = createGenericParameter(
             extensionDeclarationKey,
             extensionDeclarationTypeParameters[index],
-            GetDescriptor(genericNode, scope)
+            GetDescriptor(genericNode, scope),
           );
 
           acc.push(genericParameter);
 
           return acc;
         },
-        generics
+        generics,
       );
     },
     getExpressionForAllGenerics(): ts.ObjectLiteralExpression[] {
@@ -186,16 +186,16 @@ export function GenericDeclaration(scope: Scope): IGenericDeclaration {
               Identifiers.MockIdentifierGenericParameterIds,
               createArrayLiteral(
                 s.ids.map((arr: string) => createStringLiteral(arr)),
-                false
-              )
+                false,
+              ),
             ),
             createPropertyAssignment(
               Identifiers.MockIdentifierGenericParameterValue,
-              s.value
+              s.value,
             ),
           ],
-          true
-        )
+          true,
+        ),
       );
     },
   };

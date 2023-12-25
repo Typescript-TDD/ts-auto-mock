@@ -29,10 +29,10 @@ export class DeclarationListCache {
   }
 
   private _find(
-    declarations: ts.Declaration[]
+    declarations: ts.Declaration[],
   ): DeclarationListCacheElement | undefined {
     return this._cache.find((intersection: DeclarationListCacheElement) =>
-      ArrayHelper.AreEqual(declarations, intersection.declarations)
+      ArrayHelper.AreEqual(declarations, intersection.declarations),
     );
   }
 }

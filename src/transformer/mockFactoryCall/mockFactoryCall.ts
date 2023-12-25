@@ -18,7 +18,7 @@ import { core } from '../core/core';
 export function GetMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
   declaration: ts.Declaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return getDeclarationMockFactoryCall(declaration, typeReferenceNode, scope);
 }
@@ -26,7 +26,7 @@ export function GetMockFactoryCall(
 export function CreateMockFactory(
   typeReferenceNode: ts.TypeReferenceNode,
   declaration: ts.Declaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   MockDefiner.instance.createMockFactory(declaration, scope);
 
@@ -35,7 +35,7 @@ export function CreateMockFactory(
 
 export function GetMockFactoryCallIntersection(
   intersection: ts.IntersectionTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const genericDeclaration: IGenericDeclaration = GenericDeclaration(scope);
 
@@ -47,7 +47,7 @@ export function GetMockFactoryCallIntersection(
         const declarationKey: string =
           MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
             declaration,
-            scope
+            scope,
           );
 
         genericDeclaration.addFromTypeReferenceNode(type, declarationKey);
@@ -56,7 +56,7 @@ export function GetMockFactoryCallIntersection(
           declaration as GenericDeclarationSupported,
           declarationKey,
           genericDeclaration,
-          scope
+          scope,
         );
 
         return declaration;
@@ -70,7 +70,7 @@ export function GetMockFactoryCallIntersection(
     MockDefiner.instance.getMockFactoryIntersection(
       declarations,
       intersection,
-      scope
+      scope,
     );
 
   return createCall(mockFactoryCall, [
@@ -80,11 +80,10 @@ export function GetMockFactoryCallIntersection(
 
 export function GetMockFactoryCallTypeofEnum(
   declaration: ts.EnumDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const mockFactoryCall: ts.Expression =
     MockDefiner.instance.getMockFactoryTypeofEnum(declaration, scope);
-
   return createCall(mockFactoryCall, []);
 }
 
@@ -100,14 +99,14 @@ export function GetMockFactoryCallForThis(mockKey: string): ts.Expression {
 function getDeclarationMockFactoryCall(
   declaration: ts.Declaration,
   typeReferenceNode: ts.TypeReferenceNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const declarationKey: string =
     MockDefiner.instance.getDeclarationKeyMapBasedOnScope(declaration, scope);
 
   if (!declarationKey) {
     throw new Error(
-      `Failed to look up declaration key in MockDefiner for \`${declaration.getText()}'.`
+      `Failed to look up declaration key in MockDefiner for \`${declaration.getText()}'.`,
     );
   }
 
@@ -117,14 +116,14 @@ function getDeclarationMockFactoryCall(
 
   genericDeclaration.addFromTypeReferenceNode(
     typeReferenceNode,
-    declarationKey
+    declarationKey,
   );
 
   addFromDeclarationExtensions(
     declaration as GenericDeclarationSupported,
     declarationKey,
     genericDeclaration,
-    scope
+    scope,
   );
 
   const genericsParametersExpression: ts.ObjectLiteralExpression[] =
@@ -139,7 +138,7 @@ function addFromDeclarationExtensions(
   declaration: GenericDeclarationSupported,
   declarationKey: string,
   genericDeclaration: IGenericDeclaration,
-  scope: Scope
+  scope: Scope,
 ): void {
   if (declaration.heritageClauses) {
     declaration.heritageClauses.forEach((clause: ts.HeritageClause) => {
@@ -154,21 +153,21 @@ function addFromDeclarationExtensions(
         const extensionDeclarationKey: string =
           MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
             extensionDeclaration,
-            scope
+            scope,
           );
 
         genericDeclaration.addFromDeclarationExtension(
           declarationKey,
           extensionDeclaration as GenericDeclarationSupported,
           extensionDeclarationKey,
-          extension
+          extension,
         );
 
         addFromDeclarationExtensions(
           extensionDeclaration as GenericDeclarationSupported,
           extensionDeclarationKey,
           genericDeclaration,
-          scope
+          scope,
         );
       });
     });

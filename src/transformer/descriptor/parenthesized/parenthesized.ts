@@ -4,7 +4,7 @@ import { GetProperties } from '../properties/properties';
 
 export function GetParenthesizedDescriptor(
   node: ts.ParenthesizedTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetProperties(node.type, scope);
 }

@@ -5,7 +5,7 @@ let currentCreateMock: ts.Node;
 export const GetCurrentCreateMock: () => ts.Node = () => currentCreateMock;
 
 export const SetCurrentCreateMock: (node: ts.Node) => void = (
-  node: ts.Node
+  node: ts.Node,
 ) => {
   currentCreateMock = node;
 };

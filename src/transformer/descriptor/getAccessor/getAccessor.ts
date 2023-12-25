@@ -6,7 +6,7 @@ import { PropertySignatureCache } from '../property/cache';
 
 export function GetGetAccessorDeclarationDescriptor(
   node: ts.GetAccessorDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   PropertySignatureCache.instance.set(node.name);
   const returnTypeNode: ts.Node = GetFunctionReturnType(node);

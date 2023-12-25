@@ -4,7 +4,7 @@ import { GetDescriptor } from '../descriptor';
 
 export function GetTypeAliasDescriptor(
   node: ts.TypeAliasDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetDescriptor(node.type, scope);
 }

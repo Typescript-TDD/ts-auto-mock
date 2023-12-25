@@ -28,7 +28,7 @@ import GetDeclarationFromSymbol = TypescriptHelper.GetDeclarationFromSymbol;
 
 export function GetTypeParameterDescriptor(
   node: ts.TypeParameterDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const type: ts.TypeParameter = core.typeChecker.getTypeAtLocation(node);
 
@@ -42,25 +42,25 @@ export function GetTypeParameterDescriptor(
 
   if (!typeDeclaration) {
     throw new Error(
-      `Failed to determine the owner (parent) of the type parameter: \`${declaration.getText()}'.`
+      `Failed to determine the owner (parent) of the type parameter: \`${declaration.getText()}'.`,
     );
   }
 
   const genericKey: string =
     MockDefiner.instance.getDeclarationKeyMapBasedOnScope(
       typeDeclaration,
-      scope
+      scope,
     );
 
   return createFunctionToAccessToGenericValue(
     genericKey + node.name.escapedText.toString(),
-    descriptor
+    descriptor,
   );
 }
 
 function createFunctionToAccessToGenericValue(
   key: string,
-  descriptor: ts.Expression
+  descriptor: ts.Expression,
 ): ts.CallExpression {
   const returnWhenGenericDoesNotExist: ts.ReturnStatement =
     createReturnStatement(descriptor);
@@ -76,8 +76,8 @@ function createFunctionToAccessToGenericValue(
   return createIIFE(
     createBlock(
       [generic, expressionWhenGenericExist, returnWhenGenericDoesNotExist],
-      true
-    )
+      true,
+    ),
   );
 }
 
@@ -85,7 +85,7 @@ function createFindGeneric(genericKey: string): ts.CallExpression {
   return createCall(
     createPropertyAccess(
       Identifiers.MockIdentifierGenericParameter,
-      createIdentifier('find')
+      createIdentifier('find'),
     ),
     [
       createArrowFunction(
@@ -97,35 +97,35 @@ function createFindGeneric(genericKey: string): ts.CallExpression {
                   createPropertyAccess(
                     createPropertyAccess(
                       createIdentifier('generic'),
-                      Identifiers.MockIdentifierGenericParameterIds
+                      Identifiers.MockIdentifierGenericParameterIds,
                     ),
-                    createIdentifier('indexOf')
+                    createIdentifier('indexOf'),
                   ),
-                  [createStringLiteral(genericKey)]
+                  [createStringLiteral(genericKey)],
                 ),
                 createPunctuationToken(
-                  core.ts.SyntaxKind.GreaterThanEqualsToken
+                  core.ts.SyntaxKind.GreaterThanEqualsToken,
                 ),
-                createNumericLiteral('0')
-              )
+                createNumericLiteral('0'),
+              ),
             ),
           ],
-          true
+          true,
         ),
-        [createParameter('generic')]
+        [createParameter('generic')],
       ),
-    ]
+    ],
   );
 }
 
 function assignGenericConstToCall(
-  call: ts.CallExpression
+  call: ts.CallExpression,
 ): ts.VariableStatement {
   return createVariableStatement(
     createVariableDeclarationList(
       [createVariableDeclaration(createIdentifier('generic'), call)],
-      core.ts.NodeFlags.Const
-    )
+      core.ts.NodeFlags.Const,
+    ),
   );
 }
 
@@ -138,13 +138,13 @@ function getValueFromGenericIfExist(): ts.IfStatement {
           createCall(
             createPropertyAccess(
               createIdentifier('generic'),
-              Identifiers.MockIdentifierGenericParameterValue
+              Identifiers.MockIdentifierGenericParameterValue,
             ),
-            []
-          )
+            [],
+          ),
         ),
       ],
-      true
-    )
+      true,
+    ),
   );
 }

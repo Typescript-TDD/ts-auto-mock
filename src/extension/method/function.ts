@@ -1,5 +1,5 @@
 export function isFunction(
-  functionToCheck: unknown
+  functionToCheck: unknown,
 ): functionToCheck is Function {
   return (
     !!functionToCheck &&

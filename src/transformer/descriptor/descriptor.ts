@@ -52,20 +52,20 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.ShorthandPropertyAssignment:
       return GetShorthandPropertyAssignmentDescriptor(
         node as ts.ShorthandPropertyAssignment,
-        scope
+        scope,
       );
 
     case core.ts.SyntaxKind.VariableDeclaration:
       return GetVariableDeclarationDescriptor(
         node as ts.VariableDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.Parameter:
       return GetParameterDescriptor(node as ts.ParameterDeclaration, scope);
     case core.ts.SyntaxKind.ParenthesizedExpression:
       return GetParenthesizedExpressionDescriptor(
         node as ts.ParenthesizedExpression,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.TypeAliasDeclaration:
       return GetTypeAliasDescriptor(node as ts.TypeAliasDeclaration, scope);
@@ -76,7 +76,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.InterfaceDeclaration:
       return GetInterfaceDeclarationDescriptor(
         node as ts.InterfaceDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.ClassDeclaration:
       return GetClassDeclarationDescriptor(node as ts.ClassDeclaration, scope);
@@ -90,14 +90,14 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.ExpressionWithTypeArguments:
       return GetExpressionWithTypeArgumentsDescriptor(
         node as ts.ExpressionWithTypeArguments,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.Identifier:
       return GetIdentifierDescriptor(node as ts.Identifier, scope);
     case core.ts.SyntaxKind.ThisType:
       if (!scope.currentMockKey) {
         throw new Error(
-          `The transformer attempted to look up a mock factory call for \`${node.getText()}' without a mock key.`
+          `The transformer attempted to look up a mock factory call for \`${node.getText()}' without a mock key.`,
         );
       }
 
@@ -107,7 +107,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.TypeParameter:
       return GetTypeParameterDescriptor(
         node as ts.TypeParameterDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.ImportClause:
       return GetImportDescriptor(node as ts.ImportClause, scope);
@@ -116,29 +116,29 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.GetAccessor:
       return GetGetAccessorDeclarationDescriptor(
         node as ts.GetAccessorDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.FunctionDeclaration:
       return GetMethodDeclarationDescriptor(
         node as ts.FunctionDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.MethodDeclaration:
       return GetMethodDeclarationDescriptor(
         node as ts.MethodDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.FunctionType:
       return GetFunctionTypeDescriptor(node as ts.FunctionTypeNode, scope);
     case core.ts.SyntaxKind.ConstructSignature:
       return GetFunctionTypeDescriptor(
         node as ts.ConstructSignatureDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.CallSignature:
       return GetFunctionTypeDescriptor(
         node as ts.CallSignatureDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.ArrowFunction:
     case core.ts.SyntaxKind.FunctionExpression:
@@ -146,7 +146,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.ConstructorType:
       return GetConstructorTypeDescriptor(
         node as ts.ConstructorTypeNode,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.TypeQuery:
       return GetTypeQueryDescriptor(node as ts.TypeQueryNode, scope);
@@ -161,7 +161,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.ParenthesizedType:
       return GetParenthesizedDescriptor(
         node as ts.ParenthesizedTypeNode,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.ArrayType:
       return GetArrayDescriptor();
@@ -181,12 +181,12 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.ObjectLiteralExpression:
       return GetObjectLiteralDescriptor(
         node as ts.ObjectLiteralExpression,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.IndexedAccessType:
       return GetIndexedAccessTypeDescriptor(
         node as ts.IndexedAccessTypeNode,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.BooleanKeyword:
     case core.ts.SyntaxKind.TypePredicate:
@@ -199,7 +199,7 @@ export function GetDescriptor(node: ts.Node, scope: Scope): ts.Expression {
     case core.ts.SyntaxKind.ImportEqualsDeclaration:
       return GetImportEqualsDescriptor(
         node as ts.ImportEqualsDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.TypeOperator:
       return GetTypeOperatorDescriptor(node as ts.TypeOperatorNode, scope);

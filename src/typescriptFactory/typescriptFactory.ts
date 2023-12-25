@@ -63,20 +63,20 @@ import { core } from '../transformer/core/core';
 
 export function createArrayLiteral(
   elements?: readonly Expression[],
-  multiLine?: boolean
+  multiLine?: boolean,
 ): ArrayLiteralExpression {
   return core.ts.factory.createArrayLiteralExpression(elements, multiLine);
 }
 
 export function createVariableStatement(
-  declarationList: VariableDeclarationList | readonly VariableDeclaration[]
+  declarationList: VariableDeclarationList | readonly VariableDeclaration[],
 ): VariableStatement {
   return core.ts.factory.createVariableStatement(undefined, declarationList);
 }
 
 export function createVariableDeclarationList(
   declarations: readonly VariableDeclaration[],
-  flags?: NodeFlags
+  flags?: NodeFlags,
 ): VariableDeclarationList {
   return core.ts.factory.createVariableDeclarationList(declarations, flags);
 }
@@ -87,14 +87,14 @@ export function createIdentifier(text: string): Identifier {
 
 export function createNumericLiteral(
   value: string | number,
-  numericLiteralFlags?: TokenFlags
+  numericLiteralFlags?: TokenFlags,
 ): NumericLiteral {
   return core.ts.factory.createNumericLiteral(value, numericLiteralFlags);
 }
 
 export function createArrowFunction(
   block: ts.ConciseBody,
-  parameter: ReadonlyArray<ts.ParameterDeclaration> = []
+  parameter: ReadonlyArray<ts.ParameterDeclaration> = [],
 ): ts.ArrowFunction {
   return core.ts.factory.createArrowFunction(
     undefined,
@@ -102,13 +102,13 @@ export function createArrowFunction(
     parameter,
     undefined,
     core.ts.factory.createToken(core.ts.SyntaxKind.EqualsGreaterThanToken),
-    block
+    block,
   );
 }
 
 export function createFunctionExpression(
   block: Block,
-  parameter: ReadonlyArray<ParameterDeclaration> = []
+  parameter: ReadonlyArray<ParameterDeclaration> = [],
 ): FunctionExpression {
   return core.ts.factory.createFunctionExpression(
     undefined,
@@ -117,13 +117,13 @@ export function createFunctionExpression(
     undefined,
     parameter,
     undefined,
-    block
+    block,
   );
 }
 
 export function createFunctionExpressionReturn(
   descriptorToReturn: Expression,
-  parameter: ReadonlyArray<ParameterDeclaration> = []
+  parameter: ReadonlyArray<ParameterDeclaration> = [],
 ): FunctionExpression {
   const block: Block = core.ts.factory.createBlock([
     core.ts.factory.createReturnStatement(descriptorToReturn),
@@ -136,31 +136,31 @@ export function createFunctionExpressionReturn(
     undefined,
     parameter,
     undefined,
-    block
+    block,
   );
 }
 
 export function createBlock(
   statements: readonly Statement[],
-  multiLine?: boolean | undefined
+  multiLine?: boolean | undefined,
 ): Block {
   return core.ts.factory.createBlock(statements, multiLine);
 }
 
 export function createReturnStatement(
-  expression?: Expression
+  expression?: Expression,
 ): ReturnStatement {
   return core.ts.factory.createReturnStatement(expression);
 }
 
 export function createCall(
   expression: Expression,
-  argumentExpressions: Expression[]
+  argumentExpressions: Expression[],
 ): CallExpression {
   return core.ts.factory.createCallExpression(
     expression,
     undefined,
-    argumentExpressions
+    argumentExpressions,
   );
 }
 
@@ -174,10 +174,10 @@ export function createIIFE(block: Block): CallExpression {
         undefined,
         [],
         undefined,
-        block
-      )
+        block,
+      ),
     ),
-    []
+    [],
   );
 }
 
@@ -187,26 +187,26 @@ export function createEmptyProperty(): PropertyDeclaration {
 
 export function createProperty(
   propertyName: string | PropertyName,
-  type: TypeNode | undefined
+  type: TypeNode | undefined,
 ): PropertyDeclaration {
   return core.ts.factory.createPropertyDeclaration(
     undefined,
     propertyName,
     undefined,
     type,
-    undefined
+    undefined,
   );
 }
 
 export function createPropertySignature(
   propertyName: string | PropertyName,
-  type: TypeNode
+  type: TypeNode,
 ): PropertySignature {
   return core.ts.factory.createPropertySignature(
     [],
     propertyName,
     undefined,
-    type
+    type,
   );
 }
 
@@ -216,26 +216,26 @@ export function createParameter(parameterName: string): ParameterDeclaration {
   return core.ts.factory.createParameterDeclaration(
     modifiers,
     dotDotDotToken,
-    createIdentifier(parameterName)
+    createIdentifier(parameterName),
   );
 }
 
 export function createParameterFromIdentifier(
-  identifier: Identifier
+  identifier: Identifier,
 ): ParameterDeclaration {
   const modifiers: undefined = undefined;
   const dotDotDotToken: undefined = undefined;
   return core.ts.factory.createParameterDeclaration(
     modifiers,
     dotDotDotToken,
-    identifier
+    identifier,
   );
 }
 
 export function createMethod(
   methodName: string,
   body: Block,
-  parameterNames: Identifier[] = []
+  parameterNames: Identifier[] = [],
 ): MethodDeclaration {
   const parameters: ParameterDeclaration[] = parameterNames.map(
     (parameterName: Identifier) =>
@@ -245,8 +245,8 @@ export function createMethod(
         parameterName,
         undefined,
         undefined,
-        undefined
-      )
+        undefined,
+      ),
   );
   const modifiers: undefined = undefined;
   const asteriskToken: undefined = undefined;
@@ -261,25 +261,25 @@ export function createMethod(
     typeParameters,
     parameters,
     type,
-    body
+    body,
   );
 }
 
 export function createVariableDeclaration(
   variableIdentifier: Identifier,
-  initializer: Expression
+  initializer: Expression,
 ): VariableDeclaration {
   return core.ts.factory.createVariableDeclaration(
     variableIdentifier,
     undefined,
     undefined,
-    initializer
+    initializer,
   );
 }
 
 export function createPropertyAccess(
   expression: Expression,
-  name: string | Identifier | PrivateIdentifier
+  name: string | Identifier | PrivateIdentifier,
 ): PropertyAccessExpression {
   return core.ts.factory.createPropertyAccessExpression(expression, name);
 }
@@ -297,7 +297,7 @@ export function createLogicalNot(operand: Expression): PrefixUnaryExpression {
 }
 
 export function createLiteral(
-  type: LiteralType
+  type: LiteralType,
 ): StringLiteral | NumericLiteral | BigIntLiteral {
   if (typeof type.value === 'string') {
     return createStringLiteral(type.value);
@@ -312,19 +312,19 @@ export function createLiteral(
 
 export function createNodeArray<T extends Node>(
   elements?: readonly T[],
-  hasTrailingComma?: boolean
+  hasTrailingComma?: boolean,
 ): NodeArray<T> {
   return core.ts.factory.createNodeArray(elements, hasTrailingComma);
 }
 
 export function createArrayTypeNode(): Node {
   return core.ts.factory.createArrayTypeNode(
-    core.ts.factory.createKeywordTypeNode(core.ts.SyntaxKind.AnyKeyword)
+    core.ts.factory.createKeywordTypeNode(core.ts.SyntaxKind.AnyKeyword),
   );
 }
 
 export function createTypeNode<TKind extends KeywordTypeSyntaxKind>(
-  kind: TKind
+  kind: TKind,
 ): KeywordTypeNode<TKind> {
   return core.ts.factory.createKeywordTypeNode(kind);
 }
@@ -335,7 +335,7 @@ export function createFunctionTypeNode(typeNode: TypeNode): FunctionTypeNode {
 
 export function createObjectLiteral(
   properties?: readonly ObjectLiteralElementLike[],
-  multiLine?: boolean
+  multiLine?: boolean,
 ): ObjectLiteralExpression {
   return core.ts.factory.createObjectLiteralExpression(properties, multiLine);
 }
@@ -343,20 +343,20 @@ export function createObjectLiteral(
 export function createBinaryExpression(
   left: Expression,
   operator: BinaryOperator | BinaryOperatorToken,
-  right: Expression
+  right: Expression,
 ): BinaryExpression {
   return core.ts.factory.createBinaryExpression(left, operator, right);
 }
 
 export function createPunctuationToken<TKind extends PunctuationSyntaxKind>(
-  token: TKind
+  token: TKind,
 ): PunctuationToken<TKind> {
   return core.ts.factory.createToken(token);
 }
 
 export function createIfStatement(
   expression: Expression,
-  block: Block
+  block: Block,
 ): IfStatement {
   return core.ts.factory.createIfStatement(expression, block, undefined);
 }
@@ -366,31 +366,31 @@ export function createReturn(expression: Expression): ReturnStatement {
 }
 
 export function createExpressionStatement(
-  binaryExpression: Expression
+  binaryExpression: Expression,
 ): ExpressionStatement {
   return core.ts.factory.createExpressionStatement(binaryExpression);
 }
 
 export function createElementAccessExpression(
   identifier: Identifier,
-  literalProperty: StringLiteral
+  literalProperty: StringLiteral,
 ): ElementAccessExpression {
   return core.ts.factory.createElementAccessExpression(
     identifier,
-    literalProperty
+    literalProperty,
   );
 }
 
 export function createPropertyAssignment(
   name: string | PropertyName,
-  expression: ts.Expression
+  expression: ts.Expression,
 ): PropertyAssignment {
   return core.ts.factory.createPropertyAssignment(name, expression);
 }
 
 export function createElementAccess(
   expression: Expression,
-  index: number | Expression
+  index: number | Expression,
 ): ElementAccessExpression {
   return core.ts.factory.createElementAccessExpression(expression, index);
 }
@@ -400,36 +400,36 @@ export function createConditional(
   questionToken: QuestionToken | undefined,
   whenTrue: Expression,
   colonToken: ColonToken | undefined,
-  whenFalse: Expression
+  whenFalse: Expression,
 ): ConditionalExpression {
   return core.ts.factory.createConditionalExpression(
     condition,
     questionToken,
     whenTrue,
     colonToken,
-    whenFalse
+    whenFalse,
   );
 }
 
 export function updateSourceFileNode(
   node: SourceFile,
-  statements: readonly Statement[]
+  statements: readonly Statement[],
 ): SourceFile {
   return core.ts.factory.updateSourceFile(node, statements);
 }
 
 export function createImportAllAs(
   moduleName: ts.Identifier,
-  filenameToImportFrom: string
+  filenameToImportFrom: string,
 ): ImportDeclaration {
   return core.ts.factory.createImportDeclaration(
     [],
     core.ts.factory.createImportClause(
       false,
       undefined,
-      core.ts.factory.createNamespaceImport(moduleName)
+      core.ts.factory.createNamespaceImport(moduleName),
     ),
-    core.ts.factory.createStringLiteral(filenameToImportFrom)
+    core.ts.factory.createStringLiteral(filenameToImportFrom),
   );
 }
 
@@ -437,19 +437,19 @@ export function createForStatement(
   initializer: Expression | VariableDeclarationList | undefined,
   condition: Expression | undefined,
   incrementor: Expression | undefined,
-  statement: Statement
+  statement: Statement,
 ): ForStatement {
   return core.ts.factory.createForStatement(
     initializer,
     condition,
     incrementor,
-    statement
+    statement,
   );
 }
 
 export function createPostfix(
   operand: Expression,
-  operator: PostfixUnaryOperator
+  operator: PostfixUnaryOperator,
 ): PostfixUnaryExpression {
   return core.ts.factory.createPostfixUnaryExpression(operand, operator);
 }
@@ -459,7 +459,7 @@ export function createOmittedExpression(): OmittedExpression {
 }
 
 export function createTypeReferenceNode(
-  identifier: Identifier
+  identifier: Identifier,
 ): TypeReferenceNode {
   return core.ts.factory.createTypeReferenceNode(identifier, undefined);
 }
@@ -477,7 +477,7 @@ export function createTypeQueryNode(identifier: Identifier): TypeQueryNode {
 }
 
 export function createTypeLiteralNode(
-  typeElements: readonly TypeElement[]
+  typeElements: readonly TypeElement[],
 ): TypeLiteralNode {
   return core.ts.factory.createTypeLiteralNode(typeElements);
 }

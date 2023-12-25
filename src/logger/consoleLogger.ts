@@ -1,22 +1,21 @@
-import { Format, TransformableInfo } from 'logform';
-import * as winston from 'winston';
-import { ConsoleTransportInstance } from 'winston/lib/winston/transports';
+import { ILogger } from './logger.interface';
+import { MessageFormatter } from './logger';
 
-export function ConsoleLogger(): ConsoleTransportInstance {
-  const customFormat: Format = winston.format.printf(
-    (info: TransformableInfo) => `${info.level}: ${info.message}`
-  );
-
-  return new winston.transports.Console({
-    level: 'error',
-    format: winston.format.combine(
-      winston.format((info: TransformableInfo) => {
-        info.level = info.level.toUpperCase();
-        return info;
-      })(),
-      winston.format.colorize(),
-      winston.format.simple(),
-      customFormat
-    ),
-  });
+/* eslint-disable no-console */
+export function ConsoleLogger(
+  messageFormatter: MessageFormatter,
+  service: string,
+): ILogger {
+  return {
+    info: (message: string): void => {
+      console.log(messageFormatter(service, 'info', message));
+    },
+    warning: (message: string): void => {
+      console.log(messageFormatter(service, 'warning', message));
+    },
+    error: (message: string): void => {
+      console.log(messageFormatter(service, 'error', message));
+    },
+  };
 }
+/* eslint-enable no-console */

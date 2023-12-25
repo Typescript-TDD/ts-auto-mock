@@ -9,20 +9,20 @@ import {
 } from '../../typescriptFactory/typescriptFactory';
 
 export function mergePropertyAccessor(
-  methodName: string
+  methodName: string,
 ): ts.PropertyAccessExpression {
   return createPropertyAccess(
     createPropertyAccess(
       MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Merge),
-      PrivateIdentifier('Merge')
+      PrivateIdentifier('Merge'),
     ),
-    createIdentifier(methodName)
+    createIdentifier(methodName),
   );
 }
 
 export function getMockMergeExpression(
   nodeMocked: ts.Expression,
-  defaultValues: ts.Expression
+  defaultValues: ts.Expression,
 ): ts.Expression {
   return createCall(mergePropertyAccessor('merge'), [
     nodeMocked,

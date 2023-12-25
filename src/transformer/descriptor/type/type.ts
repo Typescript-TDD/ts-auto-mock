@@ -7,7 +7,7 @@ import { GetTypeImport } from './typeImport';
 
 export function GetTypes(
   nodes: ts.NodeArray<ts.Node>,
-  scope: Scope
+  scope: Scope,
 ): ts.Node[] {
   let newNodes: ts.Node[] = [];
 
@@ -22,7 +22,7 @@ export function GetTypes(
 
       const hasLiteralOrPrimitive: boolean = intersectionTypes.some(
         (intersectionType: ts.Node) =>
-          TypescriptHelper.IsLiteralOrPrimitive(intersectionType)
+          TypescriptHelper.IsLiteralOrPrimitive(intersectionType),
       );
 
       if (!hasLiteralOrPrimitive) {
@@ -39,7 +39,7 @@ export function GetTypes(
 export function GetType(node: ts.Node, scope: Scope): ts.Node {
   if (core.ts.isTypeReferenceNode(node)) {
     const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-      node.typeName
+      node.typeName,
     );
 
     const type: ts.Node = GetType(declaration, scope);

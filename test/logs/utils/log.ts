@@ -7,7 +7,7 @@ export interface UnsupportedTypeLog {
 }
 
 export const getLogsByCreateMockFileName: (
-  fileName: string
+  fileName: string,
 ) => Promise<UnsupportedTypeLog[]> = async (fileName: string) => {
   const logErrorFile: string = await ensureGetLogFileContent();
   const logs: UnsupportedTypeLog[] = [];
@@ -24,7 +24,7 @@ export const getLogsByCreateMockFileName: (
   }
 
   return logs.filter(
-    (log: UnsupportedTypeLog) => log.created.indexOf(fileName) > -1
+    (log: UnsupportedTypeLog) => log.created.indexOf(fileName) > -1,
   );
 };
 

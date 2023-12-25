@@ -9,13 +9,13 @@ export interface CustomFunction {
 
   isHandledFunction(
     node: ts.CallExpression,
-    declaration: ts.SignatureDeclaration
+    declaration: ts.SignatureDeclaration,
   ): boolean;
   run(node: ts.CallExpression): ts.Node;
 }
 
 function isHandledDeclarationType(
-  declaration: ts.Declaration
+  declaration: ts.Declaration,
 ): declaration is ts.FunctionDeclaration | ts.MethodSignature {
   return (
     declaration &&
@@ -27,7 +27,7 @@ function isHandledDeclarationType(
 export function getMatchingCustomFunction(
   node: ts.CallExpression,
   declaration: ts.Declaration,
-  customFunctions: CustomFunction[]
+  customFunctions: CustomFunction[],
 ): CustomFunction | void {
   if (!isHandledDeclarationType(declaration)) {
     return;

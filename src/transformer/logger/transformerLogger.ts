@@ -23,27 +23,27 @@ export interface TransformerLogger {
   indexedAccessTypeFailed(
     propertyName: string,
     nodeText: string,
-    currentNode: ts.Node
+    currentNode: ts.Node,
   ): void;
 }
 
 const notSupportedTypeMessage: (
   type: string,
   createMockFileUrl: string,
-  currentNodeFileUrl: string
+  currentNodeFileUrl: string,
 ) => string = (
   type: string,
   createMockFileUrl: string,
-  currentNodeFileUrl: string
+  currentNodeFileUrl: string,
 ) => `Not supported type: ${type} - it will convert to null
 ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`;
 
 const warningPositionLog: (
   createMockFileUrl: string,
-  currentNodeFileUrl: string
+  currentNodeFileUrl: string,
 ) => string = (
   createMockFileUrl: string,
-  currentNodeFileUrl: string
+  currentNodeFileUrl: string,
 ) => `created ${createMockFileUrl}
 used by ${currentNodeFileUrl}`;
 
@@ -62,7 +62,7 @@ export function TransformerLogger(): TransformerLogger {
     circularGenericNotSupported(nodeName: string): void {
       logger.warning(
         `Found a circular generic of \`${nodeName}' and such generics are currently not supported. 
-        The generated mock will be incomplete.`
+        The generated mock will be incomplete.`,
       );
     },
     unexpectedCreateMock(mockFileName: string, expectedFileName: string): void {
@@ -77,12 +77,12 @@ export function TransformerLogger(): TransformerLogger {
       const currentNodeFileUrl: string = getNodeFileUrl(currentNode);
 
       logger.warning(
-        notSupportedTypeMessage(type, createMockFileUrl, currentNodeFileUrl)
+        notSupportedTypeMessage(type, createMockFileUrl, currentNodeFileUrl),
       );
     },
     typeOfFunctionCallNotFound(node: string): void {
       logger.warning(
-        `Cannot find type of function call: ${node} - it will convert to null`
+        `Cannot find type of function call: ${node} - it will convert to null`,
       );
     },
     typeOfPropertyNotFound(node: ts.Node): void {
@@ -93,13 +93,13 @@ export function TransformerLogger(): TransformerLogger {
 
       logger.warning(
         `The transformer could not determine a property value for ${node.getText()} without a specified type nor an initializer value - it will convert to null
-${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`,
       );
     },
     indexedAccessTypeFailed(
       propertyName: string,
       nodeText: string,
-      currentNode: ts.Node
+      currentNode: ts.Node,
     ): void {
       const createMockNode: ts.Node = GetCurrentCreateMock();
 
@@ -108,7 +108,7 @@ ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
 
       logger.warning(
         `IndexedAccessType transformation failed: cannot find property ${propertyName} of - ${nodeText}
-${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`,
       );
     },
     missingTypeDefinition(node: ts.Node): void {
@@ -119,7 +119,7 @@ ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
 
       logger.warning(
         `Type definition for type reference ${node.getText()} not found - it will convert to null
-${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`,
       );
     },
     missingReturnFromFunctionLike(node: ts.Node): void {
@@ -130,7 +130,7 @@ ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
 
       logger.warning(
         `Node body or return type for type reference ${node.getText()} not found - it will convert to null
-${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`,
       );
     },
     typeCannotBeChecked(node: ts.Node): void {
@@ -141,7 +141,7 @@ ${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
 
       logger.warning(
         `the type to type node conversion returned a type that will fail to convert because it cannot be analyzed ${node.getText()} not found - it will convert to null
-${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`
+${warningPositionLog(createMockFileUrl, currentNodeFileUrl)}`,
       );
     },
   };

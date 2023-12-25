@@ -11,7 +11,7 @@ import {
 export function GetStringDescriptor(): ts.Expression {
   if (IsTsAutoMockRandomEnabled()) {
     const propertyName: string = TypescriptHelper.GetStringPropertyName(
-      PropertySignatureCache.instance.get()
+      PropertySignatureCache.instance.get(),
     );
     const prefix: ts.StringLiteral = createStringLiteral(propertyName);
     return createCall(RandomPropertyAccessor('string'), [prefix]);

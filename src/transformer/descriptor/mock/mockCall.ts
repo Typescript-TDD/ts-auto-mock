@@ -21,7 +21,7 @@ import { PropertyAssignments } from './mockPropertiesAssignments';
 
 export function GetMockCall(
   properties: PropertyAssignments,
-  signature: ts.Expression | null
+  signature: ts.Expression | null,
 ): ts.CallExpression {
   const mockObjectReturnValueName: ts.Identifier =
     Identifiers.MockIdentifierObjectReturnValue;
@@ -29,11 +29,11 @@ export function GetMockCall(
     createVariableStatement([
       createVariableDeclaration(
         Identifiers.MockIdentifierInternalValues,
-        createObjectLiteral()
+        createObjectLiteral(),
       ),
       createVariableDeclaration(
         mockObjectReturnValueName,
-        signature || createObjectLiteral(properties.literals)
+        signature || createObjectLiteral(properties.literals),
       ),
     ]),
   ];
@@ -45,7 +45,7 @@ export function GetMockCall(
     // tslint:disable-next-line:no-conditional-assignment
     while ((literalProperty = properties.literals[index++])) {
       statements.push(
-        AssignLiteralPropertyTo(mockObjectReturnValueName, literalProperty)
+        AssignLiteralPropertyTo(mockObjectReturnValueName, literalProperty),
       );
     }
   }
@@ -68,30 +68,30 @@ export function GetMockCall(
 
 function AssignVariableTo(
   variable: ts.Expression,
-  expression: ts.Expression
+  expression: ts.Expression,
 ): ts.ExpressionStatement {
   const binaryExpression: ts.BinaryExpression = createBinaryExpression(
     variable,
     core.ts.SyntaxKind.EqualsToken,
-    expression
+    expression,
   );
   return createExpressionStatement(binaryExpression);
 }
 
 function AssignLiteralPropertyTo(
   mockObjectReturnValueName: ts.Identifier,
-  literalProperty: ts.PropertyAssignment
+  literalProperty: ts.PropertyAssignment,
 ): ts.ExpressionStatement {
   const propertyAccess: ts.ElementAccessExpression =
     createElementAccessExpression(
       mockObjectReturnValueName,
-      literalProperty.name as ts.StringLiteral
+      literalProperty.name as ts.StringLiteral,
     );
   return AssignVariableTo(propertyAccess, literalProperty.initializer);
 }
 
 function AssignMockMarkerPropertyTo(
-  identifier: ts.Identifier
+  identifier: ts.Identifier,
 ): ts.ExpressionStatement {
   const mockMarkerProperty: Property = GetMockMarkerProperty();
 
@@ -106,33 +106,33 @@ function AssignMockMarkerPropertyTo(
   const objectDefineProperty: ts.PropertyAccessExpression =
     createPropertyAccess(
       createIdentifier('Object'),
-      createIdentifier('defineProperty')
+      createIdentifier('defineProperty'),
     );
   const objectDefinePropertyCall: ts.CallExpression = createCall(
     objectDefineProperty,
-    argumentsDefineProperty
+    argumentsDefineProperty,
   );
   return createExpressionStatement(objectDefinePropertyCall);
 }
 
 function AssignPropertiesTo(
   properties: ts.PropertyAssignment[],
-  uniqueVariable: ts.Identifier
+  uniqueVariable: ts.Identifier,
 ): ts.ExpressionStatement {
   const propertiesObject: ts.ObjectLiteralExpression = createObjectLiteral(
     properties,
-    true
+    true,
   );
 
   const propertyAccessExpression: ts.PropertyAccessExpression =
     createPropertyAccess(
       createIdentifier('Object'),
-      createIdentifier('defineProperties')
+      createIdentifier('defineProperties'),
     );
 
   const callToObjectDefineProperties: ts.CallExpression = createCall(
     propertyAccessExpression,
-    [uniqueVariable, propertiesObject]
+    [uniqueVariable, propertiesObject],
   );
   return createExpressionStatement(callToObjectDefineProperties);
 }

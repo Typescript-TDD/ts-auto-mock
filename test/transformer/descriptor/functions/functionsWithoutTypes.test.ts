@@ -172,8 +172,8 @@ describe('functions without types defined', () => {
       getObjectKeyValues(
         type({
           test: 'hello',
-        })
-      )
+        }),
+      ),
     ).toEqual({
       param: null,
     });

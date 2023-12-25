@@ -8,14 +8,14 @@ import { GetUndefinedDescriptor } from '../undefined/undefined';
 
 export function GetIntersectionDescriptor(
   intersectionTypeNode: ts.IntersectionTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const nodes: ts.Node[] = GetTypes(intersectionTypeNode.types, scope);
 
   const hasInvalidIntersections: boolean = nodes.some(
     (node: ts.Node) =>
       TypescriptHelper.IsLiteralOrPrimitive(node) ||
-      core.ts.isTypeQueryNode(node)
+      core.ts.isTypeQueryNode(node),
   );
 
   if (hasInvalidIntersections) {

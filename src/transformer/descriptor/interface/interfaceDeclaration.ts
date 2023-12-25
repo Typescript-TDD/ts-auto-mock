@@ -4,7 +4,7 @@ import { GetProperties } from '../properties/properties';
 
 export function GetInterfaceDeclarationDescriptor(
   node: ts.InterfaceDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetProperties(node, scope);
 }

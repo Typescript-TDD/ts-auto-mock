@@ -30,7 +30,7 @@ export namespace TypescriptHelper {
     if (!symbol) {
       throw new Error(
         `The type checker failed to look up a symbol for \`${node.getText()}'. 
-        Perhaps, the checker was searching an outdated source.`
+        Perhaps, the checker was searching an outdated source.`,
       );
     }
 
@@ -42,7 +42,7 @@ export namespace TypescriptHelper {
 
     if (!declarations) {
       throw new Error(
-        `Failed to look up declarations for \`${symbol.getName()}'.`
+        `Failed to look up declarations for \`${symbol.getName()}'.`,
       );
     }
 
@@ -56,13 +56,13 @@ export namespace TypescriptHelper {
   }
 
   export function GetConcreteDeclarationFromSymbol(
-    symbol: ts.Symbol
+    symbol: ts.Symbol,
   ): ts.Declaration {
     const declarations: ts.Declaration[] | undefined = symbol.declarations;
 
     if (!declarations) {
       throw new Error(
-        `Failed to look up declarations for \`${symbol.getName()}'.`
+        `Failed to look up declarations for \`${symbol.getName()}'.`,
       );
     }
 
@@ -76,7 +76,7 @@ export namespace TypescriptHelper {
   }
 
   export function GetDeclarationForImport(
-    node: ImportDeclaration
+    node: ImportDeclaration,
   ): ts.Declaration {
     const declarations: ts.Declaration[] = GetDeclarationsForImport(node);
 
@@ -84,7 +84,7 @@ export namespace TypescriptHelper {
   }
 
   export function GetConcreteDeclarationForImport(
-    node: ImportDeclaration
+    node: ImportDeclaration,
   ): ts.Declaration {
     const declarations: ts.Declaration[] = GetDeclarationsForImport(node);
 
@@ -92,7 +92,7 @@ export namespace TypescriptHelper {
   }
 
   export function GetParameterOfNode(
-    node: ts.EntityName
+    node: ts.EntityName,
   ): ts.NodeArray<ts.TypeParameterDeclaration> {
     const declaration: ts.Declaration = GetDeclarationFromNode(node);
 
@@ -103,7 +103,7 @@ export namespace TypescriptHelper {
   }
 
   export function GetTypeParameterOwnerMock(
-    declaration: ts.Declaration
+    declaration: ts.Declaration,
   ): ts.Declaration | undefined {
     const typeDeclaration: ts.Declaration | undefined =
       core.ts.getTypeParameterOwner(declaration);
@@ -134,7 +134,7 @@ export namespace TypescriptHelper {
 
     if (!symbol) {
       throw new Error(
-        `The type checker failed to look up symbol for property: ${propertyName.getText()}.`
+        `The type checker failed to look up symbol for property: ${propertyName.getText()}.`,
       );
     }
 
@@ -146,7 +146,7 @@ export namespace TypescriptHelper {
   }
 
   export function getSignatureOfCallExpression(
-    node: ts.CallExpression
+    node: ts.CallExpression,
   ): ts.Signature | undefined {
     return core.typeChecker.getResolvedSignature(node);
   }
@@ -158,14 +158,14 @@ export namespace TypescriptHelper {
   }
 
   function GetFirstValidDeclaration(
-    declarations: ts.Declaration[]
+    declarations: ts.Declaration[],
   ): ts.Declaration {
     return (
       declarations.find(
         (declaration: ts.Declaration) =>
           !core.ts.isVariableDeclaration(declaration) &&
           !core.ts.isFunctionDeclaration(declaration) &&
-          !core.ts.isModuleDeclaration(declaration)
+          !core.ts.isModuleDeclaration(declaration),
       ) || declarations[0]
     );
   }
@@ -178,7 +178,7 @@ export namespace TypescriptHelper {
   }
 
   function isImportExportDeclaration(
-    declaration: ts.Declaration
+    declaration: ts.Declaration,
   ): declaration is ImportDeclaration {
     return (
       core.ts.isImportEqualsDeclaration(declaration) ||

@@ -4,7 +4,7 @@ import { assertTypeArgumentPresence } from './assert-type-argument-presence';
 
 function isDeclarationWithName(
   declaration: ts.SignatureDeclaration,
-  declarationName: string
+  declarationName: string,
 ): boolean {
   return declaration.name?.getText() === declarationName;
 }
@@ -12,14 +12,14 @@ function isDeclarationWithName(
 export function customFunctionWithTypeArgument(
   sourceName: string,
   declarationName: string,
-  run: (node: ts.CallExpression, typeArgument: ts.TypeNode) => ts.Node
+  run: (node: ts.CallExpression, typeArgument: ts.TypeNode) => ts.Node,
 ): CustomFunction {
   return {
     sourceDts: sourceName,
     sourceUrl: `../${sourceName}`,
     isHandledFunction(
       node: ts.CallExpression,
-      declaration: ts.SignatureDeclaration
+      declaration: ts.SignatureDeclaration,
     ): boolean {
       return isDeclarationWithName(declaration, declarationName);
     },

@@ -11,7 +11,7 @@ describe('create-mock-list-values', () => {
       2,
       (index: number) => ({
         property: `sss${index}`,
-      })
+      }),
     );
 
     expect(properties[0].property).toBe('sss0');

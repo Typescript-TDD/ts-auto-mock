@@ -10,7 +10,7 @@ type PropertyNode = ts.PropertySignature | ts.PropertyDeclaration;
 
 export function GetPropertyDescriptor(
   node: PropertyNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   PropertySignatureCache.instance.set(node.name);
   if (node.type) {

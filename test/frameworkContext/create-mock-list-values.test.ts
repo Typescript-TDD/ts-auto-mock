@@ -16,7 +16,7 @@ describe('create-mock-list-values', () => {
         property: {
           a: index * 2,
         },
-      })
+      }),
     );
     properties[0].method();
     properties[2].method();
@@ -42,7 +42,7 @@ describe('create-mock-list-values', () => {
         property: {
           a: index * 2,
         },
-      })
+      }),
     );
     expect(mockList.length).toBe(2);
   });

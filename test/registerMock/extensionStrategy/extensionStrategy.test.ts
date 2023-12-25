@@ -5,7 +5,7 @@ import { FakePromise } from '../fakePromise';
 function asFakePromise<
   T,
   TProp extends Promise<T>,
-  TFake extends FakePromise<T>
+  TFake extends FakePromise<T>,
 >(prop: Promise<T>): FakePromise<T> {
   return prop as unknown as FakePromise<T>;
 }

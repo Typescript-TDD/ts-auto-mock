@@ -15,33 +15,33 @@ import { SignatureLike } from './signatureLike';
 export function GetMockPropertiesFromSymbol(
   propertiesSymbol: ts.Symbol[],
   signatures: ReadonlyArray<ts.Signature>,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const properties: PropertyLike[] = propertiesSymbol
     .filter((prop: ts.Symbol) => !!prop.declarations) // Dynamically generated properties (mapped types) do not have declarations
     .map(
       (prop: ts.Symbol) =>
         prop.declarations?.filter(
-          (declaration: ts.Declaration) => !core.ts.isSetAccessor(declaration)
-        )[0]
+          (declaration: ts.Declaration) => !core.ts.isSetAccessor(declaration),
+        )[0],
     )
     .filter(Boolean) as PropertyLike[];
 
   const signaturesDeclarations: SignatureLike[] = signatures.map(
-    (signature: ts.Signature) => signature.declaration
+    (signature: ts.Signature) => signature.declaration,
   ) as SignatureLike[];
 
   return GetMockPropertiesFromDeclarations(
     properties,
     signaturesDeclarations,
-    scope
+    scope,
   );
 }
 
 export function GetMockPropertiesFromDeclarations(
   list: ReadonlyArray<PropertyLike>,
   signatures: ReadonlyArray<SignatureLike>,
-  scope: Scope
+  scope: Scope,
 ): ts.CallExpression {
   const propertiesFilter: PropertyLike[] = list.filter(
     (member: PropertyLike) => {
@@ -71,15 +71,15 @@ export function GetMockPropertiesFromDeclarations(
       return (
         modifiers.filter(
           (modifier: ts.Modifier) =>
-            modifier.kind === core.ts.SyntaxKind.PrivateKeyword
+            modifier.kind === core.ts.SyntaxKind.PrivateKeyword,
         ).length === 0
       );
-    }
+    },
   );
 
   const accessorDeclaration: PropertyAssignments = GetMockPropertiesAssignments(
     propertiesFilter,
-    scope
+    scope,
   );
 
   const signaturesDescriptor: ts.Expression | null = signatures.length

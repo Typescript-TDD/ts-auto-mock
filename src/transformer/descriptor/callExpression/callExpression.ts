@@ -11,14 +11,14 @@ import { GetNullDescriptor } from '../null/null';
 
 export function GetCallExpressionDescriptor(
   node: ts.CallExpression,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetDescriptor(GetCallExpressionType(node), scope);
 }
 
 export function GetCallExpressionType(node: ts.CallExpression): ts.Node {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-    node.expression
+    node.expression,
   );
 
   return GetFinalFunctionTypeFromDeclaration(node, declaration);
@@ -26,7 +26,7 @@ export function GetCallExpressionType(node: ts.CallExpression): ts.Node {
 
 function GetFinalFunctionTypeFromDeclaration(
   initialNode: ts.Node,
-  node: ts.Node
+  node: ts.Node,
 ): ts.Node {
   if (core.ts.isFunctionLike(node)) {
     return GetFunctionReturnType(node as FunctionLikeDeclaration);

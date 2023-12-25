@@ -9,7 +9,7 @@ describe('On', () => {
 
   it('should return an ExtensionHandler when used with a mock', () => {
     expect(On(createMock<{ prop: () => void }>())).toEqual(
-      jasmine.any(ExtensionHandler)
+      jasmine.any(ExtensionHandler),
     );
   });
 });

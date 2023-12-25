@@ -20,7 +20,7 @@ export const createMockListCustomFunction: CustomFunction =
         amount: lengthExpression,
         defaultValues: getDefaultValues(node),
       });
-    }
+    },
   );
 
 function getDefaultValues(node: ts.CallExpression): ts.Expression | undefined {

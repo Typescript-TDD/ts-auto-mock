@@ -6,7 +6,7 @@ import { GetDescriptor } from '../descriptor';
 
 export const GetShorthandPropertyAssignmentDescriptor: (
   node: ts.ShorthandPropertyAssignment,
-  scope: Scope
+  scope: Scope,
 ) => ts.Expression = (node: ts.ShorthandPropertyAssignment, scope) => {
   const typeChecker: ts.TypeChecker = core.typeChecker;
 
@@ -16,7 +16,7 @@ export const GetShorthandPropertyAssignmentDescriptor: (
   if (!symbol) {
     throw new Error(
       `The type checker failed to look up a symbol for \`${node.getText()}'. 
-        Perhaps, the checker was searching an outdated source.`
+        Perhaps, the checker was searching an outdated source.`,
     );
   }
 

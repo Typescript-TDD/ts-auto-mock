@@ -10,7 +10,7 @@ import {
 
 export function GetMappedDescriptor(
   node: ts.MappedTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const typeParameter: ts.TypeNode | undefined = node.typeParameter.constraint;
 
@@ -26,7 +26,7 @@ export function GetMappedDescriptor(
       if (core.ts.isLiteralTypeNode(possibleType)) {
         const property: ts.PropertyDeclaration = createProperty(
           (possibleType.literal as ts.StringLiteral).text,
-          node.type
+          node.type,
         );
         acc.push(property);
         return acc;
@@ -41,7 +41,7 @@ export function GetMappedDescriptor(
 
       return acc;
     },
-    []
+    [],
   );
 
   return GetMockPropertiesFromDeclarations(properties, [], scope);

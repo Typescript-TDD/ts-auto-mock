@@ -30,7 +30,7 @@ export class ModuleImportIdentifierPerFile {
       (key: ModuleName) => ({
         moduleUrl: ModulesImportUrl[key],
         identifier: this._modulesNameIdentifierPerFile[fileName][key],
-      })
+      }),
     );
   }
 
@@ -43,8 +43,8 @@ export class ModuleImportIdentifierPerFile {
       (moduleIdentifier: ModuleNameIdentifier) =>
         createImportOnIdentifier(
           moduleIdentifier.moduleUrl,
-          moduleIdentifier.identifier
-        )
+          moduleIdentifier.identifier,
+        ),
     );
   }
 }
