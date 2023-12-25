@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ lts/gallium ]
+        node-version: [ lts/hydrogen ]
     steps:
     - name: Checkout
       uses: actions/checkout@v3

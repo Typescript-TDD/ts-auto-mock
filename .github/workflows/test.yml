@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ lts/gallium, lts/hydrogen ]
+        node-version: [ lts/hydrogen ]
 
     steps:
     - uses: actions/checkout@v3
