@@ -9,5 +9,6 @@ updates:
     interval: "daily"
   ignore:
   - dependency-name: "@types/node"
-    # @types/node versions follow node versions. this project currently supports node lts/gallium and lts/hydrogen
-    versions: [ '>=17.0.0' ]
+    # This project currently supports node lts/hydrogen
+    # Ignore anything higher than 18
+    versions: [ '>=19.0.0' ]
