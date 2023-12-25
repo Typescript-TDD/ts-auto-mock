@@ -1,3 +1,3 @@
 export type Extension<TMock, TRequestedOverriddenMock> = (
-  mock: TMock
+  mock: TMock,
 ) => TRequestedOverriddenMock;

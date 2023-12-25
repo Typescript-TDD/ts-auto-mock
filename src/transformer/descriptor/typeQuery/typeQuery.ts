@@ -22,7 +22,7 @@ import {
 
 export function GetTypeQueryDescriptor(
   node: ts.TypeQueryNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const symbol: ts.Symbol | undefined = getTypeQuerySymbol(node);
 
@@ -38,7 +38,7 @@ export function GetTypeQueryDescriptor(
 
 export function GetTypeQueryDescriptorFromDeclaration(
   declaration: ts.NamedDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const typeChecker: ts.TypeChecker = core.typeChecker;
 
@@ -47,14 +47,14 @@ export function GetTypeQueryDescriptorFromDeclaration(
       return createFunctionExpressionReturn(
         GetTypeReferenceDescriptor(
           createTypeReferenceNode(declaration.name as ts.Identifier),
-          scope
-        )
+          scope,
+        ),
       );
     case core.ts.SyntaxKind.TypeAliasDeclaration:
     case core.ts.SyntaxKind.InterfaceDeclaration:
       return GetTypeReferenceDescriptor(
         createTypeReferenceNode(declaration.name as ts.Identifier),
-        scope
+        scope,
       );
     // NamespaceImport, ImportEqualsDeclaration and ModuleDeclaration cannot be used in a typeof
     // but to test definitely typed this is the only way, eventually we should move this code in the definitely typed folder
@@ -67,10 +67,10 @@ export function GetTypeQueryDescriptorFromDeclaration(
         GetPropertiesFromSourceFileOrModuleDeclaration(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (declaration as any).symbol as ts.Symbol,
-          scope
+          scope,
         ),
         [],
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.EnumDeclaration:
       // TODO: Use following two lines when issue #17552 on typescript github is resolved (https://github.com/microsoft/TypeScript/issues/17552)
@@ -78,13 +78,13 @@ export function GetTypeQueryDescriptorFromDeclaration(
       // return node.exprName as ts.Identifier;
       return GetMockFactoryCallTypeofEnum(
         declaration as ts.EnumDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.FunctionDeclaration:
     case core.ts.SyntaxKind.MethodSignature:
       return GetMethodDeclarationDescriptor(
         declaration as ts.FunctionDeclaration,
-        scope
+        scope,
       );
     case core.ts.SyntaxKind.VariableDeclaration:
       const variable: ts.VariableDeclaration =
@@ -96,7 +96,7 @@ export function GetTypeQueryDescriptorFromDeclaration(
 
       if (!variable.initializer) {
         throw new Error(
-          `The transformer cannot determine a value for \`${variable.getText()}' without a specified type or no initializer value.`
+          `The transformer cannot determine a value for \`${variable.getText()}' without a specified type or no initializer value.`,
         );
       }
 
@@ -110,7 +110,7 @@ export function GetTypeQueryDescriptorFromDeclaration(
 
         return GetTypeQueryDescriptorFromDeclaration(
           inferredTypeDeclaration,
-          scope
+          scope,
         );
       } else {
         return GetDescriptor(inferredType, scope);
@@ -118,7 +118,7 @@ export function GetTypeQueryDescriptorFromDeclaration(
     default:
       TransformerLogger().typeNotSupported(
         `TypeQuery of ${core.ts.SyntaxKind[declaration.kind]}`,
-        declaration
+        declaration,
       );
       return GetNullDescriptor();
   }
@@ -129,13 +129,13 @@ function getTypeQuerySymbol(node: ts.TypeQueryNode): ts.Symbol | undefined {
 }
 
 function getTypeQueryDeclarationFromSymbol(
-  symbol: ts.Symbol
+  symbol: ts.Symbol,
 ): ts.NamedDeclaration {
   const declaration: ts.Declaration | undefined = symbol.declarations?.[0];
 
   if (!declaration) {
     throw new Error(
-      `Failed to look up declaration for \`${symbol.getName()}'.`
+      `Failed to look up declaration for \`${symbol.getName()}'.`,
     );
   }
 

@@ -12,7 +12,7 @@ export class Merge {
         srcValue: unknown,
         oneLevelPath: string,
         objContainer: object,
-        srcContainer: object
+        srcContainer: object,
       ) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -26,14 +26,14 @@ export class Merge {
         ) {
           set(objContainer, [oneLevelPath], undefined);
         }
-      }
+      },
     );
   }
 
   public static mergeIterator<T>(
     a: T,
     b: (index: number) => PartialDeep<T>,
-    index: number
+    index: number,
   ): T {
     return Merge.merge(a, b(index));
   }

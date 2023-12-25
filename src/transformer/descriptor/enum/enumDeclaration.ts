@@ -9,14 +9,14 @@ import {
 } from '../../../typescriptFactory/typescriptFactory';
 
 export function GetEnumDeclarationDescriptor(
-  node: ts.EnumDeclaration
+  node: ts.EnumDeclaration,
 ): ts.Expression {
   const typeChecker: ts.TypeChecker = core.typeChecker;
 
   if (IsTsAutoMockRandomEnabled()) {
     const nodesList: ts.Expression[] = node.members.map(
       (member: ts.EnumMember, index: number) =>
-        getEnumMemberValue(typeChecker, member, index)
+        getEnumMemberValue(typeChecker, member, index),
     );
 
     return createCall(RandomPropertyAccessor('enumValue'), nodesList);
@@ -28,7 +28,7 @@ export function GetEnumDeclarationDescriptor(
 function getEnumMemberValue(
   typeChecker: ts.TypeChecker,
   member: ts.EnumMember,
-  defaultValue: string | number = 0
+  defaultValue: string | number = 0,
 ): ts.Expression {
   const value: string | number =
     typeChecker.getConstantValue(member) || defaultValue;

@@ -9,7 +9,7 @@ import { PropertySignatureCache } from '../property/cache';
 
 export function GetIndexedAccessTypeDescriptor(
   node: ts.IndexedAccessTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   let propertyName: string | null = null;
 
@@ -17,7 +17,7 @@ export function GetIndexedAccessTypeDescriptor(
     case core.ts.SyntaxKind.TypeReference:
       const declaration: ts.Declaration =
         TypescriptHelper.GetDeclarationFromNode(
-          (node.indexType as ts.TypeReferenceNode).typeName
+          (node.indexType as ts.TypeReferenceNode).typeName,
         );
 
       switch (declaration.kind) {
@@ -25,7 +25,7 @@ export function GetIndexedAccessTypeDescriptor(
           const propertyNameIdentifier: ts.PropertyName =
             PropertySignatureCache.instance.get();
           propertyName = TypescriptHelper.GetStringPropertyName(
-            propertyNameIdentifier
+            propertyNameIdentifier,
           );
           break;
         case core.ts.SyntaxKind.TypeAliasDeclaration:
@@ -41,7 +41,7 @@ export function GetIndexedAccessTypeDescriptor(
             `IndexedAccess of TypeReference of ${
               core.ts.SyntaxKind[declaration.kind]
             }`,
-            declaration
+            declaration,
           );
           break;
       }
@@ -54,7 +54,7 @@ export function GetIndexedAccessTypeDescriptor(
     default:
       TransformerLogger().typeNotSupported(
         `IndexedAccess of ${core.ts.SyntaxKind[node.indexType.kind]}`,
-        node.indexType
+        node.indexType,
       );
       break;
   }
@@ -63,7 +63,7 @@ export function GetIndexedAccessTypeDescriptor(
     const propertySymbol: ts.Symbol | undefined =
       core.typeChecker.getPropertyOfType(
         core.typeChecker.getTypeFromTypeNode(node.objectType),
-        propertyName
+        propertyName,
       );
 
     if (!propertySymbol) {
@@ -72,14 +72,14 @@ export function GetIndexedAccessTypeDescriptor(
       TransformerLogger().indexedAccessTypeFailed(
         propertyName,
         node.getText(),
-        node
+        node,
       );
       return GetNullDescriptor();
     }
 
     return GetDescriptor(
       TypescriptHelper.GetDeclarationFromSymbol(propertySymbol),
-      scope
+      scope,
     );
   }
 

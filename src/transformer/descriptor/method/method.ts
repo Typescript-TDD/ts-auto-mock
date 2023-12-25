@@ -14,7 +14,7 @@ import {
 
 export function GetMethodDescriptor(
   propertyName: ts.PropertyName,
-  returnValue: ts.Expression
+  returnValue: ts.Expression,
 ): ts.Expression {
   const providerGetMethod: ts.PropertyAccessExpression =
     CreateProviderGetMethod();
@@ -25,7 +25,7 @@ export function GetMethodDescriptor(
     createStringLiteral(propertyNameString);
 
   const propertyValueFunction: ts.ArrowFunction = createArrowFunction(
-    createBlock([createReturnStatement(returnValue)], true)
+    createBlock([createReturnStatement(returnValue)], true),
   );
 
   return createCall(providerGetMethod, [
@@ -39,10 +39,10 @@ function CreateProviderGetMethod(): ts.PropertyAccessExpression {
     createPropertyAccess(
       createPropertyAccess(
         MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
-        createIdentifier('Provider')
+        createIdentifier('Provider'),
       ),
-      createIdentifier('instance')
+      createIdentifier('instance'),
     ),
-    createIdentifier('getMethod')
+    createIdentifier('getMethod'),
   );
 }

@@ -5,7 +5,7 @@ import { GetTypeImport, ImportNode } from '../type/typeImport';
 
 export function GetImportDescriptor(
   node: ImportNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const type: ts.Node = GetTypeImport(node);
   return GetDescriptor(type, scope);

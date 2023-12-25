@@ -4,7 +4,7 @@ import { MessageFormatter } from './logger';
 /* eslint-disable no-console */
 export function ConsoleLogger(
   messageFormatter: MessageFormatter,
-  service: string
+  service: string,
 ): ILogger {
   return {
     info: (message: string): void => {

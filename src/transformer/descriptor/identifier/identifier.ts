@@ -7,7 +7,7 @@ import { core } from '../../core/core';
 
 export function GetIdentifierDescriptor(
   node: ts.Identifier,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   if (
     core.ts.identifierToKeywordKind(node) ===

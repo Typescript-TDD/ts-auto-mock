@@ -10,12 +10,12 @@ interface CustomTransformerConfig {
 
 export const customTransformer: (
   program: ts.Program,
-  config: CustomTransformerConfig
+  config: CustomTransformerConfig,
 ) => ts.TransformerFactory<ts.SourceFile> = (
   program: ts.Program,
-  config: CustomTransformerConfig
+  config: CustomTransformerConfig,
 ) =>
   baseTransformer(customFunctions, config.typescript)(
     program,
-    config.transformerOptions
+    config.transformerOptions,
   );

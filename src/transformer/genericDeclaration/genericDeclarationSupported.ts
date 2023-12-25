@@ -5,7 +5,7 @@ import { core } from '../core/core';
 export type GenericDeclarationSupported = InterfaceOrClassDeclaration;
 
 export function extensionExpressionSupported(
-  expression: ts.LeftHandSideExpression
+  expression: ts.LeftHandSideExpression,
 ): expression is ts.Identifier {
   // This check is to prevent extends function() to die.
   // We don't have to support call expression in heritage extends because it will never have generics.

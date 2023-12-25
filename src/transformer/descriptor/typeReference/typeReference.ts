@@ -17,10 +17,10 @@ import {
 
 export function GetTypeReferenceDescriptor(
   node: ts.TypeReferenceNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const declaration: ts.Declaration = TypescriptHelper.GetDeclarationFromNode(
-    node.typeName
+    node.typeName,
   );
 
   if (!declaration) {

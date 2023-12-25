@@ -11,7 +11,7 @@ export const createMockCustomFunction: CustomFunction =
       getMock(node, {
         nodeToMock,
         defaultValues: getDefaultValues(node),
-      })
+      }),
   );
 
 function getDefaultValues(node: ts.CallExpression): ts.Expression | undefined {

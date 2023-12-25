@@ -10,7 +10,7 @@ export function GetFunctionTypeDescriptor(
     | ts.FunctionTypeNode
     | ts.CallSignatureDeclaration
     | ts.ConstructSignatureDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const property: ts.PropertyName = PropertySignatureCache.instance.get();
 

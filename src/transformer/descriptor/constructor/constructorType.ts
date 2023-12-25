@@ -5,7 +5,7 @@ import { createFunctionExpressionReturn } from '../../../typescriptFactory/types
 
 export function GetConstructorTypeDescriptor(
   node: ts.ConstructorTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return createFunctionExpressionReturn(GetDescriptor(node.type, scope));
 }

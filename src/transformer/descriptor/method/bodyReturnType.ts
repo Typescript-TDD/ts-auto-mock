@@ -12,13 +12,13 @@ export function GetReturnTypeFromBodyDescriptor(
     | ts.FunctionExpression
     | ts.MethodDeclaration
     | ts.FunctionDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetDescriptor(GetReturnNodeFromBody(node), scope);
 }
 
 export function GetReturnNodeFromBody(
-  node: ts.FunctionLikeDeclaration
+  node: ts.FunctionLikeDeclaration,
 ): ts.Node {
   const functionBody: ts.ConciseBody | undefined = node.body;
 
@@ -61,6 +61,6 @@ export function GetReturnNodeFromBody(
 function GetReturnStatement(body: ts.FunctionBody): ts.ReturnStatement {
   return body.statements.find(
     (statement: ts.Statement) =>
-      statement.kind === core.ts.SyntaxKind.ReturnStatement
+      statement.kind === core.ts.SyntaxKind.ReturnStatement,
   ) as ts.ReturnStatement;
 }

@@ -4,7 +4,7 @@ import { MessageFormatter } from './messageFormatter';
 
 export function FileLogger(
   messageFormatter: MessageFormatter,
-  service: string
+  service: string,
 ): ILogger {
   const filePath: string = 'tsAutoMock.log';
 

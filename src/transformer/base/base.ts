@@ -10,14 +10,14 @@ import { InitCore, core } from '../core/core';
 
 export function baseTransformer(
   customFunctions: CustomFunction[],
-  typescript: typeof ts
+  typescript: typeof ts,
 ): (
   program: ts.Program,
-  options?: Partial<TsAutoMockOptions>
+  options?: Partial<TsAutoMockOptions>,
 ) => ts.TransformerFactory<ts.SourceFile> {
   return (
     program: ts.Program,
-    options?: Partial<TsAutoMockOptions>
+    options?: Partial<TsAutoMockOptions>,
   ): ts.TransformerFactory<ts.SourceFile> => {
     if (options) {
       SetTsAutoMockOptions(options);
@@ -30,7 +30,7 @@ export function baseTransformer(
       GetIsFilesExcludedFromOptions();
 
     return (
-        context: ts.TransformationContext
+        context: ts.TransformationContext,
       ): ((file: ts.SourceFile) => ts.SourceFile) =>
       (file: ts.SourceFile): ts.SourceFile => {
         if (isFileExcluded(file)) {
@@ -41,7 +41,7 @@ export function baseTransformer(
         let sourceFile: ts.SourceFile = visitNodeAndChildren(
           file,
           context,
-          customFunctions
+          customFunctions,
         );
 
         sourceFile = updateSourceFileNode(sourceFile, [
@@ -57,23 +57,23 @@ export function baseTransformer(
 function visitNodeAndChildren(
   node: ts.SourceFile,
   context: ts.TransformationContext,
-  customFunctions: CustomFunction[]
+  customFunctions: CustomFunction[],
 ): ts.SourceFile;
 function visitNodeAndChildren(
   node: ts.Node,
   context: ts.TransformationContext,
-  customFunctions: CustomFunction[]
+  customFunctions: CustomFunction[],
 ): ts.Node;
 function visitNodeAndChildren(
   node: ts.Node,
   context: ts.TransformationContext,
-  customFunctions: CustomFunction[]
+  customFunctions: CustomFunction[],
 ): ts.Node {
   return core.ts.visitEachChild(
     visitNode(node, customFunctions),
     (childNode: ts.Node) =>
       visitNodeAndChildren(childNode, context, customFunctions),
-    context
+    context,
   );
 }
 

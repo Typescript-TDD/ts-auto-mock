@@ -35,7 +35,7 @@ describe('build', () => {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion,@typescript-eslint/no-non-null-assertion
             statsAsJson!
               .errors!.map((statErr: StatsError) => JSON.stringify(statErr))
-              .join('\n')
+              .join('\n'),
         );
       }
 
@@ -46,23 +46,23 @@ describe('build', () => {
         1,
         `Only one transformer.ts should import typescript, but found:\n${modulesImportingTypescript
           .map((m: StatsModuleReason) => m.module)
-          .join(', ')}`
+          .join(', ')}`,
       );
       expect(modulesImportingTypescript[0].module).toBe(
-        './src/transformer/transformer.ts'
+        './src/transformer/transformer.ts',
       );
       done();
     });
   });
 
   function getModulesImportingTypescript(
-    statsAsJson: StatsCompilation
+    statsAsJson: StatsCompilation,
   ): StatsModuleReason[] {
     return flatMap(
       statsAsJson.modules?.filter(
-        (x: StatsModule) => x.identifier === 'external commonjs "typescript"'
+        (x: StatsModule) => x.identifier === 'external commonjs "typescript"',
       ) || [],
-      (x: StatsModule) => x.reasons || []
+      (x: StatsModule) => x.reasons || [],
     );
   }
 

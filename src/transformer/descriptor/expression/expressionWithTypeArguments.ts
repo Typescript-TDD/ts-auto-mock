@@ -4,7 +4,7 @@ import { GetDescriptor } from '../descriptor';
 
 export function GetExpressionWithTypeArgumentsDescriptor(
   node: ts.ExpressionWithTypeArguments,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetDescriptor(node.expression, scope);
 }

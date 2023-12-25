@@ -52,8 +52,8 @@ describe('registerMock of typeQuery', () => {
         class Some {
           public prop: string;
         },
-        { C: 'something' }
-      )
+        { C: 'something' },
+      ),
     );
 
     const mock1: typeof MyClass = createMock<typeof MyClass>();

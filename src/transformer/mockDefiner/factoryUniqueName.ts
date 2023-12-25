@@ -20,7 +20,7 @@ export class FactoryUniqueName {
       declaration.name;
 
     return this._createUniqueName(
-      declarationNameIdentifier && declarationNameIdentifier.text
+      declarationNameIdentifier && declarationNameIdentifier.text,
     );
   }
 
@@ -41,7 +41,7 @@ export class FactoryUniqueName {
 
         return acc;
       },
-      ''
+      '',
     );
 
     return this._createUniqueName(nameOfDeclarations);

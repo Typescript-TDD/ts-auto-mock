@@ -2,7 +2,7 @@ import type * as ts from 'typescript';
 import { GetReturnNodeFromBody } from './bodyReturnType';
 
 export function GetFunctionReturnType(
-  node: ts.FunctionLikeDeclaration
+  node: ts.FunctionLikeDeclaration,
 ): ts.Node {
   let returnType: ts.Node;
 

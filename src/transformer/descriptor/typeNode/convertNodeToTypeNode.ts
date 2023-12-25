@@ -4,7 +4,7 @@ import { TransformerLogger } from '../../logger/transformerLogger';
 import { GetNullDescriptor } from '../null/null';
 
 export function convertNodeToTypeNode(
-  node: ts.Node
+  node: ts.Node,
 ): ts.TypeNode | ts.Expression {
   const typeChecker: ts.TypeChecker = core.typeChecker;
 
@@ -13,7 +13,7 @@ export function convertNodeToTypeNode(
   const typeNode: ts.TypeNode | undefined = typeChecker.typeToTypeNode(
     typeAtLocation,
     undefined,
-    undefined
+    undefined,
   );
 
   if (!typeNode) {
@@ -30,7 +30,7 @@ export function convertNodeToTypeNode(
 }
 
 const canTypeBeChecked: (type: ts.TypeNode) => boolean = (
-  type: ts.TypeNode
+  type: ts.TypeNode,
 ): boolean =>
   [
     core.ts.SyntaxKind.BigIntKeyword,

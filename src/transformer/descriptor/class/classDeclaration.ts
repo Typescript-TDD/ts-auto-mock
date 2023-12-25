@@ -4,7 +4,7 @@ import { GetProperties } from '../properties/properties';
 
 export function GetClassDeclarationDescriptor(
   node: ts.ClassDeclaration,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetProperties(node, scope);
 }

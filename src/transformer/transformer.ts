@@ -5,8 +5,8 @@ import { customFunctions } from './customFunctions/custom-functions';
 
 export const transformer: (
   program: ts.Program,
-  options?: Partial<TsAutoMockOptions>
+  options?: Partial<TsAutoMockOptions>,
 ) => ts.TransformerFactory<ts.SourceFile> = baseTransformer(
   customFunctions,
-  ts
+  ts,
 );

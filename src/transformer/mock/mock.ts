@@ -40,7 +40,7 @@ export interface CreateMockOptions {
 
 export function getMock(
   node: ts.CallExpression,
-  options: CreateMockOptions
+  options: CreateMockOptions,
 ): ts.Expression {
   SetCurrentCreateMock(node);
   const mockExpression: ts.Expression = getMockExpression(options);
@@ -48,7 +48,7 @@ export function getMock(
   if (!!options.amount) {
     return getListOfMocks(
       mockExpression,
-      options as CreateMockOptions & { amount: ts.Expression }
+      options as CreateMockOptions & { amount: ts.Expression },
     );
   }
 
@@ -57,7 +57,7 @@ export function getMock(
 
 export function storeRegisterMock(
   typeToMock: ts.TypeNode,
-  node: ts.CallExpression
+  node: ts.CallExpression,
 ): ts.Node {
   SetCurrentCreateMock(node);
   if (core.ts.isTypeReferenceNode(typeToMock)) {
@@ -65,11 +65,11 @@ export function storeRegisterMock(
       .arguments[0] as ts.FunctionExpression;
     return MockDefiner.instance.registerMockFor(
       TypescriptHelper.GetDeclarationFromNode(typeToMock.typeName),
-      factory
+      factory,
     );
   } else {
     Logger('RegisterMock').error(
-      'registerMock can be used only to mock type references.'
+      'registerMock can be used only to mock type references.',
     );
     return createOmittedExpression();
   }
@@ -77,7 +77,7 @@ export function storeRegisterMock(
 
 function getSingleMock(
   options: CreateMockOptions,
-  mockExpression: ts.Expression
+  mockExpression: ts.Expression,
 ): ts.Expression {
   if (!!options.defaultValues) {
     return getMockMergeExpression(mockExpression, options.defaultValues);
@@ -95,7 +95,7 @@ function getMockExpression(options: CreateMockOptions): ts.Expression {
 
 function getListOfMocks(
   mock: ts.Expression,
-  options: CreateMockOptions & { amount: ts.Expression }
+  options: CreateMockOptions & { amount: ts.Expression },
 ): ts.Expression {
   if (!!options.defaultValues) {
     return getListCallMock(
@@ -104,7 +104,7 @@ function getListOfMocks(
         mock,
         options.defaultValues,
         Identifiers.MockCreateMockListLoopStep,
-      ])
+      ]),
     );
   }
 
@@ -113,7 +113,7 @@ function getListOfMocks(
 
 function getListCallMock(
   expression: ts.Expression,
-  mockExpr: ts.Expression
+  mockExpr: ts.Expression,
 ): ts.CallExpression {
   return createIIFE(
     createBlock(
@@ -123,30 +123,30 @@ function getListCallMock(
             [
               createVariableDeclaration(
                 Identifiers.MockCreateMockListLoopArray,
-                createArrayLiteral([], false)
+                createArrayLiteral([], false),
               ),
             ],
-            core.ts.NodeFlags.Const
-          )
+            core.ts.NodeFlags.Const,
+          ),
         ),
         createForStatement(
           createVariableDeclarationList(
             [
               createVariableDeclaration(
                 Identifiers.MockCreateMockListLoopStep,
-                createNumericLiteral('0')
+                createNumericLiteral('0'),
               ),
             ],
-            core.ts.NodeFlags.Let
+            core.ts.NodeFlags.Let,
           ),
           createBinaryExpression(
             Identifiers.MockCreateMockListLoopStep,
             createPunctuationToken(core.ts.SyntaxKind.LessThanToken),
-            expression
+            expression,
           ),
           createPostfix(
             Identifiers.MockCreateMockListLoopStep,
-            core.ts.SyntaxKind.PlusPlusToken
+            core.ts.SyntaxKind.PlusPlusToken,
           ),
           createBlock(
             [
@@ -154,18 +154,18 @@ function getListCallMock(
                 createCall(
                   createPropertyAccess(
                     Identifiers.MockCreateMockListLoopArray,
-                    createIdentifier('push')
+                    createIdentifier('push'),
                   ),
-                  [mockExpr]
-                )
+                  [mockExpr],
+                ),
               ),
             ],
-            true
-          )
+            true,
+          ),
         ),
         createReturn(Identifiers.MockCreateMockListLoopArray),
       ],
-      true
-    )
+      true,
+    ),
   );
 }

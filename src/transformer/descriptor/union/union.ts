@@ -7,13 +7,13 @@ import { GetUndefinedDescriptor } from '../undefined/undefined';
 
 export function GetUnionDescriptor(
   node: ts.UnionTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const findNodes: ts.Node[] = GetTypes(node.types, scope);
 
   if (scope.hydrated) {
     const removeUndefinedNodes: ts.Node[] = findNodes.filter(
-      (typeNode: ts.TypeNode) => !isNotDefinedType(typeNode)
+      (typeNode: ts.TypeNode) => !isNotDefinedType(typeNode),
     );
 
     if (removeUndefinedNodes.length) {
@@ -24,7 +24,7 @@ export function GetUnionDescriptor(
   }
 
   const notDefinedType: ts.Node[] = findNodes.filter((typeNode: ts.TypeNode) =>
-    isNotDefinedType(typeNode)
+    isNotDefinedType(typeNode),
   );
 
   if (notDefinedType.length) {

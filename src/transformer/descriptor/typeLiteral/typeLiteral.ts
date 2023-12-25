@@ -4,7 +4,7 @@ import { GetProperties } from '../properties/properties';
 
 export function GetTypeLiteralDescriptor(
   node: ts.TypeLiteralNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   return GetProperties(node, scope);
 }

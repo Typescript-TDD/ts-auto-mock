@@ -9,7 +9,7 @@ export function NodeToString(node: ts.Node): string {
     '',
     core.ts.ScriptTarget.Latest,
     /* setParentNodes*/ false,
-    core.ts.ScriptKind.TS
+    core.ts.ScriptKind.TS,
   );
   const printer: ts.Printer = core.ts.createPrinter({
     newLine: core.ts.NewLineKind.LineFeed,

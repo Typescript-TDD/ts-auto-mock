@@ -8,13 +8,13 @@ import {
 } from '../../../typescriptFactory/typescriptFactory';
 
 export function RandomPropertyAccessor(
-  methodName: string
+  methodName: string,
 ): ts.PropertyAccessExpression {
   return createPropertyAccess(
     createPropertyAccess(
       MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Random),
-      PrivateIdentifier('Random')
+      PrivateIdentifier('Random'),
     ),
-    createIdentifier(methodName)
+    createIdentifier(methodName),
   );
 }

@@ -7,7 +7,7 @@ import { GetDescriptor } from '../descriptor';
 
 export const GetVariableDeclarationDescriptor: (
   node: ts.VariableDeclaration,
-  scope: Scope
+  scope: Scope,
 ) => ts.Expression = (node: ts.VariableDeclaration, scope: Scope) => {
   const typeChecker: ts.TypeChecker = core.typeChecker;
   const coreTs: typeof core.ts = core.ts;
@@ -16,13 +16,13 @@ export const GetVariableDeclarationDescriptor: (
   }
 
   const symbol: ts.Symbol | undefined = typeChecker.getSymbolAtLocation(
-    node.name
+    node.name,
   );
 
   if (!symbol) {
     throw new Error(
       `The type checker failed to look up a symbol for \`${node.getText()}'. 
-        Perhaps, the checker was searching an outdated source.`
+        Perhaps, the checker was searching an outdated source.`,
     );
   }
 
@@ -30,13 +30,13 @@ export const GetVariableDeclarationDescriptor: (
   const typeToNode: ts.TypeNode | undefined = typeChecker.typeToTypeNode(
     type,
     undefined,
-    undefined
+    undefined,
   );
 
   if (!typeToNode) {
     throw new Error(
       `The type checker failed to look up a node for \`${node.getText()}'. 
-        Perhaps, the checker was searching an outdated source.`
+        Perhaps, the checker was searching an outdated source.`,
     );
   }
 

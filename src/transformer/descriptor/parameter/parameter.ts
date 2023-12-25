@@ -5,7 +5,7 @@ import { GetDescriptor } from '../descriptor';
 
 export const GetParameterDescriptor: (
   node: ts.ParameterDeclaration,
-  scope: Scope
+  scope: Scope,
 ) => ts.Expression = (node: ts.ParameterDeclaration, scope: Scope) => {
   if (node.type) {
     return GetDescriptor(node.type, scope);

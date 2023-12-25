@@ -20,16 +20,16 @@ export function GetMockMarkerProperty(): Property {
       createPropertyAccess(
         createPropertyAccess(
           MockDefiner.instance.getCurrentModuleIdentifier(ModuleName.Extension),
-          PrivateIdentifier('Marker')
+          PrivateIdentifier('Marker'),
         ),
-        createIdentifier('instance')
+        createIdentifier('instance'),
       ),
-      createIdentifier('get')
+      createIdentifier('get'),
     );
 
   const mockMarkerCall: ts.CallExpression = createCall(
     propertyAccessExpression,
-    []
+    [],
   );
 
   return {

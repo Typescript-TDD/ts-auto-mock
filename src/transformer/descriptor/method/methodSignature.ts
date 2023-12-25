@@ -6,7 +6,7 @@ import { GetMethodDescriptor } from './method';
 
 export function GetMethodSignatureDescriptor(
   node: ts.MethodSignature,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   let returnType: ts.Expression;
 

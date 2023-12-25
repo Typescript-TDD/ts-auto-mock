@@ -12,13 +12,13 @@ const now: () => string = () => new Date().toISOString();
 export type MessageFormatter = (
   service: string,
   level: string,
-  message: string
+  message: string,
 ) => string;
 
 const formatter: MessageFormatter = (
   service: string,
   level: string,
-  message: string
+  message: string,
 ) => `${now()}-${level.toUpperCase()}: ${service} - ${message}`;
 
 export function Logger(service: string): ILogger {

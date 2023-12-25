@@ -8,5 +8,5 @@ export const registerMockCustomFunction: CustomFunction =
     'register-mock.d.ts',
     'registerMock',
     (node: ts.CallExpression, nodeToMock: ts.TypeNode): ts.Node =>
-      storeRegisterMock(nodeToMock, node)
+      storeRegisterMock(nodeToMock, node),
   );

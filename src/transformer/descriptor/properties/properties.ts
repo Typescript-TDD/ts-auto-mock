@@ -20,11 +20,11 @@ export function GetProperties(node: ts.Node, scope: Scope): ts.Expression {
 
     Array.prototype.push.apply(
       signatures,
-      typeChecker.getSignaturesOfType(type, core.ts.SignatureKind.Call)
+      typeChecker.getSignaturesOfType(type, core.ts.SignatureKind.Call),
     );
     Array.prototype.push.apply(
       signatures,
-      typeChecker.getSignaturesOfType(type, core.ts.SignatureKind.Construct)
+      typeChecker.getSignaturesOfType(type, core.ts.SignatureKind.Construct),
     );
 
     return GetMockPropertiesFromSymbol(symbols, signatures, scope);
@@ -33,7 +33,7 @@ export function GetProperties(node: ts.Node, scope: Scope): ts.Expression {
 
 export function GetPropertiesFromMembers(
   node: ts.TypeLiteralNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const members: ts.NodeArray<ts.NamedDeclaration> = node.members;
   const signatures: Array<SignatureLike> = [];

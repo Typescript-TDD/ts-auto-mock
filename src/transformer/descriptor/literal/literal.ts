@@ -10,7 +10,7 @@ import {
 
 export function GetLiteralDescriptor(
   node: ts.LiteralTypeNode,
-  scope: Scope
+  scope: Scope,
 ): ts.Expression {
   const type: ts.Type = core.typeChecker.getTypeAtLocation(node);
   const literalType: ts.LiteralType = type as ts.LiteralType;
@@ -26,7 +26,7 @@ export function GetLiteralDescriptor(
 }
 
 function GetLiteralTokenDescriptor(
-  node: ts.LiteralTypeNode
+  node: ts.LiteralTypeNode,
 ): ts.StringLiteral | ts.NumericLiteral {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const nodeToken: any = node as any;
