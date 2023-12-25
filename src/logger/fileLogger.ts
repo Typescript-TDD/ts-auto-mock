@@ -1,29 +1,31 @@
-import { TransformableInfo } from 'logform';
-import * as winston from 'winston';
-import { FileTransportInstance } from 'winston/lib/winston/transports';
+import fs from 'fs';
+import { ILogger } from './logger.interface';
+import { MessageFormatter } from './messageFormatter';
 
-let winstonFileLogger: FileTransportInstance;
+export function FileLogger(
+  messageFormatter: MessageFormatter,
+  service: string
+): ILogger {
+  const filePath: string = 'tsAutoMock.log';
 
-export function FileLogger(): FileTransportInstance {
-  return (
-    winstonFileLogger ||
-    (winstonFileLogger = new winston.transports.File({
-      filename: 'tsAutoMock.log',
-      options: { flags: 'w' },
-      level: 'error',
-      format: winston.format.combine(
-        winston.format((info: TransformableInfo) => {
-          info.level = info.level.toUpperCase();
-          return info;
-        })(),
-        winston.format.simple(),
-        winston.format.timestamp(),
-        winston.format.printf(
-          (info: TransformableInfo) =>
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-            `${info.timestamp} - ${info.level}: ${info.message}`
-        )
-      ),
-    }))
-  );
+  const writeData: (data: string) => void = (data: string) => {
+    fs.writeFileSync(filePath, data, {
+      flag: 'a',
+    });
+  };
+
+  return {
+    info: (message: string): void => {
+      writeData(messageFormatter(service, 'info', message));
+      writeData('\n');
+    },
+    warning: (message: string): void => {
+      writeData(messageFormatter(service, 'warning', message));
+      writeData('\n');
+    },
+    error: (message: string): void => {
+      writeData(messageFormatter(service, 'error', message));
+      writeData('\n');
+    },
+  };
 }
