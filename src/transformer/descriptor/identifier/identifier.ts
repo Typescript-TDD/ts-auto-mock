@@ -10,8 +10,7 @@ export function GetIdentifierDescriptor(
   scope: Scope
 ): ts.Expression {
   if (
-    node.originalKeywordKind &&
-    node.originalKeywordKind === core.ts.SyntaxKind.UndefinedKeyword
+      core.ts.identifierToKeywordKind(node) === core.ts.SyntaxKind?.UndefinedKeyword
   ) {
     return GetUndefinedDescriptor();
   }

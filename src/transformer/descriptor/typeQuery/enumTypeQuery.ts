@@ -4,13 +4,12 @@ import {
   createBlock,
   createReturn,
 } from '../../../typescriptFactory/typescriptFactory';
-/* eslint-disable dot-notation,@typescript-eslint/ban-ts-comment */
+import { core } from "../../core/core";
 export function GetTypeofEnumDescriptor(
   enumDeclaration: ts.EnumDeclaration
 ): ts.Expression {
-  // @ts-ignore
-  enumDeclaration['modifiers'] = undefined;
+  const declaration = core.ts.factory.createEnumDeclaration(undefined, enumDeclaration.name, enumDeclaration.members);
   return createArrowFunction(
-    createBlock([enumDeclaration, createReturn(enumDeclaration.name)], true)
+    createBlock([declaration, createReturn(enumDeclaration.name)], true)
   );
 }

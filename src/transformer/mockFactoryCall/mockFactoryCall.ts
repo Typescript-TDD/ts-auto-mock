@@ -1,19 +1,16 @@
 import type * as ts from 'typescript';
-import { TypescriptHelper } from '../descriptor/helper/helper';
-import { GenericDeclaration } from '../genericDeclaration/genericDeclaration';
-import { IGenericDeclaration } from '../genericDeclaration/genericDeclaration.interface';
+import {TypescriptHelper} from '../descriptor/helper/helper';
+import {GenericDeclaration} from '../genericDeclaration/genericDeclaration';
+import {IGenericDeclaration} from '../genericDeclaration/genericDeclaration.interface';
 import {
   extensionExpressionSupported,
   GenericDeclarationSupported,
 } from '../genericDeclaration/genericDeclarationSupported';
-import { MockDefiner } from '../mockDefiner/mockDefiner';
-import { Identifiers } from '../mockIdentifier/mockIdentifier';
-import { Scope } from '../scope/scope';
-import {
-  createArrayLiteral,
-  createCall,
-} from '../../typescriptFactory/typescriptFactory';
-import { core } from '../core/core';
+import {MockDefiner} from '../mockDefiner/mockDefiner';
+import {Identifiers} from '../mockIdentifier/mockIdentifier';
+import {Scope} from '../scope/scope';
+import {createArrayLiteral, createCall,} from '../../typescriptFactory/typescriptFactory';
+import {core} from '../core/core';
 
 export function GetMockFactoryCall(
   typeReferenceNode: ts.TypeReferenceNode,
@@ -82,9 +79,7 @@ export function GetMockFactoryCallTypeofEnum(
   declaration: ts.EnumDeclaration,
   scope: Scope
 ): ts.Expression {
-  const mockFactoryCall: ts.Expression =
-    MockDefiner.instance.getMockFactoryTypeofEnum(declaration, scope);
-
+  const mockFactoryCall: ts.Expression = MockDefiner.instance.getMockFactoryTypeofEnum(declaration, scope);
   return createCall(mockFactoryCall, []);
 }
 
