@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [3.7.3](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.7.2...3.7.3) (2024-04-13)
+
+
+### Bug Fixes
+
+* **negativeNumbers:** convert negative literal numbers to unary expression with minus token ([#1580](https://github.com/Typescript-TDD/ts-auto-mock/issues/1580)) ([5b9289d](https://github.com/Typescript-TDD/ts-auto-mock/commit/5b9289d43ec42b528cc64cde30b91bbd8d9bd13f))
+
 ## [3.7.2](https://github.com/Typescript-TDD/ts-auto-mock/compare/3.7.1...3.7.2) (2023-12-25)
 
 
