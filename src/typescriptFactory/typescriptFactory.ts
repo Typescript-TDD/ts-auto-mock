@@ -33,6 +33,7 @@ import type {
   ParameterDeclaration,
   PostfixUnaryExpression,
   PostfixUnaryOperator,
+  PrefixUnaryOperator,
   PrefixUnaryExpression,
   PrivateIdentifier,
   PropertyAccessExpression,
@@ -90,6 +91,26 @@ export function createNumericLiteral(
   numericLiteralFlags?: TokenFlags,
 ): NumericLiteral {
   return core.ts.factory.createNumericLiteral(value, numericLiteralFlags);
+}
+
+export function createExpressionForNegativeOrPositiveNumber(
+  value: number,
+): Expression {
+  if (value < 0) {
+    return createPrefixUnaryExpression(
+      core.ts.SyntaxKind.MinusToken,
+      createNumericLiteral(Math.abs(value)),
+    );
+  }
+
+  return createNumericLiteral(value);
+}
+
+export function createPrefixUnaryExpression(
+  unaryOperator: PrefixUnaryOperator,
+  operand: Expression,
+): Expression {
+  return core.ts.factory.createPrefixUnaryExpression(unaryOperator, operand);
 }
 
 export function createArrowFunction(
@@ -298,13 +319,13 @@ export function createLogicalNot(operand: Expression): PrefixUnaryExpression {
 
 export function createLiteral(
   type: LiteralType,
-): StringLiteral | NumericLiteral | BigIntLiteral {
+): StringLiteral | Expression | BigIntLiteral {
   if (typeof type.value === 'string') {
     return createStringLiteral(type.value);
   }
 
   if (typeof type.value === 'number') {
-    return createNumericLiteral(type.value);
+    return createExpressionForNegativeOrPositiveNumber(type.value);
   }
 
   return core.ts.factory.createBigIntLiteral(type.value);

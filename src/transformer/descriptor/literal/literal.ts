@@ -3,8 +3,8 @@ import { Scope } from '../../scope/scope';
 import { core } from '../../core/core';
 import { GetDescriptor } from '../descriptor';
 import {
+  createExpressionForNegativeOrPositiveNumber,
   createLiteral,
-  createNumericLiteral,
   createStringLiteral,
 } from '../../../typescriptFactory/typescriptFactory';
 
@@ -27,15 +27,15 @@ export function GetLiteralDescriptor(
 
 function GetLiteralTokenDescriptor(
   node: ts.LiteralTypeNode,
-): ts.StringLiteral | ts.NumericLiteral {
+): ts.StringLiteral | ts.Expression {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const nodeToken: any = node as any;
 
   if (nodeToken.kind === core.ts.SyntaxKind.NumericLiteral) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    return createNumericLiteral(parseInt(nodeToken.text, 10));
+    return createExpressionForNegativeOrPositiveNumber(
+      parseInt(nodeToken.text, 10),
+    );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return createStringLiteral(nodeToken.text);
 }
