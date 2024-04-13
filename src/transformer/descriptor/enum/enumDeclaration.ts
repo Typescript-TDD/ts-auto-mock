@@ -4,7 +4,7 @@ import { RandomPropertyAccessor } from '../random/random';
 import { IsTsAutoMockRandomEnabled } from '../../../options/random';
 import {
   createCall,
-  createNumericLiteral,
+  createExpressionForNegativeOrPositiveNumber,
   createStringLiteral,
 } from '../../../typescriptFactory/typescriptFactory';
 
@@ -34,7 +34,7 @@ function getEnumMemberValue(
     typeChecker.getConstantValue(member) || defaultValue;
 
   if (typeof value === 'number') {
-    return createNumericLiteral(value);
+    return createExpressionForNegativeOrPositiveNumber(value);
   }
 
   return createStringLiteral(value);

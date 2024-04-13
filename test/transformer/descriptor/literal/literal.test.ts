@@ -8,6 +8,7 @@ import {
   TypeUnionTokenAllBoolean,
   TypeUnionTokenNumber,
   TypeUnionTokenSameBoolean,
+  TypeUnionWithNegatives,
 } from '../utils/types/typeUnion';
 import { getObjectKeyValues } from '../../utilities/getObjectKeyValues';
 
@@ -26,22 +27,26 @@ describe('for literal', () => {
   describe('with a specific number', () => {
     interface Interface {
       a: 2;
+      b: -3;
     }
 
-    it('should set null', () => {
+    it('should set the number', () => {
       const properties: Interface = createMock<Interface>();
       expect(properties.a).toBe(2);
+      expect(properties.b).toBe(-3);
     });
   });
 
   describe('with import', () => {
     interface Interface {
       literal: TypeUnion;
+      literalWithNegatives: TypeUnionWithNegatives;
     }
 
     it('should set the first one', () => {
       const properties: Interface = createMock<Interface>();
       expect(properties.literal).toBe('1');
+      expect(properties.literalWithNegatives).toBe(-1);
     });
   });
 

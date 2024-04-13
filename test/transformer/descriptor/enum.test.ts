@@ -15,6 +15,7 @@ describe('for enum', () => {
     Right = 1,
     Left = 3,
   }
+
   interface Interface {
     a: Direction;
     b: DirectionAssign;
@@ -53,5 +54,23 @@ describe('for enum with constant computed values', () => {
     const properties: Interface = createMock<Interface>();
 
     expect(properties.a).toEqual(2);
+  });
+});
+
+describe('for enum with negative values', () => {
+  it('should assign the values', () => {
+    enum AssignmentWithNegatives {
+      Negative1 = -4,
+      Positive = 1,
+      Negative2 = -7,
+    }
+
+    interface Interface {
+      enum: AssignmentWithNegatives;
+    }
+
+    const properties: Interface = createMock<Interface>();
+
+    expect(properties.enum).toEqual(-4);
   });
 });
