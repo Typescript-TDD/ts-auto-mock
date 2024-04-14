@@ -12,7 +12,7 @@
 ![Slack](docs/slack_small.png) Need help? Join us
 on [Slack](https://join.slack.com/t/typescripttdd/shared_invite/enQtODk3MjQwNzUwNTk2LTMzNjdlZTNmMmY3Nzg2NDNiZDA1YzJmZjk2NjcwZjQwODQ3YzE5NGZjM2Q4MzZjYWNiMWE4MGU0NjEzM2E5YzE)
 
-test 2
+test 3
 
 # :warning: This repository is now no longer maintained for new features development :warning:
 
