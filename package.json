@@ -81,7 +81,7 @@
         "eslint-webpack-plugin": "^4.0.1",
         "git-branch-is": "4.0.0",
         "husky": "^8.0.3",
-        "jasmine": "^5.1.0",
+        "jasmine": "5.2.0",
         "jasmine-spec-reporter": "7.0.0",
         "no-emit-webpack-plugin": "4.0.1",
         "prettier": "3.3.3",
