@@ -31,8 +31,13 @@ jobs:
         npm run ts-patch:install
         npm run build
         npm test
+
   check-type:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ lts/iron ]
 
     steps:
     - uses: actions/checkout@v3
