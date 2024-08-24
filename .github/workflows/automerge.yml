@@ -13,8 +13,11 @@ jobs:
   automerge:
     runs-on: ubuntu-latest
     steps:
-    - name: automerge
-      uses: "pascalgn/automerge-action@7ab42e888a333bf77ce865bc84fedc6a365a3548"
+    - id: automerge
+      name: automerge
+      uses: "pascalgn/automerge-action@v0.16.3"
+      permissions:
+        contents: write
       env:
         MERGE_METHOD: "rebase"
         MERGE_LABELS: "ts-auto-mock-automerge"

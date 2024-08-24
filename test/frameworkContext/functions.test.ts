@@ -26,7 +26,9 @@ describe('functions', () => {
 
   it('should create different factories for different functions mock', () => {
     interface AMock {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
       first: Function;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
       second: Function;
     }
 

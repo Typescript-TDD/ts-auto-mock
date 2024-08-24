@@ -12,8 +12,9 @@
     "project": "tsconfig.eslint.json",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "import", "prettier"],
+  "plugins": ["@typescript-eslint", "import", "prettier", "@stylistic"],
   "rules": {
+    "@stylistic/semi": "error",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/ban-types": "off",
@@ -95,7 +96,7 @@
       }
     ],
     "@typescript-eslint/interface-name-prefix": "off",
-    "@typescript-eslint/member-delimiter-style": [
+    "@stylistic/member-delimiter-style": [
       "error",
       {
         "multiline": {
@@ -121,10 +122,9 @@
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/prefer-function-type": "error",
     "@typescript-eslint/prefer-namespace-keyword": "error",
-    "@typescript-eslint/quotes": ["error", "single"],
-    "@typescript-eslint/semi": ["error", "always"],
+    "@stylistic/quotes": ["error", "single"],
     "@typescript-eslint/triple-slash-reference": "error",
-    "@typescript-eslint/type-annotation-spacing": "error",
+    "@stylistic/type-annotation-spacing": "error",
     "@typescript-eslint/unified-signatures": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "_" }],

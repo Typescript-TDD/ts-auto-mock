@@ -21,7 +21,8 @@ describe('build', () => {
   });
 
   it('should not import typescript other than in transformer', (done: DoneFn) => {
-    webpack(config, (err, stats) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-argument
+    webpack(config as any, (err, stats) => {
       if (!stats) {
         fail('Stats not generated');
       }
@@ -42,12 +43,14 @@ describe('build', () => {
       const modulesImportingTypescript: StatsModuleReason[] =
         getModulesImportingTypescript(statsAsJson);
 
-      expect(modulesImportingTypescript.length).toBe(
-        1,
-        `Only one transformer.ts should import typescript, but found:\n${modulesImportingTypescript
-          .map((m: StatsModuleReason) => m.module)
-          .join(', ')}`,
-      );
+      expect(modulesImportingTypescript.length)
+        .withContext(
+          `Only one transformer.ts should import typescript, but found:\n${modulesImportingTypescript
+            .map((m: StatsModuleReason) => m.module)
+            .join(', ')}`,
+        )
+        .toBe(1);
+
       expect(modulesImportingTypescript[0].module).toBe(
         './src/transformer/transformer.ts',
       );

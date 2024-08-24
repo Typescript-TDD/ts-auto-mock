@@ -44,6 +44,8 @@ type PartialObjectDeep<ObjectType extends object> = {
 
 type SuppressObjectPrototypeOverrides<ObjectType> = Pick<
   ObjectType,
+  // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
   Exclude<keyof ObjectType, keyof Object>
 > &
+  // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
   Pick<Object, Extract<keyof Object, keyof ObjectType>>;

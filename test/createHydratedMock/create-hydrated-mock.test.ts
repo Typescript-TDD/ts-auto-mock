@@ -146,6 +146,7 @@ describe('create-hydrated-mock', () => {
 
   describe('for type of enum', () => {
     it('should mock the properties as it was createMock', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       enum Enum {
         A,
         B = 'some',
@@ -176,7 +177,7 @@ describe('create-hydrated-mock', () => {
       mock1 = createMock<Interface>();
 
       expect(mock0.prop).toEqual('');
-      expect(mock1.prop).toBeUndefined('');
+      expect(mock1.prop).toBeUndefined();
     });
 
     it('should create unique mocks', () => {
