@@ -13,9 +13,6 @@ jobs:
   automerge:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-node@v3
-      with:
-        node-version: lts/iron
     - id: automerge
       name: automerge
       uses: "pascalgn/automerge-action@v0.16.3"
