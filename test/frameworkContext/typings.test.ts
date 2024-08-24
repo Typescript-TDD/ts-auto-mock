@@ -5,6 +5,7 @@ describe('when creating a mock', () => {
   it('should compile when accessing to extended typings', () => {
     interface A<T> {
       a: T;
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       b: () => {};
     }
 
@@ -13,6 +14,7 @@ describe('when creating a mock', () => {
 
       methodExpectJasmineExtension(): string;
 
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       methodReturnMockedType(): A<() => {}>;
     }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 export type ConditionalType<T> = T extends string
   ? 'string'
   : T extends number
@@ -9,3 +10,4 @@ export type ConditionalType<T> = T extends string
         : T extends Function
           ? 'function'
           : 'object';
+/* eslint-enable @typescript-eslint/no-unsafe-function-type */

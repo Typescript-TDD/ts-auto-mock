@@ -23,7 +23,8 @@ export function PrintNode(node: ts.Node): void {
 
   try {
     PrintNodeLogger.info(NodeToString(node));
-  } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
     PrintNodeLogger.warning('There was an error printing the node');
   }
 }
