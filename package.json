@@ -60,7 +60,7 @@
         "@commitlint/config-angular": "19.5.0",
         "@semantic-release/changelog": "^6.0.3",
         "@semantic-release/git": "10.0.1",
-        "@semantic-release/github": "10.3.4",
+        "@semantic-release/github": "10.3.5",
         "@stylistic/eslint-plugin": "2.8.0",
         "@stylistic/eslint-plugin-ts": "2.8.0",
         "@types/jasmine": "^5.1.4",
