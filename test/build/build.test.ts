@@ -27,14 +27,12 @@ describe('build', () => {
         fail('Stats not generated');
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion,@typescript-eslint/no-non-null-assertion
       const statsAsJson: StatsCompilation = stats!.toJson();
 
       if (err || statsAsJson?.errors?.length) {
         fail(
           err ||
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion,@typescript-eslint/no-non-null-assertion
-            statsAsJson!
+            statsAsJson
               .errors!.map((statErr: StatsError) => JSON.stringify(statErr))
               .join('\n'),
         );
