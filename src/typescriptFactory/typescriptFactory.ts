@@ -163,7 +163,7 @@ export function createFunctionExpressionReturn(
 
 export function createBlock(
   statements: readonly Statement[],
-  multiLine?: boolean | undefined,
+  multiLine?: boolean,
 ): Block {
   return core.ts.factory.createBlock(statements, multiLine);
 }
