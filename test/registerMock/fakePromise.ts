@@ -6,7 +6,6 @@ export class FakePromise<T> {
   private _rej: (e: any) => void;
 
   constructor() {
-    // eslint-disable-next-line @typescript-eslint/typedef
     this._promise = new Promise((res, rej) => {
       this._res = res;
       this._rej = rej;
