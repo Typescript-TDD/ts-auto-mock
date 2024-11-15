@@ -58,7 +58,7 @@
     "devDependencies": {
         "@commitlint/cli": "19.5.0",
         "@commitlint/config-angular": "19.5.0",
-        "@eslint/compat": "1.2.2",
+        "@eslint/compat": "1.2.3",
         "@eslint/eslintrc": "3.1.0",
         "@eslint/js": "9.14.0",
         "@semantic-release/changelog": "^6.0.3",
