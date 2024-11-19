@@ -71,7 +71,7 @@
         "@types/micromatch": "^4.0.9",
         "@types/node": "20.16.1",
         "@typescript-eslint/eslint-plugin": "8.15.0",
-        "@typescript-eslint/parser": "8.14.0",
+        "@typescript-eslint/parser": "8.15.0",
         "all-contributors-cli": "^6.26.1",
         "clean-webpack-plugin": "4.0.0",
         "commitizen": "^4.3.0",
