@@ -56,7 +56,7 @@
     "author": "Vittorio Guerriero & Giulio Caprino",
     "license": "MIT",
     "devDependencies": {
-        "@commitlint/cli": "19.5.0",
+        "@commitlint/cli": "19.6.0",
         "@commitlint/config-angular": "19.5.0",
         "@eslint/compat": "1.2.3",
         "@eslint/eslintrc": "3.2.0",
