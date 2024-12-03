@@ -87,7 +87,7 @@
         "git-branch-is": "4.0.0",
         "globals": "15.13.0",
         "husky": "9.1.7",
-        "jasmine": "5.4.0",
+        "jasmine": "5.5.0",
         "jasmine-spec-reporter": "7.0.0",
         "no-emit-webpack-plugin": "4.0.1",
         "prettier": "3.4.1",
