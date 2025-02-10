@@ -90,7 +90,7 @@
         "jasmine": "5.5.0",
         "jasmine-spec-reporter": "7.0.0",
         "no-emit-webpack-plugin": "4.0.1",
-        "prettier": "3.4.2",
+        "prettier": "3.5.0",
         "regenerator-runtime": "^0.14.1",
         "semantic-release": "24.2.1",
         "semantic-release-slack-bot": "^4.0.2",
